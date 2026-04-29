@@ -150,7 +150,7 @@ function Invoke-ZtAssessment {
 
 		[PsfArgumentCompleter('ZeroTrustAssessment.Tests.Pillar')]
 		# The Zero Trust pillar to assess. Defaults to All.
-		[ValidateSet('All', 'Identity', 'Devices', 'Network', 'Data')]
+		[ValidateSet('All', 'Identity', 'Devices', 'Network', 'Data', 'Identidade', 'Dispositivos', 'Rede', 'Dados')]
 		[string]
 		$Pillar = 'All',
 

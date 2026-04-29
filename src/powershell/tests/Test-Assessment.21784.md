@@ -1,9 +1,8 @@
-Phishing-resistant authentication methods like passkeys and FIDO2 security keys provide the strongest protection against credential theft and sophisticated phishing attacks. Traditional MFA methods remain vulnerable to adversary-in-the-middle attacks and social engineering. Enforcing phishing-resistant methods for all users through Conditional Access policies helps prevent unauthorized access even when attackers attempt to intercept authentication flows.
+Métodos de autenticação resistentes a phishing, como passkeys e chaves de segurança FIDO2, oferecem a proteção mais forte contra roubo de credenciais e ataques de phishing sofisticados. Métodos tradicionais de MFA continuam vulneráveis a ataques de adversário no meio (AiTM) e engenharia social. Exigir métodos resistentes a phishing para todos os usuários por meio de políticas de Acesso Condicional ajuda a impedir o acesso não autorizado, mesmo quando atacantes tentam interceptar os fluxos de autenticação.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure Conditional Access for all users with MFA strength](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Deploy phishing-resistant passwordless authentication](https://learn.microsoft.com/entra/identity/authentication/how-to-deploy-phishing-resistant-passwordless-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar Acesso Condicional para todos os usuários com força de MFA](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Implantar autenticação sem senha resistente a phishing](https://learn.microsoft.com/entra/identity/authentication/how-to-deploy-phishing-resistant-passwordless-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

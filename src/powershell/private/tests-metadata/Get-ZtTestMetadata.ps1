@@ -192,6 +192,20 @@ function Get-ZtTestMetadata {
 				}
 			}
 
+			# Normalize Portuguese values to English
+			if ($result.Pillar) {
+				$result.Pillar = $result.Pillar | Resolve-ZtPillarName
+			}
+			if ($result.RiskLevel) {
+				$result.RiskLevel = $result.RiskLevel | Resolve-ZtLevelName
+			}
+			if ($result.ImplementationCost) {
+				$result.ImplementationCost = $result.ImplementationCost | Resolve-ZtLevelName
+			}
+			if ($result.UserImpact) {
+				$result.UserImpact = $result.UserImpact | Resolve-ZtLevelName
+			}
+
 			$result
 		}
 	}

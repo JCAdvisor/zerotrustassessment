@@ -9,8 +9,8 @@ export default function Apps() {
             </PageHeader>
             <Card>
                 <CardHeader>
-                    <CardTitle>Coming soon</CardTitle>
-                    <CardDescription>He that can have patience can have what he will. - Benjamin Franklin
+                    <CardTitle>Disponível em breve</CardTitle>
+                    <CardDescription>Quem pode ter paciência pode ter o que quiser. - Benjamin Franklin
                     </CardDescription>
                 </CardHeader>
             </Card>

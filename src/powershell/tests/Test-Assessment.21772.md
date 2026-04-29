@@ -1,16 +1,15 @@
-Applications that use client secrets might store them in configuration files, hardcode them in scripts, or risk their exposure in other ways. The complexities of secret management make client secrets susceptible to leaks and attractive to attackers. Client secrets, when exposed, provide attackers with the ability to blend their activities with legitimate operations, making it easier to bypass security controls. If an attacker compromises an application's client secret, they can escalate their privileges within the system, leading to broader access and control, depending on the permissions of the application.
+Aplicativos que utilizam segredos de cliente (client secrets) podem armazená-los em arquivos de configuração, codificá-los diretamente em scripts ou correr o risco de exposição de outras formas. A complexidade do gerenciamento de segredos torna os segredos de cliente suscetíveis a vazamentos e atraentes para atacantes. Quando expostos, os segredos de cliente permitem que invasores misturem suas atividades com operações legítimas, facilitando a evasão de controles de segurança. Se um atacante comprometer o segredo de um aplicativo, ele poderá escalar seus privilégios no sistema, levando a um acesso e controle mais amplos, dependendo das permissões do aplicativo.
 
-Applications and service principals that have permissions for Microsoft Graph APIs or other APIs have a higher risk because an attacker can potentially exploit these additional permissions.
+Aplicativos e entidades de serviço que possuem permissões para as APIs do Microsoft Graph ou outras APIs apresentam um risco maior, pois um invasor pode explorar essas permissões adicionais.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Move applications away from shared secrets to managed identities and adopt more secure practices](https://learn.microsoft.com/entra/identity/enterprise-apps/migrate-applications-from-secrets?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-   - Use managed identities for Azure resources
-   - Deploy Conditional Access policies for workload identities
-   - Implement secret scanning
-   - Deploy application authentication policies to enforce secure authentication practices
-   - Create a least-privileged custom role to rotate application credentials
-   - Ensure you have a process to triage and monitor applications
+- [Migrar aplicativos de segredos compartilhados para identidades gerenciadas (managed identities) e adotar práticas mais seguras](https://learn.microsoft.com/entra/identity/enterprise-apps/migrate-applications-from-secrets?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+   - Use identidades gerenciadas para recursos do Azure
+   - Implemente políticas de Acesso Condicional para identidades de carga de trabalho (workload identities)
+   - Implemente a varredura de segredos (secret scanning)
+   - Implemente políticas de autenticação de aplicativos para forçar práticas seguras
+   - Crie uma função personalizada de privilégio mínimo para rotacionar credenciais
+   - Garanta que existe um processo para triagem e monitoramento de aplicativos
 <!--- Results --->
 %TestResult%
-

@@ -1,35 +1,35 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21864{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'High',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Alto',
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21864,
-    	Title = 'All risk detections are triaged',
-    	UserImpact = 'Low'
+    	Title = 'Todas as detecções de risco passaram por triagem',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking All risk detections are triaged"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se todas as detecções de risco passaram por triagem"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21864' -Title "All risk detections are triaged" `
-        -UserImpact Low -Risk High -ImplementationCost High `
+    Add-ZtTestResultDetail -TestId '21864' -Title "Todas as detecções de risco passaram por triagem" `
+        -UserImpact Baixo -Risk Alto -ImplementationCost Alto `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

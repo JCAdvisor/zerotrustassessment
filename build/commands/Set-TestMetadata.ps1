@@ -61,7 +61,7 @@ function Set-TestMetadata {
 		[string]
 		$Category,
 
-		[ValidateSet('Low', 'Medium', 'High')]
+		[ValidateSet('Low', 'Medium', 'High', 'Baixo', 'Médio', 'Alto')]
 		[string]
 		$ImplementationCost,
 
@@ -77,21 +77,21 @@ function Set-TestMetadata {
 		[string]
 		$Pillar,
 
-		[ValidateSet('Low', 'Medium', 'High')]
+		[ValidateSet('Low', 'Medium', 'High', 'Baixo', 'Médio', 'Alto')]
 		[string]
 		$RiskLevel,
 
 		[string]
 		$SfiPillar,
 
-		[ValidateSet('Workforce', 'External')]
+		[ValidateSet('Workforce', 'External', 'Força de Trabalho', 'Externo')]
 		[string[]]
 		$TenantType,
 
 		[string]
 		$Title,
 
-		[ValidateSet('Low', 'Medium', 'High')]
+		[ValidateSet('Low', 'Medium', 'High', 'Baixo', 'Médio', 'Alto')]
 		[string]
 		$UserImpact
 	)

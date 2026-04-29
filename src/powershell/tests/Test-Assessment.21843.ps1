@@ -1,35 +1,30 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
-function Test-Assessment-21843{
+function Test-Assessment-21843 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'High',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Alto',
     	Pillar = 'Identity',
-    	RiskLevel = 'Low',
+    	RiskLevel = 'Baixo',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce'),
     	TestId = 21843,
-    	Title = 'Block legacy Microsoft Online PowerShell module',
-    	UserImpact = 'Low'
+    	Title = 'Bloquear o módulo legado Microsoft Online PowerShell',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Block legacy Microsoft Online PowerShell module"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando o bloqueio do módulo legado Microsoft Online PowerShell"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    $result = $false
-    $testResultMarkdown = "Planned for future release."
-    $passed = $result
+    $passed = $false
+    $testResultMarkdown = "Planejado para uma versão futura."
 
-
-    Add-ZtTestResultDetail -TestId '21843' -Title "Block legacy Microsoft Online PowerShell module" `
-        -UserImpact Low -Risk Low -ImplementationCost High `
-        -AppliesTo Identity -Tag Identity `
+    Add-ZtTestResultDetail -TestId '21843' -Title "Bloquear o módulo legado Microsoft Online PowerShell" `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

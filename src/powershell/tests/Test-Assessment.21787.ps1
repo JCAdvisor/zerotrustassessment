@@ -1,50 +1,38 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21787 {
     [ZtTest(
-    	Category = 'Privileged access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso privilegiado',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 21787,
-    	Title = 'Permissions to create new tenants are limited to the Tenant Creator role',
-    	UserImpact = 'Medium'
+    	Title = 'As permissões para criar novos locatários são limitadas à função de Criador de Locatário',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking permissions to create new tenants is limited to the Tenant Creator role"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se as permissões para criar novos locatários estão limitadas à função de Criador de Locatário"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = Invoke-ZtGraphRequest -RelativeUri "policies/authorizationPolicy" -ApiVersion v1.0
     $passed = -not $result.defaultUserRolePermissions.allowedToCreateTenants
 
     if ($passed) {
-        $testResultMarkdown = "Non-privileged users are restricted from creating tenants.`n`n"
+        $testResultMarkdown = "✅ **Passou**: Usuários não privilegiados estão restritos de criar novos locatários.`n`n"
     }
     else {
-        $testResultMarkdown = "Non-privileged users are allowed to create tenants.`n`n"
+        $testResultMarkdown = "❌ **Falha**: Usuários não privilegiados têm permissão para criar novos locatários.`n`n"
     }
 
-    $params = @{
-        TestId              = '21787'
-        Title               = 'Permissions to create new tenants is limited to the Tenant Creator role'
-        UserImpact          = 'Medium'
-        Risk                = 'High'
-        ImplementationCost  = 'Medium'
-        AppliesTo           = 'Identity'
-        Tag                 = 'Identity'
-        Status              = $passed
-        Result              = $testResultMarkdown
-    }
-
-    Add-ZtTestResultDetail @params
+    Add-ZtTestResultDetail -TestId '21787' -Status $passed -Result $testResultMarkdown
 }

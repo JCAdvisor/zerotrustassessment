@@ -1,6 +1,6 @@
-...
+Este teste verifica se o acesso de convidados (guests) está restrito no diretório.
 
-**Remediation action**
+**Ação de correção**
 
 <!--- Results --->
 %TestResult%

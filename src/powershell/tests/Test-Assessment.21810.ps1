@@ -1,28 +1,27 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21810 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
+    	RiskLevel = 'Médio',
     	SfiPillar = 'Protect engineering systems',
     	TenantType = ('Workforce','External'),
     	TestId = 21810,
-    	Title = 'Resource-specific consent is restricted',
-    	UserImpact = 'Medium'
+    	Title = 'O consentimento específico do recurso está restrito',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Resource-Specific Consent is restricted"
-    Write-ZtProgress -Activity $activity -Status "Getting resource-specific consent status"
+    $activity = "Verificando se o Consentimento Específico do Recurso está restrito"
+    Write-ZtProgress -Activity $activity -Status "Obtendo status do consentimento específico do recurso"
 
     $result = Get-MgBetaTeamRscConfiguration
 
@@ -30,24 +29,24 @@ function Test-Assessment-21810 {
 
     if ($result.State -eq 'EnabledForPreApprovedAppsOnly' -or $result.State -eq 'DisabledForAllApps') {
         $passed = $true
-        $testResultMarkdown += "Resource-Specific Consent is restricted.`n`n%TestResult%"
+        $testResultMarkdown += "O Consentimento Específico do Recurso está restrito.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown += "Resource-Specific Consent is not restricted.`n`n%TestResult%"
+        $testResultMarkdown += "O Consentimento Específico do Recurso não está restrito.`n`n%TestResult%"
     }
 
-    $mdInfo = "The current state is {0}.`n" -f $result.State
+    $mdInfo = "O estado atual é {0}.`n" -f $result.State
 
-    # Replace the placeholder with the detailed information
+    # Substitui o espaço reservado pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{
         TestId             = '21810'
-        Title              = "Resource-Specific Consent is restricted"
-        UserImpact         = 'Medium'
-        Risk               = 'Medium'
-        ImplementationCost = 'Medium'
+        Title              = "O consentimento específico do recurso está restrito"
+        UserImpact         = 'Médio'
+        Risk               = 'Médio'
+        ImplementationCost = 'Médio'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

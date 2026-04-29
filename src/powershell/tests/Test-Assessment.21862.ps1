@@ -1,36 +1,36 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks if all risky workload identities are triaged
+    Verifica se todas as identidades de carga de trabalho de risco passaram por triagem.
 #>
 
 function Test-Assessment-21862{
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'High',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('P2'),
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 21862,
-    	Title = 'All risky workload identities are triaged',
-    	UserImpact = 'Low'
+    	Title = 'Todas as identidades de carga de trabalho de risco passaram por triagem',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if( -not (Get-ZtLicense EntraWorkloadID) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraWorkloadID
         return
     }
 
-    $activity = "Checking All risky workload identities are triaged"
-    Write-ZtProgress -Activity $activity -Status "Getting risky service principals"
+    $activity = "Verificando se todas as identidades de carga de trabalho de risco passaram por triagem"
+    Write-ZtProgress -Activity $activity -Status "Obtendo principais de serviço de risco"
 
     $untriagedRiskyPrincipals = Invoke-ZtGraphRequest -RelativeUri "identityProtection/riskyServicePrincipals" -ApiVersion v1.0 -Filter "riskState eq 'atRisk'"
 
-    Write-ZtProgress -Activity $activity -Status "Getting service principal risk detections"
+    Write-ZtProgress -Activity $activity -Status "Obtendo detecções de risco de principais de serviço"
 
     $servicePrincipalRiskDetections = Invoke-ZtGraphRequest -RelativeUri "identityProtection/servicePrincipalRiskDetections" -ApiVersion v1.0 -Filter "riskState eq 'atRisk'"
 
@@ -39,16 +39,16 @@ function Test-Assessment-21862{
     $passed = ($untriagedRiskyPrincipals.Count -eq 0) -and ($untriagedRiskDetections.Count -eq 0)
 
     if ($passed) {
-        $testResultMarkdown = "All risky workload identities have been triaged"
+        $testResultMarkdown = "Todas as identidades de carga de trabalho de risco passaram pela triagem"
     }
     else {
         $riskySPCount = $untriagedRiskyPrincipals.Count
         $riskyDetectionCount = $untriagedRiskDetections.Count
-        $testResultMarkdown = "Found $riskySPCount untriaged risky service principals and $riskyDetectionCount untriaged risk detections"
+        $testResultMarkdown = "Encontrados $riskySPCount principais de serviço de risco sem triagem e $riskyDetectionCount detecções de risco sem triagem"
 
         if ($riskySPCount -gt 0) {
-            $testResultMarkdown += "`n`n## Untriaged Risky Service Principals`n`n"
-            $testResultMarkdown += "| Service Principal | Type | Risk Level | Risk State | Risk Last Updated |`n"
+            $testResultMarkdown += "`n`n## Principais de Serviço de Risco sem Triagem`n`n"
+            $testResultMarkdown += "| Principal de Serviço | Tipo | Nível de Risco | Estado do Risco | Última Atualização do Risco |`n"
             $testResultMarkdown += "| :--- | :--- | :--- | :--- | :--- |`n"
             foreach ($sp in $untriagedRiskyPrincipals) {
                 $portalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/SignOn/objectId/$($sp.id)/appId/$($sp.appId)"
@@ -57,8 +57,8 @@ function Test-Assessment-21862{
         }
 
         if ($riskyDetectionCount -gt 0) {
-            $testResultMarkdown += "`n`n## Untriaged Risk Detection Events`n`n"
-            $testResultMarkdown += "| Service Principal | Risk Level | Risk State | Risk Event Type | Risk Last Updated |`n"
+            $testResultMarkdown += "`n`n## Eventos de Detecção de Risco sem Triagem`n`n"
+            $testResultMarkdown += "| Principal de Serviço | Nível de Risco | Estado do Risco | Tipo de Evento de Risco | Última Atualização do Risco |`n"
             $testResultMarkdown += "| :--- | :--- | :--- | :--- | :--- |`n"
             foreach ($detection in $untriagedRiskDetections) {
                 $portalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/SignOn/objectId/$($detection.servicePrincipalId)/appId/$($detection.appId)"

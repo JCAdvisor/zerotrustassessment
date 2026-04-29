@@ -1,101 +1,72 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21806 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21806,
-    	Title = 'Secure the MFA registration (My Security Info) page',
-    	UserImpact = 'Low'
+    	Title = 'Proteger a página de registro de MFA (Minhas Informações de Segurança)',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
     if ( -not (Get-ZtLicense EntraIDP1) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP1
         return
     }
 
-    $activity = "Checking Secure the MFA registration (My Security Info) page"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando proteção da página de registro de informações de segurança"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    # Query for all CA policies
     $allCAPolicies = Invoke-ZtGraphRequest -RelativeUri 'identity/conditionalAccess/policies' -ApiVersion 'v1.0'
 
-    # Local filtering for security information registration - only consider enabled policies
     $matchedPolicies = $allCAPolicies | Where-Object {
         ($_.conditions.applications.includeUserActions -contains 'urn:user:registersecurityinfo') -and
         ($_.conditions.users.includeUsers -contains 'All') -and
         $_.state -eq 'enabled'
     }
 
-    $testResultMarkdown = ""
+    $passed = $matchedPolicies.Count -gt 0
 
-    if ($matchedPolicies.Count -gt 0) {
-        $passed = $true
-        $testResultMarkdown += "Security information registration is protected by Conditional Access policies.%TestResult%"
+    if ($passed) {
+        $testResultMarkdown = "✅ **Passou**: Foram encontradas políticas de Acesso Condicional ativas protegendo o registro de informações de segurança.`n`n%TestResult%"
     }
     else {
-        $passed = $false
-        $testResultMarkdown += "Security information registration is not protected by Conditional Access policies."
+        $testResultMarkdown = "❌ **Falha**: Nenhuma política de Acesso Condicional ativa protegendo o registro de informações de segurança foi encontrada.`n`n%TestResult%"
     }
 
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Conditional Access Policies targeting security information registration"
+    $reportTitle = "Políticas de Acesso Condicional para Registro de Informações de Segurança"
     $tableRows = ""
 
     if ($matchedPolicies.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
         $formatTemplate = @'
-
 ## {0}
 
-
-| Policy Name | User Actions Targeted | Grant Controls Applied |
+| Nome da Política | Ações de Usuário | Controles de Concessão |
 | :---------- | :-------------------- | :--------------------- |
 {1}
-
 '@
-
         foreach ($policy in $matchedPolicies) {
             $portalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/PolicyBlade/policyId/{0}" -f $policy.id
-            $tableRows += @"
-| [$(Get-SafeMarkdown($policy.displayName))]($portalLink) | $($policy.conditions.applications.includeUserActions) | $($policy.grantControls.builtInControls -join ', ') |`n
-"@
+            $tableRows += "| [$(Get-SafeMarkdown($policy.displayName))]($portalLink) | $($policy.conditions.applications.includeUserActions) | $($policy.grantControls.builtInControls -join ', ') |`n"
         }
-
-        # Format the template by replacing placeholders with values
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
     else {
-        $mdInfo = "No Conditional Access policies targeting security information registration.`n"
+        $mdInfo = "Nenhuma política de Acesso Condicional visando o registro de informações de segurança foi encontrada.`n"
     }
 
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    $params = @{
-        TestId             = '21806'
-        Title              = 'Secure the MFA registration (My Security Info) page'
-        UserImpact         = 'Low'
-        Risk               = 'High'
-        ImplementationCost = 'Medium'
-        AppliesTo          = 'Identity'
-        Tag                = 'Identity'
-        Status             = $passed
-        Result             = $testResultMarkdown
-    }
-
-    Add-ZtTestResultDetail @params
+    Add-ZtTestResultDetail -TestId '21806' -Status $passed -Result $testResultMarkdown
 }

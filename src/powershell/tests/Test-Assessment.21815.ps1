@@ -1,94 +1,64 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21815 {
     [ZtTest(
-    	Category = 'Privileged access',
-    	ImplementationCost = 'High',
+    	Category = 'Acesso privilegiado',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('P2'),
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce'),
     	TestId = 21815,
-    	Title = 'All privileged role assignments are activated just in time and not permanently active',
-    	UserImpact = 'Low'
+    	Title = 'Todas as atribuições de funções privilegiadas são ativadas just-in-time e não permanentemente ativas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if ( -not (Get-ZtLicense EntraIDP2) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP2
         return
     }
 
-    $activity = "Checking All privileged role assignments are activated just in time and not permanently active"
-    Write-ZtProgress -Activity $activity -Status "Getting privileged role assignments"
+    $activity = "Verificando se todas as atribuições de funções privilegiadas são ativadas just-in-time e não permanentemente ativas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo atribuições de funções privilegiadas"
 
     $sql = @"
-select distinct  principalDisplayName, userPrincipalName, roleDisplayName, privilegeType, isPrivileged
+select distinct principalDisplayName, userPrincipalName, roleDisplayName, privilegeType, isPrivileged
 from vwRole
 "@
     $roleAssignments = Invoke-DatabaseQuery -Database $Database -Sql $sql
 
-    # Check if any privileged role assignment in the results has privilegeType set to Permanent
     $results = $roleAssignments | Where-Object { $_.isPrivileged -eq $true -and $_.privilegeType -eq 'Permanent' }
 
     $testResultMarkdown = ""
+    $passed = $results.Count -eq 0
 
-    if ($results.Count -eq 0) {
-        $passed = $true
-        $testResultMarkdown += "No privileged users have permanent role assignments."
-    }
-    else {
-        $passed = $false
-        $testResultMarkdown += "Privileged users with permanent role assignments were found.`n`n%TestResult%"
+    if ($passed) {
+        $testResultMarkdown = "Todas as atribuições de funções privilegiadas são ativadas just-in-time e não são permanentemente ativas.`n`n%TestResult%"
+    } else {
+        $testResultMarkdown = "Existem $($results.Count) atribuições de funções privilegiadas permanentes.`n`n%TestResult%"
     }
 
-        # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Privileged users with permanent role assignments"
-    $tableRows = ""
-
-    if (-not $passed) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
-        $formatTemplate = @'
-
-## {0}
-
-
-| User | UPN | Role Name | Assignment Type |
-| :--- | :-- | :-------- | :-------------- |
-{1}
-
-'@
-
-        foreach ($result in $results) {
-            $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserProfileMenuBlade/~/AdministrativeRole/userId/{0}/hidePreviewBanner~/true' -f $result.principalId
-            $tableRows += @"
-| [$(Get-SafeMarkdown($result.principalDisplayName))]($portalLink) | $($result.userPrincipalName) | $($result.roleDisplayName) | $($result.privilegeType) |`n
-"@
-        }
-
-        # Format the template by replacing placeholders with values
-        $mdInfo = $formatTemplate -f $reportTitle, $tableRows
+    $mdInfo = "## Usuários privilegiados com atribuições permanentes`n`n| Usuário | UPN | Função | Tipo de Atribuição |`n| :--- | :--- | :--- | :--- |`n"
+    foreach ($res in $results) {
+        $mdInfo += "| $($res.principalDisplayName) | $($res.userPrincipalName) | $($res.roleDisplayName) | $($res.privilegeType) |`n"
     }
 
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{
         TestId             = '21815'
-        Title              = "All privileged role assignments are activated just in time and not permanently active"
-        UserImpact         = 'Low'
-        Risk               = 'High'
-        ImplementationCost = 'High'
+        Title              = "Todas as atribuições de funções privilegiadas são ativadas just-in-time e não permanentemente ativas"
+        UserImpact         = 'Baixo'
+        Risk               = 'Alto'
+        ImplementationCost = 'Alto'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

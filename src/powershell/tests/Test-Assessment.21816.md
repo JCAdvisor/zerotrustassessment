@@ -1,10 +1,9 @@
-Threat actors who compromise permanently assigned privileged accounts gain continuous access to high-impact directory operations. This extended access allows attackers to establish persistent backdoors, modify security configurations, and disable monitoring systems. Without time-limited access controls, compromised privileged accounts provide indefinite tenant control.
+Atores de ameaça que comprometem contas privilegiadas atribuídas permanentemente ganham acesso contínuo a operações de diretório de alto impacto. Esse acesso estendido permite que os invasores estabeleçam backdoors persistentes, modifiquem configurações de segurança e desativem sistemas de monitoramento. Sem controles de acesso limitados por tempo, as contas privilegiadas comprometidas fornecem controle indefinido do locatário.
 
-Requiring eligible role assignments to be activated just-in-time, reduces the attack surface and limits attacker dwell time.
+Exigir que as atribuições de funções qualificadas sejam ativadas just-in-time reduz a superfície de ataque e limita o tempo de permanência do invasor.
 
-**Remediation action**
+**Ação de correção**
 
-- [Use Privileged Identity Management to manage privileged Microsoft Entra roles](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-getting-started?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Use o Privileged Identity Management para gerenciar funções privilegiadas do Microsoft Entra](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-getting-started?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

@@ -1,30 +1,29 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21776 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21776,
-    	Title = 'User consent settings are restricted',
-    	UserImpact = 'High'
+    	Title = 'Configurações de consentimento do usuário estão restritas',
+    	UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking User consent settings are restricted"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se as configurações de consentimento do usuário estão restritas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    # Query authorization policy for user consent settings
     $authorizationPolicy = Invoke-ZtGraphRequest -RelativeUri 'policies/authorizationPolicy' -ApiVersion 'v1.0'
 
     $matchedPolicies = $authorizationPolicy | Where-Object { $_.defaultUserRolePermissions.permissionGrantPoliciesAssigned -match '^ManagePermissionGrantsForSelf' }
@@ -34,56 +33,46 @@ function Test-Assessment-21776 {
 
     if ($hasNoMatchedPolicies -or $hasLowImpactPolicy) {
         $passed = $true
-        $testResultMarkdown = "✅ **Pass**: User consent settings are properly restricted to prevent illicit consent grant attacks.`n`n%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: As configurações de consentimento do usuário estão devidamente restritas.`n`n"
     }
     else {
         $passed = $false
-        $testResultMarkdown = "❌ **Fail**: User consent settings are not sufficiently restricted, allowing users to consent to potentially risky applications.`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: O consentimento do usuário está muito permissivo, permitindo ataques de consentimento ilícito.`n`n"
     }
 
-    # Define variables to insert into the format string
-    $reportTitle = "Authorization Policy Configuration"
+    $reportTitle = "Configurações de Consentimento"
     $portalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ConsentPoliciesMenuBlade/~/UserSettings"
-
-    # Create a here-string with format placeholders {0}, {1}, etc.
-    # {0} - Title of the report
-    # {1} - Link to the user consent settings in the portal
-    # {2} - Description of the current user consent settings
     $formatTemplate = @"
 
 ## {0}
 
-
-**Current [user consent settings]({1})**
+**[Configurações de consentimento do usuário]({1}) atuais**
 
 - {2}
 
 "@
 
     if ($hasNoMatchedPolicies) {
-        $settingsDescription = "Do not allow user consent.`nAn administrator will be required for all apps."
+        $settingsDescription = "Não permitir o consentimento do usuário.`nUm administrador será necessário para todos os aplicativos."
     }
     elseif ($hasLowImpactPolicy) {
-        $settingsDescription = "Allow user consent for apps from verified publishers, for selected permissions (Recommended).`nAll users can consent for permissions classified as `"low impact`", for apps from verified publishers or apps registered in this organization."
+        $settingsDescription = "Permitir consentimento do usuário para aplicativos de editores verificados, para permissões selecionadas (Recomendado).`nTodos os usuários podem consentir para permissões classificadas como 'baixo impacto'."
     }
     else {
-        $settingsDescription = "Allow user consent for apps.`nAll users can consent for any app to access the organization's data."
+        $settingsDescription = "Permitir consentimento do usuário para aplicativos.`nTodos os usuários podem consentir para qualquer aplicativo acessar os dados da organização."
     }
 
-    # Format the template by replacing placeholders with values
     $mdInfo = $formatTemplate -f $reportTitle, $portalLink, $settingsDescription
-
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{
         TestId             = '21776'
-        Title              = 'User consent settings are restricted'
-        UserImpact         = 'High'
-        Risk               = 'High'
-        ImplementationCost = 'Medium'
-        AppliesTo          = 'Identity'
-        Tag                = 'Identity'
+        Title              = 'Configurações de consentimento do usuário estão restritas'
+        UserImpact         = 'Alto'
+        Risk               = 'Alto'
+        ImplementationCost = 'Médio'
+        AppliesTo          = 'Identidade'
+        Tag                = 'Identidade'
         Status             = $passed
         Result             = $testResultMarkdown
     }

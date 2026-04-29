@@ -1,18 +1,17 @@
-When password expiration policies remain enabled, threat actors can exploit the predictable password rotation patterns that users typically follow when forced to change passwords regularly. Users frequently create weaker passwords by making minimal modifications to existing ones, such as incrementing numbers or adding sequential characters. Threat actors can easily anticipate and exploit these types of changes through credential stuffing attacks or targeted password spraying campaigns. These predictable patterns enable threat actors to establish persistence through:
+Quando as políticas de expiração de senha permanecem ativadas, os atores de ameaça podem explorar os padrões previsíveis de rotação de senha que os usuários normalmente seguem quando forçados a alterar as senhas regularmente. Os usuários frequentemente criam senhas mais fracas fazendo modificações mínimas nas existentes, como incrementar números ou adicionar caracteres sequenciais. Os atores de ameaça podem facilmente antecipar e explorar esses tipos de alterações por meio de ataques de preenchimento de credenciais (credential stuffing) ou campanhas direcionadas de pulverização de senhas (password spraying). Esses padrões previsíveis permitem que os atores de ameaça estabeleçam persistência por meio de:
 
-- Compromised credentials
-- Escalated privileges by targeting administrative accounts with weak rotated passwords
-- Maintaining long-term access by predicting future password variations
+- Credenciais comprometidas
+- Privilégios escalonados ao visar contas administrativas com senhas rotacionadas fracas
+- Manutenção de acesso de longo prazo prevendo variações futuras de senha
 
-Research shows that users create weaker, more predictable passwords when they are forced to expire. These predictable passwords are easier for experienced attackers to crack, as they often make simple modifications to existing passwords rather than creating entirely new, strong passwords. Additionally, when users are required to frequently change passwords, they might resort to insecure practices such as writing down passwords or storing them in easily accessible locations, creating more attack vectors for threat actors to exploit during physical reconnaissance or social engineering campaigns. 
+Pesquisas mostram que os usuários criam senhas mais fracas e previsíveis quando são forçados a expirar. Essas senhas previsíveis são mais fáceis de quebrar para invasores experientes, pois eles costumam fazer modificações simples nas senhas existentes em vez de criar senhas inteiramente novas e fortes. Além disso, quando os usuários são obrigados a alterar as senhas com frequência, eles podem recorrer a práticas inseguras, como anotar senhas ou armazená-las em locais de fácil acesso, criando mais vetores de ataque para os atores de ameaça explorarem durante o reconhecimento físico ou campanhas de engenharia social.
 
-**Remediation action**
+**Ação de correção**
 
-- [Set the password expiration policy for your organization](https://learn.microsoft.com/microsoft-365/admin/manage/set-password-expiration-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-    - Sign in to the [Microsoft 365 admin center](https://admin.microsoft.com/). Go to **Settings** > **Org Settings** >** Security & Privacy** > **Password expiration policy**. Ensure the **Set passwords to never expire** setting is checked.
-- [Disable password expiration using Microsoft Graph](https://learn.microsoft.com/graph/api/domain-update?view=graph-rest-1.0&preserve-view=true&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- [Set individual user passwords to never expire using Microsoft Graph PowerShell](https://learn.microsoft.com/microsoft-365/admin/add-users/set-password-to-never-expire?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Defina a política de expiração de senha para sua organização](https://learn.microsoft.com/microsoft-365/admin/manage/set-password-expiration-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+    - Entre no [centro de administração do Microsoft 365](https://admin.microsoft.com/). Vá para **Configurações** > **Configurações da Organização** > **Segurança e Privacidade** > **Política de expiração de senha**. Certifique-se de que a configuração **Definir senhas para nunca expirarem** esteja marcada.
+- [Desative a expiração de senha usando o Microsoft Graph](https://learn.microsoft.com/graph/api/domain-update?view=graph-rest-1.0&preserve-view=true&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Defina senhas de usuários individuais para nunca expirarem usando o Microsoft Graph PowerShell](https://learn.microsoft.com/microsoft-365/admin/add-users/set-password-to-never-expire?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
     - `Update-MgUser -UserId <UserID> -PasswordPolicies DisablePasswordExpiration`
 <!--- Results --->
 %TestResult%
-

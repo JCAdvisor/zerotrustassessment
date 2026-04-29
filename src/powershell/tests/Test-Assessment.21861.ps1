@@ -1,32 +1,32 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks if there are any untriaged high-risk users in Identity Protection.
+    Verifica se há usuários de alto risco sem triagem no Identity Protection.
 #>
 
 function Test-Assessment-21861 {
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'High',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('P2'),
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 21861,
-    	Title = 'All high-risk users are triaged',
-    	UserImpact = 'Low'
+    	Title = 'Todos os usuários de alto risco passaram por triagem',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking All risky users are triaged"
-    Write-ZtProgress -Activity $activity -Status "Getting risky users"
+    $activity = "Verificando se todos os usuários de risco passaram por triagem"
+    Write-ZtProgress -Activity $activity -Status "Obtendo usuários de risco"
 
     $EntraIDPlan = Get-ZtLicenseInformation -Product EntraID
     if ($EntraIDPlan -eq "Free" -or $EntraIDPlan -eq "P1") {
-        Write-PSFMessage '🟦 Skipping test: Requires P2 or Governance plan' -Tag Test -Level VeryVerbose
+        Write-PSFMessage '🟦 Pulando teste: Requer plano P2 ou de Governança' -Tag Test -Level VeryVerbose
         return
     }
 
@@ -40,18 +40,18 @@ function Test-Assessment-21861 {
 
     # Prepare the markdown output
     if ($result) {
-        $testResultMarkdown = "All high-risk users are properly triaged in Entra ID Protection.%TestResult%"
+        $testResultMarkdown = "Todos os usuários de alto risco passaram devidamente pela triagem no Entra ID Protection.%TestResult%"
     }
     else {
-        $testResultMarkdown = "Found **$($riskyUsers.Count)** untriaged high-risk users in Entra ID Protection.%TestResult%"
+        $testResultMarkdown = "Encontrados **$($riskyUsers.Count)** usuários de alto risco sem triagem no Entra ID Protection.%TestResult%"
     }
 
     # Build the detailed sections of the markdown
     $mdInfo = ""
 
     if (!$result) {
-        $mdInfo += "`n## Untriaged High-Risk Users`n`n"
-        $mdInfo += "| User | Risk level | Last updated | Risk detail |`n"
+        $mdInfo += "`n## Usuários de alto risco sem triagem`n`n"
+        $mdInfo += "| Usuário | Nível de risco | Última atualização | Detalhes do risco |`n"
         $mdInfo += "| :----------------- | :--------- | :-------------------- | :---------- |`n"
 
         foreach ($user in $riskyUsers) {
@@ -65,8 +65,8 @@ function Test-Assessment-21861 {
     # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '21861' -Title "All risky users are triaged" `
-        -UserImpact Low -Risk High -ImplementationCost High `
+    Add-ZtTestResultDetail -TestId '21861' -Title "Todos os usuários de risco passaram por triagem" `
+        -UserImpact Baixo -Risk Alto -ImplementationCost Alto `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown
 }

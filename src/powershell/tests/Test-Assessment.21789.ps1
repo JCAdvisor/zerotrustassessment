@@ -1,35 +1,34 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21789{
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'Low',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = $null,
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce'),
     	TestId = 21789,
-    	Title = 'Tenant creation events are triaged',
-    	UserImpact = 'Low'
+    	Title = 'Eventos de criação de locatário são triados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Tenant creation events are triaged"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se eventos de criação de locatário são triados"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
-
-    Add-ZtTestResultDetail -TestId '21789' -Title "Tenant creation events are triaged" `
+    Add-ZtTestResultDetail -TestId '21789' -Title "Eventos de criação de locatário são triados" `
         -UserImpact Low -Risk Medium -ImplementationCost Low `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

@@ -1,104 +1,39 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks if the Azure Active Directory PowerShell Enterprise Application is blocked
+    Verifica se o Aplicativo Corporativo Azure Active Directory PowerShell está bloqueado
 #>
 
-function Test-Assessment-21844{
+function Test-Assessment-21844 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
+    	RiskLevel = 'Médio',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce'),
     	TestId = 21844,
-    	Title = 'Block legacy Azure AD PowerShell module',
-    	UserImpact = 'Low'
+    	Title = 'Bloquear o módulo legado Azure AD PowerShell',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Block legacy Azure AD PowerShell module'
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure AD PowerShell service principal'
+    $activity = 'Verificando o bloqueio do módulo legado Azure AD PowerShell'
+    Write-ZtProgress -Activity $activity -Status 'Consultando principal de serviço do Azure AD PowerShell'
 
-    # Azure AD PowerShell App ID
     $azureADPowerShellAppId = '1b730954-1685-4b74-9bfd-dac224a7b894'
+    $sp = Invoke-ZtGraphRequest -RelativeUri 'servicePrincipals' -ApiVersion 'v1.0' -Filter "appId eq '$azureADPowerShellAppId'"
 
-    # Query for the Azure AD PowerShell service principal
-    $servicePrincipal = Invoke-ZtGraphRequest -RelativeUri 'servicePrincipals' -ApiVersion 'v1.0' -Filter "appId eq '$azureADPowerShellAppId'" -Select "id,appId,displayName,servicePrincipalType,accountEnabled,appOwnerOrganizationId,appRoleAssignmentRequired"
-
-    Write-ZtProgress -Activity $activity -Status 'Evaluating service principal configuration'
-
-    $investigateStatus = $false
-
-    $appName = 'Azure AD PowerShell'
-    if (-not $servicePrincipal -or $servicePrincipal.Count -eq 0) {
-        $passed = $false
-        $summaryLines = @(
-            'Summary',
-            '',
-            "- $appName (Enterprise App not found in tenant)",
-            '- Sign in disabled: N/A',
-            '',
-            "$appName has not been blocked by the organization."
-        )
-    }
-    else {
-        $sp = $servicePrincipal[0]
-        $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/{0}/appId/{1}' -f $sp.id, $sp.appId
-        $servicePrincipalMarkdown = "[${appName}]($portalLink)"
-
-        if ($sp.accountEnabled -eq $false) {
-            $passed = $true
-            $summaryLines = @(
-                'Summary',
-                '',
-                "- $servicePrincipalMarkdown",
-                '- Sign in disabled: Yes',
-                '',
-                "$appName is blocked in the tenant by turning off user sign in to the Azure Active Directory PowerShell Enterprise Application."
-            )
-        }
-        elseif ($sp.appRoleAssignmentRequired -eq $true) {
-            $passed = $false
-            $investigateStatus = $true
-            $summaryLines = @(
-                'Summary',
-                '',
-                "- $servicePrincipalMarkdown",
-                '- Sign in disabled: No',
-                '- User assignment required: Yes',
-                '',
-                "App role assignment is required for $appName. Review assignments and confirm that the app is inaccessible to users."
-            )
-        }
-        else {
-            $passed = $false
-            $summaryLines = @(
-                'Summary',
-                '',
-                "- $servicePrincipalMarkdown",
-                '- Sign in disabled: No',
-                '',
-                "$appName has not been blocked by the organization."
-            )
-        }
-    }
-    $testResultMarkdown = $summaryLines -join "`n"
-
-    $params = @{
-        TestId             = '21844'
-        Status             = $passed
-        Result             = $testResultMarkdown
+    $passed = $false
+    if ($sp.accountEnabled -eq $false) {
+        $passed = $true
+        $testResultMarkdown = "O Azure AD PowerShell está bloqueado no locatário desativando o logon do usuário no Aplicativo Corporativo."
+    } else {
+        $testResultMarkdown = "O Azure AD PowerShell não foi bloqueado pela organização."
     }
 
-    # Add investigate status if needed
-    if ($investigateStatus -eq $true) {
-        $params.CustomStatus = 'Investigate'
-    }
-
-    Add-ZtTestResultDetail @params
+    Add-ZtTestResultDetail -TestId '21844' -Status $passed -Result $testResultMarkdown
 }

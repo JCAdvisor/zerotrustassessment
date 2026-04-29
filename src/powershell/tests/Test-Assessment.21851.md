@@ -1,14 +1,13 @@
-External user accounts are often used to provide access to business partners who belong to organizations that have a business relationship with your organization. If these accounts are compromised in their organization, attackers can use the valid credentials to gain initial access to your environment, often bypassing traditional defenses due to their legitimacy.
+Contas de usuários externos são frequentemente usadas para fornecer acesso a parceiros de negócios que pertencem a organizações que têm um relacionamento comercial com a sua organização. Se essas contas forem comprometidas em sua organização de origem, atacantes podem usar as credenciais válidas para obter acesso inicial ao seu ambiente, muitas vezes contornando as defesas tradicionais devido à sua aparente legitimidade.
 
-Attackers might gain access with external user accounts, if multifactor authentication (MFA) isn't universally enforced or if there are exceptions in place. They might also gain access by exploiting the vulnerabilities of weaker MFA methods like SMS and phone calls using social engineering techniques, such as SIM swapping or phishing, to intercept the authentication codes.
+Atacantes podem ganhar acesso com contas de usuários externos se a autenticação multifator (MFA) não for universalmente imposta ou se houver exceções em vigor. Eles também podem ganhar acesso explorando vulnerabilidades de métodos de MFA mais fracos, como SMS e chamadas telefônicas, usando técnicas de engenharia social, como SIM swapping ou phishing, para interceptar códigos de autenticação.
 
-Once an attacker gains access to an account without MFA or a session with weak MFA methods, they might attempt to manipulate MFA settings (for example, registering attacker controlled methods) to establish persistence to plan and execute further attacks based on the privileges of the compromised accounts.
+Uma vez que um atacante ganha acesso a uma conta sem MFA ou a uma sessão com métodos de MFA fracos, ele pode tentar manipular as configurações de MFA (por exemplo, registrando métodos controlados pelo atacante) para estabelecer persistência e planejar e executar ataques futuros com base nos privilégios das contas comprometidas.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Deploy a Conditional Access policy to enforce authentication strength for guests](https://learn.microsoft.com/entra/identity/conditional-access/policy-guests-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- For organizations with a closer business relationship and vetting on their MFA practices, consider deploying cross-tenant access settings to accept the MFA claim.
-   - [Configure B2B collaboration cross-tenant access settings](https://learn.microsoft.com/entra/external-id/cross-tenant-access-settings-b2b-collaboration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-change-inbound-trust-settings-for-mfa-and-device-claims)
+- [Implantar uma política de Acesso Condicional para impor a força da autenticação para convidados](https://learn.microsoft.com/entra/identity/conditional-access/policy-guests-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- Para organizações com uma relação comercial mais próxima e verificação de suas práticas de MFA, considere implantar configurações de acesso entre locatários para aceitar a reivindicação de MFA.
+   - [Configurar as definições de acesso entre locatários para colaboração B2B](https://learn.microsoft.com/entra/external-id/cross-tenant-access-settings-b2b-collaboration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-change-inbound-trust-settings-for-mfa-and-device-claims)
 <!--- Results --->
 %TestResult%
-

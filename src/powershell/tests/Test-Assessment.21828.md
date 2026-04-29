@@ -1,8 +1,7 @@
-Blocking authentication transfer in Microsoft Entra ID is a critical security control. It helps protect against token theft and replay attacks by preventing the use of device tokens to silently authenticate on other devices or browsers. When authentication transfer is enabled, a threat actor who gains access to one device can access resources to nonapproved devices, bypassing standard authentication and device compliance checks. When administrators block this flow, organizations can ensure that each authentication request must originate from the original device, maintaining the integrity of the device compliance and user session context.
+Bloquear a transferência de autenticação no Microsoft Entra ID é um controle de segurança crítico. Ele ajuda a proteger contra roubo de token e ataques de replay, impedindo o uso de tokens de dispositivo para autenticação silenciosa em outros dispositivos ou navegadores. Quando a transferência de autenticação está habilitada, um ator de ameaça que ganha acesso a um dispositivo pode acessar recursos em dispositivos não aprovados, ignorando a autenticação padrão e as verificações de conformidade do dispositivo. Quando os administradores bloqueiam esse fluxo, as organizações garantem que cada solicitação de autenticação deve se originar do dispositivo original, mantendo a integridade da conformidade do dispositivo e o contexto da sessão do usuário.
 
-**Remediation action**
+**Ação de correção**
 
-- [Deploy a Conditional Access policy to block authentication transfer](https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#authentication-transfer-policies)
+- [Implantar uma política de Acesso Condicional para bloquear a transferência de autenticação](https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#authentication-transfer-policies)
 <!--- Results --->
 %TestResult%
-

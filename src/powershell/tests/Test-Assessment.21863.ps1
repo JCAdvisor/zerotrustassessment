@@ -1,32 +1,32 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21863{
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'High',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('P2'),
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 21863,
-    	Title = 'All high-risk sign-ins are triaged',
-    	UserImpact = 'Low'
+    	Title = 'Todos os logins de alto risco passaram por triagem',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "All high-risk sign-ins are triaged"
-    Write-ZtProgress -Activity $activity -Status "Getting risky sign ins."
+    $activity = "Todos os logins de alto risco passaram por triagem"
+    Write-ZtProgress -Activity $activity -Status "Obtendo logins de risco."
 
     $EntraIDPlan = Get-ZtLicenseInformation -Product EntraID
     if ($EntraIDPlan -eq "Free" -or $EntraIDPlan -eq "P1") {
-        Write-PSFMessage '🟦 Skipping test: Requires P2 or Governance plan' -Tag Test -Level VeryVerbose
+        Write-PSFMessage '🟦 Pulando teste: Requer plano P2 ou de Governança' -Tag Test -Level VeryVerbose
         return
     }
 
@@ -40,18 +40,18 @@ function Test-Assessment-21863{
 
     # Prepare the markdown output
     if ($result) {
-        $testResultMarkdown = "No untriaged risky sign ins in the tenant.%TestResult%"
+        $testResultMarkdown = "Não há logins de risco sem triagem no locatário.%TestResult%"
     }
     else {
-        $testResultMarkdown = "Found **$($riskDetections.Count)** untriaged high-risk sign ins.%TestResult%"
+        $testResultMarkdown = "Encontrados **$($riskDetections.Count)** logins de alto risco sem triagem.%TestResult%"
     }
 
     # Build the detailed sections of the markdown
     $mdInfo = ""
 
     if (!$result) {
-        $mdInfo += "`n## Untriaged High-Risk Sign ins`n`n"
-        $mdInfo += "| Date | User Principal Name  | Type | Risk Level |`n"
+        $mdInfo += "`n## Logins de alto risco sem triagem`n`n"
+        $mdInfo += "| Data | Nome Principal do Usuário (UPN) | Tipo | Nível de Risco |`n"
         $mdInfo += "| :---- | :---- | :---- | :---- |`n"
 
         foreach ($risk in $riskDetections) {
@@ -66,8 +66,8 @@ function Test-Assessment-21863{
     # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '21863' -Title "All high-risk sign-ins are triaged" `
-        -UserImpact Low -Risk High -ImplementationCost High `
+    Add-ZtTestResultDetail -TestId '21863' -Title "Todos os logins de alto risco passaram por triagem" `
+        -UserImpact Baixo -Risk Alto -ImplementationCost Alto `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown
 }

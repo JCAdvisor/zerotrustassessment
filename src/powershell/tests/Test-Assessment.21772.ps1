@@ -1,28 +1,28 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21772 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
         Service = ('Graph'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21772,
-    	Title = 'Applications don''t have client secrets configured',
-    	UserImpact = 'Low'
+    	Title = 'Aplicativos não possuem segredos de cliente configurados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
     $sqlApp = @"
 select distinct ON (id) appId, displayName, signInAudience,
@@ -46,15 +46,16 @@ order by displayName, keyEndDateTime DESC
     $passed = ($resultsApp.Count -eq 0) -and ($resultsSP.Count -eq 0)
 
     if ($passed) {
-        $testResultMarkdown += "Applications in your tenants do not use client secrets."
+        $testResultMarkdown = "✅ **Passou**: Nenhum aplicativo ou entidade de serviço com segredos de cliente configurados foi encontrado.`n`n"
     }
     else {
-        $testResultMarkdown += "Found $($resultsApp.Count) applications and $($resultsSP.Count) service principals with client secrets configured.`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: Foram encontrados aplicativos ou entidades de serviço utilizando segredos de cliente. Recomenda-se o uso de certificados ou identidades gerenciadas.`n`n"
     }
 
+    $mdInfo = ""
     if ($resultsApp.Count -gt 0) {
-        $mdInfo = "`n## Applications with client secrets`n`n"
-        $mdInfo += "| Application | Secret expiry |`n"
+        $mdInfo += "## Registros de Aplicativos com segredos de cliente`n`n"
+        $mdInfo += "| Aplicativo | Expiração do Segredo |`n"
         $mdInfo += "| :--- | :--- |`n"
         foreach ($item in $resultsApp) {
             $portalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Credentials/appId/{0}" -f $item.appId
@@ -63,8 +64,8 @@ order by displayName, keyEndDateTime DESC
     }
 
     if ($resultsSP.Count -gt 0) {
-        $mdInfo += "`n`n## Service Principals with client secrets`n`n"
-        $mdInfo += "| Service principal | App owner tenant | Secret expiry |`n"
+        $mdInfo += "`n`n## Entidades de Serviço com segredos de cliente`n`n"
+        $mdInfo += "| Entidade de Serviço | Tenant proprietário | Expiração do Segredo |`n"
         $mdInfo += "| :--- | :--- | :--- |`n"
         foreach ($item in $resultsSP) {
             $tenant = Get-ZtTenant -tenantId $item.appOwnerOrganizationId
@@ -77,12 +78,12 @@ order by displayName, keyEndDateTime DESC
 
     $params = @{
         TestId             = '21772'
-        Title              = 'Applications don''t have secrets configured'
-        UserImpact         = 'Medium'
-        Risk               = 'High'
-        ImplementationCost = 'Medium'
-        AppliesTo          = 'Identity'
-        Tag                = 'Application'
+        Title              = 'Aplicativos não possuem segredos de cliente configurados'
+        UserImpact         = 'Médio'
+        Risk               = 'Alto'
+        ImplementationCost = 'Médio'
+        AppliesTo          = 'Identidade'
+        Tag                = 'Identidade'
         Status             = $passed
         Result             = $testResultMarkdown
     }

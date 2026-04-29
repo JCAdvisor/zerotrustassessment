@@ -1,35 +1,29 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
-function Test-Assessment-21834{
+function Test-Assessment-21834 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
     	Pillar = 'Identity',
-    	RiskLevel = 'Low',
+    	RiskLevel = 'Baixo',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce'),
     	TestId = 21834,
-    	Title = 'Directory sync account is locked down to specific named location',
-    	UserImpact = 'Low'
+    	Title = 'Conta de sincronização do diretório restrita a um local nomeado específico',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Directory sync account is locked down to specific named location"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se a conta de sincronização está restrita por local"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    $result = $false
-    $testResultMarkdown = "Planned for future release."
-    $passed = $result
+    $passed = $false
+    $testResultMarkdown = "Planejado para uma versão futura."
 
-
-    Add-ZtTestResultDetail -TestId '21834' -Title "Directory sync account is locked down to specific named location" `
-        -UserImpact Low -Risk Low -ImplementationCost Low `
-        -AppliesTo Identity -Tag Identity `
-        -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
+    Add-ZtTestResultDetail -TestId '21834' -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

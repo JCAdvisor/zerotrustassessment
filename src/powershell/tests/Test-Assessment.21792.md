@@ -1,10 +1,9 @@
-External user accounts are often used to provide access to business partners who belong to organizations that have a business relationship with your enterprise. If these accounts are compromised in their organization, attackers can use the valid credentials to gain initial access to your environment, often bypassing traditional defenses due to their legitimacy.  
+Contas de usuários externos são frequentemente usadas para fornecer acesso a parceiros de negócios. Se essas contas forem comprometidas em sua organização de origem, os atacantes podem usar as credenciais válidas para obter acesso inicial ao seu ambiente.
 
-External accounts with permissions to read directory object permissions provide attackers with broader initial access if compromised. These accounts allow attackers to gather additional information from the directory for reconnaissance.
+Contas externas com permissões para ler objetos do diretório fornecem aos atacantes um acesso inicial mais amplo se comprometidas. Essas contas permitem que os criminosos coletem informações adicionais do diretório para reconhecimento (reconnaissance).
 
-**Remediation action**
+**Ação de remediação**
 
-- [Restrict guest access to their own directory objects](https://learn.microsoft.com/entra/external-id/external-collaboration-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-configure-guest-user-access)
+- [Restringir o acesso de convidados aos seus próprios objetos de diretório](https://learn.microsoft.com/entra/external-id/external-collaboration-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-configure-guest-user-access)
 <!--- Results --->
 %TestResult%
-

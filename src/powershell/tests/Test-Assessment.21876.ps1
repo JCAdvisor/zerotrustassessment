@@ -1,35 +1,33 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21876{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21876,
-    	Title = 'Use PIM for Microsoft Entra privileged roles',
-    	UserImpact = 'Low'
+    	Title = 'Usar PIM para funções privilegiadas do Microsoft Entra',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Use PIM for Microsoft Entra privileged roles"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando uso do PIM para funções privilegiadas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
-
-    Add-ZtTestResultDetail -TestId '21876' -Title "Use PIM for Microsoft Entra privileged roles" `
-        -UserImpact Low -Risk Medium -ImplementationCost Low `
+    Add-ZtTestResultDetail -TestId '21876' -Title "Usar PIM para funções privilegiadas do Microsoft Entra" `
+        -UserImpact Baixo -Risk Médio -ImplementationCost Baixo `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

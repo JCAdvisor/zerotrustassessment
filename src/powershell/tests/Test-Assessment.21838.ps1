@@ -1,65 +1,58 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21838 {
     [ZtTest(
-    	Category = 'Credential management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de credenciais',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce','External'),
     	TestId = 21838,
-    	Title = 'Security key authentication method enabled',
-    	UserImpact = 'Low'
+    	Title = 'Método de autenticação de chave de segurança ativado',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking security key authentication method enabled'
-    Write-ZtProgress -Activity $activity -Status 'Getting FIDO2 authentication method policy'
+    $activity = 'Verificando se o método de autenticação de chave de segurança está ativado'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo política de método de autenticação FIDO2'
 
-    # Query FIDO2 authentication method configuration
+    # Consulta a configuração do método de autenticação FIDO2
     $fido2Config = Invoke-ZtGraphRequest -RelativeUri 'authenticationMethodsPolicy/authenticationMethodConfigurations/FIDO2' -ApiVersion beta
 
-    # Check if FIDO2 authentication method is enabled
+    # Verifica se o método de autenticação FIDO2 está ativado
     $fido2Enabled = $fido2Config.state -eq 'enabled'
 
     if ($fido2Enabled) {
         $passed = $true
-        $testResultMarkdown = "Security key authentication method is enabled for your tenant, providing hardware-backed phishing-resistant authentication.`n`n%TestResult%"
+        $testResultMarkdown = "O método de autenticação por chave de segurança está ativado em seu locatário, fornecendo autenticação resistente a phishing baseada em hardware.`n`n%TestResult%"
         $statusEmoji = '✅'
     } else {
         $passed = $false
-        $testResultMarkdown = "Security key authentication method is not enabled; users cannot register FIDO2 security keys for strong authentication.`n`n%TestResult%"
+        $testResultMarkdown = "O método de autenticação por chave de segurança não está ativado; os usuários não podem registrar chaves de segurança FIDO2 para autenticação forte.`n`n%TestResult%"
         $statusEmoji = '❌'
     }
 
-    # Build the detailed sections of the markdown
-    $reportTitle = 'FIDO2 security key authentication settings'
+    # Gera os detalhes do relatório
+    $reportTitle = 'Configurações do método de autenticação de chave de segurança FIDO2'
 
-    # Create a here-string with format placeholders {0}, {1}, etc.
     $formatTemplate = @"
 
 ## {0}
 
-$statusEmoji **FIDO2 authentication method**
+$statusEmoji **Método de autenticação FIDO2**
 - Status: $((Get-Culture).TextInfo.ToTitleCase($fido2Config.state.ToLower()))
-- Include targets: $(if ($fido2Config.includeTargets -is [array] -and $fido2Config.includeTargets.Count -gt 0) { ($fido2Config.includeTargets | ForEach-Object { Get-ZtAuthenticatorFeatureSettingTarget -Target $_ }) -join ', ' } else { 'None' })
-- Exclude targets: $(if ($fido2Config.excludeTargets -is [array] -and $fido2Config.excludeTargets.Count -gt 0) { ($fido2Config.excludeTargets | ForEach-Object { Get-ZtAuthenticatorFeatureSettingTarget -Target $_ }) -join ', ' } else { 'None' })
-
-
+- Alvos incluídos: $(if ($fido2Config.includeTargets -is [array] -and $fido2Config.includeTargets.Count -gt 0) { ($fido2Config.includeTargets | ForEach-Object { Get-ZtAuthenticatorFeatureSettingTarget -Target $_ }) -join ', ' } else { 'Nenhum' })
+- Alvos excluídos: $(if ($fido2Config.excludeTargets -is [array] -and $fido2Config.excludeTargets.Count -gt 0) { ($fido2Config.excludeTargets | ForEach-Object { Get-ZtAuthenticatorFeatureSettingTarget -Target $_ }) -join ', ' } else { 'Nenhum' })
 "@
 
-    # Format the template by replacing placeholders with values
     $mdInfo = $formatTemplate -f $reportTitle
-
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{
@@ -68,5 +61,4 @@ $statusEmoji **FIDO2 authentication method**
         Result             = $testResultMarkdown
     }
     Add-ZtTestResultDetail @params
-
 }

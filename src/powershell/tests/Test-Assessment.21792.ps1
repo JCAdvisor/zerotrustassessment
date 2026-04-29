@@ -1,4 +1,3 @@
-﻿
 <#
 .SYNOPSIS
 
@@ -6,41 +5,32 @@
 
 function Test-Assessment-21792 {
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'Low',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 21792,
-    	Title = 'Guests have restricted access to directory objects',
-    	UserImpact = 'Medium'
+    	Title = 'Convidados possuem acesso restrito a objetos do diretório',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
-    param(
-        $Database
-    )
+    param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
     $guestRestrictedRoleId = "2af84b1e-32c8-42b7-82bc-daa82404023b"
-
     $result = Invoke-ZtGraphRequest -RelativeUri "policies/authorizationPolicy"
-
     $passed = $result.guestUserRoleId -eq $guestRestrictedRoleId
 
     if ($passed) {
-        $testResultMarkdown += "✅ Validated guest user access is restricted."
+        $testResultMarkdown = "✅ Validado que o acesso de usuários convidados está restrito."
     }
     else {
-        $testResultMarkdown += "❌ Guest user access is not restricted.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O acesso de usuários convidados não está restrito."
     }
 
-    $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-
-    Add-ZtTestResultDetail -TestId '21792' -Title 'Guests have restricted access to directory objects' `
-        -UserImpact Medium -Risk Medium -ImplementationCost Low `
-        -AppliesTo Identity -Tag Application `
-        -Status $passed -Result $testResultMarkdown
+    Add-ZtTestResultDetail -TestId '21792' -Status $passed -Result $testResultMarkdown
 }

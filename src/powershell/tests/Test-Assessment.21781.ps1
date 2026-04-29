@@ -1,37 +1,35 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks that admins are enforced for phishing resistant authentication.
+    Verifica se os administradores são obrigados a usar autenticação resistente a phishing.
 #>
 
 function Test-Assessment-21781 {
     [ZtTest(
-    	Category = 'Privileged access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso privilegiado',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce'),
     	TestId = 21781,
-    	Title = 'Privileged users sign in with phishing-resistant methods',
-    	UserImpact = 'Low'
+    	Title = 'Usuários privilegiados fazem logon com métodos resistentes a phishing',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
     $passed = $false
 
     if ($passed) {
-        $testResultMarkdown += "Validated that following accounts have phishing resistant methods registered"
+        $testResultMarkdown += "Validado que as seguintes contas possuem métodos resistentes a phishing registrados"
     }
     else {
-        $testResultMarkdown += "Found Accounts have not registered phishing resistant methods`n`n%TestResult%"
+        $testResultMarkdown += "Encontradas contas que não registraram métodos resistentes a phishing`n`n%TestResult%"
     }
 
-    $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-
-    Add-ZtTestResultDetail -TestId '21781' -Title 'Privileged users sign in with phishing-resistant methods' `
+    Add-ZtTestResultDetail -TestId '21781' -Title 'Usuários privilegiados fazem logon com métodos resistentes a phishing' `
         -UserImpact Low -Risk High -ImplementationCost Medium `
         -AppliesTo Identity -Tag Authentication `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

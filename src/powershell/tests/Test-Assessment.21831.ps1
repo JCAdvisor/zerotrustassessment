@@ -1,36 +1,32 @@
-﻿<#
+<#
 .SYNOPSIS
-
+    Verifica se Ações Protegidas estão habilitadas para tarefas de gerenciamento de alto impacto.
 #>
 
-function Test-Assessment-21831{
+function Test-Assessment-21831 {
     [ZtTest(
-    	Category = 'Privileged access',
-    	ImplementationCost = 'Low',
+    	Category = 'Acesso privilegiado',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
+    	RiskLevel = 'Médio',
     	SfiPillar = 'Protect tenants and isolate production systems',
     	TenantType = ('Workforce'),
     	TestId = 21831,
-    	Title = 'Protected actions are enabled for high-impact management tasks',
-    	UserImpact = 'Low'
+    	Title = 'Ações protegidas estão habilitadas para tarefas de gerenciamento de alto impacto',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Conditional Access protected actions are enabled"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se Ações Protegidas do Acesso Condicional estão habilitadas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    $result = $false
-    $testResultMarkdown = "Planned for future release."
-    $passed = $result
+    $passed = $false
+    $testResultMarkdown = "Planejado para uma versão futura."
 
-
-    Add-ZtTestResultDetail -TestId '21831' -Title "Conditional Access protected actions are enabled" `
-        -UserImpact Low -Risk Medium -ImplementationCost Low `
-        -AppliesTo Identity -Tag Identity `
+    Add-ZtTestResultDetail -TestId '21831' -Title "Ações protegidas estão habilitadas" `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

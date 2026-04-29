@@ -1,8 +1,6 @@
-If you don't enable ID Protection notifications, your organization loses critical real-time alerts when threat actors compromise user accounts or conduct reconnaissance activities. When Microsoft Entra ID Protection detects accounts at risk, it sends email alerts with **Users at risk detected** as the subject and links to the **Users flagged for risk** report. Without these notifications, security teams remain unaware of active threats, allowing threat actors to maintain persistence in compromised accounts without being detected. You can feed these risks into tools like Conditional Access to make access decisions or send them to a security information and event management (SIEM) tool for investigation and correlation. Threat actors can use this detection gap to conduct lateral movement activities, privilege escalation attempts, or data exfiltration operations while administrators remain unaware of the ongoing compromise. The delayed response enables threat actors to establish more persistence mechanisms, change user permissions, or access sensitive resources before you can fix the issue. Without proactive notification of risk detections, organizations must rely solely on manual monitoring of risk reports, which significantly increases the time it takes to detect and respond to identity-based attacks.   
+Se você não habilitar as notificações do ID Protection, sua organização perderá alertas críticos em tempo real quando atacantes comprometerem contas de usuários ou realizarem atividades de reconhecimento. Quando o Microsoft Entra ID Protection detecta contas em risco, ele envia alertas por e-mail com o assunto **Usuários em risco detectados**. Sem essas notificações, as equipes de segurança permanecem sem conhecimento de ameaças ativas.
 
-**Remediation action**
-
-- [Configure users at risk detected alerts](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-configure-notifications?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-users-at-risk-detected-alerts)
+**Ação de remediação**
+- [Configurar alertas de usuários em risco detectados](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-configure-notifications?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-users-at-risk-detected-alerts)
 <!--- Results --->
 %TestResult%
-

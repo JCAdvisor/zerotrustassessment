@@ -1,27 +1,27 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
-function Test-Assessment-21866{
+function Test-Assessment-21866 {
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'Medium',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 21866,
-    	Title = 'All Microsoft Entra recommendations are addressed',
-    	UserImpact = 'Low'
+    	Title = 'Todas as recomendações do Microsoft Entra foram atendidas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking All Microsoft Entra recommendations are addressed"
+    $activity = "Verificando se todas as recomendações do Microsoft Entra foram atendidas"
     Write-ZtProgress -Activity $activity
 
     $recommendations = Invoke-ZtGraphRequest -RelativeUri "directory/recommendations" -ApiVersion beta
@@ -29,15 +29,16 @@ function Test-Assessment-21866{
 
     $passed = $result.Count -eq 0
     if ($passed) {
-        $testResultMarkdown = "All Entra Recommendations are addressed.`n`n"
+        $testResultMarkdown = "Todas as recomendações do Entra foram atendidas.`n`n"
     }
     else {
-        $testResultMarkdown = "Found $($result.Count) unaddressed Entra recommendations.`n`n%TestResult%"
+        $testResultMarkdown = "Encontradas $($result.Count) recomendações do Entra não atendidas.`n`n%TestResult%"
     }
 
+    $mdInfo = ""
     if ($result.Count -gt 0) {
-        $mdInfo = "`n## Unaddressed Entra recommendations`n`n"
-        $mdInfo += "| Display Name | Status | Insights | Priority |`n"
+        $mdInfo = "`n## Recomendações do Entra não atendidas`n`n"
+        $mdInfo += "| Nome de exibição | Status | Insights | Prioridade |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- |`n"
         foreach ($item in $result) {
             $mdInfo += "| $($item.displayName) | $($item.status) | $($item.Insights) | $($item.priority) |`n"
@@ -46,8 +47,8 @@ function Test-Assessment-21866{
 
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '21866' -Title "All Microsoft Entra recommendations are addressed" `
-        -UserImpact Low -Risk Medium -ImplementationCost High `
-        -AppliesTo Identity -Tag Identity `
+    Add-ZtTestResultDetail -TestId '21866' -Title "Todas as recomendações do Entra foram atendidas" `
+        -UserImpact Baixo -Risk Médio -ImplementationCost Médio `
+        -AppliesTo Identidade -Tag Identidade `
         -Status $passed -Result $testResultMarkdown
 }

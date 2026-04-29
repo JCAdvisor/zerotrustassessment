@@ -1,10 +1,9 @@
-Tenant creation events should be monitored and triaged to detect unauthorized tenant creation. Users with sufficient permissions can create new tenants, which could be used to establish shadow environments outside your organization's security monitoring. Routing audit logs to a SIEM and configuring alerts for tenant creation events enables security teams to quickly investigate and respond to potentially malicious activity.
+Eventos de criação de locatário (tenant) devem ser monitorados e triados para detectar a criação não autorizada de tenants. Usuários com permissões suficientes podem criar novos locatários, que poderiam ser usados para estabelecer ambientes sombra (shadow environments) fora do monitoramento de segurança da sua organização. O roteamento de logs de auditoria para um SIEM e a configuração de alertas para eventos de criação de locatário permitem que as equipes de segurança investiguem e respondam rapidamente a atividades potencialmente maliciosas.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Review and restrict permissions to create tenants](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Stream audit logs to an event hub for SIEM integration](https://learn.microsoft.com/entra/identity/monitoring-health/howto-stream-logs-to-event-hub?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Configure monitoring and alerting for audit events](https://learn.microsoft.com/entra/identity/monitoring-health/overview-monitoring-health?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Revisar e restringir permissões para criar locatários](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Transmitir logs de auditoria para um hub de eventos para integração com SIEM](https://learn.microsoft.com/entra/identity/monitoring-health/howto-stream-logs-to-event-hub?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar monitoramento e alertas para eventos de auditoria](https://learn.microsoft.com/entra/identity/monitoring-health/overview-monitoring-health?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

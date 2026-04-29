@@ -1,11 +1,10 @@
-Tenant Restrictions v2 (TRv2) allows organizations to enforce policies that restrict access to specified Microsoft Entra tenants, preventing unauthorized exfiltration of corporate data to external tenants using local accounts. Without TRv2, threat actors can exploit this vulnerability, which leads to potential data exfiltration and compliance violations, followed by credential harvesting if those external tenants have weaker controls. Once credentials are obtained, threat actors can gain initial access to these external tenants. TRv2 provides the mechanism to prevent users from authenticating to unauthorized tenants. Otherwise, threat actors can move laterally, escalate privileges, and potentially exfiltrate sensitive data, all while appearing as legitimate user activity that bypasses traditional data loss prevention controls focused on internal tenant monitoring.
+As Restrições de Locatário v2 (TRv2) permitem que as organizações apliquem políticas que restringem o acesso a locatários específicos do Microsoft Entra, impedindo a exfiltração não autorizada de dados corporativos para locatários externos usando contas locais. Sem o TRv2, atacantes podem explorar essa vulnerabilidade, o que leva a potencial exfiltração de dados e violações de conformidade, seguidas por colheita de credenciais se esses locatários externos possuírem controles mais fracos. Uma vez obtidas as credenciais, os invasores podem obter acesso inicial a esses locatários externos. O TRv2 fornece o mecanismo para impedir que os usuários se autentiquem em locatários não autorizados. Caso contrário, os atacantes podem se mover lateralmente, escalar privilégios e potencialmente exfiltrar dados sensíveis, tudo isso aparecendo como atividade de usuário legítima que ignora os controles tradicionais de prevenção de perda de dados (DLP) focados no monitoramento interno do locatário.
 
-Implementing TRv2 enforces policies that restrict access to specified tenants, mitigating these risks by ensuring that authentication and data access are confined to authorized tenants only. 
+A implementação do TRv2 aplica políticas que restringem o acesso a locatários especificados, mitigando esses riscos ao garantir que a autenticação e o acesso aos dados sejam confinados apenas a locatários autorizados.
 
-If this check passes, your tenant has a TRv2 policy configured but more steps are required to validate the scenario end-to-end.
+Se este teste passar, seu locatário possui uma política TRv2 configurada, mas etapas adicionais são necessárias para validar o cenário de ponta a ponta.
 
-**Remediation action**
-- [Set up Tenant Restrictions v2](https://learn.microsoft.com/entra/external-id/tenant-restrictions-v2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+**Ação de remediação**
+- [Configurar Restrições de Locatário v2](https://learn.microsoft.com/entra/external-id/tenant-restrictions-v2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

@@ -1,12 +1,11 @@
-The activity logs and reports in Microsoft Entra can help detect unauthorized access attempts or identify when tenant configuration changes. When logs are archived or integrated with Security Information and Event Management (SIEM) tools, security teams can implement powerful monitoring and detection security controls, proactive threat hunting, and incident response processes. The logs and monitoring features can be used to assess tenant health and provide evidence for compliance and audits.
+Os logs de atividade e relatórios no Microsoft Entra podem ajudar a detectar tentativas de acesso não autorizado ou identificar quando as configurações do locatário mudam. Quando os logs são arquivados ou integrados a ferramentas de Gerenciamento de Informações e Eventos de Segurança (SIEM), as equipes de segurança podem implementar controles poderosos de monitoramento e detecção, busca proativa de ameaças (threat hunting) e processos de resposta a incidentes. Os logs e recursos de monitoramento podem ser usados para avaliar a integridade do locatário e fornecer evidências para conformidade e auditorias.
 
-If logs aren't regularly archived or sent to a SIEM tool for querying, it's challenging to investigate sign-in issues. The absence of historical logs means that security teams might miss patterns of failed sign-in attempts, unusual activity, and other indicators of compromise. This lack of visibility can prevent the timely detection of breaches, allowing attackers to maintain undetected access for extended periods.
+Se os logs não forem arquivados regularmente ou enviados a uma ferramenta SIEM para consulta, torna-se difícil investigar problemas de entrada (sign-in). A ausência de logs históricos significa que as equipes de segurança podem perder padrões de tentativas de entrada malsucedidas, atividades incomuns e outros indicadores de comprometimento. Essa falta de visibilidade pode impedir a detecção oportuna de violações, permitindo que os atacantes mantenham acesso não detectado por períodos prolongados.
 
-**Remediation action**
+**Ação de correção**
 
-- [Configure Microsoft Entra diagnostic settings](https://learn.microsoft.com/entra/identity/monitoring-health/howto-configure-diagnostic-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Integrate Microsoft Entra logs with Azure Monitor logs](https://learn.microsoft.com/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Stream Microsoft Entra logs to an event hub](https://learn.microsoft.com/entra/identity/monitoring-health/howto-stream-logs-to-event-hub?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar as definições de diagnóstico do Microsoft Entra](https://learn.microsoft.com/entra/identity/monitoring-health/howto-configure-diagnostic-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Integrar os logs do Microsoft Entra com os logs do Azure Monitor](https://learn.microsoft.com/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Transmitir logs do Microsoft Entra para um hub de eventos](https://learn.microsoft.com/entra/identity/monitoring-health/howto-stream-logs-to-event-hub?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

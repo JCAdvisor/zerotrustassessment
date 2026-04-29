@@ -1,11 +1,10 @@
-Users considered at high risk by Microsoft Entra ID Protection have a high probability of compromise by threat actors. Threat actors can gain initial access via compromised valid accounts, where their suspicious activities continue despite triggering risk indicators. This oversight can enable persistence as threat actors perform activities that normally warrant investigation, such as unusual login patterns or suspicious inbox manipulation. 
+Usuários considerados de alto risco pelo Microsoft Entra ID Protection têm uma alta probabilidade de comprometimento por atores de ameaça. Atacantes podem obter acesso inicial através de contas válidas comprometidas, onde suas atividades suspeitas continuam apesar de acionarem indicadores de risco. Essa negligência pode permitir a persistência, à medida que os atores de ameaça realizam atividades que normalmente justificariam investigação, como padrões de login incomuns ou manipulação suspeita da caixa de entrada.
 
-A lack of triage of these risky users allows for expanded reconnaissance activities and lateral movement, with anomalous behavior patterns continuing to generate uninvestigated alerts. Threat actors become emboldened as security teams show they aren't actively responding to risk indicators.
+A falta de triagem desses usuários de risco permite atividades expandidas de reconhecimento e movimentação lateral, com padrões de comportamento anômalos continuando a gerar alertas não investigados. Os atores de ameaça tornam-se encorajados à medida que as equipes de segurança mostram que não estão respondendo ativamente aos indicadores de risco.
 
-**Remediation action**
+**Ação de correção**
 
-- [Investigate high risk users](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) in Microsoft Entra ID Protection
-- [Remediate high risk users and unblock](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-remediate-unblock?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) in Microsoft Entra ID Protection
+- [Investigar usuários de alto risco](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) no Microsoft Entra ID Protection
+- [Corrigir usuários de alto risco e desbloquear](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-remediate-unblock?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) no Microsoft Entra ID Protection
 <!--- Results --->
 %TestResult%
-

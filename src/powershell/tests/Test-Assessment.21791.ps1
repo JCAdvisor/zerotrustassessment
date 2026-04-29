@@ -1,59 +1,34 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks that a guest user does not invite other guests.
+    Verifica se um usuário convidado não pode convidar outros convidados.
 #>
 
 function Test-Assessment-21791{
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'Low',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 21791,
-    	Title = 'Guests can’’t invite other guests',
-    	UserImpact = 'Medium'
+    	Title = 'Convidados não podem convidar outros convidados',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-
-    $activity = "Checking guest authorization policy"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
     $result = Invoke-ZtGraphRequest -RelativeUri "policies/authorizationPolicy" -ApiVersion v1.0
-
     $passed = $result.allowInvitesFrom -ne "everyone"
 
     if ($passed) {
-
-        Switch ($result.allowInvitesFrom) {
-            'none' {
-                $allowInvitesFromLabel = "No one in the organization can invite guest users including admins (most restrictive)"
-            }
-            'adminsAndGuestInviters' {
-                $allowInvitesFromLabel = "Only users assigned to specific admin roles can invite guest users"
-            }
-            'adminsGuestInvitersAndAllMembers' {
-                $allowInvitesFromLabel = "Member users and users assigned to specific admin roles can invite guest users including guests with member permissions"
-            }
-            default {
-                $allowInvitesFromLabel = $result.allowInvitesFrom
-            }
-        }
-
-        $testResultMarkdown = "Tenant restricts who can invite guests.`n`n"
-        $testResultMarkdown += "**Guest invite settings**`n`n"
-        $testResultMarkdown += "  * Guest invite restrictions → $allowInvitesFromLabel"
+        $testResultMarkdown = "O locatário restringe quem pode convidar convidados.`n`n"
     } else {
-        $testResultMarkdown = "Tenant allows any user (including other guests) to invite guests."
+        $testResultMarkdown = "O locatário permite que qualquer usuário (incluindo outros convidados) convide novos convidados."
     }
 
-    Add-ZtTestResultDetail -TestId '21791' -Title "Guest can’t invite other guests" `
-        -UserImpact Medium -Risk Medium -ImplementationCost Low `
-        -AppliesTo Identity -Tag ExternalCollaboration `
-        -Status $passed -Result $testResultMarkdown
+    Add-ZtTestResultDetail -TestId '21791' -Status $passed -Result $testResultMarkdown
 }

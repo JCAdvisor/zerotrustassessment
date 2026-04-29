@@ -1,32 +1,32 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks that legacy auth is blocked.
+    Verifica se a autenticação legada está bloqueada.
 #>
 
 function Test-Assessment-21796 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 21796,
-    	Title = 'Block legacy authentication policy is configured',
-    	UserImpact = 'High'
+    	Title = 'A política de bloqueio de autenticação legada está configurada',
+    	UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
     if ( -not (Get-ZtLicense EntraIDP1) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP1
         return
     }
 
-    $activity = "Checking blocking of legacy authentication"
-    Write-ZtProgress -Activity $activity -Status "Getting CA policies"
+    $activity = "Verificando o bloqueio de autenticação legada"
+    Write-ZtProgress -Activity $activity -Status "Obtendo políticas de Acesso Condicional"
 
     $caps = Invoke-ZtGraphRequest -RelativeUri 'identity/conditionalAccess/policies' -ApiVersion beta
 
@@ -35,26 +35,22 @@ function Test-Assessment-21796 {
             $_.conditions.clientAppTypes -contains "exchangeActiveSync" -and `
             $_.conditions.clientAppTypes -contains "other" }
 
-
     $blockPoliciesEnabled = $blockPolicies | Where-Object {`
          $_.conditions.users.includeUsers -contains "All" -and `
-         $blockPolicies.state -eq "enabled" `
+         $_.state -eq "enabled" `
     }
 
     $passed = ($blockPoliciesEnabled | Measure-Object).Count -ge 1
 
     if ($passed) {
-        $testResultMarkdown = "Conditional Access to block legacy Authentication are configured and enabled.`n`n%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: Políticas de Acesso Condicional para bloquear autenticação legada estão configuradas e habilitadas.`n`n%TestResult%"
     }
     elseif (($blockPolicies | Measure-Object).Count -ge 1) {
-        $testResultMarkdown = "Policies to block legacy authentication were found but are not properly configured.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ **Atenção**: Foram encontradas políticas para bloquear autenticação legada, mas elas não estão configuradas corretamente ou não estão habilitadas.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "No conditional access to block legacy authentication were found."
+        $testResultMarkdown = "❌ **Falha**: Nenhuma política de Acesso Condicional para bloquear autenticação legada foi encontrada."
     }
 
-    Add-ZtTestResultDetail -TestId '21796' -Title 'Block legacy authentication policies are configured' `
-        -UserImpact Medium -Risk Medium -ImplementationCost Low `
-        -AppliesTo Identity -Tag User, Credential `
-        -Status $passed -Result $testResultMarkdown -GraphObjectType ConditionalAccess -GraphObjects $blockPolicies
+    Add-ZtTestResultDetail -TestId '21796' -Status $passed -Result $testResultMarkdown -GraphObjectType ConditionalAccess -GraphObjects $blockPolicies
 }

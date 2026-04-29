@@ -1,34 +1,33 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21779{
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
-    	Pillar = '',
-    	RiskLevel = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
     	SfiPillar = '',
     	TenantType = ('Workforce','External'),
     	TestId = 21779,
-    	Title = 'Use recent versions of Microsoft Applications',
-    	UserImpact = 'Low'
+    	Title = 'Usar versões recentes de Aplicativos Microsoft',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Use recent versions of Microsoft Applications"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando o uso de versões recentes de Aplicativos Microsoft"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
-
-    Add-ZtTestResultDetail -TestId '21779' -Title "Use recent versions of Microsoft Applications" `
+    Add-ZtTestResultDetail -TestId '21779' -Title "Usar versões recentes de Aplicativos Microsoft" `
         -UserImpact Low -Risk Medium -ImplementationCost Medium `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

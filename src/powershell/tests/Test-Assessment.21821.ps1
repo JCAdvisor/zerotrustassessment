@@ -1,34 +1,31 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21821{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
+    	RiskLevel = 'Médio',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce'),
     	TestId = 21821,
-    	Title = 'Guest access is restricted',
-    	UserImpact = 'Medium'
+    	Title = 'O acesso de convidados está restrito',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Guest access is restricted"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se o acesso de convidados está restrito"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    $result = $false
-    $testResultMarkdown = "Planned for future release."
-    $passed = $result
+    $testResultMarkdown = "Planejado para uma versão futura."
+    $passed = $false
 
-
-    Add-ZtTestResultDetail -TestId '21821' -Title "Guest access is restricted" `
+    Add-ZtTestResultDetail -TestId '21821' -Title "O acesso de convidados está restrito" `
         -UserImpact Medium -Risk Medium -ImplementationCost Medium `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

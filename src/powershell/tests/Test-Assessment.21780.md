@@ -1,8 +1,7 @@
-Microsoft ended support and security fixes for ADAL on June 30, 2023. Continued ADAL usage bypasses modern security protections available only in MSAL, including Conditional Access enforcement, Continuous Access Evaluation (CAE), and advanced token protection. ADAL applications create security vulnerabilities by using weaker legacy authentication patterns, often calling deprecated Azure AD Graph endpoints, and preventing adoption of hardened authentication flows that could mitigate future security advisories. 
+A Microsoft encerrou o suporte e as correções de segurança para o ADAL em 30 de junho de 2023. O uso continuado do ADAL ignora as proteções de segurança modernas disponíveis apenas no MSAL, incluindo a imposição de Acesso Condicional, Avaliação de Acesso Contínuo (CAE) e proteção avançada de tokens. Os aplicativos ADAL criam vulnerabilidades de segurança ao usar padrões de autenticação legados mais fracos, muitas vezes chamando endpoints obsoletos do Azure AD Graph, e impedindo a adoção de fluxos de autenticação endurecidos que poderiam mitigar futuros avisos de segurança.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Migrate applications to the Microsoft Authentication Library (MSAL)](https://learn.microsoft.com/entra/identity-platform/msal-migration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Migrar aplicativos para a Biblioteca de Autenticação da Microsoft (MSAL)](https://learn.microsoft.com/entra/identity-platform/msal-migration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

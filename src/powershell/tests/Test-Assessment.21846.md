@@ -1,8 +1,7 @@
-When Temporary Access Pass (TAP) is configured to allow multiple uses, threat actors who compromise the credential can reuse it repeatedly during its validity period, extending their unauthorized access window beyond the intended single bootstrapping event. This situation creates an extended opportunity for threat actors to establish persistence by registering additional strong authentication methods under the compromised account during the credential lifetime. A reusable TAP that falls into the wrong hands lets threat actors conduct reconnaissance activities across multiple sessions, gradually mapping the environment and identifying high-value targets while maintaining legitimate-looking access patterns. The compromised TAP can also serve as a reliable backdoor mechanism, allowing threat actors to maintain access even if other compromised credentials are detected and revoked, since the TAP appears as a legitimate administrative tool in security logs.
+Quando o Passe de Acesso Temporário (TAP) está configurado para permitir múltiplos usos, atores de ameaça que comprometem a credencial podem reutilizá-la repetidamente durante seu período de validade, estendendo sua janela de acesso não autorizado além do evento de configuração único pretendido. Isso cria uma oportunidade para estabelecer persistência registrando métodos extras de autenticação forte sob a conta comprometida. Um TAP reutilizável em mãos erradas permite atividades de reconhecimento em múltiplas sessões e serve como um mecanismo de backdoor confiável, aparecendo como uma ferramenta administrativa legítima nos logs de segurança.
 
-**Remediation action**
+**Ação de correção**
 
-- [Configure Temporary Access Pass for one-time use in authentication methods policy](https://learn.microsoft.com/entra/identity/authentication/howto-authentication-temporary-access-pass?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-the-temporary-access-pass-policy)
+- [Configurar o Passe de Acesso Temporário para uso único na política de métodos de autenticação](https://learn.microsoft.com/entra/identity/authentication/howto-authentication-temporary-access-pass?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-the-temporary-access-pass-policy)
 <!--- Results --->
 %TestResult%
-

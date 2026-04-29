@@ -1,4 +1,3 @@
-﻿
 <#
 .SYNOPSIS
 
@@ -6,27 +5,26 @@
 
 function Test-Assessment-21782 {
     [ZtTest(
-    	Category = 'Privileged access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso privilegiado',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 21782,
-    	Title = 'Privileged accounts have phishing-resistant methods registered',
-    	UserImpact = 'Low'
+    	Title = 'Contas privilegiadas possuem métodos resistentes a phishing registrados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-
-    $activity = "Checking phishing resistant authentication for privileged roles"
-    Write-ZtProgress -Activity $activity -Status "Getting authentication methods"
+    $activity = "Verificando autenticação resistente a phishing para funções privilegiadas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo métodos de autenticação"
 
     $sql = @"
 select distinct id, userDisplayName, roleDisplayName, methodsRegistered, list_has_any(['passKeyDeviceBound', 'passKeyDeviceBoundAuthenticator', 'windowsHelloForBusiness'], methodsRegistered) as phishResistantAuthMethod
@@ -39,32 +37,28 @@ from UserRegistrationDetails u
     $phishResistantPrivUsers = $results | Where-Object { $_.phishResistantAuthMethod }
     $phishablePrivUsers = $results | Where-Object { !$_.phishResistantAuthMethod }
 
-    $phishResistantPrivUserCount = $phishResistantPrivUsers.Length
-
-    $passed = $totalUserCount -eq $phishResistantPrivUserCount
+    $passed = $phishablePrivUsers.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown += "Validated that all privileged users have registered phishing resistant authentication methods.`n`n%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: Todas as contas privilegiadas possuem métodos resistentes a phishing registrados.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown += "Found privileged users that have not yet registered phishing resistant authentication methods`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: Foram encontrados usuários privilegiados que ainda não registraram métodos de autenticação resistentes a phishing.`n`n%TestResult%"
     }
 
-    $mdInfo = "## Privileged users`n`n"
+    $mdInfo = "## Usuários Privilegiados`n`n"
 
     if ($passed) {
-        $mdInfo += "All privileged users have registered phishing resistant authentication methods.`n`n"
+        $mdInfo += "Todos os usuários privilegiados registraram métodos de autenticação resistentes a phishing.`n`n"
     }
     else{
-        $mdInfo += "Found privileged users that have not registered phishing resistant authentication methods.`n`n"
+        $mdInfo += "Usuários privilegiados abaixo não registraram métodos resistentes a phishing.`n`n"
     }
 
-
-    $mdInfo += "User | Role Name | Phishing resistant method registered |`n"
+    $mdInfo += "| Usuário | Nome da Função | Método resistente a phishing registrado |`n"
     $mdInfo += "| :--- | :--- | :---: |`n"
 
     $userLinkFormat = "https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserProfileMenuBlade/~/UserAuthMethods/userId/{0}/hidePreviewBanner~/true"
-
 
     foreach ($user in $phishablePrivUsers | Sort-Object userDisplayName) {
         $userLink = $userLinkFormat -f $user.id
@@ -78,8 +72,8 @@ from UserRegistrationDetails u
 
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '21782' -Title 'Privileged accounts have phishing-resistant methods registered' `
+    Add-ZtTestResultDetail -TestId '21782' -Title 'Contas privilegiadas possuem métodos resistentes a phishing registrados' `
         -UserImpact Low -Risk High -ImplementationCost Medium `
-        -AppliesTo Identity -Tag Credential `
+        -AppliesTo Identity -Tag Authentication `
         -Status $passed -Result $testResultMarkdown
 }

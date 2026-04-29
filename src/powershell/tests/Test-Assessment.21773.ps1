@@ -1,27 +1,27 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21773 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21773,
-    	Title = 'Applications don''t have certificates with expiration longer than 180 days',
-    	UserImpact = 'Low'
+    	Title = 'Aplicativos não possuem certificados com expiração superior a 180 dias',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
     $sqlApp = @"
     select distinct ON (id) * from
@@ -49,15 +49,16 @@ function Test-Assessment-21773 {
     $passed = ($resultsApp.Count -eq 0) -and ($resultsSP.Count -eq 0)
 
     if ($passed) {
-        $testResultMarkdown += "Applications in your tenant don’t have certificates valid for more than 180 days."
+        $testResultMarkdown = "✅ **Passou**: Nenhum aplicativo ou entidade de serviço com certificados de longa duração (>180 dias) foi encontrado.`n`n"
     }
     else {
-        $testResultMarkdown += "Found $($resultsApp.Count) applications and $($resultsSP.Count) service principals with certificates longer than 180 days`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: Foram encontrados aplicativos ou entidades de serviço com certificados que expiram em mais de 180 dias.`n`n"
     }
 
+    $mdInfo = ""
     if ($resultsApp.Count -gt 0) {
-        $mdInfo = "`n## Applications with long-lived credentials`n`n"
-        $mdInfo += "| Application | Certificate expiry |`n"
+        $mdInfo += "## Registros de Aplicativos com credenciais de longa duração`n`n"
+        $mdInfo += "| Aplicativo | Expiração do Certificado |`n"
         $mdInfo += "| :--- | :--- |`n"
         foreach ($item in $resultsApp) {
             $portalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Credentials/appId/{0}" -f $item.appId
@@ -66,8 +67,8 @@ function Test-Assessment-21773 {
     }
 
     if ($resultsSP.Count -gt 0) {
-        $mdInfo += "`n`n## Service principals with long-lived credentials`n`n"
-        $mdInfo += "| Service principal | App owner tenant | Certificate expiry |`n"
+        $mdInfo += "`n`n## Entidades de serviço com credenciais de longa duração`n`n"
+        $mdInfo += "| Entidade de serviço | Tenant proprietário | Expiração do Certificado |`n"
         $mdInfo += "| :--- | :--- | :--- |`n"
         foreach ($item in $resultsSP) {
             $tenant = Get-ZtTenant -tenantId $item.appOwnerOrganizationId
@@ -80,12 +81,12 @@ function Test-Assessment-21773 {
 
     $params = @{
         TestId             = '21773'
-        Title              = 'Applications don''t have certificates with expiration longer than 180 days'
-        UserImpact         = 'Medium'
-        Risk               = 'High'
-        ImplementationCost = 'Medium'
-        AppliesTo          = 'Identity'
-        Tag                = 'Application'
+        Title              = 'Aplicativos não possuem certificados com expiração superior a 180 dias'
+        UserImpact         = 'Médio'
+        Risk               = 'Alto'
+        ImplementationCost = 'Médio'
+        AppliesTo          = 'Identidade'
+        Tag                = 'Identidade'
         Status             = $passed
         Result             = $testResultMarkdown
     }

@@ -64,6 +64,7 @@
 		if ($Reload) {
 			Update-ZtTestMetadata
 		}
+		$selectedPillars = if ($Pillar) { $Pillar | ForEach-Object { Resolve-ZtPillarName -Pillar $_ } | Select-Object -Unique } else { @() }
 		if (-not $script:__ZtSession.TestMeta) {
 			$script:__ZtSession.TestMeta = foreach ($command in Get-Command Test-Assessment-* -Module $PSCmdlet.MyInvocation.MyCommand.Module.Name) {
 				Get-ZtTestMetadata -Command $command
@@ -77,7 +78,7 @@
 
 		$script:__ZtSession.TestMeta | Where-Object {
 			(-not $Tests -or $_.TestID -in $Tests) -and
-			(-not $Pillar -or $Pillar -contains 'All' -or $_.Pillar -in $Pillar) -and
+			(-not $Pillar -or $selectedPillars -contains 'All' -or (Resolve-ZtPillarName -Pillar $_.Pillar) -in $selectedPillars) -and
 			(-not $TenantType -or $_.TenantType -contains $TenantType)
 		}
 	}

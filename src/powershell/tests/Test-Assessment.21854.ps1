@@ -1,36 +1,34 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21854{
     [ZtTest(
-    	Category = 'Privileged access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso privilegiado',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = $null,
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21854,
-    	Title = 'Privileged roles aren''t assigned to stale identities',
-    	UserImpact = 'Low'
+    	Title = 'Funções privilegiadas não são atribuídas a identidades obsoletas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Privileged roles aren't assigned to stale identities"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se funções privilegiadas não estão atribuídas a identidades obsoletas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
-
-    Add-ZtTestResultDetail -TestId '21854' -Title "Privileged roles aren't assigned to stale identities" `
-        -UserImpact Low -Risk Medium -ImplementationCost Medium `
+    Add-ZtTestResultDetail -TestId '21854' -Title "Funções privilegiadas não são atribuídas a identidades obsoletas" `
+        -UserImpact Baixo -Risk Médio -ImplementationCost Médio `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

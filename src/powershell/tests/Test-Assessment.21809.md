@@ -1,11 +1,9 @@
-Enabling the Admin consent workflow in a Microsoft Entra tenant is a vital security measure that mitigates risks associated with unauthorized application access and privilege escalation. This check is important because it ensures that any application requesting elevated permission undergoes a review process by designated administrators before consent is granted. The admin consent workflow in Microsoft Entra ID notifies reviewers who evaluate and approve or deny consent requests based on the application's legitimacy and necessity. If this check doesn't pass, meaning the workflow is disabled, any application can request and potentially receive elevated permissions without administrative review. This poses a substantial security risk, as malicious actors could exploit this lack of oversight to gain unauthorized access to sensitive data, perform privilege escalation, or execute other malicious activities.
+Habilitar o fluxo de trabalho de consentimento do administrador em um locatário do Microsoft Entra é uma medida de segurança vital que mitiga riscos associados ao acesso não autorizado a aplicativos e escalonamento de privilégios. Esta verificação garante que qualquer aplicativo que solicite permissões elevadas passe por um processo de revisão por administradores designados antes que o consentimento seja concedido. Se este fluxo estiver desabilitado, qualquer aplicativo pode solicitar e potencialmente receber permissões elevadas sem revisão administrativa, o que representa um risco substancial.
 
-**Remediation action**
+**Ação de remediação**
 
-For admin consent requests, set the **Users can request admin consent to apps they are unable to consent to** setting to **Yes**. Specify other settings, such as who can review requests.
+Para solicitações de consentimento, defina a configuração **Usuários podem solicitar consentimento do administrador para aplicativos aos quais não podem consentir** como **Sim**. Especifique quem pode revisar as solicitações.
 
-- [Enable the admin consent workflow](https://learn.microsoft.com/entra/identity/enterprise-apps/configure-admin-consent-workflow?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-the-admin-consent-workflow)
-- Or use the [Update adminConsentRequestPolicy](https://learn.microsoft.com/graph/api/adminconsentrequestpolicy-update?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) API to set the `isEnabled` property to true and other settings
+- [Habilitar o fluxo de trabalho de consentimento do administrador](https://learn.microsoft.com/entra/identity/enterprise-apps/configure-admin-consent-workflow?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-the-admin-consent-workflow)
 <!--- Results --->
 %TestResult%
-

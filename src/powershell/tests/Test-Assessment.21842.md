@@ -1,10 +1,9 @@
-Self-Service Password Reset (SSPR) for administrators allows password changes to happen without strong secondary authentication factors or administrative oversight. Threat actors who compromise administrative credentials can use this capability to bypass other security controls and maintain persistent access to the environment.
+O recurso de Redefinição de Senha por Autoatendimento (SSPR) para administradores permite que alterações de senha ocorram sem fatores de autenticação secundários fortes ou supervisão administrativa. Atores de ameaça que comprometem credenciais administrativas podem usar essa capacidade para ignorar outros controles de segurança e manter acesso persistente ao ambiente.
 
-Once compromised, attackers can immediately reset the password to lock out legitimate administrators. They can then establish persistence, escalate privileges, and deploy malicious payloads undetected.
+Uma vez comprometidos, os invasores podem redefinir imediatamente a senha para bloquear os administradores legítimos. Eles podem então estabelecer persistência, escalar privilégios e implantar cargas maliciosas sem serem detectados.
 
-**Remediation action**
+**Ação de correção**
 
-- [Disable SSPR for administrators by updating the authorization policy](https://learn.microsoft.com/entra/identity/authentication/concept-sspr-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#administrator-reset-policy-differences)
+- [Desativar o SSPR para administradores atualizando a política de autorização](https://learn.microsoft.com/entra/identity/authentication/concept-sspr-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#administrator-reset-policy-differences)
 <!--- Results --->
 %TestResult%
-

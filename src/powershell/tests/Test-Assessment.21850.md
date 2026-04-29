@@ -1,10 +1,9 @@
-When the smart lockout threshold is set to more than 10, threat actors can exploit the configuration to conduct reconnaissance, identify valid user accounts without triggering lockout protections, and establish initial access without detection. Once attackers gain initial access, they can move laterally through the environment by using the compromised account to access resources and escalate privileges.
+Quando o limite do bloqueio inteligente é definido para mais de 10, atores de ameaça podem explorar a configuração para realizar reconhecimento, identificar contas de usuários válidas sem acionar as proteções de bloqueio e estabelecer o acesso inicial sem serem detectados. Uma vez que os atacantes ganham o acesso inicial, eles podem se mover lateralmente pelo ambiente usando a conta comprometida para acessar recursos e escalar privilégios.
 
-Smart lockout helps lock out bad actors who try to guess your users' passwords or use brute force methods to get in. Smart lockout recognizes sign-ins that come from valid users and treats them differently than ones of attackers and other unknown sources. A threshold of more than 10 provides insufficient protection against automated password spray attacks, making it easier for threat actors to compromise accounts while evading detection mechanisms. 
+O bloqueio inteligente ajuda a impedir que maus atores tentem adivinhar as senhas dos seus usuários ou usem métodos de força bruta para entrar. O bloqueio inteligente reconhece logins provenientes de usuários válidos e os trata de forma diferente dos logins de atacantes e outras fontes desconhecidas. Um limite superior a 10 oferece proteção insuficiente contra ataques automatizados de password spray, tornando mais fácil para os atores de ameaça comprometerem contas enquanto evitam os mecanismos de detecção.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Set Microsoft Entra smart lockout threshold to 10 or less](https://learn.microsoft.com/entra/identity/authentication/howto-password-smart-lockout?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Definir o limite do bloqueio inteligente do Microsoft Entra para 10 ou menos](https://learn.microsoft.com/entra/identity/authentication/howto-password-smart-lockout?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

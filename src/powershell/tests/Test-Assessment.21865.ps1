@@ -1,32 +1,32 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21865 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 21865,
-    	Title = 'Named locations are configured',
-    	UserImpact = 'Low'
+    	Title = 'Locais nomeados estão configurados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if ( -not (Get-ZtLicense EntraIDP1) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP1
         return
     }
 
-    $activity = "Checking Trusted network locations are configured to increase quality of risk detections"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se locais de rede confiáveis estão configurados para aumentar a qualidade das detecções de risco"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     # Query all named locations
     $allNamedLocations = Invoke-ZtGraphRequest -RelativeUri 'identity/conditionalAccess/namedLocations' -ApiVersion 'v1.0'
@@ -34,51 +34,43 @@ function Test-Assessment-21865 {
     # Check if at least one named location is configured as trusted
     if ($allNamedLocations | Where-Object { $_.isTrusted -eq $true }) {
         $passed = $true
-        $testResultMarkdown = "✅ **Pass**: Trusted named locations are configured in Microsoft Entra ID to support location-based security controls.`n`n%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: Locais nomeados confiáveis estão configurados no Microsoft Entra ID para suportar controles de segurança baseados em localização.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown = "❌ **Fail**: No trusted named locations configured, reducing location intelligence for risk detection and Conditional Access policies."
+        $testResultMarkdown = "❌ **Falha**: Nenhum local nomeado confiável foi encontrado no Microsoft Entra ID.`n`n%TestResult%"
     }
 
-    # Build the detailed sections of the markdown
+    # Gerar detalhes do relatório
+    $reportTitle = "Locais Nomeados Configurados"
+    $totalNamedLocations = if ($null -eq $allNamedLocations) { 0 } else { $allNamedLocations.Count }
+    $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ConditionalAccessMenuBlade/~/NamedLocations'
 
-    # Define variables to insert into the format string
-    $reportTitle = "All named locations"
-    $totalNamedLocations = $allNamedLocations | Measure-Object | Select-Object -ExpandProperty Count
-    $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/NamedLocations/menuId//fromNav/'
-    $tableRows = ""
-
-
-    # Create a here-string with format placeholders {0}, {1}, etc.
     $formatTemplate = @'
-
 ## {0}
 
-{1} [named locations]({2}) found.
+Total de locais nomeados: [{1}]({2})
 
-| Name | Location type | Trusted | Creation date | Modified date |
-| :--- | :------------ | :------ | :------------ | :------------ |
+| Nome | Tipo | Confiável | Criado em | Modificado em |
+| :--- | :--- | :--- | :--- | :--- |
 {3}
-
 '@
 
-        foreach ($namedLocation in $allNamedLocations) {
-
-            $name = $namedLocation.displayName
-            $locationType = switch ($namedLocation) {
-                { $_.'@odata.type' -eq '#microsoft.graph.ipNamedLocation' } { 'IP-based' }
-                { $_.'@odata.type' -eq '#microsoft.graph.countryNamedLocation' } { 'Country-based' }
-                default { 'Unknown' }
-            }
-            $trusted = if ($namedLocation.isTrusted) { 'Yes' } else { 'No' }
-            $createdDateTime = Get-FormattedDate -DateString $namedLocation.createdDateTime
-            $modifiedDateTime = Get-FormattedDate -DateString $namedLocation.modifiedDateTime
-
-            $tableRows += @"
-| $name | $locationType | $trusted | $createdDateTime | $ModifiedDateTime |`n
-"@
+    foreach ($namedLocation in $allNamedLocations | Sort-Object displayName) {
+        $name = $namedLocation.displayName
+        $locationType = switch ($namedLocation) {
+            { $_.'@odata.type' -eq '#microsoft.graph.ipNamedLocation' } { 'Baseado em IP' }
+            { $_.'@odata.type' -eq '#microsoft.graph.countryNamedLocation' } { 'Baseado em País' }
+            default { 'Desconhecido' }
         }
+        $trusted = if ($namedLocation.isTrusted) { 'Sim' } else { 'Não' }
+        $createdDateTime = Get-FormattedDate -DateString $namedLocation.createdDateTime
+        $modifiedDateTime = Get-FormattedDate -DateString $namedLocation.modifiedDateTime
+
+        $tableRows += @"
+| $name | $locationType | $trusted | $createdDateTime | $modifiedDateTime |`n
+"@
+    }
 
     # Format the template by replacing placeholders with values
     $mdInfo = $formatTemplate -f $reportTitle, $totalNamedLocations, $portalLink, $tableRows
@@ -88,12 +80,12 @@ function Test-Assessment-21865 {
 
     $params = @{
         TestId             = '21865'
-        Title              = 'Trusted network locations are configured to increase quality of risk detections'
-        UserImpact         = 'Low'
-        Risk               = 'Medium'
-        ImplementationCost = 'Low'
-        AppliesTo          = 'Identity'
-        Tag                = 'Identity'
+        Title              = 'Locais de rede confiáveis estão configurados para aumentar a qualidade das detecções de risco'
+        UserImpact         = 'Baixo'
+        Risk               = 'Médio'
+        ImplementationCost = 'Baixo'
+        AppliesTo          = 'Identidade'
+        Tag                = 'Identidade'
         Status             = $passed
         Result             = $testResultMarkdown
     }

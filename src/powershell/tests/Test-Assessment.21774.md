@@ -1,14 +1,11 @@
-Microsoft services applications that operate in your tenant are identified as service principals with the owner organization ID "f8cdef31-a31e-4b4a-93e4-5f571e91255a." When these service principals have credentials configured in your tenant, they might create potential attack vectors that threat actors can exploit. If an administrator added the credentials and they're no longer needed, they can become a target for attackers. Although less likely when proper preventive and detective controls are in place on privileged activities, threat actors can also maliciously add credentials. In either case, threat actors can use these credentials to authenticate as the service principal, gaining the same permissions and access rights as the Microsoft service application. This initial access can lead to privilege escalation if the application has high-level permissions, allowing lateral movement across the tenant. Attackers can then proceed to data exfiltration or persistence establishment through creating other backdoor credentials.
+Os aplicativos de serviços da Microsoft que operam em seu locatário (tenant) são identificados como entidades de serviço com o ID de organização proprietária "f8cdef31-a31e-4b4a-93e4-5f571e91255a". Quando essas entidades de serviço têm credenciais configuradas em seu tenant, elas podem criar vetores de ataque potenciais. Se um administrador adicionou as credenciais e elas não são mais necessárias, elas podem se tornar um alvo. Atacantes podem usar essas credenciais para se autenticar como a entidade de serviço, obtendo as mesmas permissões e direitos de acesso que o aplicativo de serviço da Microsoft. Esse acesso inicial pode levar à escalada de privilégios e movimento lateral.
 
-When credentials (like client secrets or certificates) are configured for these service principals in your tenant, it means someone - either an administrator or a malicious actor - enabled them to authenticate independently within your environment. These credentials should be investigated to determine their legitimacy and necessity. If they're no longer needed, they should be removed to reduce the risk. 
+Se credenciais (como segredos de cliente ou certificados) estiverem configuradas para essas entidades de serviço, significa que alguém as habilitou para autenticação independente em seu ambiente. Essas credenciais devem ser investigadas para determinar sua legitimidade.
 
-If this check doesn't pass, the recommendation is to "investigate" because you need to identify and review any applications with unused credentials configured.
+**Ação de remediação**
 
-**Remediation action**
-
-- Confirm if the credentials added are still valid use cases. If not, remove credentials from Microsoft service applications to reduce security risk. 
-    - In the Microsoft Entra admin center, browse to **Entra ID** > **App registrations** and select the affected application.
-    - Go to the **Certificates & secrets** section and remove any credentials that are no longer needed.
+- Confirme se as credenciais adicionadas ainda são casos de uso válidos. Se não, remova as credenciais dos aplicativos de serviço da Microsoft.
+    - No centro de administração do Microsoft Entra, acesse **Entra ID** > **Registros de aplicativo** e selecione o aplicativo afetado.
+    - Vá para a seção **Certificados e segredos** e remova quaisquer credenciais que não sejam mais necessárias.
 <!--- Results --->
 %TestResult%
-

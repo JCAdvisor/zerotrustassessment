@@ -1,4 +1,3 @@
-﻿
 <#
 .SYNOPSIS
 
@@ -6,30 +5,30 @@
 
 function Test-Assessment-21851 {
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'Medium',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 21851,
-    	Title = 'Guest access is protected by strong authentication methods',
-    	UserImpact = 'Medium'
+    	Title = 'O acesso de convidados é protegido por métodos de autenticação forte',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
-    Add-ZtTestResultDetail -TestId '21851' -Title 'All guests user strong authentication methods' `
-        -UserImpact Medium -Risk Medium -ImplementationCost Medium `
-        -AppliesTo Identity -Tag Application `
+    Add-ZtTestResultDetail -TestId '21851' -Title 'Todos os convidados usam métodos de autenticação forte' `
+        -UserImpact Médio -Risk Médio -ImplementationCost Médio `
+        -AppliesTo Identidade -Tag Aplicativo `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

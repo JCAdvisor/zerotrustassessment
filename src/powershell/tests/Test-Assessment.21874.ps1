@@ -1,28 +1,27 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21874 {
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'High',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('Free'),
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21874,
-    	Title = 'Guest access is limited to approved tenants',
-    	UserImpact = 'Medium'
+    	Title = 'O acesso de convidados é limitado a locatários aprovados',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Allow/Deny lists of domains to restrict external collaboration are configured"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se listas de permissão/bloqueio de domínios estão configuradas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $policies = Invoke-ZtGraphRequest -RelativeUri 'legacy/policies' -ApiVersion beta
 
@@ -30,21 +29,21 @@ function Test-Assessment-21874 {
     foreach ($policy in $policies) {
         if ( $policy.definition -and ($null -ne ($policy.definition | ConvertFrom-Json).B2BManagementPolicy.InvitationsAllowedAndBlockedDomainsPolicy.AllowedDomains) ) {
             $passed = $true
-            $testResultMarkdown = "Allow/Deny lists of domains to restrict external collaboration are configured."
+            $testResultMarkdown = "Listas de permissão/bloqueio de domínios para restringir colaboração externa estão configuradas."
             break
         }
         else {
             $passed = $false
-            $testResultMarkdown = "Allow/Deny lists of domains to restrict external collaboration are not configured."
+            $testResultMarkdown = "Listas de permissão/bloqueio de domínios para restringir colaboração externa não estão configuradas."
         }
     }
 
     $params = @{
         TestId             = '21874'
-        Title              = "Allow/Deny lists of domains to restrict external collaboration are configured"
-        UserImpact         = 'Medium'
-        Risk               = 'Medium'
-        ImplementationCost = 'Medium'
+        Title              = "O acesso de convidados é limitado a locatários aprovados"
+        UserImpact         = 'Médio'
+        Risk               = 'Médio'
+        ImplementationCost = 'Alto'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

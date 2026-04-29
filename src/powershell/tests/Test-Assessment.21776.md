@@ -1,15 +1,14 @@
-Without restricted user consent settings, threat actors can exploit permissive application consent configurations to gain unauthorized access to sensitive organizational data. When user consent is unrestricted, attackers can:
+Sem configurações de consentimento do usuário restritas, atacantes podem explorar configurações permissivas de consentimento de aplicativos para obter acesso não autorizado a dados organizacionais sensíveis. Quando o consentimento do usuário é irrestrito, os invasores podem:
 
-- Use social engineering and illicit consent grant attacks to trick users into approving malicious applications.
-- Impersonate legitimate services to request broad permissions, such as access to email, files, calendars, and other critical business data.
-- Obtain legitimate OAuth tokens that bypass perimeter security controls, making access appear normal to security monitoring systems.
-- Establish persistent access to organizational resources, conduct reconnaissance across Microsoft 365 services, move laterally through connected systems, and potentially escalate privileges.
+- Usar engenharia social e ataques de concessão de consentimento ilícito (illicit consent grant) para enganar os usuários.
+- Personificar serviços legítimos para solicitar permissões amplas (e-mail, arquivos, calendários).
+- Obter tokens OAuth legítimos que ignoram controles de segurança de perímetro.
+- Estabelecer acesso persistente e realizar movimento lateral.
 
-Unrestricted user consent also limits an organization's ability to enforce centralized governance over application access, making it difficult to maintain visibility into which non-Microsoft applications have access to sensitive data. This gap creates compliance risks where unauthorized applications might violate data protection regulations or organizational security policies.
+O consentimento irrestrito também limita a capacidade de governança centralizada, dificultando a visibilidade de quais aplicativos não-Microsoft têm acesso aos dados.
 
-**Remediation action**
+**Ação de remediação**
 
--  [Configure restricted user consent settings](https://learn.microsoft.com/entra/identity/enterprise-apps/configure-user-consent?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to prevent illicit consent grants by disabling user consent or limiting it to verified publishers with low-risk permissions only.
+- [Configurar definições de consentimento do usuário restritas](https://learn.microsoft.com/entra/identity/enterprise-apps/configure-user-consent?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para evitar concessões de consentimento ilícitas, desabilitando o consentimento do usuário ou limitando-o a editores verificados com permissões de baixo risco apenas.
 <!--- Results --->
 %TestResult%
-

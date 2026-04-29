@@ -73,27 +73,27 @@ export default function Dashboard() {
                         <CardHeader className="pb-3">
                             <CardTitle className="flex items-center gap-2">
                                 <Building2 className="size-5" />
-                                Tenant
+                                Tenant (Locatário)
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-sm text-muted-foreground">Name</span>
+                                    <span className="text-sm text-muted-foreground">Nome</span>
                                     <span className="font-medium">
-                                        {reportData.TenantName || 'Not Available'}
+                                        {reportData.TenantName || 'Não Disponível'}
                                     </span>
                                 </div>
                                 {<div className="flex flex-col gap-1">
-                                    <span className="text-sm text-muted-foreground">Tenant ID</span>
+                                    <span className="text-sm text-muted-foreground">ID</span>
                                     <span className="font-mono text-xs">
-                                        {reportData.TenantId || 'Not Available'}
+                                        {reportData.TenantId || 'Não Disponível'}
                                     </span>
                                 </div>}
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-sm text-muted-foreground">Primary Domain</span>
+                                    <span className="text-sm text-muted-foreground">Domínio Principal</span>
                                     <span className="font-medium">
-                                        {reportData.Domain || 'Not Available'}
+                                        {reportData.Domain || 'Não Disponível'}
                                     </span>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@ export default function Dashboard() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-muted-foreground text-sm font-medium">Users</span>
+                                        <span className="text-muted-foreground text-sm font-medium">Usuários</span>
                                         <span className="text-lg font-medium">
                                             {formatNumber(reportData.TenantInfo?.TenantOverview?.UserCount)}
                                         </span>
@@ -122,7 +122,7 @@ export default function Dashboard() {
                             </TooltipTrigger>
                             <TooltipContent>
                                 <div className="space-y-1">
-                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.UserCount?.toLocaleString() || '0'} Users</p>
+                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.UserCount?.toLocaleString() || '0'} Usuários</p>
                                     <p className="text-xs text-muted-foreground">{metricDescriptions.users}</p>
                                 </div>
                             </TooltipContent>
@@ -138,7 +138,7 @@ export default function Dashboard() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-muted-foreground text-sm font-medium">Guests</span>
+                                        <span className="text-muted-foreground text-sm font-medium">Usuários Convidados</span>
                                         <span className="text-lg font-medium">
                                             {formatNumber(reportData.TenantInfo?.TenantOverview?.GuestCount)}
                                         </span>
@@ -147,7 +147,7 @@ export default function Dashboard() {
                             </TooltipTrigger>
                             <TooltipContent>
                                 <div className="space-y-1">
-                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.GuestCount?.toLocaleString() || '0'} Guests</p>
+                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.GuestCount?.toLocaleString() || '0'} Usuários Convidados</p>
                                     <p className="text-xs text-muted-foreground">{metricDescriptions.guests}</p>
                                 </div>
                             </TooltipContent>
@@ -163,7 +163,7 @@ export default function Dashboard() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-muted-foreground text-sm font-medium">Groups</span>
+                                        <span className="text-muted-foreground text-sm font-medium">Grupos</span>
                                         <span className="text-lg font-medium">
                                             {formatNumber(reportData.TenantInfo?.TenantOverview?.GroupCount)}
                                         </span>
@@ -172,7 +172,7 @@ export default function Dashboard() {
                             </TooltipTrigger>
                             <TooltipContent>
                                 <div className="space-y-1">
-                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.GroupCount?.toLocaleString() || '0'} Groups</p>
+                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.GroupCount?.toLocaleString() || '0'} Grupos</p>
                                     <p className="text-xs text-muted-foreground">{metricDescriptions.groups}</p>
                                 </div>
                             </TooltipContent>
@@ -188,7 +188,7 @@ export default function Dashboard() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-muted-foreground text-sm font-medium">Apps</span>
+                                        <span className="text-muted-foreground text-sm font-medium">Aplicativos</span>
                                         <span className="text-lg font-medium">
                                             {formatNumber(reportData.TenantInfo?.TenantOverview?.ApplicationCount)}
                                         </span>
@@ -197,7 +197,7 @@ export default function Dashboard() {
                             </TooltipTrigger>
                             <TooltipContent>
                                 <div className="space-y-1">
-                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.ApplicationCount?.toLocaleString() || '0'} Applications</p>
+                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.ApplicationCount?.toLocaleString() || '0'} Aplicativos</p>
                                     <p className="text-xs text-muted-foreground">{metricDescriptions.apps}</p>
                                 </div>
                             </TooltipContent>
@@ -213,7 +213,7 @@ export default function Dashboard() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-muted-foreground text-sm font-medium">Devices</span>
+                                        <span className="text-muted-foreground text-sm font-medium">Dispositivos</span>
                                         <span className="text-lg font-medium">
                                             {formatNumber(reportData.TenantInfo?.TenantOverview?.DeviceCount)}
                                         </span>
@@ -222,7 +222,7 @@ export default function Dashboard() {
                             </TooltipTrigger>
                             <TooltipContent>
                                 <div className="space-y-1">
-                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.DeviceCount?.toLocaleString() || '0'} Devices</p>
+                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.DeviceCount?.toLocaleString() || '0'} Dispositivos</p>
                                     <p className="text-xs text-muted-foreground">{metricDescriptions.devices}</p>
                                 </div>
                             </TooltipContent>
@@ -238,7 +238,7 @@ export default function Dashboard() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-muted-foreground text-sm font-medium">Managed</span>
+                                        <span className="text-muted-foreground text-sm font-medium">Dispositivos Gerenciados</span>
                                         <span className="text-lg font-medium">
                                             {formatNumber(reportData.TenantInfo?.TenantOverview?.ManagedDeviceCount)}
                                         </span>
@@ -247,7 +247,7 @@ export default function Dashboard() {
                             </TooltipTrigger>
                             <TooltipContent>
                                 <div className="space-y-1">
-                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.ManagedDeviceCount?.toLocaleString() || '0'} Managed Devices</p>
+                                    <p className="font-semibold">{reportData.TenantInfo?.TenantOverview?.ManagedDeviceCount?.toLocaleString() || '0'} Dispositivos Gerenciados</p>
                                     <p className="text-xs text-muted-foreground">{metricDescriptions.managed}</p>
                                 </div>
                             </TooltipContent>
@@ -283,41 +283,41 @@ export default function Dashboard() {
                         <CardContent className="flex gap-6">
                             <div className="flex flex-col gap-2">
                                 <div className="grid auto-rows-min gap-0.5">
-                                    <div className="text-sm text-muted-foreground">Identity</div>
+                                    <div className="text-sm text-muted-foreground">Identidade</div>
                                     <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
                                         {reportData.TestResultSummary.IdentityPassed}/{reportData.TestResultSummary.IdentityTotal}
                                         <span className="text-sm font-normal text-muted-foreground">
-                                            tests
+                                            testes
                                         </span>
                                     </div>
                                 </div>
                                 <div className="grid auto-rows-min gap-0.5">
-                                    <div className="text-sm text-muted-foreground">Devices</div>
+                                    <div className="text-sm text-muted-foreground">Dispositivos</div>
                                     <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
                                         {reportData.TestResultSummary.DevicesPassed}/{reportData.TestResultSummary.DevicesTotal}
                                         <span className="text-sm font-normal text-muted-foreground">
-                                            tests
+                                            testes
                                         </span>
                                     </div>
                                 </div>
                                 {reportData.TestResultSummary.DataPassed !== undefined && (
                                 <div className="grid flex-1 auto-rows-min gap-0.5">
-                                    <div className="text-sm text-muted-foreground">Data</div>
+                                    <div className="text-sm text-muted-foreground">Dados</div>
                                     <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
                                         {reportData.TestResultSummary.DataPassed}/{reportData.TestResultSummary.DataTotal}
                                         <span className="text-sm font-normal text-muted-foreground">
-                                            tests
+                                            testes
                                         </span>
                                     </div>
                                 </div>
                                 )}
                                 {reportData.TestResultSummary.NetworkPassed !== undefined && (
                                 <div className="grid flex-1 auto-rows-min gap-0.5">
-                                    <div className="text-sm text-muted-foreground">Network</div>
+                                    <div className="text-sm text-muted-foreground">Rede</div>
                                     <div className="flex items-baseline gap-1 text-xl font-bold tabular-nums leading-none">
                                         {reportData.TestResultSummary.NetworkPassed}/{reportData.TestResultSummary.NetworkTotal}
                                         <span className="text-sm font-normal text-muted-foreground">
-                                            tests
+                                            testes
                                         </span>
                                     </div>
                                 </div>
@@ -326,19 +326,19 @@ export default function Dashboard() {
                             <ChartContainer
                                 config={{
                                     move: {
-                                        label: "Identity",
+                                        label: "Identidade",
                                         color: "hsl(var(--chart-1))",
                                     },
                                     exercise: {
-                                        label: "Devices",
+                                        label: "Dispositivos",
                                         color: "hsl(var(--chart-2))",
                                     },
                                     stand: {
-                                        label: "Data",
+                                        label: "Dados",
                                         color: "hsl(var(--chart-3))",
                                     },
                                     network: {
-                                        label: "Network",
+                                        label: "Rede",
                                         color: "hsl(var(--chart-4))",
                                     },
                                 }}
@@ -355,7 +355,7 @@ export default function Dashboard() {
                                         // Only include Network pillar if it exists (preview mode)
                                         ...(reportData.TestResultSummary.NetworkPassed !== undefined && reportData.TestResultSummary.NetworkTotal !== undefined
                                             ? [{
-                                                activity: "network",
+                                                activity: "rede",
                                                 value: (reportData.TestResultSummary.NetworkPassed / reportData.TestResultSummary.NetworkTotal) * 100,
                                                 fill: "var(--color-network)",
                                             }]
@@ -363,18 +363,18 @@ export default function Dashboard() {
                                         // Only include Data pillar if it exists (preview mode)
                                         ...(reportData.TestResultSummary.DataPassed !== undefined && reportData.TestResultSummary.DataTotal !== undefined
                                             ? [{
-                                                activity: "data",
+                                                activity: "dados",
                                                 value: (reportData.TestResultSummary.DataPassed / reportData.TestResultSummary.DataTotal) * 100,
                                                 fill: "var(--color-stand)",
                                             }]
                                             : []),
                                         {
-                                            activity: "devices",
+                                            activity: "dispositivos",
                                             value: (reportData.TestResultSummary.DevicesPassed / reportData.TestResultSummary.DevicesTotal) * 100,
                                             fill: "var(--color-exercise)",
                                         },
                                         {
-                                            activity: "identity",
+                                            activity: "identidade",
                                             value: (reportData.TestResultSummary.IdentityPassed / reportData.TestResultSummary.IdentityTotal) * 100,
                                             fill: "var(--color-move)",
                                         },
@@ -410,14 +410,14 @@ export default function Dashboard() {
                             <CardHeader className="space-y-0 pb-2 flex-row">
                                 <UserCog className="pr-2 size-8" />
                                 <CardTitle className="text-2xl tabular-nums">
-                                    Privileged users auth methods
+                                    Métodos de autenticação para Usuários privilegiados
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Steps",
+                                            label: "Passos",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -426,14 +426,14 @@ export default function Dashboard() {
                                         <AuthMethodSankey data={reportData.TenantInfo.OverviewAuthMethodsPrivilegedUsers.nodes} />
                                     ) : (
                                         <div className="flex items-center justify-center h-32 text-muted-foreground">
-                                            No data available
+                                            Sem dados disponíveis
                                         </div>
                                     )}
                                 </ChartContainer>
                             </CardContent>
                             <CardFooter className="flex-col items-start gap-1">
                                 <CardDescription>
-                                    {reportData.TenantInfo?.OverviewAuthMethodsPrivilegedUsers?.description || "No description available"}
+                                    {reportData.TenantInfo?.OverviewAuthMethodsPrivilegedUsers?.description || "Sem descrição disponível"}
                                 </CardDescription>
                             </CardFooter>
                         </Card>
@@ -446,14 +446,14 @@ export default function Dashboard() {
                             <CardHeader className="space-y-0 pb-2 flex-row">
                                 <Users className="pr-2 size-8" />
                                 <CardTitle className="text-2xl tabular-nums">
-                                    All users auth methods
+                                    Métodos de autenticação para Todos os Usuários
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Steps",
+                                            label: "Passos",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -462,7 +462,7 @@ export default function Dashboard() {
                                         <AuthMethodSankey data={reportData.TenantInfo.OverviewAuthMethodsAllUsers.nodes} />
                                     ) : (
                                         <div className="flex items-center justify-center h-32 text-muted-foreground">
-                                            No data available
+                                            Sem dados disponíveis
                                         </div>
                                     )}
                                 </ChartContainer>
@@ -727,7 +727,7 @@ export default function Dashboard() {
                             <CardHeader className="space-y-0 pb-2 flex-row">
                                 <User className="pr-2 size-8" />
                                 <CardTitle className="text-2xl tabular-nums">
-                                    User authentication
+                                    Autenticação | Usuários
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -743,7 +743,7 @@ export default function Dashboard() {
                                         <CaSankey data={reportData.TenantInfo.OverviewCaMfaAllUsers.nodes} />
                                     ) : (
                                         <div className="flex items-center justify-center h-32 text-muted-foreground">
-                                            No data available
+                                            Sem dados disponíveis
                                         </div>
                                     )}
                                 </ChartContainer>
@@ -1005,13 +1005,13 @@ export default function Dashboard() {
                         <Card className="w-full">
                             <CardHeader className="space-y-0 pb-2 flex-row">
                                 <MonitorSmartphone className="pr-2 size-8" />
-                                <CardTitle className="text-2xl tabular-nums">Device summary</CardTitle>
+                                <CardTitle className="text-2xl tabular-nums">Resumo de dispositivos</CardTitle>
                             </CardHeader>
                             <CardContent className="flex pb-4 h-[250px]">
                                 <ChartContainer
                                     config={{
                                         value: {
-                                            label: "Devices",
+                                            label: "Dispositivos",
                                         },
                                     }}
                                     className="h-[250px] w-full"
@@ -1098,7 +1098,7 @@ export default function Dashboard() {
                                     </div>
                                     <Separator orientation="vertical" className="mx-2 h-10 w-px" />
                                     <div className="grid flex-1 auto-rows-min gap-0.5">
-                                        <div className="text-xs text-muted-foreground">Mobiles</div>
+                                        <div className="text-xs text-muted-foreground">Dispositivos Móveis</div>
                                         <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                             {Math.round(((reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.mobileCount || 0) /
                                                 (reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.totalCount || 1)) * 100)}
@@ -1121,7 +1121,7 @@ export default function Dashboard() {
                                 <CardHeader className="space-y-0 pb-2 flex-row">
                                     <CircleCheckBig className="pr-2 size-8" />
                                     <CardTitle className="text-2xl tabular-nums ">
-                                        Device compliance
+                                        Comformidade de dispositivos
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex pb-2 h-[250px]">
@@ -1142,12 +1142,12 @@ export default function Dashboard() {
                                             <Pie
                                                 data={[
                                                     {
-                                                        name: "Compliant",
+                                                        name: "Em conformidade",
                                                         value: reportData.TenantInfo?.DeviceOverview?.DeviceCompliance?.compliantDeviceCount || 0,
                                                         fill: "var(--color-compliant)",
                                                     },
                                                     {
-                                                        name: "Non-compliant",
+                                                        name: "Não-conforme",
                                                         value: reportData.TenantInfo?.DeviceOverview?.DeviceCompliance?.nonCompliantDeviceCount || 0,
                                                         fill: "var(--color-nonCompliant)",
                                                     },
@@ -1172,7 +1172,7 @@ export default function Dashboard() {
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                                 <div className="w-3 h-3 rounded-sm bg-green-600"></div>
-                                                Compliant
+                                                Em conformidade
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                                 {(() => {
@@ -1190,7 +1190,7 @@ export default function Dashboard() {
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                                 <div className="w-3 h-3 rounded-sm bg-red-500"></div>
-                                                Non-compliant
+                                                Não-conforme
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                                 {(() => {
@@ -1218,18 +1218,18 @@ export default function Dashboard() {
                                 <CardHeader className="space-y-0 pb-2 flex-row">
                                     <Briefcase className="pr-2 size-8" />
                                     <CardTitle className="text-2xl tabular-nums ">
-                                        Device ownership
+                                        Propriedade de dispositivos
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex pb-2 h-[250px]">
                                     <ChartContainer
                                         config={{
                                             corporate: {
-                                                label: "Corporate",
+                                                label: "Corporativo",
                                                 color: "hsl(217, 91%, 60%)",
                                             },
                                             personal: {
-                                                label: "Personal",
+                                                label: "Pessoal",
                                                 color: "hsl(280, 85%, 60%)",
                                             },
                                         }}
@@ -1239,12 +1239,12 @@ export default function Dashboard() {
                                             <Pie
                                                 data={[
                                                     {
-                                                        name: "Corporate",
+                                                        name: "Corporativo",
                                                         value: reportData.TenantInfo?.DeviceOverview?.DeviceOwnership?.corporateCount || 0,
                                                         fill: "var(--color-corporate)",
                                                     },
                                                     {
-                                                        name: "Personal",
+                                                        name: "Pessoal",
                                                         value: reportData.TenantInfo?.DeviceOverview?.DeviceOwnership?.personalCount || 0,
                                                         fill: "var(--color-personal)",
                                                     },
@@ -1269,7 +1269,7 @@ export default function Dashboard() {
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                                 <div className="w-3 h-3 rounded-sm bg-blue-500"></div>
-                                                Corporate
+                                                Corporativo
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                                 {(() => {
@@ -1287,7 +1287,7 @@ export default function Dashboard() {
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
                                                 <div className="w-3 h-3 rounded-sm bg-purple-500"></div>
-                                                Personal
+                                                Pessoal
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                                 {(() => {
@@ -1312,7 +1312,7 @@ export default function Dashboard() {
                             <CardHeader className="space-y-0 pb-2 flex-row">
                                 <Monitor className="pr-2 size-8" />
                                 <CardTitle className="text-2xl tabular-nums">
-                                    Desktop devices
+                                    Dispositivos Desktop
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -1337,7 +1337,7 @@ export default function Dashboard() {
                             <CardFooter className="flex flex-row border-t p-4">
                                 <div className="flex w-full items-center gap-2">
                                     <div className="grid flex-1 auto-rows-min gap-0.5">
-                                        <div className="text-xs text-muted-foreground">Entra joined</div>
+                                        <div className="text-xs text-muted-foreground">Entra (Ingressados)</div>
                                         <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                             {(() => {
                                                 const nodes = reportData.TenantInfo?.DeviceOverview?.DesktopDevicesSummary?.nodes || [];
@@ -1354,7 +1354,7 @@ export default function Dashboard() {
                                     </div>
                                     <Separator orientation="vertical" className="mx-2 h-10 w-px" />
                                     <div className="grid flex-1 auto-rows-min gap-0.5">
-                                        <div className="text-xs text-muted-foreground">Entra hybrid joined</div>
+                                        <div className="text-xs text-muted-foreground">Entra (Ingresso Híbrido)</div>
                                         <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                             {(() => {
                                                 const nodes = reportData.TenantInfo?.DeviceOverview?.DesktopDevicesSummary?.nodes || [];
@@ -1371,7 +1371,7 @@ export default function Dashboard() {
                                     </div>
                                     <Separator orientation="vertical" className="mx-2 h-10 w-px" />
                                     <div className="grid flex-1 auto-rows-min gap-0.5">
-                                        <div className="text-xs text-muted-foreground">Entra registered</div>
+                                        <div className="text-xs text-muted-foreground">Entra (Registrados)</div>
                                         <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                             {(() => {
                                                 const nodes = reportData.TenantInfo?.DeviceOverview?.DesktopDevicesSummary?.nodes || [];

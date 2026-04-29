@@ -1,20 +1,20 @@
-﻿<#
+<#
 .SYNOPSIS
-    Tests if all enterprise applications with high privilege permissions have at least two owners.
+    Verifica se todos os aplicativos empresariais com permissões de alto privilégio possuem pelo menos dois proprietários.
 #>
 
 function Test-Assessment-21867 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 21867,
-    	Title = 'Enterprise applications with high privilege Microsoft Graph API permissions have owners',
-    	UserImpact = 'Low'
+    	Title = 'Aplicativos empresariais com permissões de API do Microsoft Graph de alto privilégio possuem proprietários',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
@@ -25,8 +25,8 @@ function Test-Assessment-21867 {
         -Database $Database `
         -TestId '21867' `
         -PrivilegeLevel 'High' `
-        -PassMessage 'All enterprise applications with high privilege have owners' `
-        -FailMessage 'Not all enterprise applications with high privilege permissions have owners' `
-        -ReportTitle 'Applications lacking sufficient owners' `
-        -Activity 'Checking if enterprise applications with high privilege permissions have owners'
+        -PassMessage 'Todos os aplicativos empresariais com alto privilégio possuem proprietários' `
+        -FailMessage 'Nem todos os aplicativos empresariais com permissões de alto privilégio possuem proprietários' `
+        -ReportTitle 'Aplicativos sem proprietários suficientes' `
+        -Activity 'Verificando se aplicativos empresariais com permissões de API do Microsoft Graph de alto privilégio possuem proprietários'
 }

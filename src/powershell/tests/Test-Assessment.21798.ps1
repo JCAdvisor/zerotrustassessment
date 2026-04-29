@@ -1,35 +1,34 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21798{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P2'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 21798,
-    	Title = 'ID Protection notifications are enabled',
-    	UserImpact = 'Low'
+    	Title = 'Notificações do ID Protection estão habilitadas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking ID Protection notifications enabled"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se as notificações do ID Protection estão habilitadas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
-
-    Add-ZtTestResultDetail -TestId '21798' -Title "ID Protection notifications enabled" `
+    Add-ZtTestResultDetail -TestId '21798' -Title "Notificações do ID Protection estão habilitadas" `
         -UserImpact Low -Risk High -ImplementationCost Low `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

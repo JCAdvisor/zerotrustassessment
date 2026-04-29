@@ -1,30 +1,29 @@
-﻿
 <#
 .SYNOPSIS
-    Tests if all Entra Logs are configured with Diagnostic Settings.
+    Verifica se todos os Logs do Entra estão configurados com Definições de Diagnóstico.
 #>
 
 function Test-Assessment-21860 {
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'Medium',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 21860,
-    	Title = 'Diagnostic settings are configured for all Microsoft Entra logs',
-    	UserImpact = 'Low'
+    	Title = 'Configurações de diagnóstico estão configuradas para todos os logs do Microsoft Entra',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
     if((Get-MgContext).Environment -ne 'Global')
     {
-        Write-PSFMessage "This test is only applicable to the Global environment." -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Este teste é aplicável apenas ao ambiente Global." -Tag Test -Level VeryVerbose
         return
     }
 
@@ -40,7 +39,7 @@ function Test-Assessment-21860 {
     $passed = $false
 
     if (!$accessToken) {
-        Write-PSFMessage "Azure authentication token not found." -Level Warning
+        Write-PSFMessage "Token de autenticação do Azure não encontrado." -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
@@ -55,7 +54,7 @@ function Test-Assessment-21860 {
         }
         catch {
             if ($_.Exception.Response.StatusCode -eq 403 -or $_.Exception.Message -like "*403*" -or $_.Exception.Message -like "*Forbidden*") {
-                Write-PSFMessage "The signed in user does not have access to the Azure subscription to check for log archiving." -Level Verbose
+                Write-PSFMessage "O usuário conectado não possui acesso à assinatura do Azure para verificar o arquivamento de logs." -Level Verbose
                 Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
                 return
             }
@@ -91,15 +90,15 @@ function Test-Assessment-21860 {
         $passed = $null -eq $missingLogs
 
         if ($passed) {
-            $testResultMarkdown += "All Entra Logs are configured with Diagnostic Settings.`n`n%TestResult%"
+            $testResultMarkdown += "Todos os Logs do Entra estão configurados com Definições de Diagnóstico.`n`n%TestResult%"
         }
         else {
-            $testResultMarkdown += "Some Entra Logs are not configured with Diagnostic settings.`n`n%TestResult%"
+            $testResultMarkdown += "Alguns Logs do Entra não estão configurados com definições de Diagnóstico.`n`n%TestResult%"
         }
 
-        $mdInfo = "## Log archiving`n`n"
+        $mdInfo = "## Arquivamento de logs`n`n"
 
-        $mdInfo += "Log | Archiving enabled |`n"
+        $mdInfo += "Log | Arquivamento habilitado |`n"
         $mdInfo += "| :--- | :---: |`n"
 
         foreach ($item in $missingLogs | Sort-Object) {
@@ -113,8 +112,8 @@ function Test-Assessment-21860 {
         $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
     }
 
-    Add-ZtTestResultDetail -TestId '21860' -Title 'Diagnostic settings are configured for all Microsoft Entra logs' `
-        -UserImpact Low -Risk High -ImplementationCost Medium `
+    Add-ZtTestResultDetail -TestId '21860' -Title 'Configurações de diagnóstico estão configuradas para todos os logs do Microsoft Entra' `
+        -UserImpact Baixo -Risk Alto -ImplementationCost Médio `
         -AppliesTo Identity -Tag Application `
         -Status $passed -Result $testResultMarkdown
 }

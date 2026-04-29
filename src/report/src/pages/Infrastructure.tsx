@@ -5,12 +5,12 @@ export default function Infrastructure() {
     return (
         <>
             <PageHeader>
-                <PageHeaderHeading>Infrastructure</PageHeaderHeading>
+                <PageHeaderHeading>Infraestrutura</PageHeaderHeading>
             </PageHeader>
             <Card>
                 <CardHeader>
-                    <CardTitle>Coming soon</CardTitle>
-                    <CardDescription>Patience is bitter, but its fruit is sweet. -Jean-Jacques Rousseau</CardDescription>
+                    <CardTitle>Em breve</CardTitle>
+                    <CardDescription> A paciência é amarga, mas seu fruto é doce. -Jean-Jacques Rousseau</CardDescription>
                 </CardHeader>
             </Card>
         </>

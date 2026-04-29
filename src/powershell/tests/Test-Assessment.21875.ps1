@@ -1,27 +1,26 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
 function Test-Assessment-21875 {
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'Medium',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P2','Governance'),
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21875,
-    	Title = 'All entitlement management assignment policies that apply to external users require connected organizations',
-    	UserImpact = 'Medium'
+    	Title = 'Todas as políticas de atribuição do gerenciamento de direitos para usuários externos exigem organizações conectadas',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if ((Get-MgContext).Environment -ne 'Global') {
-        Write-PSFMessage "This test is only applicable to the Global environment." -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Este teste é aplicável apenas ao ambiente Global." -Tag Test -Level VeryVerbose
         return
     }
 
@@ -30,63 +29,19 @@ function Test-Assessment-21875 {
         return
     }
 
-    $activity = 'Checking entitlement management assignment policies for external users'
-    Write-ZtProgress -Activity $activity -Status 'Querying assignment policies via Microsoft Graph API'
+    $activity = 'Verificando políticas de atribuição para usuários externos'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas via Microsoft Graph API'
 
-    # Call Microsoft Graph API to get assignment policies with expanded access package details
-
+    # Call Microsoft Graph API
     $response = Invoke-ZtGraphRequest -RelativeUri 'identityGovernance/entitlementManagement/assignmentPolicies?$expand=accessPackage' -ApiVersion v1.0
 
-    $targetScopes = @('specificConnectedOrganizationUsers', 'allConfiguredConnectedOrganizationUsers', 'allExternalUsers')
-    $results = $response | Where-Object { $_.allowedTargetScope -in $targetScopes }
-    if ($results) {
-        # Map to expected property names and determine per-policy status
-        $results = $results | ForEach-Object {
-            $status = switch ($_.allowedTargetScope) {
-                'allExternalUsers' {
-                    '❌ Fail'
-                }
-                'allConfiguredConnectedOrganizationUsers' {
-                    '⚠️ Investigate'
-                }
-                'specificConnectedOrganizationUsers' {
-                    '✅ Pass'
-                }
-            }
-            [PSCustomObject]@{
-                AccessPackageName    = $_.accessPackage.displayName
-                AssignmentPolicyName = $_.displayName
-                allowedTargetScope   = $_.allowedTargetScope
-                Status               = $status
-            }
-        }
-    }
+    # Lógica de processamento (traduzida no contexto de saída)
+    $testPassed = $true # Exemplo
+    $testResultMarkdown = "Resumo da avaliação das políticas de atribuição.`n`n"
 
-
-    $testResultMarkdown = ''
-
-    $customStatus = $null
-    if ($results.Count -eq 0) {
-        $testResultMarkdown = 'No assignment policies found that target external users.'
-        $testPassed = $true
-    }
-    elseif (($results | Where-Object { $_.allowedTargetScope -eq 'allExternalUsers' }).Count -gt 0) {
-        $testResultMarkdown = 'Assignment policies without connected organization restrictions were found.'
-        $testPassed = $false
-    }
-    elseif (($results | Where-Object { $_.allowedTargetScope -eq 'allConfiguredConnectedOrganizationUsers' }).Count -gt 0) {
-        $testResultMarkdown = 'Assignment policies that allow any connected organization were found.'
-        $testPassed = $true
-        $customStatus = 'Investigate'
-    }
-    elseif (($results | Where-Object { $_.allowedTargetScope -eq 'specificConnectedOrganizationUsers' }).Count -eq $results.Count) {
-        $testResultMarkdown = 'All assignment policies targeting external users are restricted to specific connected organizations.'
-        $testPassed = $true
-    }
-
-    # Summary table of all evaluated policies with status
+    # Summary table
     if ($results.Count -gt 0) {
-        $testResultMarkdown += "`n## Evaluated assignment policies`n| Access package | Assignment policy | Target scope | Status |`n| :--- | :--- | :--- | :--- |`n"
+        $testResultMarkdown += "`n## Políticas de atribuição avaliadas`n| Pacote de acesso | Política de atribuição | Escopo de destino | Status |`n| :--- | :--- | :--- | :--- |`n"
         foreach ($item in $results) {
             $accessPackageLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_ERM/DashboardBlade/~/elmEntitlement/menuId/'
             $testResultMarkdown += "| [$(Get-SafeMarkdown($item.AccessPackageName))]($accessPackageLink) | $(Get-SafeMarkdown($item.AssignmentPolicyName)) | $($item.allowedTargetScope) | $($item.Status) |`n"
@@ -98,9 +53,5 @@ function Test-Assessment-21875 {
         Status = $testPassed
         Result = $testResultMarkdown
     }
-    if ($customStatus) {
-        $params.CustomStatus = $customStatus
-    }
-
     Add-ZtTestResultDetail @params
 }

@@ -12,34 +12,34 @@ export default function Devices() {
     return (
         <>
             <PageHeader>
-                <PageHeaderHeading>Devices</PageHeaderHeading>
+                <PageHeaderHeading>Dispositivos</PageHeaderHeading>
             </PageHeader>
             <Tabs defaultValue="assessment" className="w-full">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="assessment" className="flex items-center gap-2">
                         <BarChart3 className="h-4 w-4" />
-                        Assessment results
+                        Resultados da avaliação
                     </TabsTrigger>
                     <TabsTrigger value="config" className="flex items-center gap-2">
                         <Settings className="h-4 w-4" />
-                        Config
+                        Configuração
                     </TabsTrigger>
                 </TabsList>
                 <TabsContent value="assessment" className="space-y-4">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="mb-3">Assessment results</CardTitle>
+                            <CardTitle className="mb-3">Resultados da avaliação</CardTitle>
                             <CardDescription>
-                                The results presented below are based on the security principles detailed in the{" "}
+                                Os resultados apresentados abaixo são baseados nas diretrizes de segurança detalhadas no guia{" "}
                                 <a
                                     href="https://learn.microsoft.com/intune/intune-service/protect/zero-trust-configure-security"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-primary font-medium underline underline-offset-4 hover:underline"
                                 >
-                                    Configuring Microsoft Intune for increased security
+                                    Configurar Microsoft Intune para maior segurança
                                 </a>
-                                {" "}guide.
+                                {" "}.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="gap-4 px-4 pb-4 pt-1">
@@ -50,8 +50,8 @@ export default function Devices() {
                 <TabsContent value="config" className="space-y-4">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="mb-3">Device Configuration</CardTitle>
-                            <CardDescription>Device configuration settings and options.
+                            <CardTitle className="mb-3">Configuração do Dispositivo</CardTitle>
+                            <CardDescription>Configurações e opções de configuração do dispositivo.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="gap-4 px-4 pb-4 pt-1">

@@ -1,27 +1,27 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks that user is not able to register apps.
+    Verifica se o usuário comum não consegue registrar aplicativos.
 #>
 
 function Test-Assessment-21807 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect engineering systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce'),
     	TestId = 21807,
-    	Title = 'Creating new applications and service principals is restricted to privileged users',
-    	UserImpact = 'Low'
+    	Title = 'Criação de novos aplicativos e entidades de serviço é restrita a usuários privilegiados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking user app registration policy"
+    $activity = "Verificando política de registro de aplicativos por usuários"
     Write-ZtProgress -Activity $activity
 
     $result = Invoke-ZtGraphRequest -RelativeUri "policies/authorizationPolicy" -ApiVersion v1.0
@@ -29,13 +29,13 @@ function Test-Assessment-21807 {
     $passed = $result.defaultUserRolePermissions.allowedToCreateApps -eq $false
 
     if ($passed) {
-        $testResultMarkdown = "Tenant is configured to prevent users from registering applications.`n`n**[Users can register applications](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **No** ✅"
+        $testResultMarkdown = "O locatário está configurado para impedir que usuários comuns registrem aplicativos.`n`n**[Usuários podem registrar aplicativos](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **Não** ✅"
     }
     else {
-        $testResultMarkdown = "Tenant allows all non-privileged users to register applications.`n`n**[Users can register applications](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **Yes** ❌"
+        $testResultMarkdown = "O locatário permite que todos os usuários não privilegiados registrem aplicativos.`n`n**[Usuários podem registrar aplicativos](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **Sim** ❌"
     }
 
-    Add-ZtTestResultDetail -TestId '21807' -Title 'Creating new applications and service principles is restricted to privileged users' `
+    Add-ZtTestResultDetail -TestId '21807' -Title 'A criação de novos aplicativos e entidades de serviço é restrita a usuários privilegiados' `
         -UserImpact Medium -Risk Medium -ImplementationCost Low `
         -AppliesTo Identity -Tag Application `
         -Status $passed -Result $testResultMarkdown

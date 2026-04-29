@@ -1,8 +1,7 @@
-Controlling device proliferation is important. Set a reasonable limit on the number of devices each user can register in your Microsoft Entra ID tenant. Limiting device registration maintains security while allowing business flexibility. Microsoft Entra ID lets users register up to 50 devices by default. Reducing this number to 10 minimizes the attack surface and simplifies device management.
+Controlar a proliferação de dispositivos é importante. Defina um limite razoável para o número de dispositivos que cada usuário pode registrar em seu locatário do Microsoft Entra ID. Limitar o registro de dispositivos mantém a segurança enquanto permite flexibilidade comercial. O Microsoft Entra ID permite que os usuários registrem até 50 dispositivos por padrão. Reduzir esse número para 10 minimiza a superfície de ataque e simplifica o gerenciamento de dispositivos.
 
-**Remediation action**
+**Ação de correção**
 
-- Learn how to [limit the maximum number of devices per user](https://learn.microsoft.com/entra/identity/devices/manage-device-identities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-device-settings).
+- Saiba como [limitar o número máximo de dispositivos por usuário](https://learn.microsoft.com/entra/identity/devices/manage-device-identities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-device-settings).
 <!--- Results --->
 %TestResult%
-

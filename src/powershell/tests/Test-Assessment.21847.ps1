@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
@@ -6,97 +6,77 @@
 function Test-Assessment-21847 {
 
     [ZtTest(
-    	Category = 'Credential management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de credenciais',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 21847,
-    	Title = 'Password protection for on-premises is enabled',
-    	UserImpact = 'Low'
+    	Title = 'A proteção de senha para ambientes locais está habilitada',
+    	UserImpact = 'Baixo'
     )]
 
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Password protection for on-premises is enabled"
-    Write-ZtProgress -Activity $activity -Status "Getting organization details"
+    $activity = "Verificando se a proteção de senha para ambientes locais está habilitada"
+    Write-ZtProgress -Activity $activity -Status "Obtendo detalhes da organização"
 
-    # Q1: Check if tenant has on-premises sync
+    # Q1: Verifica se o locatário possui sincronização local
     $orgResponse = Invoke-ZtGraphRequest -RelativeUri "organization?`$select=id,displayName,onPremisesSyncEnabled,onPremisesLastSyncDateTime" -ApiVersion v1.0
 
     if ($orgResponse.onPremisesSyncEnabled -ne $true) {
         $passed = $true
-        $testResultMarkdown = "✅ **Pass**: This tenant is not synchronized to an on-premises environment.%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: Este locatário não está sincronizado com um ambiente local.%TestResult%"
     }
     else {
-        # Q2: Check password protection settings
-        Write-ZtProgress -Activity $activity -Status "Checking password protection settings"
+        # Q2: Verifica as configurações de proteção de senha
+        Write-ZtProgress -Activity $activity -Status "Verificando configurações de proteção de senha"
 
         $pwdSettings = Invoke-ZtGraphRequest -RelativeUri "groupSettings" -ApiVersion v1.0 | Where-Object { $_.displayName -eq "Password Rule Settings" }
-
+        
+        $mdInfo = ""
         if ($null -eq $pwdSettings) {
-            $passed = $false
-            $testResultMarkdown = "❌ **Fail**: Password protection settings were not found in the tenant configuration.%TestResult%"
+             $passed = $false
+             $testResultMarkdown = "❌ **Falha**: Configurações de regra de senha não encontradas.%TestResult%"
         }
         else {
-            $settingValues = Invoke-ZtGraphRequest -RelativeUri "groupSettings/$($pwdSettings.id)" -ApiVersion v1.0
+            $enabledSetting = $pwdSettings.values | Where-Object { $_.name -eq "EnableBannedPasswordCheckOnPremises" }
+            $modeSetting = $pwdSettings.values | Where-Object { $_.name -eq "ProxyMode" }
 
-            $enabledSetting = $settingValues.values | Where-Object { $_.name -eq "EnableBannedPasswordCheckOnPremises" }
-            $modeSetting = $settingValues.values | Where-Object { $_.name -eq "BannedPasswordCheckOnPremisesMode" }
+            $passwordProtectionStatus = if ($enabledSetting.value -eq $true) { "Habilitado ✅" } else { "Desabilitado ❌" }
+            $modeStatus = if ($modeSetting.value -eq "Enforce") { "Imposto (Enforce) ✅" } else { "Auditoria (Audit) ⚠️" }
 
-            $isPasswordProtectionEnabled = $enabledSetting.value -eq $true
-            $passwordProtectionStatus = if ($isPasswordProtectionEnabled) {
-                "✅ Enabled"
-            }
-            else {
-                "❌ Disabled"
-            }
-
-            switch ($modeSetting.value) {
-                "Enforce" {
-                    $modeStatus = "✅ Enforce"
-                }
-                "Audit" {
-                    $modeStatus = "❌ Audit"
-                }
-                default {
-                    $modeStatus = "❌ Not Configured"
-                }
-            }
-
-            $mdInfo = "`n## Password Protection Settings`n`n"
-            $mdInfo += "| Setting | Value |`n"
-            $mdInfo += "| :---- | :---- |`n"
-            $mdInfo += "| Password Protection for Active Directory Domain Services | $passwordProtectionStatus |`n"
-            $mdInfo += "| Enabled Mode (Audit/Enforce) | $($modeStatus) |`n"
+            $mdInfo = "`n| Configuração | Status |`n| :--- | :--- |`n"
+            $mdInfo += "| Proteção de Senha para Active Directory Domain Services | $passwordProtectionStatus |`n"
+            $mdInfo += "| Modo Habilitado (Auditoria/Imposição) | $($modeStatus) |`n"
 
             if ($enabledSetting.value -eq $true -and $modeSetting.value -eq "Enforce") {
                 $passed = $true
-                $testResultMarkdown = "✅ **Pass**: Entra password protection is enabled and enforced.`n%TestResult%"
+                $testResultMarkdown = "✅ **Passou**: A proteção de senha do Entra está habilitada e imposta.`n%TestResult%"
             }
             else {
                 $passed = $false
                 if ($enabledSetting.value -ne $true) {
-                    $testResultMarkdown = "`n❌ **Fail**: Password protection for on-premises is not enabled.`n%TestResult%"
+                    $testResultMarkdown = "`n❌ **Falha**: A proteção de senha para ambientes locais não está habilitada.`n%TestResult%"
                 }
                 else {
                     if ($modeSetting.value -ne "Enforce") {
-                        $testResultMarkdown = "`n❌ **Fail**: Password protection for on-premises is not set to 'Enforce' mode.`n%TestResult%"
+                        $testResultMarkdown = "`n❌ **Falha**: A proteção de senha para ambientes locais não está definida para o modo 'Impor' (Enforce).`n%TestResult%"
                     }
                     else {
-                        $testResultMarkdown = "`n❌ **Fail**: Entra password protection is not properly configured.`n%TestResult%"
+                        $testResultMarkdown = "`n❌ **Falha**: A proteção de senha do Entra não está configurada corretamente.`n%TestResult%"
                     }
                 }
             }
         }
     }
 
-    # Replace the placeholder with the detailed information
+    # Substitui o marcador pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{

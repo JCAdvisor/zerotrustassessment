@@ -1,32 +1,32 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21774 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21774,
-    	Title = 'Microsoft services applications don''t have credentials configured',
-    	UserImpact = 'Low'
+    	Title = 'Aplicativos de serviços da Microsoft não possuem credenciais configuradas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Microsoft services applications don't have credentials configured"
-    Write-ZtProgress -Activity $activity -Status "Getting service principals"
+    $activity = "Verificando se aplicativos de serviços da Microsoft não possuem credenciais configuradas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo entidades de serviço"
 
-    # SQL query to find service principals with password credentials
+    # Consulta SQL para encontrar entidades de serviço com credenciais de senha
     $sqlPassCreds = @"
     SELECT distinct ON (id)
         id,
@@ -39,7 +39,7 @@ function Test-Assessment-21774 {
     ORDER BY displayName, keyEndDateTime DESC
 "@
 
-    # SQL query to find service principals with key credentials
+    # Consulta SQL para encontrar entidades de serviço com credenciais de chave
     $sqlKeyCreds = @"
     SELECT distinct ON (id)
         id,
@@ -52,72 +52,52 @@ function Test-Assessment-21774 {
     ORDER BY displayName, keyEndDateTime DESC
 "@
 
-$resultsPassCreds = Invoke-DatabaseQuery -Database $Database -Sql $sqlPassCreds
-$resultsKeyCreds = Invoke-DatabaseQuery -Database $Database -Sql $sqlKeyCreds
+    $resultsPassCreds = Invoke-DatabaseQuery -Database $Database -Sql $sqlPassCreds
+    $resultsKeyCreds = Invoke-DatabaseQuery -Database $Database -Sql $sqlKeyCreds
 
-if ($resultsPassCreds.Count -eq 0 -and $resultsKeyCreds.Count -eq 0) {
-    $passed = $true
-    $testResultMarkdown = "No Microsoft services applications have credentials configured in the tenant."
-}
-else {
-    $passed = $false
-    $testResultMarkdown = "Found Microsoft services applications with credentials configured in the tenant, which represents a security risk.`n`n%TestResult%"
-}
+    $passed = ($resultsPassCreds.Count -eq 0) -and ($resultsKeyCreds.Count -eq 0)
 
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Microsoft services applications with credentials configured in the tenant"
-    $tableRows = ""
-
-    if ($resultsPassCreds.Count -gt 0 -or $resultsKeyCreds.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
-        $formatTemplate = @'
-
+    if ($passed) {
+        $testResultMarkdown = "✅ **Passou**: Nenhuma credencial personalizada foi encontrada nos aplicativos de serviços da Microsoft.`n`n"
+        $mdInfo = "Nenhum aplicativo de serviço da Microsoft com credenciais configuradas foi encontrado."
+    }
+    else {
+        $testResultMarkdown = "❌ **Falha**: Foram encontradas credenciais configuradas em aplicativos de serviços da Microsoft. Isso deve ser investigado.`n`n"
+        
+        $reportTitle = "Aplicativos de serviços da Microsoft com credenciais"
+        $formatTemplate = @"
 ## {0}
 
-
-| Service Principal Name | Credentials Type | Credentials Expiration Date |
-| :--------------------- | :--------------- | :-------------------------- |
+| Aplicativo | Tipo de Credencial | Expiração |
+| :--- | :--- | :--- |
 {1}
-
-'@
-
+"@
+        $tableRows = ""
         foreach ($sp in $resultsPassCreds) {
             $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/{0}/appId/{1}' -f $sp.id, $sp.appId
-            $tableRows += @"
-| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Password Credentials | $(Get-FormattedDate($sp.keyEndDateTime)) |`n
-"@
+            $tableRows += "| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Segredo de Senha | $(Get-FormattedDate($sp.keyEndDateTime)) |`n"
         }
 
         foreach ($sp in $resultsKeyCreds) {
             $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/{0}/appId/{1}' -f $sp.id, $sp.appId
-            $tableRows += @"
-| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Key Credentials | $(Get-FormattedDate($sp.keyEndDateTime)) |`n
-"@
+            $tableRows += "| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Certificado/Chave | $(Get-FormattedDate($sp.keyEndDateTime)) |`n"
         }
 
-        # Format the template by replacing placeholders with values
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{
         TestId             = '21774'
-        Title              = "Microsoft services applications don't have credentials configured"
-        UserImpact         = 'Low'
-        Risk               = 'High'
-        ImplementationCost = 'Low'
-        AppliesTo          = 'Identity'
-        Tag                = 'Identity'
+        Title              = "Aplicativos de serviços da Microsoft não possuem credenciais configuradas"
+        UserImpact         = 'Baixo'
+        Risk               = 'Alto'
+        ImplementationCost = 'Baixo'
+        AppliesTo          = 'Identidade'
+        Tag                = 'Identidade'
         Status             = $passed
         Result             = $testResultMarkdown
     }
-    if (!$passed) {
-        $params.CustomStatus = 'Investigate'
-    }
-
     Add-ZtTestResultDetail @params
 }

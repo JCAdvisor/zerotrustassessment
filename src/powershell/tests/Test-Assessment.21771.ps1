@@ -1,4 +1,3 @@
-﻿
 <#
 .SYNOPSIS
 
@@ -6,24 +5,24 @@
 
 function Test-Assessment-21771 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
         Service = ('Graph'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect engineering systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce','External'),
     	TestId = 21771,
-    	Title = 'Inactive applications don’’t have highly privileged built-in roles',
-    	UserImpact = 'Low'
+    	Title = 'Aplicativos inativos não possuem funções integradas altamente privilegiadas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
     $sql = @"
     select distinct r.principalId, r.principalDisplayName, sp.publisherName,
@@ -47,22 +46,22 @@ function Test-Assessment-21771 {
     $passed = $inactiveApps.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown += "No inactive applications with privileged Entra built-in roles`n`n%TestResult%"
+        $testResultMarkdown += "Nenhum aplicativo inativo com funções integradas privilegiadas do Entra foi encontrado`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown += "Found $($inactiveApps.Count) inactive applications with privileged Entra built-in roles`n`n%TestResult%"
+        $testResultMarkdown += "Encontrado(s) $($inactiveApps.Count) aplicativo(s) inativo(s) com funções integradas privilegiadas do Entra`n`n%TestResult%"
     }
 
     if ($results.Count -gt 0) {
-        $mdInfo = "`n## Apps with privileged Entra built-in roles`n`n"
-        $mdInfo += "| | Name | Role | Assignment | App owner tenant | Last sign in|`n"
+        $mdInfo = "`n## Aplicativos com funções integradas privilegiadas do Entra`n`n"
+        $mdInfo += "| | Nome | Função | Atribuição | Tenant proprietário | Último logon|`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- |`n"
         $mdInfo += Get-AppListRole -Apps $inactiveApps -Icon "❌"
         $mdInfo += Get-AppListRole -Apps $activeApps -Icon "✅"
     }
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '21771' -Title 'Inactive applications don'’t have highly privileged Microsoft Entra built-in roles' `
+    Add-ZtTestResultDetail -TestId '21771' -Title 'Aplicativos inativos não possuem funções integradas altamente privilegiadas do Microsoft Entra' `
         -UserImpact Low -Risk High -ImplementationCost Low `
         -AppliesTo Identity -Tag Application `
         -Status $passed -Result $testResultMarkdown

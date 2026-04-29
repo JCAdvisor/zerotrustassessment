@@ -2,7 +2,7 @@
 class ZtTest : System.Attribute
 {
 	[string]$Category
-	[ValidateSet('Low','Medium','High')][string]$ImplementationCost
+	[ValidateSet('Low','Baixo','Medium','Médio','High','Alto')][string]$ImplementationCost
 	[string[]]$MinimumLicense
 
 	[string[]]$CompatibleLicense
@@ -10,12 +10,12 @@ class ZtTest : System.Attribute
 	[string[]]$Service
 
 	[string]$Pillar
-	[ValidateSet('Low','Medium','High')][string]$RiskLevel
+	[ValidateSet('Low','Baixo','Medium','Médio','High','Alto')][string]$RiskLevel
 	[string]$SfiPillar
 	[ValidateSet('Workforce','External')][string[]]$TenantType
 	[int]$TestId
 	[string]$Title
-	[ValidateSet('Low','Medium','High')][string]$UserImpact
+	[ValidateSet('Low','Baixo','Medium','Médio','High','Alto')][string]$UserImpact
 
 }
 <#

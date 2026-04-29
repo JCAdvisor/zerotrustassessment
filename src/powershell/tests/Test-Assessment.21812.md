@@ -1,8 +1,7 @@
-An excessive number of Global Administrator accounts creates an expanded attack surface that threat actors can exploit through various initial access vectors. Each extra privileged account represents a potential entry point for threat actors. An excess of Global Administrator accounts undermines the principle of least privilege. Microsoft recommends that organizations have no more than eight Global Administrators.
+Um número excessivo de contas de Administrador Global cria uma superfície de ataque expandida que os atores de ameaça podem explorar por meio de vários vetores de acesso inicial. Cada conta privilegiada extra representa um ponto de entrada potencial para os atores de ameaça. O excesso de contas de Administrador Global prejudica o princípio do privilégio mínimo. A Microsoft recomenda que as organizações não tenham mais do que oito Administradores Globais.
 
-**Remediation action**
+**Ação de correção**
 
-- [Follow best practices for Microsoft Entra roles](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Siga as melhores práticas para funções do Microsoft Entra](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

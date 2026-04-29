@@ -8,22 +8,22 @@ export default function Identity() {
     return (
         <>
             <PageHeader>
-                <PageHeaderHeading>Identity</PageHeaderHeading>
+                <PageHeaderHeading>Identidade</PageHeaderHeading>
             </PageHeader>
             <Card>
                 <CardHeader>
-                    <CardTitle className="mb-3">Assessment results</CardTitle>
+                    <CardTitle className="mb-3">Resultados da avaliação</CardTitle>
                     <CardDescription>
-                        The results presented below are based on the security principles detailed in the{" "}
+                        Os resultados apresentados abaixo são baseados nas diretrizes de segurança detalhadas no guia{" "}
                         <a
                             href="https://learn.microsoft.com/en-us/entra/fundamentals/configure-security"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-primary font-medium underline underline-offset-4 hover:underline"
                         >
-                            Configuring Microsoft Entra for increased security
+                            Configurar Microsoft Entra para aumentar a segurança
                         </a>
-                        {" "}guide.
+                        {" "}.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="gap-4 px-4 pb-4 pt-1">

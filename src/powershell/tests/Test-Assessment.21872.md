@@ -1,8 +1,7 @@
-Threat actors can exploit the lack of multifactor authentication during new device registration. Once authenticated, they can register rogue devices, establish persistence, and circumvent security controls tied to trusted endpoints. This foothold enables attackers to exfiltrate sensitive data, deploy malicious applications, or move laterally, depending on the permissions of the accounts being used by the attacker. Without MFA enforcement, risk escalates as adversaries can continuously reauthenticate, evade detection, and execute objectives.
+Atores de ameaça podem explorar a falta de autenticação multifator durante o registro de novos dispositivos. Uma vez autenticados, eles podem registrar dispositivos não autorizados, estabelecer persistência e contornar controles de segurança vinculados a endpoints confiáveis. Essa posição permite que os invasores exfiltrem dados sensíveis, implantem aplicativos maliciosos ou se movam lateralmente, dependendo das permissões das contas que estão sendo usadas pelo invasor. Sem a imposição de MFA, o risco aumenta à medida que os adversários podem se reautenticar continuamente, escapar da detecção e executar seus objetivos.
 
-**Remediation action**
+**Ação de correção**
 
-- [Deploy a Conditional Access policy to require multifactor authentication for device registration](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-device-registration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Implantar uma política de Acesso Condicional para exigir autenticação multifator para o registro de dispositivos](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-device-registration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

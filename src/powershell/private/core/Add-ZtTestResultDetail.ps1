@@ -71,33 +71,32 @@ function Add-ZtTestResultDetail {
 		)]
 		[string] $SkippedBecause,
 
-		[ValidateSet('Catastrophic', 'High', 'Medium', 'Low')]
+		[ValidateSet('Catastrophic', 'High', 'Medium', 'Low', "Catastrófico", "Alto", "Médio", "Baixo")]
 		[string] $UserImpact,
 
-		[ValidateSet('High', 'Medium', 'Low')]
+		[ValidateSet('High', 'Medium', 'Low', "Alto", "Médio", "Baixo")]
 		[string] $Risk,
 
-		[ValidateSet('High', 'Medium', 'Low')]
+		[ValidateSet('High', 'Medium', 'Low', "Alto", "Médio", "Baixo")]
 		[string] $ImplementationCost,
 
-		[ValidateSet('Identity', 'Devices', 'Data')]
+		[ValidateSet('Identity', 'Devices', 'Data', 'Identidade', 'Dispositivos', 'Dados')]
 		[string[]] $AppliesTo, #TODO Update this to specific product (Entra, Intune, etc)
 
 		[ValidateSet('Credential', 'TenantPolicy', 'ExternalCollaboration', 'Application',
-			'User', 'PrivilegedIdentity', 'ConditionalAccess', 'Authentication', 'AccessControl', 'Identity', 'Devices'
+			'User', 'PrivilegedIdentity', 'ConditionalAccess', 'Authentication', 'AccessControl', 'Identity', 'Devices', 'Credencial', 'Política de Inquilino', 'Colaboração Externa', 'Aplicativo', 'Usuário', 'Identidade Privilegiada', 'Acesso Condicional', 'Autenticação', 'Controle de Acesso', 'Identidade', 'Dispositivos'
 		)]
 		[string[]] $Tag,
 
 		# Optional. Custom status to return instead of the default status.
 		[Parameter(Mandatory = $false)]
-		[ValidateSet('Investigate')]
+		[ValidateSet('Investigate', 'Investigar')]
 		[string] $CustomStatus,
 
 		[ValidateSet('Graph', 'Azure', 'AipService', 'ExchangeOnline', 'SecurityCompliance', 'SharePointOnline')]
 		[string[]] $NotConnectedService
 	)
 
-	#region Resolve Test Item
 	$testMeta = Get-ZtTest -Current
 	# If test is executed outside of the module (e.g. solo test during dev), make sure the Test resolution still works anyway
 	if (-not $testMeta -and $TestId) {
@@ -129,7 +128,7 @@ function Add-ZtTestResultDetail {
 		}
 
 		if (-not $Result) {
-			$Result = "Skipped. $SkippedReason"
+			$Result = "Ignorado. $SkippedReason"
 		}
 	}
 

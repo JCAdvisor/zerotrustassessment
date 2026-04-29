@@ -1,9 +1,8 @@
-FIDO2 security keys provide hardware-backed, phishing-resistant authentication that protects against credential theft and unauthorized access. Security keys use cryptographic proof of identity bound to a specific device, making credentials impossible to replicate or phish. Enabling this authentication method allows users to register security keys for strong passwordless authentication.
+As chaves de segurança FIDO2 fornecem autenticação resistente a phishing e baseada em hardware, que protege contra roubo de credenciais e acesso não autorizado. As chaves de segurança usam prova criptográfica de identidade vinculada a um dispositivo específico, tornando as credenciais impossíveis de replicar ou pescar (phish). Ativar este método de autenticação permite que os usuários registrem chaves de segurança para uma autenticação forte sem senha (passwordless).
 
-**Remediation action**
+**Ação de correção**
 
-- [Enable FIDO2 security key authentication method](https://learn.microsoft.com/entra/identity/authentication/how-to-enable-passkey-fido2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-passkey-fido2-authentication-method)
-- [Manage authentication methods](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-methods-manage?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Ativar o método de autenticação de chave de segurança FIDO2](https://learn.microsoft.com/entra/identity/authentication/how-to-enable-passkey-fido2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-passkey-fido2-authentication-method)
+- [Gerenciar métodos de autenticação](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-methods-manage?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

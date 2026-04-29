@@ -1,15 +1,10 @@
-If an on-premises account is compromised and is synchronized to Microsoft Entra, the attacker might gain access to the tenant as well. This risk increases because on-premises environments typically have more attack surfaces due to older infrastructure and limited security controls. Attackers might also target the infrastructure and tools used to enable connectivity between on-premises environments and Microsoft Entra. These targets might include tools like Microsoft Entra Connect or Active Directory Federation Services, where they could impersonate or otherwise manipulate other on-premises user accounts.
+Se uma conta local for comprometida e estiver sincronizada com o Microsoft Entra, o atacante também poderá obter acesso ao locatário na nuvem. Esse risco aumenta porque os ambientes locais normalmente têm mais superfícies de ataque devido a infraestruturas mais antigas e controles de segurança limitados. Atacantes também podem visar as ferramentas usadas para permitir a conectividade, como o Microsoft Entra Connect ou o AD FS.
 
-If privileged cloud accounts are synchronized with on-premises accounts, an attacker who acquires credentials for on-premises can use those same credentials to access cloud resources and move laterally to the cloud environment.
+Se as contas privilegiadas da nuvem forem sincronizadas com contas locais, um invasor que adquira credenciais locais poderá usar essas mesmas credenciais para acessar recursos da nuvem e realizar movimento lateral para o ambiente de nuvem.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Protecting Microsoft 365 from on-premises attacks](https://learn.microsoft.com/entra/architecture/protect-m365-from-on-premises-attacks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#specific-security-recommendations)
-
-For each role with high privileges (assigned permanently or eligible through Microsoft Entra Privileged Identity Management), you should do the following actions:
-
-- Review the users that have onPremisesImmutableId and onPremisesSyncEnabled set. See [Microsoft Graph API user resource type](https://learn.microsoft.com/graph/api/resources/user?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Create cloud-only user accounts for those individuals and remove their hybrid identity from privileged roles.
+- [Protegendo o Microsoft 365 contra ataques locais](https://learn.microsoft.com/entra/architecture/protect-m365-from-on-premises-attacks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- Crie contas de usuário exclusivas na nuvem (cloud-only) para indivíduos em funções privilegiadas e remova suas identidades híbridas dessas funções.
 <!--- Results --->
 %TestResult%
-

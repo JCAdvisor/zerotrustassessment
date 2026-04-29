@@ -10,7 +10,7 @@ function Invoke-ZtTenantInfo {
         $Database,
 
         # The Zero Trust pillar to assess. Defaults to All.
-        [ValidateSet('All', 'Identity', 'Devices', 'Network', 'Data')]
+        [ValidateSet('All', 'Identity', 'Devices', 'Network', 'Data', 'Identidade', 'Dispositivos', 'Rede', 'Dados')]
         [string]
         $Pillar = 'All'
     )
@@ -18,14 +18,14 @@ function Invoke-ZtTenantInfo {
     Add-ZtTenantOverview # Always run (shown on dashboard)
 
     # Only run if Pillar is All or Identity
-    if ($Pillar -in ('All', 'Identity')) {
+    if ($Pillar -in ('All', 'Identity', 'Identidade')) {
         Add-ZtOverviewCaMfa -Database $Database
         Add-ZtOverviewCaDevicesAllUsers -Database $Database
         Add-ZtOverviewAuthMethodsAllUsers -Database $Database
         Add-ZtOverviewAuthMethodsPrivilegedUsers -Database $Database
     }
 
-    if ($Pillar -in ('All', 'Devices')) {
+    if ($Pillar -in ('All', 'Devices', 'Dispositivos')) {
         $IntunePlan = Get-ZtLicenseInformation -Product Intune
         if ($null -ne $IntunePlan) {
             Add-ZtDeviceOverview -Database $Database

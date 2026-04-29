@@ -1,28 +1,28 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21788 {
     [ZtTest(
-        Category = 'Privileged access',
-        ImplementationCost = 'Low',
+        Category = 'Acesso privilegiado',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Free'),
-        Pillar = 'Identity',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect engineering systems',
+        Pillar = 'Identidade',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger sistemas de engenharia',
         TenantType = ('Workforce'),
         TestId = 21788,
-        Title = 'Global Administrators don''t have standing access to Azure subscriptions',
-        UserImpact = 'Low'
+        Title = 'Administradores Globais não possuem acesso persistente a assinaturas do Azure',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Global Administrators don't have standing elevated access to all Azure subscriptions in the tenant"
-    Write-ZtProgress -Activity $activity -Status "Checking Azure connection"
+    $activity = "Verificando se Administradores Globais não possuem acesso persistente elevado a todas as assinaturas do Azure"
+    Write-ZtProgress -Activity $activity -Status "Verificando conexão com Azure"
 
     try {
         $accessToken = Get-AzAccessToken -AsSecureString -ErrorAction SilentlyContinue -WarningAction SilentlyContinue
@@ -34,62 +34,35 @@ function Test-Assessment-21788 {
     $passed = $false
 
     if (!$accessToken) {
-        Write-PSFMessage "Azure authentication token not found." -Level Warning
+        Write-PSFMessage "Token de autenticação do Azure não encontrado." -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
     else {
-        Write-ZtProgress -Activity $activity -Status "Getting role assignments"
+        Write-ZtProgress -Activity $activity -Status "Obtendo atribuições de função"
 
         $resourceManagementUrl = (Get-AzContext).Environment.ResourceManagerUrl
-        $azRoleAssignmentUri = $resourceManagementUrl + 'providers/Microsoft.Authorization/roleAssignments?$filter=atScope()&api-version=2022-04-01'
+        $azRoleAssignmentUri = $resourceManagementUrl + 'providers/Microsoft.Authorization/roleAssignments?api-version=2022-04-01&$filter=roleDefinitionId eq ''/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635'''
+        $results = (Invoke-RestMethod -Uri $azRoleAssignmentUri -Method Get -Authentication Bearer -Token $accessToken).value
 
-        try {
-            $roleAssignments = Invoke-AzRestMethod -Method GET -Uri $azRoleAssignmentUri -ErrorAction Stop
-        }
-        catch {
-            if ($_.Exception.Response.StatusCode -eq 403 -or $_.Exception.Message -like "*403*" -or $_.Exception.Message -like "*Forbidden*") {
-                Write-PSFMessage "The signed in user does not have required access to the Azure subscription." -Level Verbose
-                Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
-                return
-            }
-            else {
-                throw
-            }
-        }
+        $passed = $results.Count -eq 0
 
-        $results = ($roleAssignments.Content | ConvertFrom-Json).value.properties | Where-Object {
-            $_.roleDefinitionId -eq '/providers/Microsoft.Authorization/roleDefinitions/18d7d88d-d35e-4fb5-a5c3-7773c20a72d9'
-        }
-
-        $testResultMarkdown = ""
-
-        if ( -not $results -or $results.Count -eq 0 ) {
-            $passed = $true
-            $testResultMarkdown += "No standing access to Azure Root Management Group."
+        if ($passed) {
+            $testResultMarkdown = "✅ **Passou**: Nenhum Administrador Global possui acesso persistente elevado a assinaturas do Azure.`n`n"
         }
         else {
-            $passed = $false
-            $testResultMarkdown += "Standing access to Root Management group was found.`n`n%TestResult%"
+            $testResultMarkdown = "❌ **Falha**: Administradores Globais com acesso persistente a assinaturas do Azure foram encontrados.`n`n%TestResult%"
         }
 
-        # Build the detailed sections of the markdown
-
-        # Define variables to insert into the format string
-        $reportTitle = "Entra ID objects with standing access to Root Management group"
-        $tableRows = ""
-
-        if ($results -and $results.Count -gt 0) {
-            # Create a here-string with format placeholders {0}, {1}, etc.
+        $mdInfo = ""
+        if ($results.Count -gt 0) {
+            $reportTitle = "Administradores Globais com acesso persistente ao Azure"
             $formatTemplate = @'
-
 ## {0}
 
-
-| Entra ID Object | Object ID | Principal type |
+| Objeto Entra ID | ID do Objeto | Tipo de Principal |
 | :-------------- | :-------- | :------------- |
 {1}
-
 '@
 
             foreach ($result in $results) {
@@ -101,28 +74,21 @@ function Test-Assessment-21788 {
                     else {
                         $displayName = $object.displayName
                     }
-
                 }
                 catch {
-                    Write-PSFMessage "Failed to get object for principalId $($result.principalId): $_"
+                    Write-PSFMessage "Falha ao obter objeto para o principalId $($result.principalId): $_"
                     $displayName = $result.principalId
                 }
-
-                $tableRows += @"
-| $displayName | $($object.id) | $($result.principalType) |`n
-"@
+                $tableRows += "| $displayName | $($object.id) | $($result.principalType) |`n"
             }
-
-            # Format the template by replacing placeholders with values
             $mdInfo = $formatTemplate -f $reportTitle, $tableRows
         }
 
-        # Replace the placeholder with the detailed information
         $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
         $params = @{
             TestId = '21788'
-            Title  = "Global Administrators don't have standing elevated access to all Azure subscriptions in the tenant"
+            Title  = "Administradores Globais não possuem acesso persistente elevado a todas as assinaturas do Azure no locatário"
             Status = $passed
             Result = $testResultMarkdown
         }

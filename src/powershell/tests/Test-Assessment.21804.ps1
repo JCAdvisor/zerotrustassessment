@@ -1,80 +1,68 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21804 {
     [ZtTest(
-    	Category = 'Credential management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de credenciais',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21804,
-    	Title = 'SMS and Voice Call authentication methods are disabled',
-    	UserImpact = 'Medium'
+    	Title = 'Métodos de autenticação SMS e Chamada de Voz estão desabilitados',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Weak authentication methods are disabled"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se métodos de autenticação fracos estão desabilitados"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
- $authMethodsPolicy = Invoke-ZtGraphRequest -RelativeUri "policies/authenticationMethodsPolicy" -ApiVersion 'v1.0'
-$matchedMethods = $authMethodsPolicy.authenticationMethodConfigurations | Where-Object { $_.id -eq 'Sms' -or $_.id -eq 'Voice' }
+    $authMethodsPolicy = Invoke-ZtGraphRequest -RelativeUri "policies/authenticationMethodsPolicy" -ApiVersion 'v1.0'
+    $matchedMethods = $authMethodsPolicy.authenticationMethodConfigurations | Where-Object { $_.id -eq 'Sms' -or $_.id -eq 'Voice' }
 
-$testResultMarkdown = ""
+    $testResultMarkdown = ""
 
-# If the "state" property of any of the matched methods is "enabled", fail the test. Else pass the test.
-if ($matchedMethods.state -contains 'enabled') {
-    $passed = $false
-    $testResultMarkdown += "Found weak authentication methods that are still enabled.`n`n%TestResult%"
-}
-else {
-    $passed = $true
-    $testResultMarkdown += "SMS and voice calls authentication methods are disabled in the tenant.`n`n%TestResult%"
-}
+    if ($matchedMethods.state -contains 'enabled') {
+        $passed = $false
+        $testResultMarkdown += "Foram encontrados métodos de autenticação fracos que ainda estão habilitados.`n`n%TestResult%"
+    }
+    else {
+        $passed = $true
+        $testResultMarkdown += "Os métodos de autenticação SMS e chamadas de voz estão desabilitados no locatário.`n`n%TestResult%"
+    }
 
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Weak authentication methods"
+    $reportTitle = "Métodos de autenticação fracos"
     $tableRows = ""
 
-        # Create a here-string with format placeholders {0}, {1}, etc.
-        $formatTemplate = @'
+    $formatTemplate = @'
 ## {0}
-| Method ID | Is method weak? | State |
+| ID do Método | O método é fraco? | Estado |
 | :-------- | :-------------- | :---- |
 {1}
 '@
 
-        foreach ($method in $matchedMethods) {
+    foreach ($method in $matchedMethods) {
+        $tableRows += "| $($method.id) | Sim | $((Get-Culture).TextInfo.ToTitleCase($method.state.ToLower())) |`n"
+    }
 
-            $tableRows += @"
-| $($method.id) | Yes | $($method.state) |`n
-"@
-        }
-
-        # Format the template by replacing placeholders with values
-        $mdInfo = $formatTemplate -f $reportTitle, $tableRows
-
-    # Replace the placeholder with the detailed information
+    $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-
 
     $params = @{
         TestId             = '21804'
-        Title              = "Weak authentication methods are disabled"
-        UserImpact         = 'Medium'
-        Risk               = 'High'
-        ImplementationCost = 'Medium'
-        AppliesTo          = 'Identity'
-        Tag                = 'Identity'
+        Title              = "Métodos de autenticação fracos estão desabilitados"
+        UserImpact         = 'Médio'
+        Risk               = 'Alto'
+        ImplementationCost = 'Médio'
+        AppliesTo          = 'Identidade'
+        Tag                = 'Identidade'
         Status             = $passed
         Result             = $testResultMarkdown
     }

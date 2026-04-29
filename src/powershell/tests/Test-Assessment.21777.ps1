@@ -1,37 +1,36 @@
-﻿<#
+<#
 .SYNOPSIS
-    Test to check if App Instance Property Lock is configured for all multitenant applications.
+    Teste para verificar se o bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários.
 #>
 
 function Test-Assessment-21777 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21777,
-    	Title = 'App instance property lock is configured for all multitenant applications',
-    	UserImpact = 'Low'
+    	Title = 'O bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking App Instance Property Lock is configured for all multitenant applications"
-    Write-ZtProgress -Activity $activity -Status "Getting applications"
+    $activity = "Verificando se o bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários"
+    Write-ZtProgress -Activity $activity -Status "Obtendo aplicativos"
 
     $sqlCount = "SELECT COUNT(*) ItemCount FROM Application WHERE ID IS NOT NULL"
     $resultCount = Invoke-DatabaseQuery -Database $Database -Sql $sqlCount
     $hasData = $resultCount.ItemCount -gt 0
 
     if($hasData){
-        # SQL query to find multitenant applications and check their servicePrincipalLockConfiguration
         $sqlApp = @"
         SELECT
             appId,
@@ -42,54 +41,32 @@ function Test-Assessment-21777 {
                 WHEN servicePrincipalLockConfiguration IS NULL THEN false
                 WHEN servicePrincipalLockConfiguration->>'isEnabled' = 'false' THEN false
                 ELSE true
-            END AS isLockConfigured
+            END as isLockConfigured
         FROM Application
-        WHERE signInAudience = 'AzureADMultipleOrgs' OR signInAudience = 'AzureADandPersonalMicrosoftAccount'
-        ORDER BY displayName
+        WHERE signInAudience IN ('AzureADMultipleOrgs', 'AzureADandPersonalMicrosoftAccount')
 "@
-
         $resultsApp = Invoke-DatabaseQuery -Database $Database -Sql $sqlApp
     }
 
-    # Initialize variables
-    $passed = $true
-    $testResultMarkdown = ""
+    $failedApps = $resultsApp | Where-Object { $_.isLockConfigured -eq $false }
+    $passed = $null -eq $failedApps -or $failedApps.Count -eq 0
 
-    # Check if any application in the results has isLockConfigured set to false
-    if ($hasData -and $resultsApp.Count -gt 0) {
-        foreach ($app in $resultsApp) {
-            if ($app.isLockConfigured -eq $false) {
-                $passed = $false
-                break
-            }
-        }
-    }
-
-    $noMultiTenantApps = -not $hasData -or $resultsApp.Count -eq 0
-    if ($noMultiTenantApps) {
-        $testResultMarkdown = "No multi-tenant apps were found in this tenant."
-    }
-    elseif ($passed) {
-        $testResultMarkdown = "All multi-tenant apps have app instance property lock configured."
+    if ($passed) {
+        $testResultMarkdown = "✅ **Passou**: Todos os aplicativos multilocatários possuem o bloqueio de instância configurado.`n`n"
     }
     else {
-        $testResultMarkdown = "Found multi-tenant apps without app instance property lock configured.`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: Foram encontrados aplicativos multilocatários sem o bloqueio de propriedade de instância configurado.`n`n"
     }
 
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Multi-tenant applications and their App Instance Property Lock setting"
+    $reportTitle = "Aplicativos multilocatários e configuração de Bloqueio de Instância"
     $tableRows = ""
 
     if ($resultsApp.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
-
-| Application | Application ID | App Instance Property Lock configured |
+| Aplicativo | ID do Aplicativo | Bloqueio de Instância Configurado |
 | :---------- | :------------- | :------------------------------------ |
 {1}
 
@@ -97,26 +74,22 @@ function Test-Assessment-21777 {
 
         foreach ($app in $resultsApp) {
             $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Authentication/appId/{0}/isMSAApp~/false' -f $app.appId
-            $tableRows += @"
-| [$(Get-SafeMarkdown($app.displayName))]($portalLink) | $($app.appId) | $($app.isLockConfigured) |`n
-"@
+            $tableRows += "| [$(Get-SafeMarkdown($app.displayName))]($portalLink) | $($app.appId) | $($app.isLockConfigured) |`n"
         }
 
-        # Format the template by replacing placeholders with values
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{
         TestId             = '21777'
-        Title              = "App Instance Property Lock is configured for all multitenant applications"
-        UserImpact         = 'Low'
-        Risk               = 'High'
-        ImplementationCost = 'Low'
-        AppliesTo          = 'Identity'
-        Tag                = 'Identity'
+        Title              = "O bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários"
+        UserImpact         = 'Baixo'
+        Risk               = 'Alto'
+        ImplementationCost = 'Baixo'
+        AppliesTo          = 'Identidade'
+        Tag                = 'Identidade'
         Status             = $passed
         Result             = $testResultMarkdown
     }

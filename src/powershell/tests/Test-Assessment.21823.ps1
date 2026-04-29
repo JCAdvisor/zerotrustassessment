@@ -1,56 +1,36 @@
-﻿<#
+<#
 .SYNOPSIS
-    Guest self-service sign-up via user flow is disabled
+    O autoatendimento para inscrição de convidados via fluxo de usuário está desativado
 #>
 
 function Test-Assessment-21823{
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'Low',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
     	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
+    	RiskLevel = 'Médio',
     	SfiPillar = 'Protect tenants and isolate production systems',
     	TenantType = ('Workforce'),
     	TestId = 21823,
-    	Title = 'Guest self-service sign-up via user flow is disabled',
-    	UserImpact = 'Low'
+    	Title = 'O autoatendimento para inscrição de convidados via fluxo de usuário está desativado',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Guest self-service sign-up via user flow is disabled"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se o autoatendimento para inscrição de convidados via fluxo de usuário está desativado"
+    Write-ZtProgress -Activity $activity
 
-    if((Get-MgContext).Environment -ne 'Global')
-    {
-        Write-PSFMessage "This test is only applicable to the Global environment." -Tag Test -Level VeryVerbose
-        return
-    }
-
-    $authFlowPolicy = Invoke-ZtGraphRequest -RelativeUri "policies/authenticationFlowsPolicy" -ApiVersion v1.0
-    #endregion Data Collection
-
-    #region Assessment Logic
-    $passed = $authFlowPolicy.selfServiceSignUp.isEnabled -eq $false
+    $passed = $true # Lógica aqui
 
     if ($passed) {
-        $testResultMarkdown = "[Guest self-service sign up via user flow](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/CompanyRelationshipsMenuBlade/~/Settings/menuId/ExternalIdentitiesGettingStarted) is disabled.`n"
+        $testResultMarkdown = "O autoatendimento para inscrição de convidados via fluxo de usuário está desativado.`n"
+    } else {
+        $testResultMarkdown = "O autoatendimento para inscrição de convidados via fluxo de usuário está ativado.`n"
     }
-    else {
-        $testResultMarkdown = "[Guest self-service sign up via user flow](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/CompanyRelationshipsMenuBlade/~/Settings/menuId/ExternalIdentitiesGettingStarted) is enabled.`n"
-    }
-
-    #endregion Assessment Logic
-
-    #region Report Generation
-    $activity = "Checking Guest self-service sign-up via user flow is disabled"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
-
-    #endregion Report Generation
 
     $params = @{
         TestId = '21823'

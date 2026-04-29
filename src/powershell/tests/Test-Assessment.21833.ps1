@@ -1,35 +1,30 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
-function Test-Assessment-21833{
+function Test-Assessment-21833 {
     [ZtTest(
-    	Category = 'Privileged access',
-    	ImplementationCost = 'High',
+    	Category = 'Acesso privilegiado',
+    	ImplementationCost = 'Alto',
     	Pillar = 'Identity',
-    	RiskLevel = 'Low',
+    	RiskLevel = 'Baixo',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce'),
     	TestId = 21833,
-    	Title = 'Directory Sync account credentials haven''t been rotated recently',
-    	UserImpact = 'Low'
+    	Title = 'As credenciais da conta de sincronização do diretório foram rotacionadas recentemente',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Directory Sync account credentials haven't been rotated recently"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando rotação de credenciais da conta de sincronização"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    $result = $false
-    $testResultMarkdown = "Planned for future release."
-    $passed = $result
+    $passed = $false
+    $testResultMarkdown = "Planejado para uma versão futura."
 
-
-    Add-ZtTestResultDetail -TestId '21833' -Title "Directory Sync account credentials haven't been rotated recently" `
-        -UserImpact Low -Risk Low -ImplementationCost High `
-        -AppliesTo Identity -Tag Identity `
+    Add-ZtTestResultDetail -TestId '21833' -Title "As credenciais da conta de sincronização do diretório foram rotacionadas recentemente" `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction
 }

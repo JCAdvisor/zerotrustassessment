@@ -1,8 +1,7 @@
-When organizations maintain a disproportionately high ratio of Global Administrators relative to their total privileged user population, they expose themselves to significant security risks that threat actors might exploit through various attack vectors. Excessive Global Administrator assignments create multiple high-value targets for threat actors who might leverage initial access through credential compromise, phishing attacks, or insider threats to gain unrestricted access to the entire Microsoft Entra ID tenant and connected Microsoft 365 services. 
+Quando as organizações mantêm uma proporção desproporcionalmente alta de Administradores Globais em relação à sua população total de usuários privilegiados, elas se expõem a riscos de segurança significativos que os atores de ameaça podem explorar por meio de vários vetores de ataque. Atribuições excessivas de Administrador Global criam vários alvos de alto valor para atores de ameaça que podem alavancar o acesso inicial por meio de comprometimento de credenciais, ataques de phishing ou ameaças internas para obter acesso irrestrito a todo o locatário do Microsoft Entra ID e serviços conectados do Microsoft 365.
 
-**Remediation action**
+**Ação de correção**
 
-- [Minimize the number of Global Administrator role assignments](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#5-limit-the-number-of-global-administrators-to-less-than-5)
+- [Minimize o número de atribuições da função de Administrador Global](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#5-limit-the-number-of-global-administrators-to-less-than-5)
 <!--- Results --->
 %TestResult%
-

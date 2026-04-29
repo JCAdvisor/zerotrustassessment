@@ -1,30 +1,28 @@
-﻿<#
+<#
 .SYNOPSIS
-
 #>
 
-function Test-Assessment-21842{
+function Test-Assessment-21842 {
     [ZtTest(
-    	Category = 'Credential management, Privileged access',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de credenciais, Acesso privilegiado',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
     	Pillar = 'Identity',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce'),
     	TestId = 21842,
-    	Title = 'Block administrators from using SSPR',
-    	UserImpact = 'Low'
+    	Title = 'Bloquear administradores de usar o SSPR',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Block administrators from using SSPR'
-    Write-ZtProgress -Activity $activity -Status 'Getting policy'
+    $activity = 'Verificando se administradores estão bloqueados de usar o SSPR'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo política'
 
-    # Query the authorization policy for allowedToUseSspr
     $authorizationPolicy = Invoke-ZtGraphRequest -RelativeUri 'policies/authorizationPolicy' -ApiVersion beta
     $allowedToUseSspr = $authorizationPolicy.allowedToUseSspr
 
@@ -33,20 +31,14 @@ function Test-Assessment-21842{
 
     if ($null -ne $allowedToUseSspr -and $allowedToUseSspr -eq $false) {
         $passed = $true
-        $userMessage = '✅ Administrators are properly blocked from using Self-Service Password Reset, ensuring password changes go through controlled processes.'
+        $userMessage = '✅ Administradores estão devidamente bloqueados de usar o Autoatendimento para Redefinição de Senha.'
     } else {
-        $userMessage = '❌ Administrators have access to Self-Service Password Reset, which bypasses security controls and administrative oversight.'
+        $userMessage = '❌ Administradores têm acesso ao Autoatendimento para Redefinição de Senha, o que contorna controles de segurança.'
     }
 
-    # Build markdown output (no remediation section)
     $testResultMarkdown = @"
 $userMessage
 "@
 
-    $params = @{
-        TestId = '21842'
-        Status = $passed
-        Result = $testResultMarkdown
-    }
-    Add-ZtTestResultDetail @params
+    Add-ZtTestResultDetail -TestId '21842' -Status $passed -Result $testResultMarkdown
 }

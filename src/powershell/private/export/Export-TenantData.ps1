@@ -26,7 +26,7 @@ function Export-TenantData {
 		$MaximumSignInLogQueryTime,
 
 		# The Zero Trust pillar to assess. Defaults to All.
-		[ValidateSet('All', 'Identity', 'Devices')]
+		[ValidateSet('All', 'Identity', 'Devices', 'Identidade', 'Dispositivos')]
 		[string]
 		$Pillar = 'All'
 	)
@@ -57,7 +57,7 @@ function Export-TenantData {
 	# TODO: Log tenant id and name to config and if it is different from the current tenant context error out.
 	$EntraIDPlan = Get-ZtLicenseInformation -Product EntraID
 
-	if ($Pillar -in ('All', 'Identity')) {
+	if ($Pillar -in ('All', 'Identity', 'Identidade')) {
 
 		$userQueryString = '$top=999&$select=deletedDateTime, userType, streetAddress, onPremisesSipInfo, displayName, preferredLanguage, postalCode, faxNumber, onPremisesUserPrincipalName, serviceProvisioningErrors, cloudRealtimeCommunicationInfo, createdDateTime, signInSessionsValidFromDateTime, creationType, city, onPremisesDomainName, onPremisesProvisioningErrors, externalUserStateChangeDateTime, proxyAddresses, imAddresses, refreshTokensValidFromDateTime, onPremisesLastSyncDateTime, passwordPolicies, employeeLeaveDateTime, surname, employeeId, showInAddressList, usageLocation, isManagementRestricted, assignedPlans, authorizationInfo, id, provisionedPlans, userPrincipalName, accountEnabled, passwordProfile, onPremisesObjectIdentifier, state, ageGroup, isLicenseReconciliationNeeded, mobilePhone, employeeHireDate, securityIdentifier, onPremisesSyncEnabled, identities, jobTitle, onPremisesSecurityIdentifier, companyName, legalAgeGroupClassification, otherMails, mailNickname, employeeOrgData, assignedLicenses, employeeType, onPremisesSamAccountName, externalUserState, businessPhones, isResourceAccount, mail, infoCatalogs, deviceKeys, onPremisesImmutableId, externalUserConvertedOn, department, onPremisesExtensionAttributes, givenName, preferredDataLocation, officeLocation, onPremisesDistinguishedName, consentProvidedForMinor, country'
 		if ($EntraIDPlan -ne 'Free') {
@@ -133,7 +133,7 @@ function Export-TenantData {
 		}
 	}
 
-	if ($Pillar -in ('All', 'Devices')) {
+	if ($Pillar -in ('All', 'Devices', 'Dispositivos')) {
 		Export-GraphEntity -ExportPath $ExportPath -EntityName 'Device' `
 			-EntityUri 'beta/devices' -ProgressActivity 'Devices' `
 			-QueryString '$top=999' -ShowCount

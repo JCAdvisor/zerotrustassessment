@@ -28,7 +28,7 @@ function Export-Database {
 		[PSFDirectorySingle]$ExportPath,
 
 		# The Zero Trust pillar to assess. Defaults to All.
-		[ValidateSet('All', 'Identity', 'Devices', 'Network', 'Data')]
+		[ValidateSet('All', 'Identity', 'Devices', 'Network', 'Data', 'Identidade', 'Dispositivos', 'Rede', 'Dados')]
 		[string]
 		$Pillar = 'All'
 	)
@@ -140,7 +140,7 @@ as
 		throw $_
 	}
 
-	if ($Pillar -in ('All', 'Identity')) {
+	if ($Pillar -in ('All', 'Identity', 'Identidade')) {
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'User'
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'Application'
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'ServicePrincipal'
@@ -159,12 +159,12 @@ as
 		New-ViewRole -Database $database
 	}
 
-	if ($Pillar -in ('All', 'Devices')) {
+	if ($Pillar -in ('All', 'Devices', 'Dispositivos')) {
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'Device'
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'ConfigurationPolicy'
 	}
 
-	if ($Pillar -in ('All', 'Network')) {
+	if ($Pillar -in ('All', 'Network', 'Rede')) {
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'User'
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'Application'
 		Import-EntraTable -Database $database -ExportPath $ExportPath -TableName 'ServicePrincipal'

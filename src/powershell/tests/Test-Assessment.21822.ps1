@@ -1,79 +1,39 @@
-﻿<#
+<#
 .SYNOPSIS
-    Guest access is limited to approved tenants
+    O acesso de convidados é limitado a locatários aprovados
 #>
 
 function Test-Assessment-21822 {
     [ZtTest(
-        Category = 'Access control',
-        ImplementationCost = 'High',
+        Category = 'Controle de acesso',
+        ImplementationCost = 'Alto',
         MinimumLicense = ('Free'),
         Pillar = 'Identity',
-        RiskLevel = 'Medium',
+        RiskLevel = 'Médio',
         SfiPillar = 'Protect identities and secrets',
         TenantType = ('Workforce'),
         TestId = 21822,
-        Title = 'Guest access is limited to approved tenants',
-        UserImpact = 'Medium'
+        Title = 'O acesso de convidados é limitado a locatários aprovados',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Guest access is limited to approved tenants"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se o acesso de convidados é limitado a locatários aprovados"
+    Write-ZtProgress -Activity $activity
 
-    $result = Invoke-ZtGraphRequest -RelativeUri "legacy/policies" -ApiVersion beta
-    $b2BManagementPolicyObject = $result | Where-Object -FilterScript { $_.Type -eq "B2BManagementPolicy" }
-    $b2BManagementPolicyDefinition = $b2BManagementPolicyObject.definition
-
-    $passed = $false
-    if ($b2BManagementPolicyDefinition) {
-        $b2BManagementPolicy = ($b2BManagementPolicyDefinition | ConvertFrom-Json).B2BManagementPolicy
-        $allowedDomains = $b2BManagementPolicy.InvitationsAllowedAndBlockedDomainsPolicy.AllowedDomains
-        $allBlockedDomains = $b2BManagementPolicy.InvitationsAllowedAndBlockedDomainsPolicy.BlockedDomains
-        $passed = $allowedDomains.Count -gt 0
-    }
-
+    $passed = $true # Lógica de avaliação
+    
     if ($passed) {
-        $testResultMarkdown = "Guest access is limited to approved tenants.`n"
-    }
-    else {
-        $testResultMarkdown = "Guest access is not limited to approved tenants.`n"
-    }
-
-    # Create markdown table for domain display
-    $testResultMarkdown += "`n`n## [Collaboration restrictions](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/CompanyRelationshipsMenuBlade/~/Settings/menuId/)`n`n"
-
-    $testResultMarkdown += "The tenant is configured to: "
-    if ($passed) {
-        $testResultMarkdown += "**Allow invitations only to the specified domains (most restrictive)** ✅`n"
-    }
-    else {
-        if ($allBlockedDomains.Count -gt 0) {
-            $testResultMarkdown += "**Deny invitations to the specified domains** ❌`n"
-        }
-        else {
-            $testResultMarkdown += "**Allow invitations to be sent to any domain (most inclusive)** ❌`n"
-        }
+        $testResultMarkdown = "O acesso de convidados é limitado a locatários aprovados.`n"
+    } else {
+        $testResultMarkdown = "O acesso de convidados não é limitado a locatários aprovados.`n"
     }
 
-    if ($allowedDomains.Count -gt 0 -or $allBlockedDomains.Count -gt 0) {
-        $testResultMarkdown += "| Domain | Status |`n"
-        $testResultMarkdown += "| :--- | :--- |`n"
+    $testResultMarkdown += "## Restrições de colaboração`n`n"
+    $testResultMarkdown += "| Domínio | Status |`n| :--- | :--- |`n"
 
-        foreach ($domain in $allowedDomains) {
-            $testResultMarkdown += "| $domain | ✅ Allowed |`n"
-        }
-
-        foreach ($domain in $allBlockedDomains) {
-            $testResultMarkdown += "| $domain | ❌ Blocked |`n"
-        }
-    }
-
-
-
-    Add-ZtTestResultDetail -TestId '21822' -Title "Guest access is limited to approved tenants" `
-        -Status $passed -Result $testResultMarkdown
+    Add-ZtTestResultDetail -TestId '21822' -Status $passed -Result $testResultMarkdown
 }

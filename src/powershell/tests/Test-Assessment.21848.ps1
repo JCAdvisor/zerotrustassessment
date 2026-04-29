@@ -1,92 +1,80 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21848 {
     [ZtTest(
-    	Category = 'Credential management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de credenciais',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21848,
-    	Title = 'Add organizational terms to the banned password list',
-    	UserImpact = 'Low'
+    	Title = 'Adicionar termos organizacionais à lista de senhas banidas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    #region Data Collection
-    $activity = "Checking Enable custom banned passwords"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    #region Coleta de Dados
+    $activity = "Verificando se as senhas banidas personalizadas estão habilitadas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    # Retrieve the password protection settings
+    # Recupera as configurações de proteção de senha
     $settings = Invoke-ZtGraphRequest -RelativeUri "settings" -ApiVersion beta
 
     if ($settings) {
-        # The template ID '5cf42378-d67d-4f36-ba46-e8b86229381d' is specific to password protection settings
+        # O ID de modelo '5cf42378-d67d-4f36-ba46-e8b86229381d' é específico para configurações de proteção de senha
         $passwordProtectionSettings = $settings | Where-Object { $_.templateId -eq '5cf42378-d67d-4f36-ba46-e8b86229381d' }
     }
     else {
         $passwordProtectionSettings = $null
     }
-    #endregion Data Collection
+    #endregion Coleta de Dados
 
-    #region Assessment Logic
+    #region Lógica de Avaliação
     $passed = $false
-    $testResultMarkdown = ""
-
-    if ($passwordProtectionSettings) {
-        $enableBannedPasswordCheck = ($passwordProtectionSettings.values | Where-Object { $_.name -eq 'EnableBannedPasswordCheck' }).value
-        $bannedPasswordList = ($passwordProtectionSettings.values | Where-Object { $_.name -eq 'BannedPasswordList' }).value
-        if ($bannedPasswordList -eq "") { $bannedPasswordList = $null }
-
-        if ($enableBannedPasswordCheck -eq $true -and $null -ne $bannedPasswordList) {
+    if ($null -ne $passwordProtectionSettings) {
+        $enableBannedPasswordCheck = ($passwordProtectionSettings.values | Where-Object { $_.name -eq "EnableBannedPasswordCheck" }).value -eq "True"
+        $bannedPasswordList = ($passwordProtectionSettings.values | Where-Object { $_.name -eq "BannedPasswordList" }).value
+        
+        if ($enableBannedPasswordCheck -and -not [string]::IsNullOrEmpty($bannedPasswordList)) {
             $passed = $true
         }
     }
 
+    $testResultMarkdown = ""
     if ($passed) {
-        $testResultMarkdown = "Custom banned passwords are properly configured with organization-specific terms to prevent predictable password patterns.`n`n%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: A lista de senhas banidas personalizada está habilitada e contém termos.`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "Custom banned passwords are not enabled or lack sufficient organization-specific terms, leaving the environment vulnerable to targeted password attacks.`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: A lista de senhas banidas personalizada não está habilitada ou está vazia.`n%TestResult%"
     }
-    #endregion Assessment Logic
+    #endregion Lógica de Avaliação
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Password protection settings"
+    #region Geração de Relatório
+    $reportTitle = "Configurações de Senhas Banidas Personalizadas"
     $tableRows = ""
 
-    # Create a single table with all profiles
     $formatTemplate = @'
 
 ## {0}
 
-| Enforce custom list | Custom banned password list | Number of terms |
-| :------------------ | :-------------------------- | :-------------- |
+| Imposto | Lista de Senhas Banidas (Amostra) | Total de Termos |
+| :--- | :--- | :--- |
 {1}
 
 '@
 
     $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/AuthenticationMethodsMenuBlade/~/PasswordProtection/fromNav/'
 
-    if ($enableBannedPasswordCheck -eq $true) {
-        $enforced = "Yes"
-    }
-    else {
-        $enforced = "No"
-    }
+    $enforced = if ($enableBannedPasswordCheck) { "Sim" } else { "Não" }
 
-    # Split on tab characters to handle tab-delimited banned password entries
     if ($bannedPasswordList) {
         $bannedPasswordArray = $bannedPasswordList -split '\t'
     }
@@ -94,29 +82,24 @@ function Test-Assessment-21848 {
         $bannedPasswordArray = @()
     }
 
-    # Show up to 10 banned passwords, summarize if more exist
     $maxDisplay = 10
     if ($bannedPasswordArray.Count -gt $maxDisplay) {
-        $displayList = $bannedPasswordArray[0..($maxDisplay-1)] + "...and $($bannedPasswordArray.Count - $maxDisplay) more"
+        $displayList = $bannedPasswordArray[0..($maxDisplay-1)] + "...e mais $($bannedPasswordArray.Count - $maxDisplay)"
     }
     else {
         $displayList = $bannedPasswordArray
     }
 
     $tableRows += @"
-| [$(Get-SafeMarkdown($enforced))]($portalLink) | $($displayList -join ', ') | $($bannedPasswordArray.Count) |`n
+| [$enforced]($portalLink) | $($displayList -join ', ') | $($bannedPasswordArray.Count) |`n
 "@
 
-    # Format the template by replacing placeholders with values
     $mdInfo = $formatTemplate -f $reportTitle, $tableRows
-
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '21848'
-        Title  = "Enable custom banned passwords"
         Status = $passed
         Result = $testResultMarkdown
     }

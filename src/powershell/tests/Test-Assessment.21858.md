@@ -1,12 +1,11 @@
-When guest identities remain active but unused for extended periods, threat actors can exploit these dormant accounts as entry vectors into the organization. Inactive guest accounts represent a significant attack surface because they often maintain persistent access permissions to resources, applications, and data while remaining unmonitored by security teams. Threat actors frequently target these accounts through credential stuffing, password spraying, or by compromising the guest's home organization to gain lateral access. Once an inactive guest account is compromised, attackers can utilize existing access grants to:
-- Move laterally within the tenant
-- Escalate privileges through group memberships or application permissions
-- Establish persistence through techniques like creating more service principals or modifying existing permissions
+Quando identidades de convidados permanecem ativas, mas sem uso por longos períodos, atores de ameaça podem explorar essas contas dormentes como vetores de entrada na organização. Contas de convidados inativas representam uma superfície de ataque significativa porque muitas vezes mantêm permissões de acesso persistentes a recursos, aplicativos e dados, enquanto permanecem sem monitoramento pelas equipes de segurança. Atores de ameaça frequentemente visam essas contas por meio de preenchimento de credenciais (credential stuffing), pulverização de senhas (password spraying) ou comprometendo a organização de origem do convidado para obter acesso lateral. Uma vez que uma conta de convidado inativa é comprometida, os atacantes podem utilizar as concessões de acesso existentes para:
+- Mover-se lateralmente dentro do locatário (tenant).
+- Escalar privilégios por meio de associações a grupos ou permissões de aplicativos.
+- Estabelecer persistência por meio de técnicas como a criação de mais principais de serviço ou modificação de permissões existentes.
 
-The prolonged dormancy of these accounts provides attackers with extended dwell time to conduct reconnaissance, exfiltrate sensitive data, and establish backdoors without detection, as organizations typically focus monitoring efforts on active internal users rather than external guest accounts.
+A dormência prolongada dessas contas fornece aos atacantes um tempo de permanência estendido para realizar reconhecimento, exfiltrar dados sensíveis e estabelecer backdoors sem detecção, já que as organizações normalmente concentram os esforços de monitoramento em usuários internos ativos em vez de contas de convidados externos.
 
-**Remediation action**
-- [Monitor and clean up stale guest accounts](https://learn.microsoft.com/entra/identity/users/clean-up-stale-guest-accounts?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+**Ação de correção**
+- [Monitorar e limpar contas de convidados obsoletas](https://learn.microsoft.com/entra/identity/users/clean-up-stale-guest-accounts?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

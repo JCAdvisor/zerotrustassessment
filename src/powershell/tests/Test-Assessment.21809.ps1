@@ -1,44 +1,40 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
-function Test-Assessment-21809{
+function Test-Assessment-21809 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21809,
-    	Title = 'Admin consent workflow is enabled',
-    	UserImpact = 'Low'
+    	Title = 'Fluxo de trabalho de consentimento do administrador está habilitado',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Admin consent workflow is enabled"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se o fluxo de trabalho de consentimento do administrador está habilitado"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = Invoke-ZtGraphRequest -RelativeUri "policies/adminConsentRequestPolicy" -ApiVersion v1.0
     $passed = $result.isEnabled
 
     if ($passed) {
-        $testResultMarkdown = "Admin consent workflow is enabled.`n`n"
+        $testResultMarkdown = "O fluxo de trabalho de consentimento do administrador está habilitado.`n`n"
     }
     else {
-        $testResultMarkdown = "Admin consent workflow is disabled.`n`n%TestResult%"
+        $testResultMarkdown = "O fluxo de trabalho de consentimento do administrador está desabilitado.`n`n%TestResult%"
     }
 
-    $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", "The adminConsentRequestPolicy.isEnabled property is set to false."
+    $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", "A propriedade adminConsentRequestPolicy.isEnabled está definida como false."
 
-
-    Add-ZtTestResultDetail -TestId '21809' -Title "Admin consent workflow is enabled" `
-        -UserImpact Low -Risk High -ImplementationCost Low `
-        -AppliesTo Identity -Tag Identity `
-        -Status $passed -Result $testResultMarkdown
+    Add-ZtTestResultDetail -TestId '21809' -Status $passed -Result $testResultMarkdown
 }

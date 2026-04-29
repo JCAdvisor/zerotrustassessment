@@ -1,13 +1,12 @@
-Guest accounts with extended sign-in sessions increase the risk surface area that threat actors can exploit. When guest sessions persist beyond necessary timeframes, threat actors often attempt to gain initial access through credential stuffing, password spraying, or social engineering attacks. Once they gain access, they can maintain unauthorized access for extended periods without reauthentication challenges. These compromised and extended sessions:
+Contas de convidados com sessões de logon estendidas aumentam a superfície de ataque. Quando as sessões persistem além do tempo necessário, atores de ameaça podem tentar acesso inicial via credential stuffing, pulverização de senhas ou engenharia social. Uma vez dentro, podem manter o acesso por longos períodos sem novos desafios de autenticação. Essas sessões estendidas permitem:
 
-- Allow unauthorized access to Microsoft Entra artifacts, enabling threat actors to identify sensitive resources and map organizational structures.
-- Allow threat actors to persist within the network by using legitimate authentication tokens, making detection more challenging as the activity appears as typical user behavior.
-- Provides threat actors with a longer window of time to escalate privileges through techniques like accessing shared resources, discovering more credentials, or exploiting trust relationships between systems.
+- Acesso não autorizado a artefatos do Microsoft Entra, permitindo identificar recursos sensíveis.
+- Persistência na rede usando tokens de autenticação legítimos, dificultando a detecção.
+- Uma janela maior para escalar privilégios acessando recursos compartilhados ou explorando relações de confiança.
 
-Without proper session controls, threat actors can achieve lateral movement across the organization's infrastructure, accessing critical data and systems that extend far beyond the original guest account's intended scope of access. 
+Sem controles de sessão adequados, invasores podem realizar movimentação lateral por toda a infraestrutura, acessando dados críticos muito além do escopo original da conta de convidado.
 
-**Remediation action**
-- [Configure adaptive session lifetime policies](https://learn.microsoft.com/entra/identity/conditional-access/howto-conditional-access-session-lifetime?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) so sign-in frequency policies have shorter live sign-in sessions.
+**Ação de correção**
+- [Configurar políticas adaptativas de tempo de vida de sessão](https://learn.microsoft.com/entra/identity/conditional-access/howto-conditional-access-session-lifetime?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para que as políticas de frequência de logon tenham sessões mais curtas.
 <!--- Results --->
 %TestResult%
-
