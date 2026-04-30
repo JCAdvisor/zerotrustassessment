@@ -34,4 +34,11 @@ function Test-Assessment-21954{
         "[Usuários não administradores podem recuperar chaves do BitLocker para seus dispositivos próprios]($portalLink)"
     }
 
-    $params = @{\n        TestId             = '21954'\n        Status             = $passed\n        Result             = $testResultMarkdown\n    }\n\n    Add-ZtTestResultDetail @params\n}
+        $params = @{
+        TestId             = '21954'
+        Status             = $passed
+        Result             = $testResultMarkdown
+    }
+
+    Add-ZtTestResultDetail @params
+}
