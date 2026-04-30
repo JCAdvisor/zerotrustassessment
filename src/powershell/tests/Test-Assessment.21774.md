@@ -7,5 +7,5 @@ Se credenciais (como segredos de cliente ou certificados) estiverem configuradas
 - Confirme se as credenciais adicionadas ainda são casos de uso válidos. Se não, remova as credenciais dos aplicativos de serviço da Microsoft.
     - No centro de administração do Microsoft Entra, acesse **Entra ID** > **Registros de aplicativo** e selecione o aplicativo afetado.
     - Vá para a seção **Certificados e segredos** e remova quaisquer credenciais que não sejam mais necessárias.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

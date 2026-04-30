@@ -6,5 +6,5 @@ A falta de resposta permite que os atacantes executem reconhecimento, tentem esc
 
 - [Investigar logins de risco](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Corrigir riscos e desbloquear usuários](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-remediate-unblock?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

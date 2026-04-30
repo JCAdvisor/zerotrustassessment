@@ -4,5 +4,5 @@ Este teste verifica se as credenciais da conta de sincronização do diretório 
 - [Gerenciar credenciais e certificados do Microsoft Entra Connect](https://learn.microsoft.com/entra/identity/hybrid/connect/how-to-connect-install-automatic-upgrade?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - Rotacione as chaves e credenciais usadas para a sincronização de diretório local.
 
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

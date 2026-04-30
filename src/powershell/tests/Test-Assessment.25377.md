@@ -7,5 +7,5 @@ Uma vez autenticado em um locatário externo, um agente de ameaças pode acessar
 - [Ativar sinalização de restrições universais de locatário](https://learn.microsoft.com/entra/global-secure-access/how-to-universal-tenant-restrictions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) no Global Secure Access.
 - [Implantar cliente Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/concept-clients?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) nos dispositivos.
 - [Habilitar o perfil de tráfego da Microsoft](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-microsoft-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

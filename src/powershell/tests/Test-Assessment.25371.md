@@ -11,5 +11,5 @@ Sem essa proteção:
 - Revise os recursos do [Universal CAE](https://learn.microsoft.com/entra/global-secure-access/concept-universal-continuous-access-evaluation?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para Global Secure Access.
 - Remova ou modifique as políticas de Acesso Condicional que desabilitam o CAE para cargas de trabalho do Global Secure Access.
 - Configure o Universal CAE para usar o modo de Imposição Estrita para proteção aprimorada contra repetição de token.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -6,5 +6,5 @@ A habilitação da inscrição automática do Defender garante que os dispositiv
 
 Use o Intune para configurar a inscrição automática no Microsoft Defender para Endpoint para dispositivos Android para impor a proteção contra ameaças móveis:  
 - [Integrar o Microsoft Defender para Endpoint com o Intune e integrar dispositivos](https://learn.microsoft.com/intune/intune-service/protect/advanced-threat-protection-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

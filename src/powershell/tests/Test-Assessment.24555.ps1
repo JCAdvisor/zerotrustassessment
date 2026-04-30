@@ -13,7 +13,7 @@ function Test-Assessment-24555 {
     	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24555,
-    	Title = 'A configuração de etiquetas de âmbito é aplicada para apoiar a administração delegada e o acesso com o menor privilégio',
+    	Title = 'A configuração de Tags de Escopo é aplicada para apoiar a administração delegada e o acesso com o menor privilégio',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -57,7 +57,7 @@ function Test-Assessment-24555 {
     #region Geração de Relatório
     $testResultMarkdown = ""
     if ($passed) {
-        $testResultMarkdown = "✅ Etiquetas de âmbito personalizadas foram encontradas e atribuídas.`n`n"
+        $testResultMarkdown = "✅ Tags de Escopo personalizadas foram encontradas e atribuídas.`n`n"
     }
     else {
         $testResultMarkdown = "❌ Nenhuma etiqueta de âmbito personalizada foi encontrada ou nenhuma está atribuída.`n`n"

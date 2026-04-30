@@ -6,5 +6,5 @@ Se este teste passar, seu locatário possui uma política TRv2 configurada, mas 
 
 **Ação de remediação**
 - [Configurar Restrições de Locatário v2](https://learn.microsoft.com/entra/external-id/tenant-restrictions-v2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

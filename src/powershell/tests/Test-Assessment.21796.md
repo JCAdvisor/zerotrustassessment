@@ -4,5 +4,5 @@ Atacantes que ganham acesso através de autenticação legada podem se mover lat
 
 **Ação de remediação**
 - [Implantar uma política de Acesso Condicional para Bloquear autenticação legada](https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

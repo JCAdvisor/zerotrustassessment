@@ -5,5 +5,5 @@ Organizações que usam senhas podem contar com a redefinição de senha para re
 **Ação de remediação**
 - [Implantar política de Acesso Condicional para exigir alteração de senha segura para risco de usuário elevado](https://learn.microsoft.com/entra/identity/conditional-access/policy-risk-based-user?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Use o Microsoft Entra ID Protection para [investigar o risco detalhadamente](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

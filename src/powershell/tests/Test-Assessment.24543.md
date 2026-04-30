@@ -7,5 +7,5 @@ A aplicação de políticas de conformidade garante que os dispositivos iOS/iPad
 Crie e atribua políticas de conformidade do Intune para dispositivos iOS/iPadOS para aplicar os padrões organizacionais de acesso e gerenciamento seguros:
 - [Criar uma política de conformidade no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/protect/create-compliance-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-policy)
 - [Revisar as configurações de conformidade do iOS/iPadOS que você pode gerenciar com o Intune](https://learn.microsoft.com/intune/intune-service/protect/compliance-policy-create-ios?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

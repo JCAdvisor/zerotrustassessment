@@ -7,5 +7,5 @@ Se os logs não forem arquivados regularmente ou enviados a uma ferramenta SIEM 
 - [Configurar as definições de diagnóstico do Microsoft Entra](https://learn.microsoft.com/entra/identity/monitoring-health/howto-configure-diagnostic-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Integrar os logs do Microsoft Entra com os logs do Azure Monitor](https://learn.microsoft.com/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Transmitir logs do Microsoft Entra para um hub de eventos](https://learn.microsoft.com/entra/identity/monitoring-health/howto-stream-logs-to-event-hub?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

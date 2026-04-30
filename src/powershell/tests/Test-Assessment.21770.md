@@ -6,5 +6,5 @@ Atacantes podem explorar aplicativos válidos, mas inativos, que ainda possuem p
 - Investigar se o aplicativo possui casos de uso legítimos
 - [Se a entidade de serviço não tiver casos de uso legítimos, exclua-a](https://learn.microsoft.com/graph/api/serviceprincipal-delete?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

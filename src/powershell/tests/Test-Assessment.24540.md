@@ -13,5 +13,5 @@ Configure e atribua políticas de firewall para Windows no Intune para bloquear 
 
 Para mais informações, consulte:
 - [Configurações disponíveis do Firewall do Windows](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-firewall-profile-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#windows-firewall-profile)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

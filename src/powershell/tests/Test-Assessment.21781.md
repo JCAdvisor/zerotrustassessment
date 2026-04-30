@@ -8,5 +8,5 @@ Uma vez que uma conta ou sessão privilegiada é comprometida devido a métodos 
 - [Garanta que as contas privilegiadas registrem e usem métodos resistentes a phishing](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-strengths?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#authentication-strengths)
 - [Implante uma política de Acesso Condicional para exigir credenciais resistentes a phishing para administradores](https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Monitore a atividade dos métodos de autenticação](https://learn.microsoft.com/entra/identity/monitoring-health/concept-usage-insights-report?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#authentication-methods-activity)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

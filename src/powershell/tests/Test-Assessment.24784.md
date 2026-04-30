@@ -7,5 +7,5 @@ A imposição de políticas do Defender Antivírus garante que os dispositivos m
 Use o Intune para configurar e atribuir políticas do Microsoft Defender Antivírus para dispositivos macOS para impor a proteção em tempo real e manter definições atualizadas:  
 - [Configurar políticas do Intune para gerenciar o Microsoft Defender Antivírus](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-antivirus-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#macos)
 - [Atribuir políticas no Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

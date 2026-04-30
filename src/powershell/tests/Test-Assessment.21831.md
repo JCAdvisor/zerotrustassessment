@@ -5,5 +5,5 @@ Ações protegidas permitem que administradores assegurem essas tarefas com cont
 **Ação de correção**
 
 - [Adicionar, testar ou remover ações protegidas no Microsoft Entra ID](https://learn.microsoft.com/entra/identity/role-based-access-control/protected-actions-add?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -2,5 +2,5 @@ Os aplicativos de linha de negócio (LOB) e de parceiros devem utilizar a Biblio
 
 **Ação de remediação**
 - Migre os aplicativos para a MSAL.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -7,5 +7,5 @@ Certificados, se não forem armazenados com segurança, podem ser extraídos e e
 - [Definir políticas de gerenciamento de aplicativos](https://learn.microsoft.com/graph/api/resources/applicationauthenticationmethodpolicy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Impor padrões de segredos e certificados](https://learn.microsoft.com/entra/identity/enterprise-apps/tutorial-enforce-secret-standards?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Crie uma função personalizada de privilégio mínimo para rotacionar credenciais de aplicativos](https://learn.microsoft.com/entra/identity/role-based-access-control/custom-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

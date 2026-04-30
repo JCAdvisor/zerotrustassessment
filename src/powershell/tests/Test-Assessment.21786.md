@@ -5,5 +5,5 @@ A proteção de token, também chamada de vinculação de token (token binding),
 **Ação de remediação**
 
 - [Implantar uma política de Acesso Condicional para exigir proteção de token](https://learn.microsoft.com/entra/identity/conditional-access/concept-token-protection?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -9,5 +9,5 @@ Sem essa proteção:
 **Ação de remediação**
 
 - Habilite a sinalização do Global Secure Access no Acesso Condicional. Para mais informações, consulte [Restauração do IP de origem](https://learn.microsoft.com/entra/global-secure-access/how-to-source-ip-restoration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

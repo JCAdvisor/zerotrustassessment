@@ -6,5 +6,5 @@ A imposição de políticas de atualização do macOS garante que os dispositivo
 
 Configure e atribua políticas de atualização do macOS no Intune para impor o patching oportuno e reduzir o risco de vulnerabilidades não corrigidas:  
 - [Gerenciar atualizações de software do macOS no Intune](https://learn.microsoft.com/intune/intune-service/protect/software-updates-macos?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

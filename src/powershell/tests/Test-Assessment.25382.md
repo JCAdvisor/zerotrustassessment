@@ -11,5 +11,5 @@ O escopo adequado garante uma implementação controlada — começando com grup
 **Ação de remediação**
 
 - Atribua usuários e grupos aos perfis de encaminhamento de tráfego. Para mais informações, consulte [Gerenciar atribuição de usuários e grupos](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-users-groups-assignment?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

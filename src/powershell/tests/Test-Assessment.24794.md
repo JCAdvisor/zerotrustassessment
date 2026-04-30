@@ -6,5 +6,5 @@ A imposição de Termos e Condições garante que os usuários reconheçam e ace
 
 Crie e atribua políticas de Termos e Condições no Intune para exigir a aceitação do usuário antes de conceder acesso aos recursos corporativos:  
 - [Criar política de termos e condições](https://learn.microsoft.com/intune/intune-service/enrollment/terms-and-conditions-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

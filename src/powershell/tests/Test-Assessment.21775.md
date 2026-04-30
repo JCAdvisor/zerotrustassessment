@@ -5,5 +5,5 @@ Configurar políticas de gerenciamento de aplicativos apropriadas ajuda as organ
 **Ação de remediação**
 
 - [Saiba como impor padrões de segredos e certificados usando políticas de gerenciamento de aplicativos](https://learn.microsoft.com/entra/identity/enterprise-apps/tutorial-enforce-secret-standards?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

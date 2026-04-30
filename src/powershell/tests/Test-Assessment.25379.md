@@ -7,5 +7,5 @@ A verificação de rede em conformidade reduz esse risco ao exigir que o tráfeg
 **Ação de remediação**
 - Habilite a sinalização do Global Secure Access para o Acesso Condicional. Para mais informações, consulte [Habilitar verificação de rede em conformidade com o Acesso Condicional](https://learn.microsoft.com/entra/global-secure-access/how-to-compliant-network?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-global-secure-access-signaling-for-conditional-access).
 - Crie uma política de Acesso Condicional que exija rede em conformidade para o acesso. Para mais informações, consulte [Proteja seus recursos atrás da rede em conformidade](https://learn.microsoft.com/entra/global-secure-access/how-to-compliant-network?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#protect-your-resources-behind-the-compliant-network).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

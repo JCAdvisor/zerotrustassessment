@@ -3,5 +3,5 @@ Quando as organizações mantêm uma proporção desproporcionalmente alta de Ad
 **Ação de correção**
 
 - [Minimize o número de atribuições da função de Administrador Global](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#5-limit-the-number-of-global-administrators-to-less-than-5)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

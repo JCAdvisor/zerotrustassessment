@@ -5,5 +5,5 @@ As organizações devem realizar um inventário e configurar uma lista de permis
 **Ação de correção**
 
 - Saiba como [configurar uma lista de domínios aprovados](https://learn.microsoft.com/entra/external-id/allow-deny-list?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-an-allowlist).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

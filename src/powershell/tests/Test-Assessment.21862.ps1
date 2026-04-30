@@ -26,11 +26,11 @@ function Test-Assessment-21862{
     }
 
     $activity = "Verificando se todas as identidades de carga de trabalho de risco passaram por triagem"
-    Write-ZtProgress -Activity $activity -Status "Obtendo principais de serviço de risco"
+    Write-ZtProgress -Activity $activity -Status "Obtendo entidades de serviço de risco"
 
     $untriagedRiskyPrincipals = Invoke-ZtGraphRequest -RelativeUri "identityProtection/riskyServicePrincipals" -ApiVersion v1.0 -Filter "riskState eq 'atRisk'"
 
-    Write-ZtProgress -Activity $activity -Status "Obtendo detecções de risco de principais de serviço"
+    Write-ZtProgress -Activity $activity -Status "Obtendo detecções de risco de entidades de serviço"
 
     $servicePrincipalRiskDetections = Invoke-ZtGraphRequest -RelativeUri "identityProtection/servicePrincipalRiskDetections" -ApiVersion v1.0 -Filter "riskState eq 'atRisk'"
 
@@ -44,10 +44,10 @@ function Test-Assessment-21862{
     else {
         $riskySPCount = $untriagedRiskyPrincipals.Count
         $riskyDetectionCount = $untriagedRiskDetections.Count
-        $testResultMarkdown = "Encontrados $riskySPCount principais de serviço de risco sem triagem e $riskyDetectionCount detecções de risco sem triagem"
+        $testResultMarkdown = "Encontrados $riskySPCount entidades de serviço de risco sem triagem e $riskyDetectionCount detecções de risco sem triagem"
 
         if ($riskySPCount -gt 0) {
-            $testResultMarkdown += "`n`n## Principais de Serviço de Risco sem Triagem`n`n"
+            $testResultMarkdown += "`n`n## entidades de serviço de Risco sem Triagem`n`n"
             $testResultMarkdown += "| Principal de Serviço | Tipo | Nível de Risco | Estado do Risco | Última Atualização do Risco |`n"
             $testResultMarkdown += "| :--- | :--- | :--- | :--- | :--- |`n"
             foreach ($sp in $untriagedRiskyPrincipals) {

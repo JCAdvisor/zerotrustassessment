@@ -6,5 +6,5 @@ Use o Microsoft Entra Privileged Identity Management (PIM) para fornecer acesso 
 
 - [Comece a usar o Privileged Identity Management](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-getting-started?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Crie uma revisão de acesso de recursos do Azure e funções do Microsoft Entra no PIM](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-create-roles-and-resource-roles-review?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -13,7 +13,7 @@ function Test-Assessment-23183 {
     	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce','External'),
     	TestId = 23183,
-    	Title = 'Principais de serviço usam URIs de redirecionamento seguros',
+    	Title = 'Entidades de serviço usam URIs de redirecionamento seguros',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -21,7 +21,7 @@ function Test-Assessment-23183 {
 
     Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se principais de serviço usam URIs de redirecionamento seguros"
+    $activity = "Verificando se entidades de serviço usam URIs de redirecionamento seguros"
     Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
 
@@ -30,7 +30,7 @@ function Test-Assessment-23183 {
     $passed = $results.Passed
     $testResultMarkdown = $results.TestResultMarkdown
 
-    Add-ZtTestResultDetail -TestId '23183' -Title "Principais de serviço usam URIs de redirecionamento seguros" `
+    Add-ZtTestResultDetail -TestId '23183' -Title "Entidades de serviço usam URIs de redirecionamento seguros" `
         -UserImpact Low -Risk High -ImplementationCost High `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown

@@ -6,5 +6,5 @@ Se as contas privilegiadas da nuvem forem sincronizadas com contas locais, um in
 
 - [Protegendo o Microsoft 365 contra ataques locais](https://learn.microsoft.com/entra/architecture/protect-m365-from-on-premises-attacks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - Crie contas de usuário exclusivas na nuvem (cloud-only) para indivíduos em funções privilegiadas e remova suas identidades híbridas dessas funções.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -5,5 +5,5 @@ Uma vez comprometidos, os invasores podem redefinir imediatamente a senha para b
 **Ação de correção**
 
 - [Desativar o SSPR para administradores atualizando a política de autorização](https://learn.microsoft.com/entra/identity/authentication/concept-sspr-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#administrator-reset-policy-differences)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

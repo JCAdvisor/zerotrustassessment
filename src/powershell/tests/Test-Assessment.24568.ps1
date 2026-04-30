@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Testa se a política de Platform SSO para macOS foi criada e atribuída
+    Testa se a política de SSO de plataforma para macOS foi criada e atribuída
 #>
 
 function Test-Assessment-24568 {
@@ -13,7 +13,7 @@ function Test-Assessment-24568 {
         SfiPillar = 'Proteger locatários e isolar sistemas de produção',
         TenantType = ('Workforce'),
         TestId = 24568,
-        Title = 'O Platform SSO está configurado para fortalecer a autenticação em dispositivos macOS',
+        Title = 'O SSO de plataforma está configurado para fortalecer a autenticação em dispositivos macOS',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -27,7 +27,7 @@ function Test-Assessment-24568 {
     }
 
     #region Coleta de Dados
-    $activity = "Verificando se a política de Platform SSO para macOS foi criada e atribuída"
+    $activity = "Verificando se a política de SSO de plataforma para macOS foi criada e atribuída"
     Write-ZtProgress -Activity $activity -Status "Obtendo políticas"
 
     $sql = @"
@@ -54,10 +54,10 @@ function Test-Assessment-24568 {
     #endregion Lógica de Avaliação
 
     #region Geração de Relatório
-    $testResultMarkdown = if ($passed) { "✅ Políticas de Platform SSO para macOS foram encontradas e atribuídas.`n`n" } else { "❌ Nenhuma política de Platform SSO encontrada ou atribuída.`n`n" }
+    $testResultMarkdown = if ($passed) { "✅ Políticas de SSO de plataforma para macOS foram encontradas e atribuídas.`n`n" } else { "❌ Nenhuma política de SSO de plataforma encontrada ou atribuída.`n`n" }
 
     if ($ssoPolicies.Count -gt 0) {
-        $reportTitle = "Políticas de Platform SSO macOS"
+        $reportTitle = "Políticas de SSO de plataforma macOS"
         $tableRows = ""
         $formatTemplate = @'
 
@@ -81,7 +81,7 @@ function Test-Assessment-24568 {
 
     $params = @{
         TestId = '24568'
-        Title  = 'macOS - O Platform SSO está configurado e atribuído'
+        Title  = 'macOS - O SSO de plataforma está configurado e atribuído'
         Status = $passed
         Result = $testResultMarkdown
     }

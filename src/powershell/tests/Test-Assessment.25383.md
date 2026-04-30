@@ -5,5 +5,5 @@ A atribuição excessiva de funções como Administrador Global e Administrador 
 - [Contas de acesso de emergência estão configuradas adequadamente](https://learn.microsoft.com/entra/fundamentals/zero-trust-protect-engineering-systems?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#emergency-access-accounts-are-configured-appropriately)
 - [Limite as atribuições de função de Administrador Global e Administrador do Global Secure Access a um pequeno conjunto de administradores.](https://learn.microsoft.com/entra/fundamentals/zero-trust-protect-identities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#high-global-administrator-to-privileged-user-ratio)
 - [Configure as definições de função para exigir aprovação para a ativação do Administrador Global](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

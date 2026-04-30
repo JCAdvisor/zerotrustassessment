@@ -3,7 +3,7 @@ Sem restrições que impeçam os usuários convidados de registrar e possuir apl
 Este vetor de ataque é perigoso porque os aplicativos de propriedade de convidados podem ser configurados para solicitar permissões de alto privilégio e, uma vez concedido o consentimento, fornecer aos atores de ameaça tokens OAuth legítimos. Além disso, aplicativos de propriedade de convidados podem servir como infraestrutura de comando e controle, permitindo que atores de ameaça mantenham o acesso mesmo após a conta de convidado comprometida ser detectada e remediada. As credenciais e permissões do aplicativo podem persistir independentemente da conta de usuário convidado original, permitindo que atores de ameaça mantenham o acesso. Aplicativos de propriedade de convidados também complicam os esforços de auditoria de segurança e governança, pois as organizações podem ter visibilidade limitada sobre o propósito e a postura de segurança dos aplicativos registrados por usuários externos. Essas fraquezas ocultas no gerenciamento do ciclo de vida do aplicativo dificultam a avaliação do verdadeiro escopo do acesso a dados concedido a entidades que não pertencem à Microsoft por meio de registros de aplicativos aparentemente legítimos.
 
 **Ação de correção**
-- Remova usuários convidados como proprietários de aplicativos e principais de serviço e implemente controles para evitar a propriedade futura de aplicativos por usuários convidados.
+- Remova usuários convidados como proprietários de aplicativos e entidades de serviço e implemente controles para evitar a propriedade futura de aplicativos por usuários convidados.
 - [Restringir as permissões de acesso de usuários convidados](https://learn.microsoft.com/entra/identity/users/users-restrict-guest-permissions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

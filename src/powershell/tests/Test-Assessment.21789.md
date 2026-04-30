@@ -5,5 +5,5 @@ Eventos de criação de locatário (tenant) devem ser monitorados e triados para
 - [Revisar e restringir permissões para criar locatários](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Transmitir logs de auditoria para um hub de eventos para integração com SIEM](https://learn.microsoft.com/entra/identity/monitoring-health/howto-stream-logs-to-event-hub?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Configurar monitoramento e alertas para eventos de auditoria](https://learn.microsoft.com/entra/identity/monitoring-health/overview-monitoring-health?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

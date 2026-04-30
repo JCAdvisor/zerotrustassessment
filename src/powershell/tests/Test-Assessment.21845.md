@@ -7,5 +7,5 @@ Ative o TAP e use-o com o registro de informações de segurança para proteger 
 - [Saiba como ativar o Passe de Acesso Temporário na política de métodos de autenticação](https://learn.microsoft.com/entra/identity/authentication/howto-authentication-temporary-access-pass?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-the-temporary-access-pass-policy)
 - [Saiba como atualizar as políticas de força de autenticação para incluir o Passe de Acesso Temporário](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-strength-advanced-options?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Saiba como criar uma política de Acesso Condicional para registro de informações de segurança com imposição de força de autenticação](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-security-info-registration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

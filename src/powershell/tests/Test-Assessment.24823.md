@@ -6,5 +6,5 @@ Personalizar o Portal da Empresa com a marca da sua organização e detalhes de 
 
 Configure o Portal da Empresa do Intune com a identidade visual da sua organização e informações de contato de suporte para melhorar a experiência do usuário:  
 - [Configurar o Portal da Empresa do Intune](https://learn.microsoft.com/intune/intune-service/apps/company-portal-app?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

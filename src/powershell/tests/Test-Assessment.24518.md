@@ -7,5 +7,5 @@ Atribuir proprietários permite o gerenciamento eficaz do ciclo de vida do aplic
 **Ação de correção**
 
 - [Atribuir proprietários de aplicativos empresariais](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-app-owners?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -5,5 +5,5 @@ Quando o relatório está ativado para todos os usuários, qualquer solicitaçã
 **Ação de correção**
 
 - [Ativar a configuração de relatar atividade suspeita no aplicativo Microsoft Authenticator](https://learn.microsoft.com/entra/identity/authentication/howto-mfa-mfasettings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#report-suspicious-activity)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

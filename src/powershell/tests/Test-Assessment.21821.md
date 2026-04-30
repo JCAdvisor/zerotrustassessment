@@ -2,5 +2,5 @@ Este teste verifica se o acesso de convidados (guests) está restrito no diretó
 
 **Ação de correção**
 
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

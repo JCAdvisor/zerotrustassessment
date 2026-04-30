@@ -10,5 +10,5 @@ Configure políticas de Acesso Condicional baseadas em aplicações no Microsoft
 Para mais informações, consulte:  
 - [O que é o Acesso Condicional?](https://learn.microsoft.com/entra/identity/conditional-access/overview?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Saiba mais sobre as políticas de Acesso Condicional baseadas em aplicações com o Intune](https://learn.microsoft.com/intune/intune-service/protect/app-based-conditional-access-intune?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -2,5 +2,5 @@
 
 **Ação de correção**
 
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

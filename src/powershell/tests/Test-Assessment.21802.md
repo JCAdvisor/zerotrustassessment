@@ -3,5 +3,5 @@ Sem o contexto de logon, atacantes podem explorar a fadiga de autenticação inu
 **Ação de remediação**
 Forneça aos usuários o contexto necessário. Configure as notificações do Microsoft Authenticator para incluir o nome do aplicativo e a localização geográfica na política de métodos de autenticação.
 - [Usar contexto adicional nas notificações do Authenticator](https://learn.microsoft.com/entra/identity/authentication/how-to-mfa-additional-context?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

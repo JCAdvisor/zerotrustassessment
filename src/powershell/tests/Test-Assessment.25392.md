@@ -10,5 +10,5 @@ Se seus conectores não executarem a versão mais recente:
 
 - [Configure conectores de rede privada para Microsoft Entra Private Access e Microsoft Entra Application Proxy](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Verifique se todos os seus conectores estão atualizados e instale as [atualizações de conector](https://learn.microsoft.com/entra/global-secure-access/concept-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#connector-updates) mais recentes.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

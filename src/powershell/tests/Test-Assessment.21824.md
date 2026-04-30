@@ -8,5 +8,5 @@ Sem controles de sessão adequados, invasores podem realizar movimentação late
 
 **Ação de correção**
 - [Configurar políticas adaptativas de tempo de vida de sessão](https://learn.microsoft.com/entra/identity/conditional-access/howto-conditional-access-session-lifetime?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para que as políticas de frequência de logon tenham sessões mais curtas.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

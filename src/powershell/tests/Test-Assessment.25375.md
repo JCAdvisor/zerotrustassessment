@@ -10,5 +10,5 @@ Sem essa proteção:
 - Atribua licenças aos usuários por meio do centro de administração do Microsoft Entra.
 - Use o licenciamento baseado em grupo para facilitar o gerenciamento em escala.
 - Monitore a utilização de licenças através do centro de administração do Microsoft 365.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

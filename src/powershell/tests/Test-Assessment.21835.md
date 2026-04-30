@@ -3,5 +3,5 @@ A Microsoft recomenda que as organizações tenham duas contas de acesso de emer
 **Ação de correção**
 
 - Crie contas seguindo as [recomendações para contas de acesso de emergência](https://learn.microsoft.com/entra/identity/role-based-access-control/security-emergency-access?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

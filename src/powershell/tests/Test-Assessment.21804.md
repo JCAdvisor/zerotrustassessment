@@ -8,5 +8,5 @@ Uma vez que as credenciais básicas são comprometidas, os invasores exploram as
 - [Desabilitar métodos de autenticação fracos](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-methods-manage?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Desabilitar métodos baseados em telefone nas configurações legadas de MFA](https://learn.microsoft.com/entra/identity/authentication/howto-mfa-mfasettings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Implantar políticas de Acesso Condicional usando força de autenticação](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-strength-how-it-works?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

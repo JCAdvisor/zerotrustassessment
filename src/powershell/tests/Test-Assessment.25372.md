@@ -9,5 +9,5 @@ Sem o cliente Global Secure Access:
 **Ação de remediação**
 - Instale o cliente Global Secure Access: Windows, macOS, iOS e Android.
 - Monitore a integridade do cliente e o status da conexão usando o painel do Global Secure Access.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

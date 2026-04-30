@@ -13,5 +13,5 @@ Se você não habilitar esses perfis:
 - Habilite o perfil de encaminhamento de tráfego da Microsoft. Para mais informações, consulte [Gerenciar o perfil de tráfego da Microsoft](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-microsoft-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Habilite o perfil de encaminhamento de tráfego de Acesso Privado. Para mais informações, consulte [Gerenciar o perfil de encaminhamento de tráfego de Acesso Privado](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-private-access-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Habilite o perfil de encaminhamento de tráfego de Acesso à Internet. Para mais informações, consulte [Gerenciar o perfil de encaminhamento de tráfego de Acesso à Internet](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-internet-access-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

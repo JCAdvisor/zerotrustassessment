@@ -7,5 +7,5 @@ Se esta verificação passar, seu locatário possui uma política de Acesso Cond
 - [Implantar uma solução de estação de trabalho de acesso privilegiado](https://learn.microsoft.com/security/privileged-access-workstations/privileged-access-deployment?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
     - Fornece orientações para configurar o Acesso Condicional e as políticas de conformidade e configuração de dispositivos do Intune.
 - [Configurar filtros de dispositivo no Acesso Condicional para restringir o acesso privilegiado](https://learn.microsoft.com/entra/identity/conditional-access/concept-condition-filters-for-devices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

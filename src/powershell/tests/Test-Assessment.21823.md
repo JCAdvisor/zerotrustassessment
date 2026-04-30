@@ -6,5 +6,5 @@ Além disso, identidades de convidados comprometidas podem ser usadas para persi
 
 **Ação de correção**
 - [Configurar o autoatendimento para inscrição de convidados com o Microsoft Entra External ID](https://learn.microsoft.com/entra/external-id/external-collaboration-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-configure-guest-self-service-sign-up)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

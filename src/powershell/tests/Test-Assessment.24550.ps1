@@ -13,7 +13,7 @@ function Test-Assessment-24550 {
         SfiPillar = 'Proteger identidades e segredos',
         TenantType = ('Workforce'),
         TestId = 24550,
-        Title = 'Dados no Windows estão protegidos por criptografia BitLocker',
+        Title = 'Dados no Windows estão protegidos pela criptografia do BitLocker',
         UserImpact = 'Baixo'
     )]
     [CmdletBinding()]

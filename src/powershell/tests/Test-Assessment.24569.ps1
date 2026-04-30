@@ -13,7 +13,7 @@ function Test-Assessment-24569 {
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 24569,
-    	Title = 'A criptografia FileVault protege os dados em dispositivos macOS',
+    	Title = 'A criptografia do FileVault protege os dados em dispositivos macOS',
     	UserImpact = 'Médio'
     )]
     [CmdletBinding()]

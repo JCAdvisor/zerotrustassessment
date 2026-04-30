@@ -11,5 +11,5 @@ Utilize o Intune para configurar e atribuir perfis de Wi-Fi seguros para disposi
 Para mais informações, consulte:
 
 - [Reveja as definições de Wi-Fi disponíveis para dispositivos macOS no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-macos?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -5,5 +5,5 @@ Habilitar o fluxo de trabalho de consentimento do administrador em um locatário
 Para solicitações de consentimento, defina a configuração **Usuários podem solicitar consentimento do administrador para aplicativos aos quais não podem consentir** como **Sim**. Especifique quem pode revisar as solicitações.
 
 - [Habilitar o fluxo de trabalho de consentimento do administrador](https://learn.microsoft.com/entra/identity/enterprise-apps/configure-admin-consent-workflow?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-the-admin-consent-workflow)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

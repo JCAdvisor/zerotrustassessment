@@ -13,5 +13,5 @@ Pesquisas mostram que os usuários criam senhas mais fracas e previsíveis quand
 - [Desative a expiração de senha usando o Microsoft Graph](https://learn.microsoft.com/graph/api/domain-update?view=graph-rest-1.0&preserve-view=true&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - [Defina senhas de usuários individuais para nunca expirarem usando o Microsoft Graph PowerShell](https://learn.microsoft.com/microsoft-365/admin/add-users/set-password-to-never-expire?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
     - `Update-MgUser -UserId <UserID> -PasswordPolicies DisablePasswordExpiration`
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

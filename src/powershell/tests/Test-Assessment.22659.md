@@ -1,4 +1,4 @@
-Os agentes de ameaças visam cada vez mais as identidades de carga de trabalho (aplicativos, principais de serviço e identidades gerenciadas) porque elas carecem de fatores humanos e geralmente usam credenciais de longa duração. Um comprometimento geralmente segue o seguinte caminho:
+Os agentes de ameaças visam cada vez mais as identidades de carga de trabalho (aplicativos, entidades de serviço e identidades gerenciadas) porque elas carecem de fatores humanos e geralmente usam credenciais de longa duração. Um comprometimento geralmente segue o seguinte caminho:
 
 1. Abuso de credenciais ou roubo de chaves.
 2. Logons não interativos em recursos na nuvem.
@@ -15,5 +15,5 @@ O Microsoft Entra ID Protection gera continuamente detecções de identidades de
 - [Investigar identidades de carga de trabalho de risco e realizar a remediação apropriada](https://learn.microsoft.com/entra/id-protection/concept-workload-identity-risk?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Descartar riscos de identidade de carga de trabalho quando determinados como falsos positivos](https://learn.microsoft.com/graph/api/riskyserviceprincipal-dismiss?view=graph-rest-1.0&preserve-view=true&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Confirmar identidades de carga de trabalho comprometidas quando os riscos são validados](https://learn.microsoft.com/graph/api/riskyserviceprincipal-confirmcompromised?view=graph-rest-1.0&preserve-view=true&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

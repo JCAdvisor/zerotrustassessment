@@ -5,5 +5,5 @@ Sem uma validação rigorosa dos URIs de redirecionamento, os invasores podem bu
 **Ação de correção**
 
 - [Verificar os URIs de redirecionamento para seus registros de aplicativos.](https://learn.microsoft.com/entra/identity-platform/reply-url?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) Certifique-se de que os URIs de redirecionamento não tenham localhost, *.azurewebsites.net, curingas ou encurtadores de URL.
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

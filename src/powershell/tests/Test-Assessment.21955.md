@@ -3,5 +3,5 @@ Quando os administradores locais em dispositivos ingressados no Microsoft Entra 
 **Ação de remediação**
 
 - [Gerenciar os administradores locais em dispositivos ingressados no Microsoft Entra](https://learn.microsoft.com/entra/identity/devices/assign-local-admin?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#manage-the-microsoft-entra-joined-device-local-administrator-role)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -5,5 +5,5 @@ Quando os aplicativos carecem de proprietários, as equipes de segurança não c
 **Ação de correção**
 
 - [Atribuir proprietários a aplicativos](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-app-owners?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -5,5 +5,5 @@ Quando os agentes de ameaças obtêm acesso por meio de contas de convidados com
 **Ação de correção**
 
 - [Remover usuários convidados de funções privilegiadas](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

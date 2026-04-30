@@ -5,5 +5,5 @@ Permitir que usuários externos convidem outros usuários externos aumenta o ris
 **Ação de remediação**
 
 - [Restringir quem pode convidar convidados apenas a usuários atribuídos a funções de administrador específicas](https://learn.microsoft.com/entra/external-id/external-collaboration-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-configure-guest-invite-settings)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

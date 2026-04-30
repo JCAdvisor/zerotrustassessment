@@ -5,5 +5,5 @@ Sem as restrições adequadas, uma única conta de usuário comprometida fornece
 **Ação de remediação**
 
 - [Restringir usuários não administradores de recuperar as chaves do BitLocker para seus dispositivos próprios](https://learn.microsoft.com/entra/identity/devices/manage-device-identities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-device-settings)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

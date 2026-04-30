@@ -5,5 +5,5 @@ Exigir que as atribuições de funções qualificadas sejam ativadas just-in-tim
 **Ação de correção**
 
 - [Use o Privileged Identity Management para gerenciar funções privilegiadas do Microsoft Entra](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-getting-started?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

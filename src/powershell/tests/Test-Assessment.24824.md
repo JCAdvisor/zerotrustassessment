@@ -10,5 +10,5 @@ Configure políticas de Acesso Condicional no Microsoft Entra para exigir a conf
 Para mais informações, consulte:
 - [O que é o Acesso Condicional?](https://learn.microsoft.com/entra/identity/conditional-access/overview?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Integrar resultados de conformidade do dispositivo com o Acesso Condicional](https://learn.microsoft.com/intune/intune-service/protect/device-compliance-get-started?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#integrate-with-conditional-access)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

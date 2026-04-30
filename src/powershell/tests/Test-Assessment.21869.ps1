@@ -25,10 +25,10 @@ function Test-Assessment-21869 {
 
     #region Coleta de Dados
     $activity = 'Verificando requisitos de atribuição e provisionamento de aplicativos empresariais'
-    Write-ZtProgress -Activity $activity -Status 'Obtendo principais de serviço sem requisitos de atribuição'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo entidades de serviço sem requisitos de atribuição'
 
     # (Lógica SQL e filtragem traduzida conforme os padrões anteriores)
-    
+
     $passed = $true # Lógica de avaliação omitida
     $testResultMarkdown = "## Resumo de Avaliação`n`n"
     $mdInfo = "Estes aplicativos não exigem atribuição e possuem trabalhos de provisionamento sem filtros de escopo adequados.`n`n"

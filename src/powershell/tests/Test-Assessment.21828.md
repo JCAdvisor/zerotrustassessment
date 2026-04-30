@@ -3,5 +3,5 @@ Bloquear a transferência de autenticação no Microsoft Entra ID é um controle
 **Ação de correção**
 
 - [Implantar uma política de Acesso Condicional para bloquear a transferência de autenticação](https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#authentication-transfer-policies)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

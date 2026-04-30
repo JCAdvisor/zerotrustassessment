@@ -26,7 +26,7 @@ function Test-Assessment-22128 {
     $activity = "Verificando se usuários convidados não possuem funções de diretório altamente privilegiadas atribuídas"
     Write-ZtProgress -Activity $activity -Status "Obtendo funções de diretório altamente privilegiadas"
 
-    # Consulta SQL para encontrar principais de serviço com credenciais de senha
+    # Consulta SQL para encontrar entidades de serviço com credenciais de senha
     $sqlPrivilegedRoles = @"
     SELECT
         vr.roleDefinitionId,

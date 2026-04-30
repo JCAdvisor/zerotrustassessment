@@ -5,5 +5,5 @@ O monitoramento desses alertas de ativação pode ajudar as equipes de seguranç
 **Ação de correção**
 
 - [Configure notificações para funções privilegiadas](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#require-justification-on-active-assignment)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

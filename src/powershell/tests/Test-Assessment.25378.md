@@ -9,5 +9,5 @@ Ao bloquear a colaboração B2B de saída padrão, as organizações impõem uma
 - Use a pasta de trabalho de atividade de acesso entre locatários para identificar os padrões atuais de colaboração externa antes de bloquear o acesso padrão. Para mais informações, consulte [Pasta de trabalho de atividade de acesso entre locatários](https://learn.microsoft.com/entra/identity/monitoring-health/workbook-cross-tenant-access-activity?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Configure as configurações padrão de colaboração B2B de saída para bloquear o acesso. Para mais informações, consulte [Modificar configurações de acesso de saída](https://learn.microsoft.com/entra/external-id/cross-tenant-access-settings-b2b-collaboration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#modify-outbound-access-settings).
 - Adicione configurações específicas da organização para locatários parceiros aprovados que exigem colaboração B2B. Para mais informações, consulte [Adicionar uma organização](https://learn.microsoft.com/entra/external-id/cross-tenant-access-settings-b2b-collaboration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-an-organization).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

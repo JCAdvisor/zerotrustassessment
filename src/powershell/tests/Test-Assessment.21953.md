@@ -5,5 +5,5 @@ A rotação automatizada de senhas e o gerenciamento centralizado do LAPS fecham
 **Ação de remediação**
 
 - [Configurar a Solução de Senha de Administrador Local do Windows (LAPS)](https://learn.microsoft.com/entra/identity/devices/howto-manage-local-admin-passwords?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

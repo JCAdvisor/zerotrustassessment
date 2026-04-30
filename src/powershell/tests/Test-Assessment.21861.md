@@ -6,5 +6,5 @@ A falta de triagem desses usuários de risco permite atividades expandidas de re
 
 - [Investigar usuários de alto risco](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) no Microsoft Entra ID Protection
 - [Corrigir usuários de alto risco e desbloquear](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-remediate-unblock?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) no Microsoft Entra ID Protection
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

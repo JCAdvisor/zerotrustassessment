@@ -5,5 +5,5 @@ Bloqueie o módulo Azure AD PowerShell e imponha o uso do Microsoft Graph PowerS
 **Ação de correção**
 
 - [Desativar o logon de usuário para o aplicativo](https://learn.microsoft.com/entra/identity/enterprise-apps/disable-user-sign-in-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

@@ -6,5 +6,5 @@ Quando um invasor obtém acesso não autorizado a credenciais, ele pode usá-las
 - [Protocolos do Exchange podem ser desativados no Exchange Online](https://learn.microsoft.com/exchange/clients-and-mobile-in-exchange-online/disable-basic-authentication-in-exchange-online?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Protocolos de autenticação legada podem ser bloqueados com Acesso Condicional](https://learn.microsoft.com/entra/identity/conditional-access/policy-block-legacy-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Workbook de logons usando autenticação legada para ajudar a determinar a segurança da desativação](https://learn.microsoft.com/entra/identity/monitoring-health/workbook-legacy-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

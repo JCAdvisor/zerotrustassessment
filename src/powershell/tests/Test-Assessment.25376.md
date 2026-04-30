@@ -6,5 +6,5 @@ Organizações com tráfego ignorado significativo, seja devido à implantação
 - Habilite e configure o perfil de tráfego da Microsoft. Para mais informações, consulte [Habilitar perfil de tráfego da Microsoft](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-microsoft-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Implante o cliente Global Secure Access em todos os dispositivos gerenciados. Para mais informações, consulte [Implantar cliente Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/how-to-install-windows-client?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Revise e configure as regras de encaminhamento de tráfego adequadamente. Para mais informações, consulte [Revisar regras de encaminhamento de tráfego](https://learn.microsoft.com/entra/global-secure-access/concept-microsoft-traffic-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

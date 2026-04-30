@@ -5,5 +5,5 @@ Sem políticas de Acesso Condicional protegendo o registro de informações de s
 - [Implantar uma política de Acesso Condicional para o registro de informações de segurança](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-security-info-registration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Configurar locais de rede conhecidos](https://learn.microsoft.com/entra/identity/conditional-access/concept-assignment-network?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Habilitar o registro combinado de informações de segurança](https://learn.microsoft.com/entra/identity/authentication/howto-registration-mfa-sspr-combined?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

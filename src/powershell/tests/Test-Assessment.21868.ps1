@@ -24,7 +24,7 @@ function Test-Assessment-21868 {
     Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
     $activity = "Verificando se convidados possuem aplicativos no locatário"
-    Write-ZtProgress -Activity $activity -Status "Obtendo aplicativos e principais de serviço"
+    Write-ZtProgress -Activity $activity -Status "Obtendo aplicativos e entidades de serviço"
 
     $sqlApp = @'
     select distinct ON (id) id, appId, displayName
@@ -56,7 +56,7 @@ function Test-Assessment-21868 {
         $testResultMarkdown = "✅ **Passou**: Não foram encontrados usuários convidados como proprietários de aplicativos no locatário."
     }
     else {
-        $testResultMarkdown = "❌ **Falha**: Foram encontrados usuários convidados como proprietários de aplicativos ou principais de serviço no locatário.`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: Foram encontrados usuários convidados como proprietários de aplicativos ou entidades de serviço no locatário.`n`n%TestResult%"
     }
 
     $mdInfo = ""
@@ -70,7 +70,7 @@ function Test-Assessment-21868 {
     }
 
     if ($guestSpOwners.Count -gt 0) {
-        $mdInfo += "### Principais de serviço de propriedade de convidados`n"
+        $mdInfo += "### entidades de serviço de propriedade de convidados`n"
         $mdInfo += "| Nome de exibição do usuário | UPN | Principal de serviço |`n"
         $mdInfo += "| :--- | :--- | :--- |`n"
         foreach($owner in $guestSpOwners) {

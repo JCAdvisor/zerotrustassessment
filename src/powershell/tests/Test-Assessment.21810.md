@@ -3,5 +3,5 @@ Permitir que proprietários de grupos consintam com aplicativos no Microsoft Ent
 **Ação de correção**
 Configure a pré-aprovação de permissões de Consentimento Específico de Recurso (RSC).
 - [Pré-aprovação de permissões RSC](https://learn.microsoft.com/microsoftteams/platform/graph-api/rsc/preapproval-instruction-docs?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

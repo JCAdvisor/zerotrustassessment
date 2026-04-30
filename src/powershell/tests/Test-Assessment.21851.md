@@ -9,5 +9,5 @@ Uma vez que um atacante ganha acesso a uma conta sem MFA ou a uma sessão com m�
 - [Implantar uma política de Acesso Condicional para impor a força da autenticação para convidados](https://learn.microsoft.com/entra/identity/conditional-access/policy-guests-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Para organizações com uma relação comercial mais próxima e verificação de suas práticas de MFA, considere implantar configurações de acesso entre locatários para aceitar a reivindicação de MFA.
    - [Configurar as definições de acesso entre locatários para colaboração B2B](https://learn.microsoft.com/entra/external-id/cross-tenant-access-settings-b2b-collaboration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-change-inbound-trust-settings-for-mfa-and-device-claims)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%

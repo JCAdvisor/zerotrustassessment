@@ -3,5 +3,5 @@ Sem locais nomeados configurados no Microsoft Entra ID, atores de ameaça podem 
 **Ação de correção**
 
 - [Configurar locais nomeados para definir intervalos de IP confiáveis e regiões geográficas para detecção aprimorada de riscos baseada em localização e imposição de políticas de Acesso Condicional](https://learn.microsoft.com/entra/identity/conditional-access/concept-assignment-network?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Resultados --->
+<!--- Results --->
 %TestResult%
