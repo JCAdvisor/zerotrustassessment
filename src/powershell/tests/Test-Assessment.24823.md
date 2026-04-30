@@ -1,12 +1,10 @@
-If the Intune Company Portal branding isn't configured to represent your organization’s details, users can encounter a generic interface and lack direct support information. This reduces user trust, increases support overhead, and can lead to confusion or delays in resolving issues.
+Se a identidade visual do Portal da Empresa do Intune não estiver configurada para representar os detalhes da sua organização, os usuários podem encontrar uma interface genérica e carecer de informações de suporte direto. Isso reduz a confiança do usuário, aumenta a sobrecarga de suporte e pode causar confusão na resolução de problemas.
 
-Customizing the Company Portal with your organization’s branding and support contact details improves user trust, streamlines support, and reinforces the legitimacy of device management communications.
+Personalizar o Portal da Empresa com a marca da sua organização e detalhes de contato de suporte melhora a confiança do usuário, agiliza o suporte e reforça a legitimidade das comunicações de gerenciamento de dispositivos.
 
+**Ação de remediação**
 
-**Remediation action**
-
-Configure the Intune Company Portal with your organization’s branding and support contact information to enhance user experience and reduce support overhead:  
-- [Configure the Intune Company Portal](https://learn.microsoft.com/intune/intune-service/apps/company-portal-app?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+Configure o Portal da Empresa do Intune com a identidade visual da sua organização e informações de contato de suporte para melhorar a experiência do usuário:  
+- [Configurar o Portal da Empresa do Intune](https://learn.microsoft.com/intune/intune-service/apps/company-portal-app?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+<!--- Resultados --->
 %TestResult%
-

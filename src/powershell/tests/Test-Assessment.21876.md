@@ -2,5 +2,5 @@ Este teste verifica o uso do Microsoft Entra Privileged Identity Management (PIM
 
 **Ação de correção**
 
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

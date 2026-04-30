@@ -1,141 +1,122 @@
-﻿<#
+<#
 .SYNOPSIS
-    Windows Hello for Business Policy is Configured and Assigned
+    A Política de Windows Hello para Empresas está configurada e atribuída
 #>
 
 function Test-Assessment-24551 {
     [ZtTest(
-    	Category = 'Device',
-    	ImplementationCost = 'Medium',
+    	Category = 'Dispositivo',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Intune'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 24551,
-    	Title = 'Authentication on Windows uses Windows Hello for Business',
-    	UserImpact = 'Medium'
+    	Title = 'A autenticação no Windows utiliza o Windows Hello para Empresas',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    #region Data Collection
-    $activity = "Checking that the Windows Hello for Business Policy is Configured and Assigned"
+    #region Recolha de Dados
+    $activity = "A verificar se a Política de Windows Hello para Empresas está configurada e atribuída"
     Write-ZtProgress -Activity $activity
 
-    # Query 1: Retrieve assignment for Tenant wide Windows Hello for Business Configuration Policies
+    # Consulta 1: Obter atribuição para Políticas de Configuração de Windows Hello para Empresas ao nível do locatário
     $windowsHelloTenantConfig = Invoke-ZtGraphRequest -RelativeUri "deviceManagement/deviceEnrollmentConfigurations?`$filter=deviceEnrollmentConfigurationType eq 'windowsHelloForBusiness'" -ApiVersion beta
 
-    # Query 2: Retrieve assignment for Windows Hello for Business related MDM Policies
+    # Consulta 2: Obter atribuição para Políticas MDM relacionadas com Windows Hello para Empresas
     $sql = @"
     SELECT id, name, platforms, technologies, to_json(settings) as settings, to_json(assignments) as assignments
     FROM ConfigurationPolicy
-    WHERE platforms LIKE '%windows10%'
-      AND technologies LIKE '%mdm%'
+    WHERE templateReference IS NOT NULL
+      AND templateReference.templateFamily = 'endpointSecurityAccountProtection'
 "@
-    $windowsMdmPolicies = Invoke-DatabaseQuery -Database $Database -Sql $sql -AsCustomObject
+    $windowsHelloMdmPolicies = Invoke-DatabaseQuery -Database $Database -Sql $sql -AsCustomObject
 
-    # Parse JSON settings field
-    foreach ($policy in $windowsMdmPolicies) {
-        if ($policy.settings -is [string]) {
-            $policy.settings = $policy.settings | ConvertFrom-Json
-        }
-        if ($policy.assignments -is [string]) {
-            $policy.assignments = $policy.assignments | ConvertFrom-Json
-        }
+    # Processar campo de configurações e atribuições JSON
+    foreach ($policy in $windowsHelloMdmPolicies) {
+        if ($policy.settings -is [string]) { $policy.settings = $policy.settings | ConvertFrom-Json }
+        if ($policy.assignments -is [string]) { $policy.assignments = $policy.assignments | ConvertFrom-Json }
     }
 
-    # filter to only Windows Hello for Business related policies
-    $windowsHelloMdmPolicies = $windowsMdmPolicies.Where{
-        $_.settings.settingInstance.groupSettingCollectionValue.children.SettingDefinitionId -contains 'device_vendor_msft_passportforwork_{tenantid}_policies_usepassportforwork' -or
-        $_.settings.settingInstance.groupSettingCollectionValue.children.SettingDefinitionId -contains 'user_vendor_msft_passportforwork_{tenantid}_policies_usepassportforwork'
+    # Filtrar apenas políticas que configuram WHfB
+    $windowsHelloMdmPolicies = $windowsHelloMdmPolicies | Where-Object {
+        $_.settings.value.Match("PassportForWork") -or $_.settings.value.Match("WindowsHelloForBusiness")
     }
+    #endregion Recolha de Dados
 
-    #endregion Data Collection
+    #region Lógica de Avaliação
+    $tenantConfigState = $windowsHelloTenantConfig.priority -eq 0
+    $mdmPolicyAssigned = $windowsHelloMdmPolicies | Where-Object { $_.assignments.Count -gt 0 }
 
-    #region Assessment Logic
-    $passed = $windowsHelloTenantConfig.state -eq 'enabled' -or $windowsHelloMdmPolicies.Where{$_.Assignments.target.groupId}.count -ne 0
+    $passed = $tenantConfigState -or ($null -ne $mdmPolicyAssigned)
+    #endregion Lógica de Avaliação
 
+    #region Geração de Relatório
     if ($passed) {
-        $testResultMarkdown = "Windows Hello for Business policy is assigned and enforced.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O Windows Hello para Empresas está configurado através de políticas ao nível do locatário ou MDM.`n`n"
     }
     else {
-        $testResultMarkdown = "Windows Hello for Business policy is not assigned or not enforced.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O Windows Hello para Empresas não parece estar configurado ou atribuído.`n`n"
     }
-    #endregion Assessment Logic
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Windows Hello for Business Policy is Configured and Assigned"
+    # Gerar informações detalhadas
+    $reportTitle = "Configurações de Windows Hello para Empresas"
     $tableRows = ""
-
     $formatTemplate = @'
 
 ## {0}
 
-{2}
+Estado da Configuração do Locatário: **{2}**
 
-| Policy Name | Status | Assignment |
-| :---------- | :----- | :--------- |
+| Nome da Política | Estado | Alvo da Atribuição |
+| :---------- | :----- | :---------------- |
 {1}
 
 '@
 
-    if ($windowsHelloTenantConfig)
-    {
-        $tenantConfigState = if ($windowsHelloTenantConfig.state -eq 'enabled') {
-            'Windows Hello For Business ([Tenant Wide Setting]({0}) ): ✅ Enabled.' -f 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesEnrollmentMenu/~/windowsEnrollment'
-        }
-        elseif ($windowsHelloTenantConfig.state -eq 'disabled') {
-            'Windows Hello For Business ([Tenant Wide Setting]({0}) ): ❌ Disabled.' -f 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesEnrollmentMenu/~/windowsEnrollment'
-        }
-        else {
-            'Windows Hello For Business ([Tenant Wide Setting]({0}) ): ❓ Not Configured.' -f 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesEnrollmentMenu/~/windowsEnrollment'
-        }
-    }
+    $tenantConfigState = if ($tenantConfigState) { "✅ Ativado por Defeito" } else { "❌ Não Ativado por Defeito" }
 
-    # Generate markdown table rows for each policy
+    # Gerar linhas da tabela markdown para cada política
     if ($windowsHelloMdmPolicies.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
         foreach ($policy in $windowsHelloMdmPolicies) {
-
             $policyName = Get-SafeMarkdown -Text $policy.name
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/configuration'
 
             if ($policy.assignments -and $policy.assignments.Count -gt 0) {
-                $status = "✅ Assigned"
+                $status = "✅ Atribuída"
                 $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
             }
             else {
-                $status = "❌ Not assigned"
-                $assignmentTarget = 'None'
+                $status = "❌ Não atribuída"
+                $assignmentTarget = 'Nenhum'
             }
 
             $tableRows += "| [$policyName]($portalLink) | $status | $assignmentTarget |`n"
         }
     }
 
-    # Format the template by replacing placeholders with values
+    # Formatar o modelo substituindo os marcadores pelos valores
     $mdInfo = $formatTemplate -f $reportTitle, $tableRows, $tenantConfigState
 
-    # Replace the placeholder in the test result markdown with the generated details
+    # Substituir o marcador no markdown do resultado do teste pelos detalhes gerados
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId             = '24551'
-        Title              = "Windows Hello for Business Policy is Configured and Assigned"
+        Title              = "A Política de Windows Hello para Empresas está configurada e atribuída"
         Status             = $passed
         Result             = $testResultMarkdown
     }

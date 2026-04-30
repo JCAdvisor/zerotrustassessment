@@ -3,5 +3,5 @@ Este teste verifica se as funções privilegiadas do Microsoft Entra ID possuem 
 **Ação de correção**
 
 - [Configurar revisões de acesso para funções do Microsoft Entra](https://learn.microsoft.com/entra/id-governance/access-reviews-overview?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

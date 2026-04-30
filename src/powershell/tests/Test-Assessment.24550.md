@@ -1,13 +1,12 @@
-Without a properly configured and assigned BitLocker policy in Intune, threat actors can exploit unencrypted Windows devices to gain unauthorized access to sensitive corporate data. Devices that lack enforced encryption are vulnerable to physical attacks, like disk removal or booting from external media, allowing attackers to bypass operating system security controls. These attacks can result in data exfiltration, credential theft, and further lateral movement within the environment.
+Sem uma política BitLocker devidamente configurada e atribuída no Intune, os agentes de ameaças podem explorar dispositivos Windows não criptografados para obter acesso não autorizado a dados corporativos confidenciais. Os dispositivos que carecem de criptografia forçada são vulneráveis a ataques físicos, como a remoção do disco ou o arranque a partir de suportes externos, permitindo que os atacantes contornem os controlos de segurança do sistema operativo. Estes ataques podem resultar em exfiltração de dados, roubo de credenciais e movimentação lateral adicional dentro do ambiente.
 
-Enforcing BitLocker across managed Windows devices is critical for compliance with data protection regulations and for reducing the risk of data breaches.
+A imposição do BitLocker em dispositivos Windows geridos é fundamental para a conformidade com as regulamentações de proteção de dados e para reduzir o risco de violações de dados.
 
-**Remediation action**
+**Ação de correção**
 
-Use Intune to enforce BitLocker encryption and monitor compliance across all managed Windows devices:  
-- [Create a BitLocker policy for Windows devices in Intune](https://learn.microsoft.com/intune/intune-service/protect/encrypt-devices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-and-deploy-policy)
-- [Assign policies in Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
-- [Monitor device encryption with Intune](https://learn.microsoft.com/intune/intune-service/protect/encryption-monitor?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Utilize o Intune para forçar a criptografia BitLocker e monitorizar a conformidade em todos os dispositivos Windows geridos:
+- [Criar uma política BitLocker para dispositivos Windows no Intune](https://learn.microsoft.com/intune/intune-service/protect/encrypt-devices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-and-deploy-policy)
+- [Atribuir políticas no Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
+- [Monitorizar a criptografia do dispositivo com o Intune](https://learn.microsoft.com/intune/intune-service/protect/encryption-monitor?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

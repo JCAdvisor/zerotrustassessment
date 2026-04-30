@@ -9,5 +9,5 @@ A função de Administrador Global fornece acesso a recursos administrativos no 
 
 - [Configure as definições de função para exigir aprovação para ativação do Administrador Global](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Configure o fluxo de trabalho de aprovação para funções privilegiadas](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-approval-workflow?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

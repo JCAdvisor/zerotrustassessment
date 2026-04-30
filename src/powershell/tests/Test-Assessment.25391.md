@@ -1,16 +1,15 @@
-When Microsoft Entra private network connectors are inactive or unhealthy, organizations might resort to using less secure access methods. This condition creates opportunities where threat actors can target externally exposed services or use compromised credentials.
+Quando os conectores de rede privada do Microsoft Entra estão inativos ou não saudáveis, as organizações podem recorrer ao uso de métodos de acesso menos seguros. Essa condição cria oportunidades onde agentes de ameaças podem atingir serviços expostos externamente ou usar credenciais comprometidas.
 
-Without functional connectors:
+Sem conectores funcionais:
 
-- Token-based authentication and authorization for all Microsoft Entra Private Access scenarios is eliminated.
-- Threat actors can bypass intended security boundaries to access resources beyond their authorization scope.
-- The service can't route requests properly, directly disrupting network access controls.
+- A autenticação e autorização baseadas em token para todos os cenários de Acesso Privado do Microsoft Entra são eliminadas.
+- Invasores podem ignorar os limites de segurança pretendidos para acessar recursos além do seu escopo de autorização.
+- O serviço não pode rotear solicitações adequadamente, interrompendo diretamente os controles de acesso à rede.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure connectors for high availability](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Monitor connector health in the Microsoft Entra admin center under Global Secure Access > Connect > Connectors.
-- [Troubleshoot connector installation and connectivity issues](https://learn.microsoft.com/entra/global-secure-access/troubleshoot-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+- [Configure conectores para alta disponibilidade](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- Monitore a integridade do conector no centro de administração do Microsoft Entra em Global Secure Access > Conectar > Conectores.
+- [Solucione problemas de instalação e conectividade do conector](https://learn.microsoft.com/entra/global-secure-access/troubleshoot-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+<!--- Resultados --->
 %TestResult%
-

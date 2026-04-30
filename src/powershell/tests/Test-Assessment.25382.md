@@ -1,16 +1,15 @@
-Without proper scoping of traffic forwarding profiles, organizations risk either exposing all users to security controls before infrastructure readiness is validated or inadvertently excluding users who should be protected.
+Sem o escopo adequado dos perfis de encaminhamento de tráfego, as organizações correm o risco de expor todos os usuários aos controles de segurança antes que a prontidão da infraestrutura seja validada ou de excluir inadvertidamente usuários que deveriam ser protegidos.
 
-Risks of improper scoping:
+Riscos de um escopo inadequado:
 
-- **Too broad**: When profiles are assigned to "all users" without deliberate planning, a misconfiguration could disrupt network connectivity for the entire organization simultaneously.
-- **Too narrow**: If profiles are scoped too narrowly or assignments are incomplete, a subset of users operates outside the security perimeter, creating gaps that threat actors can exploit.
-- **Unmonitored access**: Attackers who compromise devices belonging to unassigned users can access resources without traffic being inspected, logged, or subject to security policies.
+- **Muito amplo**: Quando os perfis são atribuídos a "todos os usuários" sem um planejamento deliberado, uma configuração incorreta pode interromper a conectividade de rede para toda a organização simultaneamente.
+- **Muito restrito**: Se os perfis tiverem um escopo muito limitado ou se as atribuições estiverem incompletas, um subconjunto de usuários operará fora do perímetro de segurança, criando lacunas que os agentes de ameaças podem explorar.
+- **Acesso não monitorado**: Invasores que comprometem dispositivos pertencentes a usuários não atribuídos podem acessar recursos sem que o tráfego seja inspecionado, registrado ou sujeito a políticas de segurança.
 
-Proper scoping ensures controlled rollout—starting with pilot groups to validate functionality, then expanding to broader populations—while maintaining visibility into which users are protected.
+O escopo adequado garante uma implementação controlada — começando com grupos de pilotos para validar a funcionalidade e, em seguida, expandindo para populações mais amplas — mantendo a visibilidade sobre quais usuários estão protegidos.
 
-**Remediation action**
+**Ação de remediação**
 
-- Assign users and groups to traffic forwarding profiles. For more information, see [Manage users and groups assignment](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-users-groups-assignment?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+- Atribua usuários e grupos aos perfis de encaminhamento de tráfego. Para mais informações, consulte [Gerenciar atribuição de usuários e grupos](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-users-groups-assignment?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+<!--- Resultados --->
 %TestResult%
-

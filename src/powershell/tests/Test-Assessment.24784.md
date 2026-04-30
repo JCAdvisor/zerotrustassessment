@@ -1,12 +1,11 @@
-If Microsoft Defender Antivirus policies aren't properly configured and assigned to macOS devices in Intune, attackers can exploit unprotected endpoints to execute malware, disable antivirus protections, and persist in the environment. Without enforced policies, devices run outdated definitions, lack real-time protection, or have misconfigured scan schedules, increasing the risk of undetected threats and privilege escalation. This enables lateral movement across the network, credential harvesting, and data exfiltration. The absence of antivirus enforcement undermines device compliance, increases exposure of endpoints to zero-day threats, and can result in regulatory noncompliance. Attackers use these gaps to maintain persistence and evade detection, especially in environments without centralized policy enforcement.
+Se as políticas do Microsoft Defender Antivírus não forem configuradas e atribuídas corretamente aos dispositivos macOS no Intune, invasores podem explorar endpoints desprotegidos para executar malware, desativar proteções de antivírus e persistir no ambiente. Sem políticas impostas, os dispositivos executam definições desatualizadas, carecem de proteção em tempo real ou possuem cronogramas de verificação mal configurados, aumentando o risco de ameaças não detectadas e escalada de privilégios. Isso permite a movimentação lateral na rede, colheita de credenciais e exfiltração de dados. A ausência de imposição de antivírus compromete a conformidade do dispositivo, aumenta a exposição a ameaças de dia zero e pode resultar em descumprimento regulatório. Invasores usam essas lacunas para manter persistência e evitar detecção, especialmente em ambientes sem imposição centralizada.
 
-Enforcing Defender Antivirus policies ensures that macOS devices are consistently protected against malware, supports real-time threat detection, and aligns with Zero Trust by maintaining a secure and compliant endpoint posture.
+A imposição de políticas do Defender Antivírus garante que os dispositivos macOS estejam consistentemente protegidos contra malware, oferece suporte à detecção de ameaças em tempo real e se alinha ao Zero Trust mantendo uma postura de endpoint segura.
 
-**Remediation action**
+**Ação de remediação**
 
-Use Intune to configure and assign Microsoft Defender Antivirus policies for macOS devices to enforce real-time protection, maintain up-to-date definitions, and reduce exposure to malware:  
-- [Configure Intune policies to manage Microsoft Defender Antivirus](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-antivirus-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#macos)
-- [Assign policies in Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
-<!--- Results --->
+Use o Intune para configurar e atribuir políticas do Microsoft Defender Antivírus para dispositivos macOS para impor a proteção em tempo real e manter definições atualizadas:  
+- [Configurar políticas do Intune para gerenciar o Microsoft Defender Antivírus](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-antivirus-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#macos)
+- [Atribuir políticas no Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
+<!--- Resultados --->
 %TestResult%
-

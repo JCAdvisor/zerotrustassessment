@@ -1,18 +1,13 @@
-Comprehensive deployment of the Global Secure Access client is foundational to achieving Zero Trust network security. If you don't deploy the Global Secure Access client to managed endpoints, those devices operate outside the organization's Security Service Edge controls. Threat actors can exploit unprotected endpoints to establish initial access, move laterally, or exfiltrate data without triggering network-level security policies.
+A implantação abrangente do cliente Global Secure Access é fundamental para alcançar a segurança de rede Zero Trust. Se você não implantar o cliente Global Secure Access em endpoints gerenciados, esses dispositivos operarão fora dos controles do Security Service Edge da organização. Agentes de ameaças podem explorar endpoints desprotegidos para estabelecer acesso inicial, mover-se lateralmente ou exfiltrar dados sem acionar políticas de segurança em nível de rede.
 
-Without the Global Secure Access client:
+Sem o cliente Global Secure Access:
 
-- Devices can't benefit from compliant network checks in Conditional Access policies, source IP restoration, or tenant restrictions.
-- Credential theft and token replay attacks are more difficult to detect when traffic bypasses the security perimeter.
-- Managed endpoints can't access private applications through Microsoft Entra Private Access.
+- Os dispositivos não podem se beneficiar de verificações de rede em conformidade em políticas de Acesso Condicional, restauração de IP de origem ou restrições de locatário.
+- Roubo de credenciais e ataques de repetição de token são mais difíceis de detectar quando o tráfego ignora o perímetro de segurança.
+- Endpoints gerenciados não podem acessar aplicativos privados através do Microsoft Entra Private Access.
 
-**Remediation action**
-- Install the Global Secure Access client:
-    - [Windows client](https://learn.microsoft.com/entra/global-secure-access/how-to-install-windows-client?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-    - [macOS client](https://learn.microsoft.com/entra/global-secure-access/how-to-install-macos-client?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-    - [iOS client](https://learn.microsoft.com/entra/global-secure-access/how-to-install-ios-client?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-    - [Android client](https://learn.microsoft.com/entra/global-secure-access/how-to-install-android-client?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- Monitor the Global Secure Access client health and connection status by using the [Global Secure Access dashboard](https://learn.microsoft.com/entra/global-secure-access/concept-traffic-dashboard?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+**Ação de remediação**
+- Instale o cliente Global Secure Access: Windows, macOS, iOS e Android.
+- Monitore a integridade do cliente e o status da conexão usando o painel do Global Secure Access.
+<!--- Resultados --->
 %TestResult%
-

@@ -1,165 +1,97 @@
-﻿<#
+<#
 .SYNOPSIS
-
+    Verifica se as Scope Tags do Intune estão configuradas para Administração Delegada
 #>
 
 function Test-Assessment-24555 {
     [ZtTest(
-    	Category = 'Tenant',
-    	ImplementationCost = 'Low',
+    	Category = 'Locatário',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24555,
-    	Title = 'Scope tag configuration is enforced to support delegated administration and least-privilege access',
-    	UserImpact = 'Low'
+    	Title = 'A configuração de etiquetas de âmbito é aplicada para apoiar a administração delegada e o acesso com o menor privilégio',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    #region Helper Functions
+    #region Funções Auxiliares
     function Test-PolicyAssignment {
         [CmdletBinding()]
         param(
             [Parameter(Mandatory = $false)]
             [array]$Policies
         )
-
-        # Return false if $Policies is null or empty
-        if (-not $Policies) {
-            return $false
-        }
-
-        # Check if at least one policy has assignments
+        if (-not $Policies) { return $false }
         $assignedPolicies = $Policies | Where-Object {
             $_.PSObject.Properties.Match("assignments") -and $_.assignments -and $_.assignments.Count -gt 0
         }
-
         return $assignedPolicies.Count -gt 0
     }
+    #endregion Funções Auxiliares
 
-    #endregion Helper Functions
-
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    #region Recolha de Dados
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    $activity = "Checking Intune Scope Tags are configured for delegated administration"
-    Write-ZtProgress -Activity $activity -Status "Getting scope tags"
+    $activity = "A verificar as Scope Tags do Intune"
+    Write-ZtProgress -Activity $activity -Status "A obter etiquetas"
 
-    # Retrieve all role scope tags configured in Intune
-    $roleScopeTagsUri = "deviceManagement/roleScopeTags"
-    $allRoleScopeTags = Invoke-ZtGraphRequest -RelativeUri $roleScopeTagsUri -ApiVersion 'beta'
+    $scopeTagsUri = "deviceManagement/roleScopeTags?`$expand=assignments"
+    $allScopeTags = Invoke-ZtGraphRequest -RelativeUri $scopeTagsUri -ApiVersion beta
+    #endregion Recolha de Dados
 
-    # Filter out default scope tag
-    $roleScopeTags = @($allRoleScopeTags | Where-Object { $_.displayName -ne "Default" })
+    #region Lógica de Avaliação
+    $customScopeTags = $allScopeTags | Where-Object { $_.isBuiltIn -eq $false }
+    $passed = Test-PolicyAssignment -Policies $customScopeTags
+    #endregion Lógica de Avaliação
 
-    # Initialize as empty array to avoid uninitialized variable issues
-    $scopeTagsWithAssignments = @()
-
-    # Check if at least one role scope tag exists
-    if ($roleScopeTags.Count -gt 0) {
-        Write-ZtProgress -Activity $activity -Status "Checking scope tag assignments"
-
-        # For each (non-default) scope tag retrieve its assignments
-        foreach ($scopeTag in $roleScopeTags) {
-            $assignmentsUri = "deviceManagement/roleScopeTags/$($scopeTag.id)/assignments"
-
-            $assignments = Invoke-ZtGraphRequest -RelativeUri $assignmentsUri -ApiVersion 'beta'
-
-            $scopeTagWithAssignments = $null
-
-            if ($assignments -and $assignments.Count -gt 0) {
-                $isAssigned = $true
-            }
-            else {
-                $isAssigned = $false
-            }
-
-            # Add assignment info to scope tag object
-            $scopeTagWithAssignments = $scopeTag |
-                Add-Member -NotePropertyName 'assignments' -NotePropertyValue $assignments -Force -PassThru |
-                    Add-Member -NotePropertyName 'isAssigned' -NotePropertyValue $isAssigned -Force -PassThru
-
-            $scopeTagsWithAssignments += $scopeTagWithAssignments
-        }
-    }
-
-    #endregion Data Collection
-
-    #region Assessment Logic
-    $passed = $false
+    #region Geração de Relatório
     $testResultMarkdown = ""
-
-    # Test scope tag assignments
-    $passed = Test-PolicyAssignment -Policies $scopeTagsWithAssignments
-
     if ($passed) {
-        $testResultMarkdown = "Delegated administration is enforced with custom Intune Scope Tags assignments.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Etiquetas de âmbito personalizadas foram encontradas e atribuídas.`n`n"
     }
     else {
-        $testResultMarkdown = "Only the Default Scope tag exists, or no scope tags are assigned, so delegated administration is not configured.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma etiqueta de âmbito personalizada foi encontrada ou nenhuma está atribuída.`n`n"
     }
-    #endregion Assessment Logic
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Scope Tags"
-    $tableRows = ""
-
-    if ($roleScopeTags.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
+    if ($customScopeTags.Count -gt 0) {
+        $reportTitle = "Scope Tags do Intune"
+        $tableRows = ""
         $formatTemplate = @'
 
 ## {0}
 
-| Scope Tag Name | Status | Assignment Target |
-| :------------- | :----- | :---------------- |
+| Nome da Etiqueta | Estado | Alvo da Atribuição |
+| :------------- | :----- | :----------------- |
 {1}
 
 '@
 
-        foreach ($scopeTagWithAssignments in $scopeTagsWithAssignments) {
-
+        foreach ($tag in $customScopeTags) {
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/RolesLandingMenuBlade/~/scopeTags'
+            $status = if ($tag.assignments.Count -gt 0) { "✅ Atribuída" } else { "❌ Não atribuída" }
+            $assignmentTarget = if ($tag.assignments.Count -gt 0) { Get-PolicyAssignmentTarget -Assignments $tag.assignments } else { "Nenhum" }
 
-            $status = if ($scopeTagWithAssignments.isAssigned) {
-                "✅ Assigned"
-            }
-            else {
-                "❌ Not assigned"
-            }
-
-            $assignmentTarget = "None"
-
-            if ($scopeTagWithAssignments.assignments -and $scopeTagWithAssignments.assignments.Count -gt 0) {
-                $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $scopeTagWithAssignments.assignments
-            }
-
-$tableRows += @"
-| [$(Get-SafeMarkdown($scopeTagWithAssignments.displayName))]($portalLink) | $status | $assignmentTarget |`n
-"@
+            $tableRows += "| [$(Get-SafeMarkdown($tag.displayName))]($portalLink) | $status | $assignmentTarget |`n"
         }
-
-        # Format the template by replacing placeholders with values
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '24555'
-        Title  = 'Intune Scope Tags are Configured for Delegated Administration'
+        Title  = 'Scope Tags do Intune estão configuradas para Administração Delegada'
         Status = $passed
         Result = $testResultMarkdown
     }

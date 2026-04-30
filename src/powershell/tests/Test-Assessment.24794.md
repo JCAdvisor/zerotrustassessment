@@ -1,11 +1,10 @@
-If Terms and Conditions policies aren't configured and assigned in Intune, users can access corporate resources without agreeing to required legal, security, or usage terms. This omission exposes the organization to compliance risks, legal liabilities, and potential misuse of resources.
+Se as políticas de Termos e Condições não forem configuradas e atribuídas no Intune, os usuários podem acessar recursos corporativos sem concordar com os termos legais, de segurança ou de uso exigidos. Essa omissão expõe a organização a riscos de conformidade, responsabilidades legais e possível uso indevido de recursos.
 
-Enforcing Terms and Conditions ensures users acknowledge and accept company policies before accessing sensitive data or systems, supporting regulatory compliance and responsible resource use.
+A imposição de Termos e Condições garante que os usuários reconheçam e aceitem as políticas da empresa antes de acessar dados ou sistemas confidenciais, apoiando a conformidade regulatória e o uso responsável dos recursos.
 
-**Remediation action**
+**Ação de remediação**
 
-Create and assign Terms and Conditions policies in Intune to require user acceptance before granting access to corporate resources:  
-- [Create terms and conditions policy](https://learn.microsoft.com/intune/intune-service/enrollment/terms-and-conditions-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+Crie e atribua políticas de Termos e Condições no Intune para exigir a aceitação do usuário antes de conceder acesso aos recursos corporativos:  
+- [Criar política de termos e condições](https://learn.microsoft.com/intune/intune-service/enrollment/terms-and-conditions-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+<!--- Resultados --->
 %TestResult%
-

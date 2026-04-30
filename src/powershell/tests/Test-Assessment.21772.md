@@ -11,5 +11,5 @@ Aplicativos e entidades de serviço que possuem permissões para as APIs do Micr
    - Implemente políticas de autenticação de aplicativos para forçar práticas seguras
    - Crie uma função personalizada de privilégio mínimo para rotacionar credenciais
    - Garanta que existe um processo para triagem e monitoramento de aplicativos
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

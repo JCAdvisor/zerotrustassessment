@@ -3,5 +3,5 @@ Controlar a proliferação de dispositivos é importante. Defina um limite razo�
 **Ação de correção**
 
 - Saiba como [limitar o número máximo de dispositivos por usuário](https://learn.microsoft.com/entra/identity/devices/manage-device-identities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-device-settings).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

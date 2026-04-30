@@ -4,5 +4,5 @@ Identidades de carga de trabalho comprometidas (principais de serviço e aplicat
 
 - [Investigar e remediar identidades de carga de trabalho de risco](https://learn.microsoft.com/entra/id-protection/concept-workload-identity-risk?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#investigate-risky-workload-identities)
 - [Aplicar políticas de Acesso Condicional para identidades de carga de trabalho](https://learn.microsoft.com/entra/identity/conditional-access/workload-identity?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

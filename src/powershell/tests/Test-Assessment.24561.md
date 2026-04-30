@@ -1,15 +1,14 @@
-Without enforcing macOS LAPS policies during Automated Device Enrollment (ADE), threat actors can exploit static or reused local administrator passwords to escalate privileges, move laterally, and establish persistence. Devices provisioned without randomized credentials are vulnerable to credential harvesting and reuse across multiple endpoints, increasing the risk of domain-wide compromise.
+Sem a aplicação de políticas de LAPS para macOS durante o Registro Automatizado de Dispositivos (ADE), os agentes de ameaças podem explorar senhas de administrador local estáticas ou reutilizadas para escalar privilégios, mover-se lateralmente e estabelecer persistência. Dispositivos provisionados sem credenciais aleatórias são vulneráveis à colheita de credenciais e reutilização em múltiplos endpoints, aumentando o risco de comprometimento de todo o domínio.
 
-Enforcing macOS LAPS ensures that each device is provisioned with a unique, encrypted local administrator password managed by Intune. This disrupts the attack chain at the credential access and lateral movement stages, significantly reducing the risk of widespread compromise and aligning with Zero Trust principles of least privilege and credential hygiene.
+A aplicação do LAPS para macOS garante que cada dispositivo seja provisionado com uma senha de administrador local única e criptografada, gerenciada pelo Intune. Isso interrompe a cadeia de ataque nas fases de acesso a credenciais e movimento lateral, reduzindo significativamente o risco de comprometimento generalizado e alinhando-se aos princípios de Zero Trust de privilégio mínimo e higiene de credenciais.
 
-**Remediation action**
+**Ação de correção**
 
-Use Intune to configure macOS ADE profiles that provision a local admin account with a randomized and encrypted password, and that enables secure rotation:  
-- [Configure macOS LAPS in Microsoft Intune](https://learn.microsoft.com/intune/intune-service/enrollment/macos-laps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Rotate local admin password (macOS)](https://learn.microsoft.com/intune/intune-service/remote-actions/device-rotate-local-admin-password?pivots=macos&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Use o Intune para configurar perfis de ADE para macOS que provisionem uma conta de administrador local com uma senha aleatória e criptografada, e que permitam a rotação segura:
+- [Configurar LAPS para macOS no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/enrollment/macos-laps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Rotacionar senha de administrador local (macOS)](https://learn.microsoft.com/intune/intune-service/remote-actions/device-rotate-local-admin-password?pivots=macos&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 
-For more information, see:  
-- [macOS ADE setup guide](https://learn.microsoft.com/intune/intune-service/enrollment/device-enrollment-program-enroll-macos?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Para mais informações, consulte:
+- [Guia de configuração de ADE para macOS](https://learn.microsoft.com/intune/intune-service/enrollment/device-enrollment-program-enroll-macos?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

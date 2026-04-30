@@ -1,17 +1,16 @@
-Without app protection policies, corporate data accessed on Android devices is vulnerable to leakage through unmanaged or malicious apps. Users can unintentionally copy sensitive information into personal apps, store data insecurely, or bypass authentication controls. This risk is amplified on devices that aren't fully managed, where corporate and personal contexts coexist, increasing the likelihood of data exfiltration or unauthorized access.
+Sem políticas de proteção de aplicativos, os dados corporativos acedidos em dispositivos Android são vulneráveis a fugas através de aplicações não geridas ou maliciosas. Os utilizadores podem copiar involuntariamente informações confidenciais para aplicações pessoais, armazenar dados de forma insegura ou contornar controlos de autenticação. Este risco é ampliado em dispositivos que não são totalmente geridos, onde os contextos corporativo e pessoal coexistem, aumentando a probabilidade de exfiltração de dados ou acesso não autorizado.
 
-Enforcing app protection policies ensures that corporate data is only accessible through trusted apps and remains protected even on personal or BYOD Android devices.
+A aplicação de políticas de proteção de aplicativos garante que os dados corporativos sejam apenas acedidos através de aplicações fidedignas e permaneçam protegidos mesmo em dispositivos Android pessoais ou BYOD.
 
-These policies enforce encryption, restrict data sharing, and require authentication, reducing the risk of data leakage and aligning with Zero Trust principles of data protection and Conditional Access.
+Estas políticas aplicam criptografia, restringem a partilha de dados e exigem autenticação, reduzindo o risco de fuga de dados e alinhando-se com os princípios Zero Trust de proteção de dados e Acesso Condicional.
 
-**Remediation action**
+**Ação de correção**
 
-Deploy Intune app protection policies that encrypt data, restrict sharing, and require authentication in approved Android apps:  
-- [Deploy Intune app protection policies](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policies?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-an-iosipados-or-android-app-protection-policy)
-- [Review the Android app protection settings reference](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy-settings-android?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Implemente políticas de proteção de aplicativos do Intune que criptografem dados, restrinjam a partilha e exijam autenticação em aplicações Android aprovadas:
+- [Implementar políticas de proteção de aplicativos do Intune](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policies?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-an-iosipados-or-android-app-protection-policy)
+- [Rever a referência de configurações de proteção de aplicativos Android](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy-settings-android?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 
-For more information, see:  
-- [Learn about using app protection policies](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Para mais informações, veja:
+- [Saiba mais sobre a utilização de políticas de proteção de aplicativos](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

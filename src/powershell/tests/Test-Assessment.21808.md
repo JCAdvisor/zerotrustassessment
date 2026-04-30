@@ -3,5 +3,5 @@ O fluxo de código do dispositivo (device code flow) é um fluxo de autenticaç�
 **Ação de remediação**
 
 - [Implantar uma política de Acesso Condicional para bloquear o fluxo de código do dispositivo](https://learn.microsoft.com/entra/identity/conditional-access/policy-block-authentication-flows?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#device-code-flow-policies).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

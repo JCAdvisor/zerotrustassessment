@@ -5,5 +5,5 @@ Quando os usuários não conseguem redefinir suas próprias senhas por meio de p
 **Ação de correção**
 
 - [Habilitar o Self-Service Password Reset (redefinição de senha de autoatendimento)](https://learn.microsoft.com/entra/identity/authentication/tutorial-enable-sspr?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

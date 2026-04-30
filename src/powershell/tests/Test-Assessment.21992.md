@@ -1,13 +1,12 @@
-If certificates aren't rotated regularly, they can give threat actors an extended window to extract and exploit them, leading to unauthorized access. When credentials like these are exposed, attackers can blend their malicious activities with legitimate operations, making it easier to bypass security controls. If an attacker compromises an application’s certificate, they can escalate their privileges within the system, leading to broader access and control, depending on the application's privileges.
+Se os certificados não forem rotacionados regularmente, eles podem dar aos agentes de ameaças uma janela estendida para extraí-los e explorá-los, levando ao acesso não autorizado. Quando credenciais como essas são expostas, os atacantes podem misturar suas atividades maliciosas com operações legítimas, facilitando a evasão de controles de segurança. Se um atacante comprometer o certificado de um aplicativo, ele poderá escalar seus privilégios dentro do sistema, levando a um acesso e controle mais amplos, dependendo dos privilégios do aplicativo.
 
-Query all of your service principals and application registrations that have certificate credentials. Make sure the certificate start date is less than 180 days.
+Consulte todas as suas entidades de serviço (service principals) e registros de aplicativos que possuem credenciais de certificado. Certifique-se de que a data de início do certificado seja inferior a 180 dias.
 
-**Remediation action**
+**Ação de correção**
 
-- [Define an application management policy to manage certificate lifetimes](https://learn.microsoft.com/graph/api/resources/applicationauthenticationmethodpolicy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Define a trusted certificate chain of trust](https://learn.microsoft.com/graph/api/resources/certificatebasedapplicationconfiguration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Create a least privileged custom role to rotate application credentials](https://learn.microsoft.com/entra/identity/role-based-access-control/custom-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) 
-- [Learn more about app management policies to manage certificate based credentials](https://devblogs.microsoft.com/identity/app-management-policy/)
+- [Definir uma política de gerenciamento de aplicativos para gerenciar o tempo de vida dos certificados](https://learn.microsoft.com/graph/api/resources/applicationauthenticationmethodpolicy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Definir uma cadeia de confiança de certificados confiáveis](https://learn.microsoft.com/graph/api/resources/certificatebasedapplicationconfiguration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Criar uma função personalizada de privilégio mínimo para rotacionar credenciais de aplicativos](https://learn.microsoft.com/entra/identity/role-based-access-control/custom-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Saiba mais sobre as políticas de gerenciamento de aplicativos para gerenciar credenciais baseadas em certificado](https://devblogs.microsoft.com/identity/app-management-policy/)
 <!--- Results --->
 %TestResult%
-

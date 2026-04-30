@@ -3,5 +3,5 @@ Atores de ameaça podem explorar a falta de autenticação multifator durante o 
 **Ação de correção**
 
 - [Implantar uma política de Acesso Condicional para exigir autenticação multifator para o registro de dispositivos](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-device-registration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
@@ -13,23 +13,23 @@ function Test-Assessment-21893{
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce','External'),
     	TestId = 21893,
-    	Title = 'All users are required to register for MFA',
+    	Title = 'Todos os usuários devem se registrar para MFA',
     	UserImpact = 'Medium'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Enable Microsoft Entra ID Protection policy to enforce multifactor authentication registration"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando a ativação da política do Microsoft Entra ID Protection para exigir o registro de autenticação multifator"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21893' -Title "Enable Microsoft Entra ID Protection policy to enforce multifactor authentication registration" `
+    Add-ZtTestResultDetail -TestId '21893' -Title "Habilitar política do Microsoft Entra ID Protection para exigir o registro de autenticação multifator" `
         -UserImpact Medium -Risk Low -ImplementationCost Medium `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

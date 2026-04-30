@@ -2,5 +2,5 @@ Se você não habilitar as notificações do ID Protection, sua organização pe
 
 **Ação de remediação**
 - [Configurar alertas de usuários em risco detectados](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-configure-notifications?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-users-at-risk-detected-alerts)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

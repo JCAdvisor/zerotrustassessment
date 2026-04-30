@@ -1,65 +1,60 @@
-﻿<#
+<#
 .SYNOPSIS
-    An app protection policy for Android devices exists
+    Existe uma política de proteção de aplicativos para dispositivos Android
 #>
 
 function Test-Assessment-24549 {
     [ZtTest(
-    	Category = 'Data',
-    	ImplementationCost = 'Low',
+    	Category = 'Dados',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 24549,
-    	Title = 'Data on Android is protected by app protection policies',
-    	UserImpact = 'High'
+    	Title = 'Dados no Android estão protegidos por políticas de proteção de aplicativos',
+    	UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    #region Data Collection
-    $activity = "Checking that an app protection policy for Android devices exists"
+    #region Recolha de Dados
+    $activity = "A verificar se existe uma política de proteção de aplicativos para dispositivos Android"
     Write-ZtProgress -Activity $activity
 
-    # Query 1: Retrieve all Android App Protection Policies and their assignments
+    # Consulta 1: Obter todas as Políticas de Proteção de Aplicações Android e as suas atribuições
     $androidAppProtectionPolicies = Invoke-ZtGraphRequest -RelativeUri 'deviceAppManagement/androidManagedAppProtections?$expand=assignments' -ApiVersion v1.0
-    #endregion Data Collection
+    #endregion Recolha de Dados
 
-    #region Assessment Logic
+    #region Lógica de Avaliação
     $passed = $androidAppProtectionPolicies.Count -ne 0 -and $androidAppProtectionPolicies.Where{$_.IsAssigned -eq $true}.count -ne 0
 
     if ($passed) {
-        $testResultMarkdown = "At least one App protection policy for Android exists and is assigned.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Pelo menos uma política de proteção de aplicativos para Android foi encontrada e atribuída.`n`n"
     }
     else {
-        $testResultMarkdown = "No App protection policy for Android exists or none are assigned.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma política de proteção de aplicativos para Android foi encontrada ou nenhuma está atribuída.`n`n"
     }
-    #endregion Assessment Logic
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Android App Protection policies configured for Android"
-    $tableRows = ""
-
-    # Generate markdown table rows for each policy
+    # Gerar linhas da tabela markdown para cada política
     if ($androidAppProtectionPolicies.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
+        $reportTitle = "Políticas de Proteção de Aplicações Android"
+        $tableRows = ""
+
+        # Criar uma here-string com marcadores de formato {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | Status | Assignment |
+| Nome da Política | Estado | Atribuição |
 | :---------- | :----- | :--------- |
 {1}
 
@@ -68,14 +63,14 @@ function Test-Assessment-24549 {
         foreach ($policy in $androidAppProtectionPolicies) {
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/AppsMenu/~/protection'
             $status = if ($policy.IsAssigned) {
-                '✅ Assigned'
+                '✅ Atribuída'
             }
             else {
-                '❌ Not Assigned'
+                '❌ Não Atribuída'
             }
 
             $policyName = Get-SafeMarkdown -Text $policy.displayName
-            $assignmentTarget = "None"
+            $assignmentTarget = "Nenhum"
 
             if ($policy.assignments -and $policy.assignments.Count -gt 0) {
                 $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
@@ -86,17 +81,17 @@ function Test-Assessment-24549 {
 "@
         }
 
-         # Format the template by replacing placeholders with values
+         # Formatar o modelo substituindo os marcadores pelos valores
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder in the test result markdown with the generated details
+    # Substituir o marcador no markdown do resultado do teste pelos detalhes gerados
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId             = '24549'
-        Title              = "An app protection policy for Android devices exists"
+        Title              = "Existe uma política de proteção de aplicativos para dispositivos Android"
         Status             = $passed
         Result             = $testResultMarkdown
     }

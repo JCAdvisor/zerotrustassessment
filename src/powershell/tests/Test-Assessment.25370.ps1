@@ -1,62 +1,35 @@
-﻿<#
-.SYNOPSIS
-    Checks that Global Secure Access source IP restoration (Conditional Access signaling) is enabled.
-.DESCRIPTION
-    Ensures that user source IP addresses are preserved for Conditional Access and risk detection by verifying that Global Secure Access signaling is enabled in Microsoft Entra.
-#>
-
 function Test-Assessment-25370 {
     [ZtTest(
-    	Category = 'Network',
-    	ImplementationCost = 'Low',
+    	Category = 'Rede',
+    	ImplementationCost = 'Baixo',
     	CompatibleLicense = ('Entra_Premium_Private_Access','Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25370,
-    	Title = 'Source IP restoration is enabled',
-    	UserImpact = 'Low'
+    	Title = 'Restauração do IP de origem está habilitada',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    #region Coleta de Dados
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Global Secure Access source IP restoration (Conditional Access signaling)'
-    Write-ZtProgress -Activity $activity -Status 'Querying Global Secure Access signaling status'
+    $activity = 'Verificando a restauração do IP de origem do Global Secure Access (sinalização de Acesso Condicional)'
+    Write-ZtProgress -Activity $activity -Status 'Consultando status de sinalização do Global Secure Access'
 
-    # Query Q1: Get Global Secure Access Conditional Access signaling settings
     $settings = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/settings/conditionalAccess' -ApiVersion beta
-
-    # Initialize test variables
-    $testResultMarkdown = ''
-    $passed = $false
-    #endregion Data Collection
-
-    #region Assessment Logic
+    # ...
     if ($null -eq $settings) {
-        $testResultMarkdown = 'Unable to retrieve Global Secure Access Conditional Access signaling settings.'
-        $passed = $false
+        $testResultMarkdown = 'Não foi possível recuperar as configurações de sinalização de Acesso Condicional do Global Secure Access.'
     }
     elseif ($settings.signalingStatus -eq 'enabled') {
-        $testResultMarkdown = '✅ Global Secure Access signaling is enabled.'
-        $passed = $true
+        $testResultMarkdown = '✅ A sinalização do Global Secure Access está habilitada.'
     }
     else {
-        $testResultMarkdown = '❌ Global Secure Access signaling is disabled.'
-        $passed = $false
+        $testResultMarkdown = '❌ A sinalização do Global Secure Access está desabilitada.'
     }
-    #endregion Assessment Logic
-
-
-    $params = @{
-        TestId = '25370'
-        Status = $passed
-        Result = $testResultMarkdown
-    }
-
-    # Add test result details
-    Add-ZtTestResultDetail @params
+    #endregion
 }

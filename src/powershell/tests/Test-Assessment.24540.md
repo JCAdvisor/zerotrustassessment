@@ -1,18 +1,17 @@
-If policies for Windows Firewall aren't configured and assigned, threat actors can exploit unprotected endpoints to gain unauthorized access, move laterally, and escalate privileges within the environment. Without enforced firewall rules, attackers can bypass network segmentation, exfiltrate data, or deploy malware, increasing the risk of widespread compromise.
+Se as políticas para o Firewall do Windows não estiverem configuradas e atribuídas, os agentes de ameaças podem explorar endpoints desprotegidos para obter acesso não autorizado, mover-se lateralmente e escalar privilégios no ambiente. Sem regras de firewall aplicadas, os invasores podem burlar a segmentação de rede, exfiltrar dados ou implantar malware, aumentando o risco de comprometimento generalizado.
 
-Enforcing Windows Firewall policies ensures consistent application of inbound and outbound traffic controls, reducing exposure to unauthorized access and supporting Zero Trust through network segmentation and device-level protection.
+A aplicação de políticas do Firewall do Windows garante a aplicação consistente de controles de tráfego de entrada e saída, reduzindo a exposição ao acesso não autorizado e apoiando o Zero Trust por meio da segmentação de rede e proteção no nível do dispositivo.
 
-**Remediation action**
+**Ação de correção**
 
-Configure and assign firewall policies for Windows in Intune to block unauthorized traffic and enforce consistent network protections across all managed devices:
+Configure e atribua políticas de firewall para Windows no Intune para bloquear tráfego não autorizado e aplicar proteções de rede consistentes em todos os dispositivos gerenciados:
 
-- [Configure firewall policies for Windows devices](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-firewall-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci). Intune uses two complementary profiles to manage firewall settings:
-  - **Windows Firewall** - Use this profile to configure overall firewall behavior based on network type.
-  - **Windows Firewall rules** - Use this profile to define traffic rules for apps, ports, or IPs, tailored to specific groups or workloads. This Intune profile also supports use of [reusable settings groups](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-firewall-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-reusable-settings-groups-to-profiles-for-firewall-rules) to help simplify management of common settings you use for different profile instances.
-- [Assign policies in Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
+- [Configurar políticas de firewall para dispositivos Windows](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-firewall-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci). O Intune usa dois perfis complementares para gerenciar as configurações de firewall:
+  - **Firewall do Windows** - Use este perfil para configurar o comportamento geral do firewall com base no tipo de rede.
+  - **Regras do Firewall do Windows** - Use este perfil para definir regras de tráfego para aplicativos, portas ou IPs, adaptadas a grupos ou cargas de trabalho específicos. Este perfil do Intune também oferece suporte ao uso de [grupos de configurações reutilizáveis](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-firewall-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-reusable-settings-groups-to-profiles-for-firewall-rules) para ajudar a simplificar o gerenciamento de configurações comuns que você usa para diferentes instâncias de perfil.
+- [Atribuir políticas no Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
 
-For more information, see:  
-- [Available Windows Firewall settings](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-firewall-profile-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#windows-firewall-profile)
-<!--- Results --->
+Para mais informações, consulte:
+- [Configurações disponíveis do Firewall do Windows](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-firewall-profile-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#windows-firewall-profile)
+<!--- Resultados --->
 %TestResult%
-

@@ -1,15 +1,14 @@
-If Intune profiles for Attack Surface Reduction (ASR) rules aren't properly configured and assigned to Windows devices, threat actors can exploit unprotected endpoints to execute obfuscated scripts and invoke Win32 API calls from Office macros. These techniques are commonly used in phishing campaigns and malware delivery, allowing attackers to bypass traditional antivirus defenses and gain initial access. Once inside, attackers escalate privileges, establish persistence, and move laterally across the network. Without ASR enforcement, devices remain vulnerable to script-based attacks and macro abuse, undermining the effectiveness of Microsoft Defender and exposing sensitive data to exfiltration. This gap in endpoint protection increases the likelihood of successful compromise and reduces the organization’s ability to contain and respond to threats.
+Se os perfis do Intune para as regras de Redução da Superfície de Ataque (ASR) não estiverem devidamente configurados e atribuídos a dispositivos Windows, os agentes de ameaças podem explorar endpoints desprotegidos para executar scripts ofuscados e invocar chamadas da API Win32 a partir de macros do Office. Estas técnicas são comummente utilizadas em campanhas de phishing e entrega de malware, permitindo que os atacantes contornem as defesas tradicionais de antivírus e ganhem acesso inicial. Uma vez lá dentro, os atacantes escalam privilégios, estabelecem persistência e movem-se lateralmente pela rede.
 
-Enforcing ASR rules helps block common attack techniques such as script-based execution and macro abuse, reducing the risk of initial compromise and supporting Zero Trust by hardening endpoint defenses.
+A imposição das regras ASR ajuda a bloquear técnicas comuns de ataque, como a execução baseada em scripts e o abuso de macros, reduzindo o risco de comprometimento inicial e apoiando o Zero Trust através do reforço das defesas dos endpoints.
 
-**Remediation action**
+**Ação de correção**
 
-Use Intune to deploy **Attack Surface Reduction Rules** profiles for Windows devices to block high-risk behaviors and strengthen endpoint protection:
-- [Configure Intune profiles for Attack Surface Reduction Rules](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-asr-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#devices-managed-by-intune)
-- [Assign policies in Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
+Utilize o Intune para implementar perfis de **Regras de Redução da Superfície de Ataque** para dispositivos Windows para bloquear comportamentos de alto risco:
+- [Configurar perfis do Intune para Regras de Redução da Superfície de Ataque](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-asr-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#devices-managed-by-intune)
+- [Atribuir políticas no Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
 
-For more information, see:  
-- [Attack surface reduction rules reference](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-reference?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) in the Microsoft Defender documentation.
+Para mais informações, consulte:
+- [Referência das regras de redução da superfície de ataque](https://learn.microsoft.com/defender-endpoint/attack-surface-reduction-rules-reference?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) na documentação do Microsoft Defender.
 <!--- Results --->
 %TestResult%
-

@@ -1,9 +1,8 @@
-Requiring sign-ins from managed devices ensures that users access organizational resources only from devices that meet your security and compliance requirements. Unmanaged devices lack organizational security controls and endpoint protection, creating potential entry points for attackers. Using Conditional Access to require compliant or Microsoft Entra hybrid joined devices helps protect against credential theft and unauthorized access from untrusted endpoints.
+Exigir que os logons ocorram a partir de dispositivos gerenciados garante que os usuários acessem os recursos organizacionais apenas de dispositivos que atendam aos seus requisitos de segurança e conformidade. Dispositivos não gerenciados carecem de controles de segurança organizacional e proteção de endpoint, criando potenciais pontos de entrada para invasores. O uso do Acesso Condicional para exigir dispositivos em conformidade ou dispositivos com ingresso híbrido no Microsoft Entra ajuda a proteger contra o roubo de credenciais e o acesso não autorizado a partir de endpoints não confiáveis.
 
-**Remediation action**
+**Ação de correção**
 
-- [Require compliant or hybrid joined devices with Conditional Access](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-device-compliance?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Configure device compliance policies in Microsoft Intune](https://learn.microsoft.com/mem/intune/protect/device-compliance-get-started?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Exigir dispositivos em conformidade ou com ingresso híbrido com Acesso Condicional](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-device-compliance?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar políticas de conformidade de dispositivos no Microsoft Intune](https://learn.microsoft.com/mem/intune/protect/device-compliance-get-started?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

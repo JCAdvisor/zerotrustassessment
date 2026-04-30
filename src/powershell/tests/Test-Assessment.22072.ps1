@@ -1,35 +1,35 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-22072{
     [ZtTest(
-    	Category = 'Credential management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de credenciais',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 22072,
-    	Title = 'Self-service password reset doesn''t use security questions',
-    	UserImpact = 'Medium'
+    	Title = 'Redefinição de senha por autoatendimento não usa perguntas de segurança',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Self-Service Password Reset does not use Q & A"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se a Redefinição de Senha por Autoatendimento não utiliza Perguntas e Respostas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '22072' -Title "Self-Service Password Reset does not use Q & A" `
+    Add-ZtTestResultDetail -TestId '22072' -Title "Redefinição de Senha por Autoatendimento não utiliza Perguntas e Respostas" `
         -UserImpact Medium -Risk Medium -ImplementationCost Medium `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

@@ -1,6 +1,6 @@
-﻿<#
+<#
     .SYNOPSIS
-    Checks Service principals have certificates or credentials associated with them
+    Verifica se as Entidades de Serviço possuem certificados ou credenciais associadas a elas
 
 #>
 
@@ -14,21 +14,21 @@ function Test-Assessment-21896 {
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce','External'),
     	TestId = 21896,
-    	Title = 'Service principals don''t have certificates or credentials associated with them',
+    	Title = 'Entidades de serviço não possuem certificados ou credenciais associadas a elas',
     	UserImpact = 'Low'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Service principals have certificates or credentials associated with them'
-    Write-ZtProgress -Activity $activity -Status 'Getting Service Principals'
+    $activity = 'Verificando se as Entidades de Serviço possuem certificados ou credenciais associadas a elas'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo Entidades de Serviço'
 
-    # Start test as passed
+    # Iniciar teste como aprovado
     $passed = $true
 
-    # Q2: Get service principals with any credentials using single SQL query
+    # Q2: Obter entidades de serviço com quaisquer credenciais usando uma única consulta SQL
     $sqlPassCreds = @"
     SELECT distinct ON (id)
         id,
@@ -41,7 +41,7 @@ function Test-Assessment-21896 {
     ORDER BY displayName, keyEndDateTime DESC
 "@
 
-    # SQL query to find service principals with key credentials
+    # Consulta SQL para encontrar entidades de serviço com credenciais de chave
     $sqlKeyCreds = @"
     SELECT distinct ON (id)
         id,
@@ -59,28 +59,27 @@ function Test-Assessment-21896 {
 
     if ($resultsPassCreds.Count -eq 0 -and $resultsKeyCreds.Count -eq 0) {
         $passed = $true
-        $testResultMarkdown = "Service principals don't have credentials associated with them."
+        $testResultMarkdown = "As entidades de serviço não possuem credenciais associadas a elas."
     }
     else {
         $passed = $false
-        $testResultMarkdown = "Found Service Principals with credentials configured in the tenant, which represents a security risk.`n`n%TestResult%"
+        $testResultMarkdown = "Foram encontradas Entidades de Serviço com credenciais configuradas no locatário, o que representa um risco de segurança.`n`n%TestResult%"
     }
 
-    # Build the detailed sections of the markdown
+    # Construir as seções detalhadas do markdown
 
-    # Define variables to insert into the format string
-    $reportTitle = 'Service Principals with credentials configured in the tenant'
+    # Definir variáveis para inserir na string de formato
+    $reportTitle = 'Entidades de Serviço com credenciais configuradas no locatário'
     $tableRows = ""
 
     if ($resultsPassCreds.Count -gt 0 -or $resultsKeyCreds.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
 
-| Service Principal Name | Credentials Type | Credentials Expiration Date | Expiry Status |
-| :--------------------- | :--------------- | :-------------------------- | :------------ |
+| Nome da Entidade de Serviço | Tipo de Credencial | Data de Expiração da Credencial | Status de Expiração |
+| :-------------------------- | :----------------- | :------------------------------ | :------------------ |
 {1}
 
 '@
@@ -89,14 +88,14 @@ function Test-Assessment-21896 {
             $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/{0}/appId/{1}' -f $sp.id, $sp.appId
             $expiryDate = $sp.keyEndDateTime.ToDateTime([TimeOnly]::MinValue)
             $expiryStatus = if ( (Get-Date) -gt $expiryDate) {
-                '❗ Expired'
+                '❗ Expirado'
             }
             else {
-                '✅ Current'
+                '✅ Atual'
             }
 
             $tableRows += @"
-| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Password Credentials | $(Get-FormattedDate($sp.keyEndDateTime)) | $expiryStatus |`n
+| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Credenciais de Senha | $(Get-FormattedDate($sp.keyEndDateTime)) | $expiryStatus |`n
 "@
         }
 
@@ -104,27 +103,25 @@ function Test-Assessment-21896 {
             $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/{0}/appId/{1}' -f $sp.id, $sp.appId
             $expiryDate = $sp.keyEndDateTime.ToDateTime([TimeOnly]::MinValue)
             $expiryStatus = if ( (Get-Date) -gt $expiryDate) {
-                '❗ Expired'
+                '❗ Expirado'
             }
             else {
-                '✅ Current'
+                '✅ Atual'
             }
 
             $tableRows += @"
-| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Key Credentials | $(Get-FormattedDate($sp.keyEndDateTime)) | $expiryStatus |`n
+| [$(Get-SafeMarkdown($sp.displayName))]($portalLink) | Credenciais de Chave | $(Get-FormattedDate($sp.keyEndDateTime)) | $expiryStatus |`n
 "@
         }
 
-        # Format the template by replacing placeholders with values
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{
         TestId             = '21896'
-        Title              = "Service principals don't have certificates or credentials associated with them"
+        Title              = "Entidades de serviço não possuem certificados ou credenciais associadas a elas"
         UserImpact         = 'Low'
         Risk               = 'Medium'
         ImplementationCost = 'Medium'
@@ -134,7 +131,7 @@ function Test-Assessment-21896 {
         Result             = $testResultMarkdown
     }
     if (!$passed) {
-        $params.CustomStatus = 'Investigate'
+        $params.CustomStatus = 'Investigar'
     }
 
     Add-ZtTestResultDetail @params

@@ -7,5 +7,5 @@ Habilite a configuração **Restringir usuários não administradores de criar l
 - [Restringir as permissões padrão de usuários membros](https://learn.microsoft.com/entra/fundamentals/users-default-permissions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#restrict-member-users-default-permissions)
 - [Atribuir a função de Criador de Locatário](https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#tenant-creator)
 - [Revisar eventos de criação de locatário](https://learn.microsoft.com/entra/identity/monitoring-health/reference-audit-activities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#core-directory). Procure por OperationName=="Create Company", Category == "DirectoryManagement".
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

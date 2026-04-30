@@ -1,12 +1,11 @@
-If policies for Windows Hello for Business (WHfB) aren't configured and assigned to all users and devices, threat actors can exploit weak authentication mechanisms—like passwords—to gain unauthorized access. This can lead to credential theft, privilege escalation, and lateral movement within the environment. Without strong, policy-driven authentication like WHfB, attackers can compromise devices and accounts, increasing the risk of widespread impact.
+Se as políticas para o Windows Hello para Empresas (WHfB) não estiverem configuradas e atribuídas a todos os utilizadores e dispositivos, os agentes de ameaças podem explorar mecanismos de autenticação fracos — como palavras-passe — para obter acesso não autorizado. Isto pode levar ao roubo de credenciais, escalonamento de privilégios e movimentação lateral dentro do ambiente. Sem uma autenticação forte e baseada em políticas como o WHfB, os atacantes podem comprometer dispositivos e contas, aumentando o risco de um impacto generalizado.
 
-Enforcing WHfB disrupts this attack chain by requiring strong, multifactor authentication, which helps reduce the risk of credential-based attacks and unauthorized access.
+A imposição do WHfB interrompe esta cadeia de ataque ao exigir uma autenticação forte e multifator, o que ajuda a reduzir o risco de ataques baseados em credenciais e acesso não autorizado.
 
-**Remediation action**
+**Ação de correção**
 
-Deploy Windows Hello for Business in Intune to enforce strong, multifactor authentication:  
-- [Configure a tenant-wide Windows Hello for Business policy](https://learn.microsoft.com/intune/intune-service/protect/windows-hello?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-windows-hello-for-business-policy-for-device-enrollment) that applies at the time a device enrolls with Intune.
-- After enrollment, [configure Account protection profiles](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-account-protection-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#account-protection-profiles) and [assign](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups) different configurations for Windows Hello for Business to different groups of users and devices.
+Implemente o Windows Hello para Empresas no Intune para forçar uma autenticação forte e multifator:
+- [Configurar uma política de Windows Hello para Empresas ao nível do locatário](https://learn.microsoft.com/intune/intune-service/protect/windows-hello?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-windows-hello-for-business-policy-for-device-enrollment) que se aplica no momento em que um dispositivo se regista no Intune.
+- Após o registo, [configure perfis de proteção de conta](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-account-protection-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#account-protection-profiles) e [atribua](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups) diferentes configurações de Windows Hello para Empresas a diferentes grupos de utilizadores e dispositivos.
 <!--- Results --->
 %TestResult%
-

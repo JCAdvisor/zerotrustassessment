@@ -1,10 +1,9 @@
-Without Local Admin Password Solution (LAPS) deployed, threat actors exploit static local administrator passwords to establish initial access. After threat actors compromise a single device with a shared local administrator credential, they can move laterally across the environment and authenticate to other systems sharing the same password. Compromised local administrator access gives threat actors system-level privileges, letting them disable security controls, install persistent backdoors, exfiltrate sensitive data, and establish command and control channels. 
+Sem a implantação da Solução de Senha de Administrador Local (LAPS), os agentes de ameaça exploram senhas estáticas de administradores locais para estabelecer o acesso inicial. Após comprometerem um único dispositivo com uma credencial de administrador local compartilhada, eles podem se mover lateralmente pelo ambiente e se autenticar em outros sistemas que compartilham a mesma senha. O acesso de administrador local comprometido concede privilégios de nível de sistema, permitindo desabilitar controles de segurança, instalar backdoors persistentes, exfiltrar dados sensíveis e estabelecer canais de comando e controle.
 
-The automated password rotation and centralized management of LAPS closes this security gap and adds controls to help manage who has access to these critical accounts. Without solutions like LAPS, you can't detect or respond to unauthorized use of local administrator accounts, giving threat actors extended dwell time to achieve their objectives while remaining undetected.
+A rotação automatizada de senhas e o gerenciamento centralizado do LAPS fecham essa lacuna de segurança e adicionam controles para ajudar a gerenciar quem tem acesso a essas contas críticas. Sem soluções como o LAPS, não é possível detectar ou responder ao uso não autorizado de contas de administrador local, dando aos atacantes um tempo de permanência estendido para alcançar seus objetivos sem serem detectados.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure Windows Local Administrator Password Solution](https://learn.microsoft.com/entra/identity/devices/howto-manage-local-admin-passwords?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+- [Configurar a Solução de Senha de Administrador Local do Windows (LAPS)](https://learn.microsoft.com/entra/identity/devices/howto-manage-local-admin-passwords?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+<!--- Resultados --->
 %TestResult%
-

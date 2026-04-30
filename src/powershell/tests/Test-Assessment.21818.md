@@ -3,5 +3,5 @@ Organizações sem alertas de ativação adequados para funções altamente priv
 **Ação de correção**
 
 - [Configure as definições de função do Microsoft Entra no Privileged Identity Management](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-how-to-change-default-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#require-justification-on-activation)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

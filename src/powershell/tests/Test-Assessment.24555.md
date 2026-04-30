@@ -1,12 +1,11 @@
-If Intune scope tags aren't properly configured for delegated administration, attackers who gain privileged access to Intune or Microsoft Entra ID can escalate privileges and access sensitive device configurations across the tenant. Without granular scope tags, administrative boundaries are unclear, allowing attackers to move laterally, manipulate device policies, exfiltrate configuration data, or deploy malicious settings to all users and devices. A single compromised admin account can impact the entire environment. The absence of delegated administration also undermines least-privileged access, making it difficult to contain breaches and enforce accountability. Attackers might exploit global administrator roles or misconfigured role-based access control (RBAC) assignments to bypass compliance policies and gain broad control over device management.
+Se as etiquetas de âmbito (scope tags) do Intune não forem configuradas corretamente para a administração delegada, os atacantes que obtenham acesso privilegiado ao Intune ou ao Microsoft Entra ID podem escalar privilégios e aceder a configurações de dispositivos sensíveis em todo o locatário. Sem etiquetas de âmbito granulares, os limites administrativos são pouco claros, permitindo que os atacantes se movam lateralmente, manipulem políticas de dispositivos, exfiltrem dados de configuração ou implementem definições maliciosas em todos os utilizadores e dispositivos. Uma única conta de administrador comprometida pode afetar todo o ambiente. A ausência de administração delegada também prejudica o acesso com o menor privilégio, tornando difícil conter violações e garantir a responsabilidade. Os atacantes podem explorar funções de administrador global ou atribuições de controlo de acesso baseado em funções (RBAC) mal configuradas para contornar políticas de conformidade e ganhar um controlo amplo sobre a gestão de dispositivos.
 
-Enforcing scope tags segments administrative access and aligns it with organizational boundaries. This limits the blast radius of compromised accounts, supports least-privilege access, and aligns with Zero Trust principles of segmentation, role-based control, and containment.
+A aplicação de etiquetas de âmbito segmenta o acesso administrativo e alinha-o com os limites organizacionais. Isto limita o raio de impacto de contas comprometidas, apoia o acesso com o menor privilégio e alinha-se com os princípios Zero Trust de segmentação, controlo baseado em funções e contenção.
 
-**Remediation action**
+**Ação de correção**
 
-Use Intune scope tags and RBAC roles to limit admin access based on role, geography, or business unit:  
-- [Learn how to create and deploy scope tags for distributed IT](https://learn.microsoft.com/intune/intune-service/fundamentals/scope-tags?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Implement role-based access control with Microsoft Intune](https://learn.microsoft.com/intune/intune-service/fundamentals/role-based-access-control?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Utilize etiquetas de âmbito e funções RBAC do Intune para limitar o acesso de administrador com base na função, geografia ou unidade de negócio:
+- [Saiba como criar e implementar etiquetas de âmbito para TI distribuída](https://learn.microsoft.com/intune/intune-service/fundamentals/scope-tags?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Implementar o controlo de acesso baseado em funções com o Microsoft Intune](https://learn.microsoft.com/intune/intune-service/fundamentals/role-based-access-control?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

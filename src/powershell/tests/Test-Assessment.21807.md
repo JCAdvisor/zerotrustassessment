@@ -7,5 +7,5 @@ Além disso, atacantes podem usar entidades de serviço para se misturar a proce
 **Ação de remediação**
 
 - [Bloquear usuários não privilegiados de criar aplicativos](https://learn.microsoft.com/entra/identity/role-based-access-control/delegate-app-roles?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

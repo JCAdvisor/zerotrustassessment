@@ -1,66 +1,60 @@
-﻿<#
+<#
 .SYNOPSIS
-    An app protection policy for iOS devices exists
+    Existe uma política de proteção de aplicativos para dispositivos iOS
 #>
 
 function Test-Assessment-24548 {
     [ZtTest(
-    	Category = 'Data',
-    	ImplementationCost = 'Low',
+    	Category = 'Dados',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 24548,
-    	Title = 'Data on iOS/iPadOS is protected by app protection policies',
-    	UserImpact = 'High'
+    	Title = 'Dados no iOS/iPadOS estão protegidos por políticas de proteção de aplicativos',
+    	UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    #region Data Collection
-    $activity = "Checking that an app protection policy for iOS devices exists"
+    #region Recolha de Dados
+    $activity = "A verificar se existe uma política de proteção de aplicativos para dispositivos iOS"
     Write-ZtProgress -Activity $activity
 
-    # Query 1: Retrieve all iOS App Protection Policies and their assignments
+    # Consulta 1: Obter todas as Políticas de Proteção de Aplicações iOS e as suas atribuições
     $iosAppProtectionPolicies = Invoke-ZtGraphRequest -RelativeUri 'deviceAppManagement/iosManagedAppProtections?$expand=assignments' -ApiVersion v1.0
-    #endregion Data Collection
+    #endregion Recolha de Dados
 
-    #region Assessment Logic
+    #region Lógica de Avaliação
     $passed = $iosAppProtectionPolicies.Count -ne 0 -and $iosAppProtectionPolicies.Where{$_.IsAssigned -eq $true}.count -ne 0
 
     if ($passed) {
-        $testResultMarkdown = "At least one App protection policy for iOS exists and is assigned.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Pelo menos uma política de proteção de aplicativos para iOS foi encontrada e atribuída.`n`n"
     }
     else {
-        $testResultMarkdown = "No App protection policy for iOS exists or none are assigned.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma política de proteção de aplicativos para iOS foi encontrada ou nenhuma está atribuída.`n`n"
     }
-    #endregion Assessment Logic
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "OS App Protection policies configured for iOS"
-    $tableRows = ""
-
-    # Generate markdown table rows for each policy
-
+    # Gerar linhas da tabela markdown para cada política
     if ($iosAppProtectionPolicies.Count -gt 0) {
-                # Create a here-string with format placeholders {0}, {1}, etc.
+        $reportTitle = "Políticas de Proteção de Aplicações iOS"
+        $tableRows = ""
+
+        # Criar uma here-string com marcadores de formato {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | Status | Assignment |
+| Nome da Política | Estado | Atribuição |
 | :---------- | :----- | :--------- |
 {1}
 
@@ -69,14 +63,14 @@ function Test-Assessment-24548 {
         foreach ($policy in $iosAppProtectionPolicies) {
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/AppsMenu/~/protection'
             $status = if ($policy.IsAssigned) {
-                '✅ Assigned'
+                '✅ Atribuída'
             }
             else {
-                '❌ Not Assigned'
+                '❌ Não Atribuída'
             }
 
             $policyName = Get-SafeMarkdown -Text $policy.displayName
-            $assignmentTarget = "None"
+            $assignmentTarget = "Nenhum"
 
             if ($policy.assignments -and $policy.assignments.Count -gt 0) {
                 $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
@@ -87,17 +81,17 @@ function Test-Assessment-24548 {
 "@
         }
 
-        # Format the template by replacing placeholders with values
+        # Formatar o modelo substituindo os marcadores pelos valores
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder in the test result markdown with the generated details
+    # Substituir o marcador no markdown do resultado do teste pelos detalhes gerados
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId             = '24548'
-        Title              = "An app protection policy for iOS devices exists"
+        Title              = "Existe uma política de proteção de aplicativos para dispositivos iOS"
         Status             = $passed
         Result             = $testResultMarkdown
     }

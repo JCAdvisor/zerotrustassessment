@@ -1,10 +1,9 @@
-When non-administrator users can access their own BitLocker keys, threat actors who compromise user credentials gain direct access to encryption keys without requiring privilege escalation. Once attackers obtain BitLocker keys, they can decrypt sensitive data stored on the device, including cached credentials, local databases, and confidential files.
+Quando usuários não administradores podem acessar suas próprias chaves do BitLocker, agentes de ameaça que comprometem credenciais de usuários ganham acesso direto às chaves de criptografia sem exigir escalonamento de privilégios. Uma vez que os atacantes obtêm as chaves do BitLocker, eles podem descriptografar dados sensíveis armazenados no dispositivo, incluindo credenciais em cache, bancos de dados locais e arquivos confidenciais.
 
-Without proper restrictions, a single compromised user account provides immediate access to all encrypted data on that device, negating the primary security benefit of disk encryption and creating a pathway for lateral movement. 
+Sem as restrições adequadas, uma única conta de usuário comprometida fornece acesso imediato a todos os dados criptografados naquele dispositivo, anulando o principal benefício de segurança da criptografia de disco e criando um caminho para movimentação lateral.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Restrict non-admin users from recovering the BitLocker key(s) for their owned devices](https://learn.microsoft.com/entra/identity/devices/manage-device-identities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-device-settings)
-<!--- Results --->
+- [Restringir usuários não administradores de recuperar as chaves do BitLocker para seus dispositivos próprios](https://learn.microsoft.com/entra/identity/devices/manage-device-identities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-device-settings)
+<!--- Resultados --->
 %TestResult%
-

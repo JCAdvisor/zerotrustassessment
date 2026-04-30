@@ -10,5 +10,5 @@ O consentimento irrestrito também limita a capacidade de governança centraliza
 **Ação de remediação**
 
 - [Configurar definições de consentimento do usuário restritas](https://learn.microsoft.com/entra/identity/enterprise-apps/configure-user-consent?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para evitar concessões de consentimento ilícitas, desabilitando o consentimento do usuário ou limitando-o a editores verificados com permissões de baixo risco apenas.
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -3,5 +3,5 @@ Um servidor de federação local introduz uma superfície de ataque crítica ao 
 **Ação de correção**
 
 - [Migrar da federação para a autenticação em nuvem, como a Sincronização de Hash de Senha (PHS) do Microsoft Entra](https://learn.microsoft.com/entra/identity/hybrid/connect/migrate-from-federation-to-cloud-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

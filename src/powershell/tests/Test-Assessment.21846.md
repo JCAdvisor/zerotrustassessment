@@ -3,5 +3,5 @@ Quando o Passe de Acesso Temporário (TAP) está configurado para permitir múlt
 **Ação de correção**
 
 - [Configurar o Passe de Acesso Temporário para uso único na política de métodos de autenticação](https://learn.microsoft.com/entra/identity/authentication/howto-authentication-temporary-access-pass?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-the-temporary-access-pass-policy)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

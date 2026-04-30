@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
@@ -12,23 +12,23 @@ function Test-Assessment-21897{
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce','External'),
     	TestId = 21897,
-    	Title = 'All app assignment and group membership is governed',
+    	Title = 'Toda atribuição de aplicativo e associação de grupo é governada',
     	UserImpact = 'High'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking All app assignment and group membership is governed"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se toda atribuição de aplicativo e associação de grupo é governada"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21897' -Title "All app assignment and group membership is governed" `
+    Add-ZtTestResultDetail -TestId '21897' -Title "Toda atribuição de aplicativo e associação de grupo é governada" `
         -UserImpact High -Risk Medium -ImplementationCost High `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

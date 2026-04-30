@@ -1,106 +1,84 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-24542 {
     [ZtTest(
-    	Category = 'Tenant',
-    	ImplementationCost = 'Low',
+    	Category = 'Locatário',
+    	ImplementationCost = 'Baixo',
         MinimumLicense = ('Intune'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24542,
-    	Title = 'Compliance policies protect macOS devices',
-    	UserImpact = 'Medium'
+    	Title = 'Políticas de conformidade protegem dispositivos macOS',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    #region Coleta de Dados
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    $activity = "Checking macOS compliance policies are created and assigned"
-    Write-ZtProgress -Activity $activity -Status "Getting compliance policies"
+    $activity = "Verificando se as políticas de conformidade do macOS estão criadas e atribuídas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo políticas de conformidade"
 
-    # Query 1: List all compliance policies for macOS in Intune
+    # Consulta 1: Listar todas as políticas de conformidade para macOS no Intune
     $compliancePoliciesUri = "deviceManagement/deviceCompliancePolicies"
     $allCompliancePolicies = Invoke-ZtGraphRequest -RelativeUri $compliancePoliciesUri -ApiVersion v1.0
 
-    # Filter for macOS compliance policies
+    # Filtrar para políticas de conformidade do macOS
     $macOSCompliancePolicies = $allCompliancePolicies | Where-Object { $_.'@odata.type' -eq '#microsoft.graph.macOSCompliancePolicy' }
-    #endregion Data Collection
+    #endregion Coleta de Dados
 
-    #region Assessment Logic
+    #region Lógica de Avaliação
     $passed = $false
     $testResultMarkdown = ""
 
-    # Check if at least one macOS compliance policy exists
-    if ($macOSCompliancePolicies.Count -gt 0) {
-        Write-ZtProgress -Activity $activity -Status "Checking policy assignments"
-
-        # Query 2: Check assignment of macOS compliance policies
-        $policiesWithAssignments = @()
-        foreach ($policy in $macOSCompliancePolicies) {
-            $assignmentsUri = "deviceManagement/deviceCompliancePolicies/$($policy.id)/assignments?`$select=target"
-
-            $assignments = Invoke-ZtGraphRequest -RelativeUri $assignmentsUri -ApiVersion v1.0
-
-            $policyWithAssignments = $null
-            if ($assignments -and $assignments.Count -gt 0) {
-                $isAssigned = $true
-            }
-            else {
-                $isAssigned = $false
-            }
-            # Add assignment info to policy object
-
-            $policyWithAssignments = $policy |
-                Add-Member -NotePropertyName 'assignments' -NotePropertyValue $assignments -Force -PassThru |
-                    Add-Member -NotePropertyName 'isAssigned' -NotePropertyValue $isAssigned -Force -PassThru
-
-            $policiesWithAssignments += $policyWithAssignments
-        }
-
-        # Check if at least one policy is assigned
-        $assignedPolicies = $policiesWithAssignments | Where-Object { $_.isAssigned -eq $true }
-
-        if ($assignedPolicies.Count -gt 0) {
+    # Verificar se pelo menos uma política de conformidade do macOS existe e está atribuída
+    $policiesWithAssignments = @()
+    foreach ($policy in $macOSCompliancePolicies) {
+        $assignmentsUri = "deviceManagement/deviceCompliancePolicies/$($policy.id)/assignments"
+        $assignments = Invoke-ZtGraphRequest -RelativeUri $assignmentsUri -ApiVersion v1.0
+        
+        $isAssigned = $assignments.Count -gt 0
+        if ($isAssigned) {
             $passed = $true
-            $testResultMarkdown = "At least one compliance policy for macOS exists and is assigned.`n`n%TestResult%"
         }
-        else {
-            $passed = $false
-            $testResultMarkdown = "No compliance policy for macOS exists or none are assigned.`n`n%TestResult%"
+
+        $policiesWithAssignments += [PSCustomObject]@{
+            displayName = $policy.displayName
+            isAssigned  = $isAssigned
+            assignments = $assignments
         }
+    }
+    #endregion Lógica de Avaliação
+
+    #region Geração de Relatório
+    if ($passed) {
+        $testResultMarkdown = "✅ Pelo menos uma política de conformidade para macOS foi encontrada e atribuída.`n`n"
     }
     else {
-        $passed = $false
-        $testResultMarkdown = "No compliance policy for macOS exists or none are assigned.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma política de conformidade para macOS foi encontrada ou nenhuma está atribuída.`n`n"
     }
-    #endregion Assessment Logic
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
+    # Criar informações detalhadas em tabela se as políticas existirem
+    if ($policiesWithAssignments) {
+        $tableRows = ""
+        $reportTitle = "Políticas de Conformidade do macOS"
 
-    # Define variables to insert into the format string
-    $reportTitle = "macOS Compliance Policies"
-    $tableRows = ""
-
-    if ($macOSCompliancePolicies.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | Status | Assignment Target |
+| Nome da Política | Status | Alvo de Atribuição |
 | :---------- | :----- | :---------------- |
 {1}
 
@@ -111,37 +89,38 @@ function Test-Assessment-24542 {
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/compliance'
 
             $status = if ($policyWithAssignments.isAssigned) {
-                "✅ Assigned"
+                "✅ Atribuída"
             }
             else {
-                "❌ Not assigned"
+                "❌ Não atribuída"
             }
 
-            $assignmentTarget = "None"
+            $assignmentTarget = "Nenhum"
 
             if ($policyWithAssignments.assignments -and $policyWithAssignments.assignments.Count -gt 0) {
                 $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policyWithAssignments.assignments
             }
 
-            $tableRows += @"
-| [$(Get-SafeMarkdown($policyWithAssignments.displayName))]($portalLink) | $status | $assignmentTarget |`n
-"@
+            $tableRows += @'
+| [{0}]({1}) | {2} | {3} |
+'@ -f (Get-SafeMarkdown -Text $policyWithAssignments.displayName), $portalLink, $status, $assignmentTarget
+            $tableRows += "`n"
         }
 
-        # Format the template by replacing placeholders with values
+        # Formatar o modelo substituindo os espaços reservados pelos valores
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
     else {
-        $mdInfo = "No macOS compliance policies found in this tenant.`n"
+        $mdInfo = "Nenhuma política de conformidade para macOS encontrada neste locatário.`n"
     }
 
-    # Replace the placeholder with the detailed information
+    # Substituir o espaço reservado pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '24542'
-        Title  = 'macOS Compliance Policy is Created and Assigned'
+        Title  = 'A Política de Conformidade do macOS está Criada e Atribuída'
         Status = $passed
         Result = $testResultMarkdown
     }

@@ -1,12 +1,11 @@
-Enterprise applications without owners become orphaned assets that threat actors can exploit. These applications often retain elevated permissions and access to sensitive resources while lacking proper oversight and security governance.
+Aplicativos empresariais sem proprietários tornam-se ativos órfãos que os agentes de ameaças podem explorar. Esses aplicativos geralmente mantêm permissões elevadas e acesso a recursos sensíveis, ao mesmo tempo em que carecem de supervisão adequada e governança de segurança.
 
-Applications without owners create blind spots in security monitoring where attackers can establish persistence by leveraging existing application permissions to access data or create backdoor accounts. The absence of ownership also prevents proper access reviews and permission audits, allowing applications with excessive permissions or outdated configurations to remain unmanaged.
+Aplicativos sem proprietários criam pontos cegos no monitoramento de segurança, onde invasores podem estabelecer persistência aproveitando as permissões de aplicativos existentes para acessar dados ou criar contas de backdoor. A ausência de propriedade também impede revisões de acesso e auditorias de permissão adequadas, permitindo que aplicativos com permissões excessivas ou configurações desatualizadas permaneçam não gerenciados.
 
-Assigning owners enables effective application lifecycle management and ensures proper security oversight.   
+Atribuir proprietários permite o gerenciamento eficaz do ciclo de vida do aplicativo e garante a supervisão de segurança adequada.
 
-**Remediation action**
+**Ação de correção**
 
-- [Assign enterprise application owners](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-app-owners?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+- [Atribuir proprietários de aplicativos empresariais](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-app-owners?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+<!--- Resultados --->
 %TestResult%
-

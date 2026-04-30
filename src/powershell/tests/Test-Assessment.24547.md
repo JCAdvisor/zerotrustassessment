@@ -1,12 +1,11 @@
-If compliance policies aren't assigned to Android Enterprise personally owned devices in Intune, threat actors can exploit noncompliant endpoints to gain unauthorized access to corporate resources, bypass security controls, and introduce vulnerabilities. Without enforced compliance, devices can lack critical security configurations like passcode requirements, data storage encryption, and OS version controls. These gaps increase the risk of data leakage and unauthorized access. Inconsistent device compliance weakens the organization’s security posture and makes it harder to detect and remediate threats before significant damage occurs.
+Se as políticas de conformidade não forem atribuídas a dispositivos Android Enterprise de propriedade pessoal no Intune, os agentes de ameaças podem explorar endpoints não conformes para obter acesso não autorizado a recursos corporativos, ignorar controlos de segurança e introduzir vulnerabilidades. Sem a conformidade aplicada, os dispositivos podem carecer de configurações de segurança críticas, como requisitos de código de acesso, criptografia de armazenamento de dados e controlos de versão do SO. Estas lacunas aumentam o risco de fuga de dados e acesso não autorizado. A conformidade inconsistente dos dispositivos enfraquece a postura de segurança da organização e torna mais difícil detetar e remediar ameaças antes que ocorram danos significativos.
 
-Enforcing compliance policies ensures that personally owned Android devices meet core security requirements and supports Zero Trust by validating device health and reducing exposure to misconfigured or unmanaged endpoints.
+A aplicação de políticas de conformidade garante que os dispositivos Android de propriedade pessoal atendam aos requisitos básicos de segurança e apoia o Zero Trust, validando a integridade do dispositivo e reduzindo a exposição a endpoints mal configurados ou não geridos.
 
-**Remediation action**
+**Ação de correção**
 
-Create and assign Intune compliance policies to Android Enterprise personally owned devices to enforce organizational standards for secure access and management:  
-- [Create a compliance policy in Microsoft Intune](https://learn.microsoft.com/intune/intune-service/protect/create-compliance-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-policy)
-- [Review the Android Enterprise compliance settings you can manage with Intune](https://learn.microsoft.com/intune/intune-service/protect/compliance-policy-create-android-for-work?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Crie e atribua políticas de conformidade do Intune a dispositivos Android Enterprise de propriedade pessoal para aplicar os padrões organizacionais para acesso e gestão seguros:
+- [Criar uma política de conformidade no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/protect/create-compliance-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-policy)
+- [Rever as configurações de conformidade do Android Enterprise que pode gerir com o Intune](https://learn.microsoft.com/intune/intune-service/protect/compliance-policy-create-android-for-work?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

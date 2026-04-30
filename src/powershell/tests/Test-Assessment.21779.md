@@ -2,5 +2,5 @@ Certifique-se de que as versões mais recentes dos Aplicativos Microsoft estejam
 
 **Ação de remediação**
 - Atualize os aplicativos para as versões mais recentes.
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

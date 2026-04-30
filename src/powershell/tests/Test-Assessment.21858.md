@@ -7,5 +7,5 @@ A dormência prolongada dessas contas fornece aos atacantes um tempo de permanê
 
 **Ação de correção**
 - [Monitorar e limpar contas de convidados obsoletas](https://learn.microsoft.com/entra/identity/users/clean-up-stale-guest-accounts?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -1,10 +1,9 @@
-Threat actors who gain privileged access to a tenant can manipulate Conditional Access policies, potentially disabling critical security controls and enabling persistent access or lateral movement. This type of attack can result in environment-wide compromise by bypassing authentication and authorization barriers.
+Agentes de ameaça que ganham acesso privilegiado a um tenant podem manipular políticas de Acesso Condicional, potencialmente desabilitando controles críticos de segurança e permitindo acesso persistente ou movimentação lateral. Esse tipo de ataque pode resultar em comprometimento de todo o ambiente ao contornar barreiras de autenticação e autorização.
 
-Protected actions let administrators secure Conditional Access policy creation and modification with extra security controls, such as stronger authentication methods (passwordless MFA or phishing-resistant MFA), the use of Privileged Access Workstation (PAW) devices, or shorter session timeouts.
+Ações protegidas permitem que os administradores protejam a criação e modificação de políticas de Acesso Condicional com controles extras de segurança, como métodos de autenticação mais fortes (MFA sem senha ou MFA resistente a phishing), o uso de estações de trabalho de acesso privilegiado (PAW) ou tempos de expiração de sessão mais curtos.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Add, test, or remove protected actions in Microsoft Entra ID](https://learn.microsoft.com/entra/identity/role-based-access-control/protected-actions-add?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+- [Adicionar, testar ou remover ações protegidas no Microsoft Entra ID](https://learn.microsoft.com/entra/identity/role-based-access-control/protected-actions-add?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+<!--- Resultados --->
 %TestResult%
-

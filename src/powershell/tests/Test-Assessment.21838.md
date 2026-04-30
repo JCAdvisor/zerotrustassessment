@@ -4,5 +4,5 @@ As chaves de segurança FIDO2 fornecem autenticação resistente a phishing e ba
 
 - [Ativar o método de autenticação de chave de segurança FIDO2](https://learn.microsoft.com/entra/identity/authentication/how-to-enable-passkey-fido2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-passkey-fido2-authentication-method)
 - [Gerenciar métodos de autenticação](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-methods-manage?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

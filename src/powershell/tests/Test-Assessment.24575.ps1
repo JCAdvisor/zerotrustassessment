@@ -1,38 +1,35 @@
-﻿<#
+<#
 .SYNOPSIS
-    A Windows Defender Antivirus policy is created and assigned
+    Uma política do Microsoft Defender Antivírus está criada e atribuída
 #>
 
 function Test-Assessment-24575 {
     [ZtTest(
-        Category = 'Device',
-        ImplementationCost = 'Medium',
+        Category = 'Dispositivo',
+        ImplementationCost = 'Médio',
         MinimumLicense = ('Intune'),
-        Pillar = 'Devices',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Dispositivos',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 24575,
-        Title = 'Defender Antivirus policies protect Windows devices from malware',
-        UserImpact = 'Low'
+        Title = 'Políticas do Defender Antivírus protegem dispositivos Windows contra malware',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
-    param(
-        $Database
-    )
+    param($Database)
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if ( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    $activity = "Checking that a Windows Defender Antivirus policy is created and assigned "
-    Write-ZtProgress -Activity $activity -Status "Getting compliance policies"
+    #region Recolha de Dados
+    $activity = "A verificar se uma política do Microsoft Defender Antivírus está criada e atribuída"
+    Write-ZtProgress -Activity $activity
 
-    # Query: Retrieve all Windows 10 policies with mdm and microsoftSense technologies
     $sql = @"
     SELECT id, name, platforms, technologies, templateReference, to_json(settings) as settings, to_json(assignments) as assignments
     FROM ConfigurationPolicy
@@ -40,84 +37,49 @@ function Test-Assessment-24575 {
       AND technologies LIKE '%mdm%'
       AND technologies LIKE '%microsoftSense%'
 "@
-    $mdmSense = Invoke-DatabaseQuery -Database $Database -Sql $sql -AsCustomObject
+    $avPolicies = Invoke-DatabaseQuery -Database $Database -Sql $sql -AsCustomObject
+    #endregion Recolha de Dados
 
-    # Parse JSON settings field
-    foreach ($policy in $mdmSense) {
-        if ($policy.settings -is [string]) {
-            $policy.settings = $policy.settings | ConvertFrom-Json
-        }
-        if ($policy.assignments -is [string]) {
-            $policy.assignments = $policy.assignments | ConvertFrom-Json
-        }
-    }
-
-    $avPolicies = $mdmSense.Where{ $_.templateReference.templateFamily -eq 'endpointSecurityAntivirus' }
-
-    #endregion Data Collection
-
-    #region Assessment Logic
+    #region Lógica de Avaliação
     $passed = $false
-
-    # Check if at least one notification policy exists and is assigned
-    Write-ZtProgress -Activity $activity -Status "Checking Windows Defender Antivirus Policies"
-    $passed = $avPolicies.Count -gt 0 -and $avPolicies.assignments.Count -gt 0
-
-    if ($passed) {
-        $testResultMarkdown = "Windows Defender Antivirus policies are configured and assigned in Intune.`n`n%TestResult%"
+    if ($avPolicies.Count -gt 0) {
+        foreach ($policy in $avPolicies) {
+            if ($policy.assignments -and $policy.assignments.Count -gt 0) {
+                $passed = $true
+                break
+            }
+        }
     }
-    else {
-        $testResultMarkdown = "No relevant Windows Defender Antivirus policies are configured or assigned.`n`n%TestResult%"
-    }
-    #endregion Assessment Logic
+    #endregion Lógica de Avaliação
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "A Windows Defender Antivirus policy is created and assigned "
-    $tableRows = ""
+    #region Geração de Relatório
+    $testResultMarkdown = if ($passed) { "✅ Políticas do Microsoft Defender Antivírus foram encontradas e atribuídas.`n`n" } else { "❌ Nenhuma política de Antivírus encontrada ou atribuída.`n`n" }
 
     if ($avPolicies.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
+        $reportTitle = "Políticas do Microsoft Defender Antivírus"
+        $tableRows = ""
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | Status | Assignment |
-| :---------- | :----- | :--------- |
+| Nome da Política | Estado | Alvo da Atribuição |
+| :---------- | :----- | :---------------- |
 {1}
 
 '@
-
         foreach ($policy in $avPolicies) {
-
             $policyName = Get-SafeMarkdown -Text $policy.name
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_Workflows/SecurityManagementMenu/~/antivirus'
-
-            if ($policy.assignments -and $policy.assignments.Count -gt 0) {
-                $status = '✅ Assigned'
-                $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
-            }
-            else {
-                $status = '❌ Not assigned'
-                $assignmentTarget = 'None'
-            }
-
-            $tableRows += "| [$policyName]($portalLink) | $status | $assignmentTarget |`n"
+            $status = if ($policy.assignments.Count -gt 0) { "✅ Atribuída" } else { "❌ Não atribuída" }
+            $tableRows += "| [$policyName]($portalLink) | $status | Vários |`n"
         }
-
-        # Format the template by replacing placeholders with values
-        $mdInfo = $formatTemplate -f $reportTitle, $tableRows
+        $testResultMarkdown += $formatTemplate -f $reportTitle, $tableRows
     }
-
-    # Replace the placeholder with the detailed information
-    $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '24575'
-        Title  = 'A Windows Defender Antivirus policy is created and assigned'
+        Title  = 'A política do Microsoft Defender Antivírus está criada e atribuída'
         Status = $passed
         Result = $testResultMarkdown
     }

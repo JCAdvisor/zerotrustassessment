@@ -1,13 +1,12 @@
-Without properly configured and assigned FileVault encryption policies in Intune, threat actors can exploit physical access to unmanaged or misconfigured macOS devices to extract sensitive corporate data. Unencrypted devices allow attackers to bypass operating system-level security by booting from external media or removing the storage drive. These attacks can expose credentials, certificates, and cached authentication tokens, enabling privilege escalation and lateral movement. Additionally, unencrypted devices undermine compliance with data protection regulations and increase the risk of reputational damage and financial penalties in the event of a breach.
+Sem políticas de criptografia FileVault devidamente configuradas e atribuídas no Intune, os agentes de ameaças podem explorar o acesso físico a dispositivos macOS não gerenciados ou mal configurados para extrair dados corporativos sensíveis. Dispositivos não criptografados permitem que invasores ignorem a segurança no nível do sistema operacional, inicializando a partir de mídia externa ou removendo a unidade de armazenamento. Esses ataques podem expor credenciais, certificados e tokens de autenticação em cache, permitindo a escalada de privilégios e a movimentação lateral. Além disso, dispositivos não criptografados prejudicam a conformidade com as regulamentações de proteção de dados e aumentam o risco de danos à reputação e penalidades financeiras em caso de violação.
 
-Enforcing FileVault encryption protects data at rest on macOS devices, even if lost or stolen. It disrupts credential harvesting and lateral movement, supports regulatory compliance, and aligns with Zero Trust principles of device trust.
+A aplicação da criptografia FileVault protege os dados em repouso em dispositivos macOS, mesmo se perdidos ou roubados. Isso interrompe a colheita de credenciais e a movimentação lateral, apoia a conformidade regulatória e alinha-se aos princípios de Zero Trust de confiança do dispositivo.
 
-**Remediation action**
+**Ação de correção**
 
-Use Intune to enforce FileVault encryption and monitor compliance on all managed macOS devices:  
-- [Create a FileVault disk encryption policy for macOS in Intune](https://learn.microsoft.com/intune/intune-service/protect/encrypt-devices-filevault?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-endpoint-security-policy-for-filevault)
-- [Assign policies in Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
-- [Monitor device encryption with Intune](https://learn.microsoft.com/intune/intune-service/protect/encryption-monitor?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Use o Intune para aplicar a criptografia FileVault e monitorar a conformidade em todos os dispositivos macOS gerenciados:
+- [Criar uma política de criptografia de disco FileVault para macOS no Intune](https://learn.microsoft.com/intune/intune-service/protect/encrypt-devices-filevault?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-endpoint-security-policy-for-filevault)
+- [Atribuir políticas no Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
+- [Monitorar a criptografia do dispositivo com o Intune](https://learn.microsoft.com/intune/intune-service/protect/encryption-monitor?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

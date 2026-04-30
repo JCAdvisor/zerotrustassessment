@@ -1,10 +1,9 @@
-Non-Microsoft and multitenant applications configured with URLs that include wildcards, localhost, or URL shorteners increase the attack surface for threat actors. These insecure redirect URIs (reply URLs) might allow adversaries to manipulate authentication requests, hijack authorization codes, and intercept tokens by directing users to attacker-controlled endpoints. Wildcard entries expand the risk by permitting unintended domains to process authentication responses, while localhost and shortener URLs might facilitate phishing and token theft in uncontrolled environments.
+Aplicativos não-Microsoft e multi-inquilinos configurados com URLs que incluem curingas (wildcards), localhost ou encurtadores de URL aumentam a superfície de ataque para agentes de ameaças. Esses URIs de redirecionamento inseguros (URLs de resposta) podem permitir que adversários manipulem solicitações de autenticação, sequestrem códigos de autorização e interceptem tokens direcionando os usuários para endpoints controlados pelo invasor. As entradas com curingas expandem o risco ao permitir que domínios não intencionais processem respostas de autenticação, enquanto URLs de localhost e encurtadores podem facilitar o phishing e o roubo de tokens em ambientes não controlados.
 
-Without strict validation of redirect URIs, attackers can bypass security controls, impersonate legitimate applications, and escalate their privileges. This misconfiguration enables persistence, unauthorized access, and lateral movement, as adversaries exploit weak OAuth enforcement to infiltrate protected resources undetected.
+Sem uma validação rigorosa dos URIs de redirecionamento, os invasores podem burlar controles de segurança, personificar aplicativos legítimos e escalar seus privilégios. Essa configuração incorreta permite a persistência, o acesso não autorizado e a movimentação lateral, conforme os adversários exploram a aplicação fraca de OAuth para infiltrar-se em recursos protegidos sem serem detectados.
 
-**Remediation action**
+**Ação de correção**
 
-- [Check the redirect URIs for your application registrations.](https://learn.microsoft.com/entra/identity-platform/reply-url?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) Make sure the redirect URIs don't have localhost, *.azurewebsites.net, wildcards, or URL shorteners.
-<!--- Results --->
+- [Verificar os URIs de redirecionamento para seus registros de aplicativos.](https://learn.microsoft.com/entra/identity-platform/reply-url?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) Certifique-se de que os URIs de redirecionamento não tenham localhost, *.azurewebsites.net, curingas ou encurtadores de URL.
+<!--- Resultados --->
 %TestResult%
-

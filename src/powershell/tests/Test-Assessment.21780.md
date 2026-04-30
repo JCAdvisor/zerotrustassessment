@@ -3,5 +3,5 @@ A Microsoft encerrou o suporte e as correções de segurança para o ADAL em 30 
 **Ação de remediação**
 
 - [Migrar aplicativos para a Biblioteca de Autenticação da Microsoft (MSAL)](https://learn.microsoft.com/entra/identity-platform/msal-migration?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -3,5 +3,5 @@ Quando a duração do Bloqueio Inteligente (Smart Lockout) é configurada abaixo
 **Ação de remediação**
 
 - [Definir a duração do Bloqueio Inteligente para 60 segundos ou mais](https://learn.microsoft.com/entra/identity/authentication/howto-password-smart-lockout?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#manage-microsoft-entra-smart-lockout-values)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

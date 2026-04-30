@@ -5,5 +5,5 @@ O bloqueio inteligente ajuda a impedir que maus atores tentem adivinhar as senha
 **Ação de remediação**
 
 - [Definir o limite do bloqueio inteligente do Microsoft Entra para 10 ou menos](https://learn.microsoft.com/entra/identity/authentication/howto-password-smart-lockout?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

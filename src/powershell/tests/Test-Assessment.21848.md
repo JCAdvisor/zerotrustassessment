@@ -5,5 +5,5 @@ A lista de senhas banidas personalizada ajuda as organizações a fechar essa la
 **Ação de remediação**
 
 - [Saiba como habilitar a proteção de senha banida personalizada e adicionar termos organizacionais](https://learn.microsoft.com/entra/identity/authentication/tutorial-configure-custom-password-protection?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

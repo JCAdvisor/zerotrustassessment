@@ -56,6 +56,7 @@ Total de locais nomeados: [{1}]({2})
 {3}
 '@
 
+    $tableRows = ""
     foreach ($namedLocation in $allNamedLocations | Sort-Object displayName) {
         $name = $namedLocation.displayName
         $locationType = switch ($namedLocation) {

@@ -7,5 +7,5 @@ Uma vez dentro, os criminosos podem disfarçar suas atividades como ações leg�
 - [Implantar autenticação multifator](https://learn.microsoft.com/entra/identity/authentication/howto-mfa-getstarted?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Implantar autenticação sem senha resistente a phishing](https://learn.microsoft.com/entra/identity/authentication/how-to-plan-prerequisites-phishing-resistant-passwordless-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Implantar política de Acesso Condicional para exigir MFA resistente a phishing para todos](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

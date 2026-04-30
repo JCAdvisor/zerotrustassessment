@@ -1,28 +1,28 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks if Local Admin Password Solution (LAPS) is deployed in the tenant.
+    Verifica se a Solução de Senha de Administrador Local (LAPS) está implantada no tenant.
 #>
 
 function Test-Assessment-21953{
     [ZtTest(
-    	Category = 'Devices',
+    	Category = 'Dispositivos',
     	ImplementationCost = 'Medium',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21953,
-    	Title = 'Local Admin Password Solution is deployed',
+    	Title = 'A Solução de Senha de Administrador Local (LAPS) está implantada',
     	UserImpact = 'Low'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Local Admin Password Solution is deployed'
-    Write-ZtProgress -Activity $activity -Status 'Getting LAPS settings'
+    $activity = 'Verificando se a Solução de Senha de Administrador Local (LAPS) está implantada'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configurações do LAPS'
 
     $lapsSettings = Invoke-ZtGraphRequest -RelativeUri 'policies/deviceRegistrationPolicy' -ApiVersion beta
 
@@ -31,28 +31,28 @@ function Test-Assessment-21953{
 
     if ($null -eq $lapsSettings) {
         $passed = $false
-        $testResultMarkdown = 'Device Registration Policy settings were not found in the tenant configuration.'
+        $testResultMarkdown = 'As configurações da Política de Registro de Dispositivo não foram encontradas na configuração do tenant.'
     }
     else {
-        Write-ZtProgress -Activity $activity -Status 'Checking LAPS configuration'
+        Write-ZtProgress -Activity $activity -Status 'Verificando configuração do LAPS'
 
         $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_Devices/DevicesMenuBlade/~/DeviceSettings/menuId/Overview'
 
         $lapsEnabled = ${lapsSettings}?.localAdminPassword?.isEnabled -eq $true
-        $lapsStatus = if ($lapsEnabled) { 'Enabled' } else { 'Disabled' }
+        $lapsStatus = if ($lapsEnabled) { 'Habilitado' } else { 'Desabilitado' }
 
-        $mdInfo = "`n## Local Admin Password Solution (LAPS) settings`n`n"
-        $mdInfo += "| Setting | Status |`n"
+        $mdInfo = "`n## Configurações da Solução de Senha de Administrador Local (LAPS)`n`n"
+        $mdInfo += "| Configuração | Status |`n"
         $mdInfo += "| :---- | :---- |`n"
-        $mdInfo += "|[Enable Microsoft Entra Local Administrator Password Solution (LAPS)]($portalLink) | $lapsStatus`n"
+        $mdInfo += "|[Habilitar Microsoft Entra Local Administrator Password Solution (LAPS)]($portalLink) | $lapsStatus`n"
 
         if ($lapsEnabled) {
             $passed = $true
-            $testResultMarkdown = "Local Admin Password Solution is deployed.$mdInfo"
+            $testResultMarkdown = "A Solução de Senha de Administrador Local (LAPS) está implantada.$mdInfo"
         }
         else {
             $passed = $false
-            $testResultMarkdown = "Local Admin Password Solution is not deployed.$mdInfo"
+            $testResultMarkdown = "A Solução de Senha de Administrador Local (LAPS) não está implantada.$mdInfo"
         }
     }
 
@@ -61,5 +61,6 @@ function Test-Assessment-21953{
         Status = $passed
         Result = $testResultMarkdown
     }
+
     Add-ZtTestResultDetail @params
 }

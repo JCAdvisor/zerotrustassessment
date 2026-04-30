@@ -1,9 +1,8 @@
-Microsoft Entra Connect Sync using user accounts instead of service principals creates security vulnerabilities. Legacy user account authentication with passwords is more susceptible to credential theft and password attacks than service principal authentication with certificates. Compromised connector accounts allow threat actors to manipulate identity synchronization, create backdoor accounts, escalate privileges, or disrupt hybrid identity infrastructure.  
+O uso do Microsoft Entra Connect Sync com contas de usuário em vez de Service Principals cria vulnerabilidades de segurança. A autenticação de conta de usuário legada com senhas é mais suscetível ao roubo de credenciais e ataques de senha do que a autenticação de Service Principal com certificados. Contas de conector comprometidas permitem que agentes de ameaças manipulem a sincronização de identidade, criem contas de backdoor, escalem privilégios ou interrompam a infraestrutura de identidade híbrida.
 
-**Remediation action**
+**Ação de correção**
 
-- [Configure service principal authentication for Entra Connect](https://learn.microsoft.com/entra/identity/hybrid/connect/authenticate-application-id?tabs=default&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#onboard-to-application-based-authentication)
-- [Remove legacy Directory Synchronization Accounts](https://learn.microsoft.com/entra/identity/hybrid/connect/authenticate-application-id?tabs=default&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#remove-a-legacy-service-account)
+- [Configurar autenticação de Service Principal para o Entra Connect](https://learn.microsoft.com/entra/identity/hybrid/connect/authenticate-application-id?tabs=default&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#onboard-to-application-based-authentication)
+- [Remover as Contas de Sincronização de Diretório legadas](https://learn.microsoft.com/entra/identity/hybrid/connect/authenticate-application-id?tabs=default&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#remove-a-legacy-service-account)
 <!--- Results --->
 %TestResult%
-

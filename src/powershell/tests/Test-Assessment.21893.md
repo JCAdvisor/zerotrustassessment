@@ -1,8 +1,7 @@
-Require multifactor authentication (MFA) registration for all users. Based on studies, your account is more than 99% less likely to be compromised if you're using MFA. Even if you don't require MFA all the time, this policy ensures your users are ready when it's needed.
+Exigir o registro de autenticação multifator (MFA) para todos os usuários. Com base em estudos, sua conta tem mais de 99% menos probabilidade de ser comprometida se você estiver usando MFA. Mesmo que você não exija MFA o tempo todo, esta política garante que seus usuários estejam prontos quando for necessário.
 
-**Remediation action**
+**Ação de correção**
 
-- [Configure the multifactor authentication registration policy](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-configure-mfa-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar a política de registro de autenticação multifator](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-configure-mfa-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

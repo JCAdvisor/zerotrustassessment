@@ -1,29 +1,28 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checking App registrations must not have reply URLs containing *.azurewebsites.net
+    Verifica se os registros de aplicativos não possuem URLs de resposta contendo *.azurewebsites.net
 #>
 
 function Test-Assessment-23183 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'High',
+    	Category = 'Gestão de aplicativos',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect engineering systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce','External'),
     	TestId = 23183,
-    	Title = 'Service principals use safe redirect URIs',
-    	UserImpact = 'Low'
+    	Title = 'Principais de serviço usam URIs de redirecionamento seguros',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param($Database)
 
-    # NOTE: This test is very similar to
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking service principals use safe redirect URIs "
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se principais de serviço usam URIs de redirecionamento seguros"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
 
     $results = Get-ZtAppWithUnsafeRedirectUris -Database $Database -Type 'ServicePrincipal'
@@ -31,7 +30,7 @@ function Test-Assessment-23183 {
     $passed = $results.Passed
     $testResultMarkdown = $results.TestResultMarkdown
 
-    Add-ZtTestResultDetail -TestId '23183' -Title "Service principals use safe redirect URIs" `
+    Add-ZtTestResultDetail -TestId '23183' -Title "Principais de serviço usam URIs de redirecionamento seguros" `
         -UserImpact Low -Risk High -ImplementationCost High `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown

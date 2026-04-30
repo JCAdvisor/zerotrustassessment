@@ -4,5 +4,5 @@ Métodos de autenticação resistentes a phishing, como passkeys e chaves de seg
 
 - [Configurar Acesso Condicional para todos os usuários com força de MFA](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Implantar autenticação sem senha resistente a phishing](https://learn.microsoft.com/entra/identity/authentication/how-to-deploy-phishing-resistant-passwordless-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -3,5 +3,5 @@ Este teste verifica se as identidades de convidados (guests) têm seu ciclo de v
 **Ação de correção**
 
 - [Gerenciar o acesso de convidados com as revisões de acesso do Microsoft Entra](https://learn.microsoft.com/entra/id-governance/create-access-review?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

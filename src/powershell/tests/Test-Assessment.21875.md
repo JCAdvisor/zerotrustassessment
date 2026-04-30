@@ -4,5 +4,5 @@ Pacotes de acesso configurados para permitir "Todos os usuários" em vez de orga
 
 - [Definir organizações confiáveis como organizações conectadas](https://learn.microsoft.com/entra/id-governance/entitlement-management-organization?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#view-the-list-of-connected-organizations)
 - [Configurar pacotes de acesso para permitir apenas organizações conectadas específicas](https://learn.microsoft.com/entra/id-governance/entitlement-management-access-package-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#allow-users-not-in-your-directory-to-request-the-access-package)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

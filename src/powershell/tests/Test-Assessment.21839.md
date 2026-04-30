@@ -6,5 +6,5 @@ As passkeys fornecem autenticação resistente a phishing usando prova criptogr�
 
 - Saiba como [ativar o método de autenticação por passkey](https://learn.microsoft.com/entra/identity/authentication/how-to-enable-passkey-fido2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-passkey-fido2-authentication-method).
 - Saiba como [planejar uma implantação de autenticação sem senha resistente a phishing](https://learn.microsoft.com/entra/identity/authentication/how-to-plan-prerequisites-phishing-resistant-passwordless-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -6,5 +6,5 @@ Embora um aplicativo com atribuição aberta, mas com escopo de provisionamento 
 - Avalie os requisitos de negócios para determinar o método de controle de acesso apropriado. [Restringir um aplicativo do Microsoft Entra a um conjunto de usuários](https://learn.microsoft.com/entra/identity-platform/howto-restrict-your-app-to-a-set-of-users?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 - Configure aplicativos empresariais para exigir atribuição para aplicativos sensíveis. [Saiba mais sobre a propriedade "Atribuição necessária" de aplicativos empresariais](https://learn.microsoft.com/entra/identity/enterprise-apps/application-properties?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assignment-required).
 - Implemente o provisionamento com escopo baseado em grupos, departamentos ou atributos. [Criar filtros de escopo](https://learn.microsoft.com/entra/identity/app-provisioning/define-conditional-rules-for-provisioning-user-accounts?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-scoping-filters).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -1,13 +1,11 @@
-If policies for Microsoft Defender Antivirus aren't properly configured and assigned in Intune, threat actors can exploit unprotected endpoints to execute malware, disable antivirus protections, and persist within the environment. Without enforced antivirus policies, devices operate with outdated definitions, disabled real-time protection, or misconfigured scan schedules. These gaps allow attackers to bypass detection, escalate privileges, and move laterally across the network. The absence of antivirus enforcement undermines device compliance, increases exposure to zero-day threats, and can result in regulatory noncompliance. Attackers leverage these weaknesses to maintain persistence and evade detection, especially in environments lacking centralized policy enforcement.
+Se as políticas para o Microsoft Defender Antivírus não estiverem devidamente configuradas e atribuídas no Intune, os agentes de ameaças podem explorar endpoints desprotegidos para executar malware, desativar as proteções de antivírus e persistir no ambiente. Sem políticas de antivírus impostas, os dispositivos operam com definições desatualizadas, proteção em tempo real desativada ou agendas de análise mal configuradas. Estas falhas permitem que os atacantes contornem a deteção e se movam lateralmente pela rede. A ausência de imposição de antivírus compromete a conformidade dos dispositivos e aumenta a exposição a ameaças zero-day.
 
-Enforcing Defender Antivirus policies ensures consistent protection against malware, supports real-time threat detection, and aligns with Zero Trust by maintaining a secure and compliant endpoint posture.
+A imposição das políticas do Defender Antivírus garante uma proteção consistente contra malware, apoia a deteção de ameaças em tempo real e alinha-se ao Zero Trust ao manter uma postura de endpoint segura e em conformidade.
 
-**Remediation action**
+**Ação de correção**
 
-Configure and assign Intune policies for Microsoft Defender Antivirus to enforce real-time protection, maintain up-to-date definitions, and reduce exposure to malware:
-
-- [Configure Intune policies to manage Microsoft Defender Antivirus](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-antivirus-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#windows)
-- [Assign policies in Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
+Configure e atribua políticas do Intune para o Microsoft Defender Antivírus para impor a proteção em tempo real e manter as definições atualizadas:
+- [Configurar políticas do Intune para gerir o Microsoft Defender Antivírus](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-antivirus-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#windows)
+- [Atribuir políticas no Intune](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups)
 <!--- Results --->
 %TestResult%
-

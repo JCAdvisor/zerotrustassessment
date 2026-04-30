@@ -1,14 +1,10 @@
-If device cleanup rules aren't configured in Intune, stale or inactive devices can remain visible in the tenant indefinitely. This leads to cluttered device lists, inaccurate reporting, and reduced visibility into the active device landscape. Unused devices might retain access credentials or tokens, increasing the risk of unauthorized access or misinformed policy decisions. 
+Se as regras de limpeza de dispositivos não forem configuradas no Intune, dispositivos obsoletos ou inativos podem permanecer visíveis no locatário indefinidamente. Isso leva a listas de dispositivos desordenadas, relatórios imprecisos e visibilidade reduzida do cenário real de dispositivos ativos. Dispositivos não utilizados podem reter credenciais ou tokens de acesso, aumentando o risco de acesso não autorizado.
 
-Device cleanup rules automatically hide inactive devices from admin views and reports, improving tenant hygiene and reducing administrative burden. This supports Zero Trust by maintaining an accurate and trustworthy device inventory while preserving historical data for audit or investigation.
+As regras de limpeza de dispositivos ocultam automaticamente dispositivos inativos das visualizações de administração e relatórios, melhorando a higiene do locatário e reduzindo a carga administrativa. Isso apoia o Zero Trust ao manter um inventário de dispositivos preciso e confiável.
 
-**Remediation action**
+**Ação de remediação**
 
-Configure Intune device cleanup rules to automatically hide inactive devices from the tenant:  
-- [Create a device cleanup rule](https://learn.microsoft.com/intune/intune-service/fundamentals/device-cleanup-rules?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#how-to-create-a-device-cleanup-rule)
-
-For more information, see:  
-- [Using Intune device cleanup rules](https://techcommunity.microsoft.com/blog/devicemanagementmicrosoft/using-intune-device-cleanup-rules-updated-version/3760854) *on the Microsoft Tech Community blog*
-<!--- Results --->
+Configure regras de limpeza de dispositivos do Intune para ocultar automaticamente dispositivos inativos do locatário:  
+- [Criar uma regra de limpeza de dispositivo](https://learn.microsoft.com/intune/intune-service/fundamentals/device-cleanup-rules?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#how-to-create-a-device-cleanup-rule)
+<!--- Resultados --->
 %TestResult%
-

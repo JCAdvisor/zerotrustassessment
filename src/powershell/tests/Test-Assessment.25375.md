@@ -1,16 +1,14 @@
-Global Secure Access requires specific Microsoft Entra licenses to function, including Microsoft Entra Internet Access and Microsoft Entra Private Access, both of which require Microsoft Entra ID P1 as a prerequisite. Without valid licenses provisioned in the tenant, administrators can't configure traffic forwarding profiles, security policies, or remote network connections. If you don't assign licenses to users, their traffic doesn't route through Global Secure Access, and remains unprotected by security controls.
+O Global Secure Access requer licenças específicas do Microsoft Entra para funcionar, incluindo o Microsoft Entra Internet Access e o Microsoft Entra Private Access, ambos exigindo o Microsoft Entra ID P1 como pré-requisito. Sem licenças válidas provisionadas no locatário, os administradores não podem configurar perfis de encaminhamento de tráfego, políticas de segurança ou conexões de rede remota. Se você não atribuir licenças aos usuários, o tráfego deles não será roteado pelo Global Secure Access e permanecerá desprotegido pelos controles de segurança.
 
-Without this protection:
+Sem essa proteção:
 
-- Threat actors can bypass web content filtering, threat protection, and Conditional Access policies.
-- Expired or suspended subscriptions can halt the Global Secure Access service, creating security gaps where previously protected traffic flows go unmonitored.
+- Agentes de ameaças podem ignorar a filtragem de conteúdo da Web, a proteção contra ameaças e as políticas de Acesso Condicional.
+- Assinaturas expiradas ou suspensas podem interromper o serviço Global Secure Access, criando lacunas de segurança onde fluxos de tráfego anteriormente protegidos não são monitorados.
 
-**Remediation action**
-- Review Global Secure Access licensing requirements and purchase appropriate licenses. For more information, see [Licensing overview](https://learn.microsoft.com/entra/global-secure-access/overview-what-is-global-secure-access?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#licensing-overview).
-- Assign licenses to users through the Microsoft Entra admin center. For more information, see [Assign licenses to users](https://learn.microsoft.com/entra/fundamentals/license-users-groups?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Use group-based licensing for easier management at scale. For more information, see [Group-based licensing](https://learn.microsoft.com/entra/fundamentals/concept-group-based-licensing?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Monitor license utilization through Microsoft 365 admin center. For more information, see [Microsoft 365 admin center](https://admin.microsoft.com/Adminportal/Home#/licenses).
-- Review Microsoft Entra Suite as an alternative that includes both Internet Access and Private Access. For more information, see [What's new in Microsoft Entra](https://learn.microsoft.com/entra/fundamentals/whats-new?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#microsoft-entra-suite).
-<!--- Results --->
+**Ação de remediação**
+- Revise os requisitos de licenciamento e adquira licenças apropriadas.
+- Atribua licenças aos usuários por meio do centro de administração do Microsoft Entra.
+- Use o licenciamento baseado em grupo para facilitar o gerenciamento em escala.
+- Monitore a utilização de licenças através do centro de administração do Microsoft 365.
+<!--- Resultados --->
 %TestResult%
-

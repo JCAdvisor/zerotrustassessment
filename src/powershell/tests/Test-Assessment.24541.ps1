@@ -1,74 +1,77 @@
-﻿<#
+<#
 .SYNOPSIS
-    A compliance policy for Windows devices exists and is assigned
+    Uma política de conformidade para dispositivos Windows existe e está atribuída
 #>
 
 function Test-Assessment-24541 {
     [ZtTest(
-    	Category = 'Tenant',
-    	ImplementationCost = 'Low',
+    	Category = 'Locatário',
+    	ImplementationCost = 'Baixo',
         MinimumLicense = ('Intune'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24541,
-    	Title = 'Compliance policies protect Windows devices',
-    	UserImpact = 'Medium'
+    	Title = 'Políticas de conformidade protegem dispositivos Windows',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    #region Coleta de Dados
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    $activity = "Checking Windows compliance policies are created and assigned"
-    Write-ZtProgress -Activity $activity -Status "Getting compliance policies"
+    $activity = "Verificando se as políticas de conformidade do Windows estão criadas e atribuídas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo políticas de conformidade"
 
-    # Query 1: List all compliance policies for Windows in Intune
+    # Consulta 1: Listar todas as políticas de conformidade para Windows no Intune
     $compliancePoliciesUri = 'deviceManagement/deviceCompliancePolicies?$expand=assignments'
     $allCompliancePolicies = Invoke-ZtGraphRequest -RelativeUri $compliancePoliciesUri -ApiVersion v1.0
 
-    # Filter for Windows compliance policies
+    # Filtrar para políticas de conformidade do Windows
     $windowsCompliancePolicies = $allCompliancePolicies | Where-Object {
         $_.'@odata.type' -eq '#microsoft.graph.windows10CompliancePolicy' -or
-        $_.'@odata.type' -eq '#microsoft.graph.windows11CompliancePolicy'
+        $_.'@odata.type' -eq '#microsoft.graph.windows81CompliancePolicy'
     }
-    #endregion Data Collection
+    #endregion Coleta de Dados
 
-    #region Assessment Logic
+    #region Lógica de Avaliação
     $passed = $false
+    $testResultMarkdown = ""
 
-    # Check if at least one Windows compliance policy exists
-    Write-ZtProgress -Activity $activity -Status "Checking policy assignments"
-    $passed = $windowsCompliancePolicies.Count -gt 0 -and $windowsCompliancePolicies.assignments.Count -gt 0
-    #endregion Assessment Logic
+    # Verificar se pelo menos uma política de conformidade do Windows existe e está atribuída
+    foreach ($policy in $windowsCompliancePolicies) {
+        if ($policy.assignments.Count -gt 0) {
+            $passed = $true
+            break
+        }
+    }
+    #endregion Lógica de Avaliação
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Windows Compliance Policies"
-    $tableRows = ""
+    #region Geração de Relatório
     if ($passed) {
-        $testResultMarkdown = "At least one compliance policy for Windows exists and is assigned.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Pelo menos uma política de conformidade para Windows foi encontrada e atribuída.`n`n"
     }
     else {
-        $testResultMarkdown = "No compliance policy for Windows exists or none are assigned.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma política de conformidade para Windows foi encontrada ou nenhuma está atribuída.`n`n"
     }
 
-    if ($windowsCompliancePolicies.Count -gt 0) {
-                # Create a here-string with format placeholders {0}, {1}, etc.
+    # Criar informações detalhadas em tabela se as políticas existirem
+    if ($windowsCompliancePolicies) {
+        $tableRows = ""
+        $reportTitle = "Políticas de Conformidade do Windows"
+
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | Status | Assignment |
+| Nome da Política | Status | Atribuição |
 | :---------- | :----- | :--------- |
 {1}
 
@@ -77,38 +80,39 @@ function Test-Assessment-24541 {
         foreach ($policy in $windowsCompliancePolicies) {
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/compliance'
             $status = if ($policy.assignments.Count -gt 0) {
-                '✅ Assigned'
+                '✅ Atribuída'
             }
             else {
-                '❌ Not Assigned'
+                '❌ Não Atribuída'
             }
 
             $policyName = Get-SafeMarkdown -Text $policy.displayName
-            $assignmentTarget = "None"
+            $assignmentTarget = "Nenhum"
 
             if ($policy.assignments -and $policy.assignments.Count -gt 0) {
                 $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
             }
 
-            $tableRows += @"
-| [$policyName]($portalLink) | $status | $assignmentTarget |`n
-"@
+            $tableRows += @'
+| [{0}]({1}) | {2} | {3} |
+'@ -f $policyName, $portalLink, $status, $assignmentTarget
+            $tableRows += "`n"
         }
 
-        # Format the template by replacing placeholders with values
+        # Formatar o modelo substituindo os espaços reservados pelos valores
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
     else {
-        $mdInfo = "No compliance policy for Windows exists or none are assigned.`n"
+        $mdInfo = "Nenhuma política de conformidade para Windows existe ou nenhuma está atribuída.`n"
     }
 
-    # Replace the placeholder with the detailed information
+    # Substituir o espaço reservado pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '24541'
-        Title  = 'Windows Compliance Policy is Created and Assigned'
+        Title  = 'A Política de Conformidade do Windows está Criada e Atribuída'
         Status = $passed
         Result = $testResultMarkdown
     }

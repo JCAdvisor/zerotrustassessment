@@ -6,5 +6,5 @@ Esse acesso inicial permite que os atores de ameaça escalem privilégios aprove
 
 - [Ativar a imposição de atestado por meio da configuração da política de métodos de autenticação](https://learn.microsoft.com/entra/identity/authentication/how-to-enable-passkey-fido2?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#enable-passkey-fido2-authentication-method).
 - [Configurar a lista aprovada de chaves de segurança por Authenticator Attestation Globally Unique Identifier (AAGUID)](https://learn.microsoft.com/entra/identity/authentication/concept-fido2-hardware-vendor?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

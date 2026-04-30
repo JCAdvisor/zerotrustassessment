@@ -1,17 +1,15 @@
-An Application Administrator role scoped at the tenant level can manage every app registration and enterprise application. If a threat actor compromises an Application Administrator with tenant-wide scope, they can add credentials to any service principal, consent to malicious APIs, modify or create applications that enable data exfiltration, and disable or tamper with Private Access apps. Scoping the role to only required Private Access enterprise apps enforces least privilege and limits the blast radius.
+Uma função de Administrador de Aplicativos com escopo no nível do locatário pode gerenciar todos os registros de aplicativos e aplicativos corporativos. Se um agente de ameaças comprometer um Administrador de Aplicativos com escopo em todo o locatário, ele poderá adicionar credenciais a qualquer entidade de serviço, consentir com APIs maliciosas, modificar ou criar aplicativos que permitam a exfiltração de dados e desativar ou adulterar aplicativos de Acesso Privado. Definir o escopo da função apenas para os aplicativos corporativos de Acesso Privado necessários impõe o privilégio mínimo e limita o raio de explosão (blast radius).
 
-If you don't scope Application Administrator assignments to specific apps:
+Se você não definir o escopo das atribuições de Administrador de Aplicativos para aplicativos específicos:
 
-- A compromised Application Administrator can manage every app registration and enterprise application in your tenant.
-- Threat actors can add credentials to any service principal, enabling persistence and lateral movement.
-- There's no blast radius containment; a single compromised identity can affect all applications.
+- Um Administrador de Aplicativos comprometido pode gerenciar cada registro de aplicativo e aplicativo corporativo em seu locatário.
+- Invasores podem adicionar credenciais a qualquer entidade de serviço, permitindo persistência e movimentação lateral.
+- Não há contenção do raio de explosão; uma única identidade comprometida pode afetar todos os aplicativos.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Assign Application Administrator roles scoped to specific app registrations](https://learn.microsoft.com/entra/identity/role-based-access-control/custom-enterprise-app-permissions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) instead of tenant-wide.
-- [Assign Microsoft Entra roles](https://learn.microsoft.com/entra/identity/role-based-access-control/manage-roles-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) with the least privilege necessary to perform required tasks.
-- [Use Privileged Identity Management to manage just-in-time role activation](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- [Manage Microsoft Entra role assignments in the admin center](https://learn.microsoft.com/entra/identity/role-based-access-control/manage-roles-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-<!--- Results --->
+- [Atribua funções de Administrador de Aplicativos com escopo para registros de aplicativos específicos](https://learn.microsoft.com/entra/identity/role-based-access-control/custom-enterprise-app-permissions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) em vez de em todo o locatário.
+- [Atribua funções do Microsoft Entra](https://learn.microsoft.com/entra/identity/role-based-access-control/manage-roles-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) com o privilégio mínimo necessário para realizar as tarefas exigidas.
+- [Use o Privileged Identity Management para gerenciar a ativação de função just-in-time](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+<!--- Resultados --->
 %TestResult%
-

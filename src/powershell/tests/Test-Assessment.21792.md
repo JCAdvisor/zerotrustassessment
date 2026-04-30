@@ -5,5 +5,5 @@ Contas externas com permissões para ler objetos do diretório fornecem aos atac
 **Ação de remediação**
 
 - [Restringir o acesso de convidados aos seus próprios objetos de diretório](https://learn.microsoft.com/entra/external-id/external-collaboration-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#to-configure-guest-user-access)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -1,12 +1,11 @@
-If compliance policies for macOS devices aren't configured and assigned, threat actors can exploit unmanaged or noncompliant endpoints to gain unauthorized access to corporate resources, bypass security controls, and persist within the environment. Without enforced compliance, macOS devices can lack critical security configurations like data storage encryption, password requirements, and OS version controls. These gaps increase the risk of data leakage, privilege escalation, and lateral movement. Inconsistent device compliance weakens the organization’s security posture and makes it harder to detect and remediate threats before significant damage occurs.
+Se as políticas de conformidade para dispositivos macOS não estiverem configuradas e atribuídas, os agentes de ameaças podem explorar endpoints não gerenciados ou não conformes para obter acesso não autorizado a recursos corporativos, burlar controles de segurança e estabelecer persistência no ambiente. Sem a conformidade aplicada, os dispositivos macOS podem carecer de configurações críticas de segurança, como criptografia de armazenamento de dados, requisitos de senha e controles de versão do SO. Essas lacunas aumentam o risco de vazamento de dados, escalonamento de privilégios e movimentação lateral. A conformidade inconsistente dos dispositivos enfraquece a postura de segurança da organização e torna mais difícil detectar e remediar ameaças antes que ocorram danos significativos.
 
-Enforcing compliance policies ensures macOS devices meet core security requirements and supports Zero Trust by validating device health and reducing exposure to misconfigured endpoints.
+A aplicação de políticas de conformidade garante que os dispositivos macOS atendam aos requisitos básicos de segurança e apoia o modelo Zero Trust, validando a integridade do dispositivo e reduzindo a exposição a endpoints mal configurados.
 
-**Remediation actions**
+**Ações de correção**
 
-Create and assign Intune compliance policies to macOS devices to enforce organizational standards for secure access and management:  
-- [Create and assign Intune compliance policies](https://learn.microsoft.com/intune/intune-service/protect/create-compliance-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-policy)
-- [Review the macOS compliance settings you can manage with Intune](https://learn.microsoft.com/intune/intune-service/protect/compliance-policy-create-mac-os?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Crie e atribua políticas de conformidade do Intune para dispositivos macOS para aplicar os padrões organizacionais de acesso e gerenciamento seguros:
+- [Criar e atribuir políticas de conformidade do Intune](https://learn.microsoft.com/intune/intune-service/protect/create-compliance-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-policy)
+- [Revisar as configurações de conformidade do macOS que você pode gerenciar com o Intune](https://learn.microsoft.com/intune/intune-service/protect/compliance-policy-create-mac-os?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

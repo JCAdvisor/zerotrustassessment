@@ -1,43 +1,40 @@
-﻿
 <#
 .SYNOPSIS
 
 #>
 
-
-
 function Test-Assessment-24546 {
     [ZtTest(
-    	Category = 'Tenant',
-    	ImplementationCost = 'Low',
+    	Category = 'Locatário',
+    	ImplementationCost = 'Baixo',
         MinimumLicense = ('P1'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24546,
-    	Title = 'Windows automatic device enrollment is enforced to eliminate risks from unmanaged endpoints',
-    	UserImpact = 'Low'
+    	Title = 'O registro automático de dispositivos Windows é aplicado para eliminar riscos de endpoints não gerenciados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    #region Coleta de Dados
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense EntraIDP1) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP1
         return
     }
 
-    $activity = "Checking Windows Automatic Enrollment is enabled"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se o Registro Automático do Windows está habilitado"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    # Retrieve Mobile Device Management Policies
+    # Recuperar Políticas de Gerenciamento de Dispositivos Móveis (MDM)
     $MDMPoliciesUri = "policies/mobileDeviceManagementPolicies"
     $MDMPolicies = Invoke-ZtGraphRequest -RelativeUri $MDMPoliciesUri -ApiVersion beta
 
-    # Convert to array if it's a single value to ensure consistent handling
+    # Converter para array se for um valor único para garantir tratamento consistente
     if ($null -eq $MDMPolicies) {
         $MDMPolicies = @()
     }
@@ -45,37 +42,35 @@ function Test-Assessment-24546 {
         $MDMPolicies = @($MDMPolicies)
     }
 
-    #endregion Data Collection
+    # Filtrar para a política do Microsoft Intune (usando o ID comum para Intune se disponível ou procurando por nome)
+    $intunePolicy = $MDMPolicies | Where-Object { $_.displayName -eq "Microsoft Intune" }
+    #endregion Coleta de Dados
 
-    #region Assessment Logic
-    $passed = $false
+    #region Lógica de Avaliação
+    # O registro automático é considerado habilitado se AppliesTo for 'all' ou 'selected'
+    $passed = $null -ne $intunePolicy -and ($intunePolicy.appliesTo -eq "all" -or $intunePolicy.appliesTo -eq "selected")
+    #endregion Lógica de Avaliação
+
+    #region Geração de Relatório
     $testResultMarkdown = ""
-
-    $intunePolicy = $MDMPolicies | Where-Object { $_.displayName -eq 'Microsoft Intune' }
-
-    if ($intunePolicy -and ($intunePolicy.appliesTo -ne 'none')) {
-        $passed = $true
-        $testResultMarkdown = "Windows Automatic Enrollment is enabled.`n`n%TestResult%"
+    if ($passed) {
+        $testResultMarkdown = "✅ O Registro Automático do Windows está habilitado e aplicado no locatário.`n`n"
     }
     else {
-        $testResultMarkdown = "Windows Automatic Enrollment is not enabled.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O Registro Automático do Windows não está habilitado ou está configurado como 'Nenhum'.`n`n"
     }
-    #endregion Assessment Logic
 
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Windows Automatic Enrollment"
+    # Variáveis para inserir na string de formato
+    $reportTitle = "Registro Automático do Windows"
     $tableRows = ""
 
     if ($intunePolicy) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
+        # Criar uma here-string com espaços reservados para formato {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | User Scope |
+| Nome da Política | Escopo do Usuário |
 | :---------- | :--------- |
 {1}
 
@@ -86,33 +81,32 @@ function Test-Assessment-24546 {
 
         switch ($intunePolicy.appliesTo) {
             'none' {
-                $userScope = "❌ None"
+                $userScope = "❌ Nenhum"
             }
             'selected' {
-                $userScope = "✅ Specific Groups"
+                $userScope = "✅ Grupos Específicos"
             }
             'all' {
-                $userScope = "✅ All Users"
+                $userScope = "✅ Todos os Usuários"
             }
             default {
-                $userScope = "⚠️ Unknown Scope"
+                $userScope = "⚠️ Escopo Desconhecido"
             }
         }
 
-
-        $tableRows = "| [$(Get-SafeMarkdown($policyName))]($portalLink) | $userScope |`n"
+        $tableRows = "| [$(Get-SafeMarkdown -Text $policyName)]($portalLink) | $userScope |`n"
     }
 
-    # Format the template by replacing placeholders with values
+    # Formatar o modelo substituindo os espaços reservados pelos valores
     $mdInfo = $formatTemplate -f $reportTitle, $tableRows
 
-    # Replace the placeholder with the detailed information
+    # Substituir o espaço reservado pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '24546'
-        Title  = 'Windows Automatic Enrollment is enabled'
+        Title  = 'O Registro Automático do Windows está Habilitado'
         Status = $passed
         Result = $testResultMarkdown
     }

@@ -1,7 +1,3 @@
-﻿
-
-
-
 <#
 .SYNOPSIS
 
@@ -9,30 +5,30 @@
 
 function Test-Assessment-22659 {
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'High',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('P2'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 22659,
-    	Title = 'All risky workload identity sign-ins are triaged',
-    	UserImpact = 'Low'
+    	Title = 'Todos os logons de identidades de carga de trabalho de risco são triados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
     if ( -not (Get-ZtLicense EntraWorkloadID) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraWorkloadID
         return
     }
 
-    $activity = 'Checking risky workload identity sign-ins'
-    Write-ZtProgress -Activity $activity -Status 'Getting risky sign-in detections'
+    $activity = 'Verificando logons de identidades de carga de trabalho de risco'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo detecções de logon de risco'
 
-    # Get risky service principal sign-in detections
+    # Obter detecções de logon de principal de serviço de risco
     $riskDetections = @()
     $response = Invoke-ZtGraphRequest -RelativeUri 'identityProtection/servicePrincipalRiskDetections' -ApiVersion 'beta'
     $riskDetections = $response.value | Where-Object {
@@ -43,32 +39,29 @@ function Test-Assessment-22659 {
 
     $testResultMarkdown = ''
     if ($result) {
-        $testResultMarkdown = @"
-✅ All risky workload identity sign-ins have been triaged and resolved.
-"@
-    }
-    else {
-        $testResultMarkdown = @"
-❌ Found risky workload identities sign-ins that require triage.
+        $testResultMarkdown = "✅ Todos os logons de identidades de carga de trabalho de risco foram triados."
+    } else {
+        $testResultMarkdown = @'
+❌ Encontrados logons de identidades de carga de trabalho de risco que requerem triagem.
 
 %TestResult%
 
-"@
+'@
     }
 
-    # Create detailed table information if there are risky detections
+    # Criar informações detalhadas em tabela se houver detecções de risco
     $mdInfo = ''
     if ($riskDetections) {
         $tableRows = ''
-        $reportTitle = "Risky Workload Identity Sign-ins"
+        $reportTitle = "Logons de Identidade de Carga de Trabalho de Risco"
 
-        # Create a here-string with format placeholders {0}, {1}, etc.
+        # Criar uma here-string com espaços reservados para formato {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
 
-| Service Principal | App ID | Risk State | Risk Level | Last Updated |
+| Principal de Serviço | ID do Aplicativo | Estado de Risco | Nível de Risco | Última Atualização |
 | :---------------- | :----- | :--------- | :--------- | :----------- |
 {1}
 
@@ -76,21 +69,28 @@ function Test-Assessment-22659 {
 
         foreach ($detection in $riskDetections) {
             $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Overview/objectId/{0}/appId/{1}' -f $detection.servicePrincipalId, $detection.appId
-            $tableRows += @"
-| [$(Get-SafeMarkdown($detection.servicePrincipalDisplayName))]($portalLink) | $($detection.appId) | $($detection.riskState) | $($detection.riskLevel) | $(Get-FormattedDate($detection.riskLastUpdatedDateTime)) |`n
-"@
+            $tableRows += @'
+| [{0}]({1}) | {2} | {3} | {4} | {5} |
+'@ -f (Get-SafeMarkdown -Text $detection.servicePrincipalDisplayName), $portalLink, $detection.appId, $detection.riskState, $detection.riskLevel, (Get-FormattedDate -Date $detection.riskLastUpdatedDateTime)
+            $tableRows += "`n"
         }
 
-        # Format the template by replacing placeholders with values
+        # Formatar o modelo substituindo os espaços reservados pelos valores
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder with the detailed information
+    # Substituir o espaço reservado pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $passed = $result
     Add-ZtTestResultDetail `
         -TestId '22659' `
+        -Title 'Todos os logons de identidades de carga de trabalho de risco são triados' `
+        -UserImpact Low `
+        -Risk High `
+        -ImplementationCost High `
+        -AppliesTo Identity `
+        -Tag Identity `
         -Status $passed `
         -Result $testResultMarkdown
 }

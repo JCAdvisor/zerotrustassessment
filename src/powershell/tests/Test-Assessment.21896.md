@@ -1,9 +1,8 @@
-Service principals without proper authentication credentials (certificates or client secrets) create security vulnerabilities that allow threat actors to impersonate these identities. This can lead to unauthorized access, lateral movement within your environment, privilege escalation, and persistent access that's difficult to detect and remediate. 
+Entidades de serviço sem credenciais de autenticação adequadas (certificados ou segredos de cliente) criam vulnerabilidades de segurança que permitem que atores de ameaças personifiquem essas identidades. Isso pode levar ao acesso não autorizado, movimentação lateral dentro do seu ambiente, escalonamento de privilégios e acesso persistente que é difícil de detectar e remediar.
 
-**Remediation action**
+**Ação de correção**
 
-- For your organization's service principals: [Add certificates or client secrets to the app registration](https://learn.microsoft.com/entra/identity-platform/how-to-add-credentials?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- For external service principals: Review and remove any unnecessary credentials to reduce security risk
+- Para as entidades de serviço da sua organização: [Adicionar certificados ou segredos de cliente ao registro do aplicativo](https://learn.microsoft.com/entra/identity-platform/how-to-add-credentials?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- Para entidades de serviço externas: Revise e remova quaisquer credenciais desnecessárias para reduzir o risco de segurança
 <!--- Results --->
 %TestResult%
-

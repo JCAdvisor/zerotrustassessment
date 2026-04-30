@@ -3,5 +3,5 @@ Este teste avalia se as permissões concedidas a parceiros por meio de Privilég
 **Ação de correção**
 
 - [Revisar e gerenciar relacionamentos GDAP](https://learn.microsoft.com/partner-center/gdap-introduction?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

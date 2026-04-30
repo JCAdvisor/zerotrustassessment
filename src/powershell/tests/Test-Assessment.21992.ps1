@@ -1,26 +1,26 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
 
 function Test-Assessment-21992{
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'High',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21992,
-    	Title = 'Application certificates must be rotated on a regular basis',
-    	UserImpact = 'Low'
+    	Title = 'Certificados de aplicativos devem ser rotacionados regularmente',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
     $sqlApp = @"
     select distinct ON (id) * from
         (select id, appId, displayName, signInAudience,
@@ -44,14 +44,14 @@ function Test-Assessment-21992{
 
     $passed = ($resultsApp.Count -eq 0) -and ($resultsSP.Count -eq 0)
     if ($passed) {
-        $testResultMarkdown += "Certificates for applications in your tenant have been issued within 180 days."
+        $testResultMarkdown += "Certificados para aplicativos em seu locatário (tenant) foram emitidos nos últimos 180 dias."
     }
     else {
-        $testResultMarkdown += "Found $($resultsApp.Count) applications and $($resultsSP.Count) service principals in your tenant with certificates that have not been rotated within 180 days.`n`n%TestResult%"
+        $testResultMarkdown += "Encontrados $($resultsApp.Count) aplicativos e $($resultsSP.Count) entidades de serviço em seu locatário com certificados que não foram rotacionados nos últimos 180 dias.`n`n%TestResult%"
     }
     if ($resultsApp.Count -gt 0) {
-        $mdInfo = "`n## Applications with certificates that have not been rotated within 180 days`n`n"
-        $mdInfo += "| Application | Certificate Start Date |`n"
+        $mdInfo = "`n## Aplicativos com certificados que não foram rotacionados nos últimos 180 dias`n`n"
+        $mdInfo += "| Aplicativo | Data de Início do Certificado |`n"
         $mdInfo += "| :--- | :--- |`n"
         foreach ($item in $resultsApp) {
             $portalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Credentials/appId/{0}" -f $item.appId
@@ -59,8 +59,8 @@ function Test-Assessment-21992{
         }
     }
     if ($resultsSP.Count -gt 0) {
-        $mdInfo += "`n`n## Service principals with certificates that have not been rotated within 180 days`n`n"
-        $mdInfo += "| Service principal | App owner tenant | Certificate Start Date |`n"
+        $mdInfo += "`n`n## Entidades de serviço com certificados que não foram rotacionados nos últimos 180 dias`n`n"
+        $mdInfo += "| Entidade de serviço | Locatário proprietário | Data de Início do Certificado |`n"
         $mdInfo += "| :--- | :--- | :--- |`n"
         foreach ($item in $resultsSP) {
             $tenant = Get-ZtTenant -tenantId $item.appOwnerOrganizationId
@@ -73,7 +73,7 @@ function Test-Assessment-21992{
 
     $params = @{
         TestId             = '21992'
-        Title              = 'Application Certificates need to be rotated on a regular basis'
+        Title              = 'Certificados de aplicativos precisam ser rotacionados regularmente'
         UserImpact         = 'Low'
         Risk               = 'High'
         ImplementationCost = 'High'

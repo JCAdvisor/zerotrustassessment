@@ -2,5 +2,5 @@ Este teste verifica se o módulo legado Microsoft Online PowerShell (MSOnline) e
 
 **Ação de correção**
 
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

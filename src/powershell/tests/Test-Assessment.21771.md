@@ -6,5 +6,5 @@ Atacantes podem explorar aplicativos válidos, mas inativos, que ainda possuem p
 - Investigar se o aplicativo possui casos de uso legítimos. Se sim, [analise se uma permissão OAuth2 é mais adequada](https://learn.microsoft.com/entra/identity-platform/v2-app-types?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Se a entidade de serviço não tiver casos de uso legítimos, exclua-a](https://learn.microsoft.com/graph/api/serviceprincipal-delete?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

@@ -11,5 +11,5 @@ A falta de requisitos de reautenticação periódica significa que, mesmo que o 
 
 - [Saiba mais sobre as políticas de tempo de vida de sessão adaptativas do Acesso Condicional](https://learn.microsoft.com/entra/identity/conditional-access/concept-session-lifetime?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Configure a frequência de logon para usuários privilegiados com políticas de Acesso Condicional](https://learn.microsoft.com/entra/identity/conditional-access/howto-conditional-access-session-lifetime?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

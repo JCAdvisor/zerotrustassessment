@@ -1,27 +1,27 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks that high priority Entra recommendations are addressed
+    Verifica se as recomendações de alta prioridade do Entra foram tratadas
 #>
 
 function Test-Assessment-22124 {
     [ZtTest(
-    	Category = 'Monitoring',
-    	ImplementationCost = 'Medium',
+    	Category = 'Monitoramento',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 22124,
-    	Title = 'High priority Microsoft Entra recommendations are addressed',
-    	UserImpact = 'Medium'
+    	Title = 'Recomendações de alta prioridade do Microsoft Entra foram tratadas',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking for directory recommendations that are high priority and are active or postponed"
+    $activity = "Verificando recomendações de diretório que são de alta prioridade e estão ativas ou adiadas"
     Write-ZtProgress -Activity $activity
 
     $recommendations = Invoke-ZtGraphRequest -RelativeUri "directory/recommendations" -ApiVersion beta
@@ -30,15 +30,15 @@ function Test-Assessment-22124 {
     $passed = $result.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "High Priority Entra Recommendations are addressed.`n`n"
+        $testResultMarkdown = "As recomendações de alta prioridade do Entra foram tratadas.`n`n"
     }
     else {
-        $testResultMarkdown = "Found $($result.Count) unaddressed high priority Entra recommendations.`n`n%TestResult%"
+        $testResultMarkdown = "Encontradas $($result.Count) recomendações de alta prioridade do Entra não tratadas.`n`n%TestResult%"
     }
 
     if ($result.Count -gt 0) {
-        $mdInfo = "`n## Unaddressed high priority Entra recommendations`n`n"
-        $mdInfo += "| Display Name | Status | Insights |`n"
+        $mdInfo = "`n## Recomendações de alta prioridade do Entra não tratadas`n`n"
+        $mdInfo += "| Nome de Exibição | Status | Insights |`n"
         $mdInfo += "| :--- | :--- | :--- |`n"
         foreach ($item in $result) {
             $mdInfo += "| $($item.displayName) | $($item.status) | $($item.Insights) |`n"
@@ -47,7 +47,7 @@ function Test-Assessment-22124 {
 
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '22124' -Title 'High priority Entra recommendations are addressed' `
+    Add-ZtTestResultDetail -TestId '22124' -Title 'Recomendações de alta prioridade do Entra foram tratadas' `
         -UserImpact Medium -Risk High -ImplementationCost Medium `
         -AppliesTo Identity -Tag Application `
         -Status $passed -Result $testResultMarkdown

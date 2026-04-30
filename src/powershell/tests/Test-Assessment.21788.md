@@ -6,5 +6,5 @@ Administradores Globais com acesso persistente a assinaturas do Azure expandem a
 - [Garanta que contas privilegiadas registrem e usem métodos resistentes a phishing](https://learn.microsoft.com/entra/identity/authentication/concept-authentication-strengths?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#authentication-strengths.md)
 - [Implante política de Acesso Condicional visando contas privilegiadas para exigir credenciais resistentes a phishing usando forças de autenticação](https://learn.microsoft.com/entra/identity/conditional-access/policy-admin-phish-resistant-mfa?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Monitore a atividade dos métodos de autenticação](https://learn.microsoft.com/entra/identity/monitoring-health/concept-usage-insights-report?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#authentication-methods-activity.md)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

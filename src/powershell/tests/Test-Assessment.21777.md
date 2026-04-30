@@ -3,5 +3,5 @@ O bloqueio de propriedade de instância de aplicativo impede alterações em pro
 **Ação de remediação**
 Habilite o bloqueio de propriedade de instância de aplicativo para todos os aplicativos multilocatários e especifique as propriedades a serem bloqueadas.
 - [Configurar um bloqueio de instância de aplicativo](https://learn.microsoft.com/entra/identity-platform/howto-configure-app-instance-property-locks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-an-app-instance-lock)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

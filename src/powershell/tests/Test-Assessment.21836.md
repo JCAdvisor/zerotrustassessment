@@ -4,5 +4,5 @@ Se os administradores atribuírem funções privilegiadas a identidades de carga
 - [Revisar e remover atribuições de funções privilegiadas](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-resource-roles-assign-roles?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#update-or-remove-an-existing-role-assignment).
 - [Siga as melhores práticas para identidades de carga de trabalho](https://learn.microsoft.com/entra/workload-id/workload-identities-overview?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#key-scenarios).
 - [Saiba mais sobre funções e permissões privilegiadas no Microsoft Entra ID](https://learn.microsoft.com/entra/identity/role-based-access-control/privileged-roles-permissions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

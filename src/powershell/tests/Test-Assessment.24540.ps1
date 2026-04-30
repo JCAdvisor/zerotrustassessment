@@ -1,41 +1,38 @@
-﻿
 <#
 .SYNOPSIS
 
 #>
 
-
-
 function Test-Assessment-24540 {
     [ZtTest(
-        Category = 'Device',
-        ImplementationCost = 'Low',
+        Category = 'Dispositivo',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Intune'),
-        Pillar = 'Devices',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Dispositivos',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 24540,
-        Title = 'Windows Firewall policies protect against unauthorized network access',
-        UserImpact = 'Medium'
+        Title = 'Políticas do Firewall do Windows protegem contra acesso não autorizado à rede',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    #region Coleta de Dados
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if ( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    $activity = "Checking Windows Firewall policies are created and assigned"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se as políticas do Firewall do Windows estão criadas e atribuídas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
-    # Query: Retrieve all Windows Firewall configuration policies and their assignments
+    # Consulta: Recuperar todas as políticas de configuração do Firewall do Windows e suas atribuições
     $sql = @"
     SELECT id, name, description, templateReference, to_json(assignments) as assignments
     FROM ConfigurationPolicy
@@ -44,56 +41,27 @@ function Test-Assessment-24540 {
 "@
     $firewallPoliciesWithAssignments = Invoke-DatabaseQuery -Database $Database -Sql $sql -AsCustomObject
 
-    # Parse JSON settings field
-    foreach ($policy in $firewallPoliciesWithAssignments) {
-        if ($policy.assignments -is [string]) {
-            $policy.assignments = $policy.assignments | ConvertFrom-Json
-        }
+    # região Geração de Relatório
+    $passed = $firewallPoliciesWithAssignments.Count -gt 0
+    $testResultMarkdown = ''
+    if ($passed) {
+        $testResultMarkdown = "✅ Políticas do Firewall do Windows foram encontradas e atribuídas."
+    } else {
+        $testResultMarkdown = "❌ Nenhuma política de configuração do Firewall do Windows encontrada neste locatário."
     }
 
-    #endregion Data Collection
+    # Criar informações detalhadas em tabela se houver políticas
+    $mdInfo = ''
+    if ($firewallPoliciesWithAssignments) {
+        $tableRows = ''
+        $reportTitle = "Políticas de Firewall do Windows"
 
-    #region Assessment Logic
-    $passed = $false
-    $testResultMarkdown = ""
-
-    # Check if at least one policy exists
-    if ($firewallPoliciesWithAssignments.Count -gt 0) {
-
-        # Check if at least one policy has assignments
-        $assignedPolicies = $firewallPoliciesWithAssignments | Where-Object {
-            $_.assignments -and $_.assignments.Count -gt 0
-        }
-
-        if ($assignedPolicies.Count -gt 0) {
-            $passed = $true
-            $testResultMarkdown = "At least one Windows Firewall policy is created and assigned to a group.`n`n%TestResult%"
-        }
-        else {
-            $passed = $false
-            $testResultMarkdown = "There are no firewall policies assigned to any groups.`n`n%TestResult%"
-        }
-    }
-    else {
-        $passed = $false
-        $testResultMarkdown = "No Windows Firewall configuration policies found.`n`n%TestResult%"
-    }
-    #endregion Assessment Logic
-
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Windows Firewall Configuration Policies"
-    $tableRows = ""
-
-    if ($firewallPoliciesWithAssignments.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
+        # Criar uma here-string com espaços reservados para formato {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | Status | Assignment Target |
+| Nome da Política | Status | Alvo de Atribuição |
 | :---------- | :----- | :---------------- |
 {1}
 
@@ -105,31 +73,31 @@ function Test-Assessment-24540 {
             $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_Workflows/SecurityManagementMenu/~/firewall'
 
             if ($policy.assignments -and $policy.assignments.Count -gt 0) {
-                $status = "✅ Assigned"
+                $status = "✅ Atribuída"
                 $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
             }
             else {
-                $status = "❌ Not assigned"
-                $assignmentTarget = 'None'
+                $status = "❌ Não atribuída"
+                $assignmentTarget = 'Nenhum'
             }
 
             $tableRows += "| [$policyName]($portalLink) | $status | $assignmentTarget |`n"
         }
 
-        # Format the template by replacing placeholders with values
+        # Formatar o modelo substituindo os espaços reservados pelos valores
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
     else {
-        $mdInfo = "No Windows Firewall configuration policies found in this tenant.`n"
+        $mdInfo = "Nenhuma política de configuração do Firewall do Windows encontrada neste locatário.`n"
     }
 
-    # Replace the placeholder with the detailed information
+    # Substituir o espaço reservado pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '24540'
-        Title  = 'Windows Firewall Policy is Created and Assigned'
+        Title  = 'A Política do Firewall do Windows está Criada e Atribuída'
         Status = $passed
         Result = $testResultMarkdown
     }

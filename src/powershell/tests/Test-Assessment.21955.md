@@ -1,8 +1,7 @@
-When local administrators on Microsoft Entra joined devices aren't properly managed, threat actors with compromised credentials can execute device takeover attacks by removing organizational administrators and disabling the device's connection to Microsoft Entra. This lack of control results in complete loss of organizational control, creating orphaned assets that can't be managed or recovered.
+Quando os administradores locais em dispositivos ingressados no Microsoft Entra não são gerenciados adequadamente, agentes de ameaça com credenciais comprometidas podem executar ataques de tomada de controle do dispositivo (takeover), removendo administradores organizacionais e desabilitando a conexão do dispositivo com o Microsoft Entra. Essa falta de controle resulta na perda completa do controle organizacional, criando ativos órfãos que não podem ser gerenciados ou recuperados.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Manage the local administrators on Microsoft Entra joined devices](https://learn.microsoft.com/entra/identity/devices/assign-local-admin?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#manage-the-microsoft-entra-joined-device-local-administrator-role)
-<!--- Results --->
+- [Gerenciar os administradores locais em dispositivos ingressados no Microsoft Entra](https://learn.microsoft.com/entra/identity/devices/assign-local-admin?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#manage-the-microsoft-entra-joined-device-local-administrator-role)
+<!--- Resultados --->
 %TestResult%
-

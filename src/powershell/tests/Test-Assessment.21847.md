@@ -8,5 +8,5 @@ Com credenciais locais válidas, os atacantes se movem lateralmente reutilizando
 **Ação de remediação**
 
 - [Implantar o Microsoft Entra password protection](https://learn.microsoft.com/entra/identity/authentication/howto-password-ban-bad-on-premises-deploy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

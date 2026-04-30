@@ -1,11 +1,10 @@
-Without device enrollment notifications, users might be unaware that their device has been enrolled in Intune—particularly in cases of unauthorized or unexpected enrollment. This lack of visibility can delay user reporting of suspicious activity and increase the risk of unmanaged or compromised devices gaining access to corporate resources. Attackers who obtain user credentials or exploit self-enrollment flows can silently onboard devices, bypassing user scrutiny and enabling data exposure or lateral movement.
+Sem notificações de registo de dispositivos, os utilizadores podem não ter conhecimento de que o seu dispositivo foi registado no Intune — particularmente em casos de registo não autorizado ou inesperado. Esta falta de visibilidade pode atrasar o reporte de atividades suspeitas por parte do utilizador e aumentar o risco de dispositivos não geridos ou comprometidos ganharem acesso a recursos corporativos. Atacantes que obtenham credenciais de utilizador ou explorem fluxos de auto-registo podem integrar dispositivos silenciosamente, contornando o escrutínio do utilizador e permitindo a exposição de dados ou movimento lateral.
 
-Enrollment notifications provide users with improved visibility into device onboarding activity. They help detect unauthorized enrollment, reinforce secure provisioning practices, and support Zero Trust principles of visibility, verification, and user engagement.
+As notificações de registo proporcionam aos utilizadores uma melhor visibilidade sobre a atividade de integração de dispositivos. Ajudam a detetar registos não autorizados, reforçam práticas de aprovisionamento seguras e apoiam os princípios Zero Trust de visibilidade, verificação e envolvimento do utilizador.
 
-**Remediation action**
+**Ação de correção**
 
-Configure Intune enrollment notifications to alert users when their device is enrolled and reinforce secure onboarding practices:  
-- [Set up enrollment notifications in Intune](https://learn.microsoft.com/intune/intune-service/enrollment/enrollment-notifications?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Configure as notificações de registo do Intune para alertar os utilizadores quando o seu dispositivo for registado e reforçar as práticas de integração seguras:
+- [Configurar notificações de registo no Intune](https://learn.microsoft.com/intune/intune-service/enrollment/enrollment-notifications?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

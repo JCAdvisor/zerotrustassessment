@@ -6,5 +6,5 @@ A migração para a política de Métodos de Autenticação combinada consolida 
 
 - [Habilitar o registro de informações de segurança combinado](https://learn.microsoft.com/entra/identity/authentication/howto-registration-mfa-sspr-combined?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - [Como migrar configurações para a política de métodos de autenticação](https://learn.microsoft.com/entra/identity/authentication/how-to-authentication-methods-manage?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

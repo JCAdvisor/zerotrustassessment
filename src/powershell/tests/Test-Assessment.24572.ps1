@@ -1,106 +1,80 @@
-﻿<#
+<#
 .SYNOPSIS
-    Device enrollment notification is configured and assigned
+    A notificação de registo de dispositivos está configurada e atribuída
 #>
 
 function Test-Assessment-24572 {
     [ZtTest(
-    	Category = 'Tenant',
-    	ImplementationCost = 'Low',
+    	Category = 'Locatário',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
-    	Pillar = 'Devices',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Dispositivos',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24572,
-    	Title = 'Device enrollment notifications are enforced to ensure user awareness and secure onboarding',
-    	UserImpact = 'Medium'
+    	Title = 'Notificações de registo de dispositivos são impostas para garantir a consciencialização do utilizador',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar' -Tag Test -Level VeryVerbose
 
     if( -not (Get-ZtLicense Intune) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedIntune
         return
     }
 
-    $activity = "Checking that a device enrollment notification is configured and assigned"
-    Write-ZtProgress -Activity $activity -Status "Getting compliance policies"
+    #region Recolha de Dados
+    $activity = "A verificar se a notificação de registo de dispositivos está configurada e atribuída"
+    Write-ZtProgress -Activity $activity -Status "A obter configurações"
 
-    # Query 1: List all Enrollment Notification configurations
     $enrollmentNotificationsUri = "deviceManagement/deviceEnrollmentConfigurations?`$expand=assignments&`$filter=deviceEnrollmentConfigurationType eq 'EnrollmentNotificationsConfiguration'"
     $enrollmentNotifications = Invoke-ZtGraphRequest -RelativeUri $enrollmentNotificationsUri -ApiVersion beta
+    #endregion Recolha de Dados
 
-    #endregion Data Collection
-
-    #region Assessment Logic
+    #region Lógica de Avaliação
     $passed = $false
-
-    # Check if at least one notification policy exists and is assigned
-    Write-ZtProgress -Activity $activity -Status "Checking Enrollment Notifications"
-    $passed = $enrollmentNotifications.Count -gt 0 -and $enrollmentNotifications.assignments.Count -gt 0
-    #endregion Assessment Logic
-
-    #region Report Generation
-    # Build the detailed sections of the markdown
-
-    # Define variables to insert into the format string
-    $reportTitle = "Device enrollment notifications"
-    $tableRows = ""
-    if ($passed) {
-        $testResultMarkdown = "At least one device enrollment notification is configured and assigned.`n`n%TestResult%"
+    if ($enrollmentNotifications.value.Count -gt 0) {
+        foreach ($policy in $enrollmentNotifications.value) {
+            if ($policy.assignments.Count -gt 0) {
+                $passed = $true
+                break
+            }
+        }
     }
-    else {
-        $testResultMarkdown = "No device enrollment notification is configured or assigned in Intune.`n`n%TestResult%"
-    }
+    #endregion Lógica de Avaliação
 
-    if ($enrollmentNotifications.Count -gt 0) {
-                # Create a here-string with format placeholders {0}, {1}, etc.
+    #region Geração de Relatório
+    $testResultMarkdown = if ($passed) { "✅ Notificações de registo de dispositivos foram encontradas e atribuídas.`n`n" } else { "❌ Nenhuma notificação de registo de dispositivos encontrada ou atribuída.`n`n" }
+
+    if ($enrollmentNotifications.value.Count -gt 0) {
+        $reportTitle = "Configurações de Notificação de Registo"
+        $tableRows = ""
         $formatTemplate = @'
 
 ## {0}
 
-| Policy Name | Status | Assignment |
-| :---------- | :----- | :--------- |
+| Nome da Política | Estado | Alvo da Atribuição |
+| :---------- | :----- | :---------------- |
 {1}
 
 '@
-
-        foreach ($policy in $enrollmentNotifications) {
-            $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_Workflows/SecurityBaselineSummaryMenu/~/profiles/summaryName/Security%20Baseline%20for%20Windows%2010%20and%20later/'
-            $status = if ($policy.assignments.Count -gt 0) {
-                '✅ Assigned'
-            }
-            else {
-                '❌ Not Assigned'
-            }
-
+        foreach ($policy in $enrollmentNotifications.value) {
             $policyName = Get-SafeMarkdown -Text $policy.displayName
-            $assignmentTarget = "None"
-
-            if ($policy.assignments -and $policy.assignments.Count -gt 0) {
-                $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
-            }
-
-            $tableRows += @"
-| [$policyName]($portalLink) | $status | $assignmentTarget |`n
-"@
+            $portalLink = 'https://intune.microsoft.com/#view/Microsoft_Intune_DeviceSettings/DevicesMenu/~/enrollment'
+            $status = if ($policy.assignments.Count -gt 0) { "✅ Atribuída" } else { "❌ Não atribuída" }
+            $assignmentTarget = if ($policy.assignments.Count -gt 0) { Get-PolicyAssignmentTarget -Assignments $policy.assignments } else { "Nenhum" }
+            $tableRows += "| [$policyName]($portalLink) | $status | $assignmentTarget |`n"
         }
-
-        # Format the template by replacing placeholders with values
-        $mdInfo = $formatTemplate -f $reportTitle, $tableRows
+        $testResultMarkdown += $formatTemplate -f $reportTitle, $tableRows
     }
-
-    # Replace the placeholder with the detailed information
-    $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Report Generation
+    #endregion Geração de Relatório
 
     $params = @{
         TestId = '24572'
-        Title  = 'Device enrollment notification is configured and assigned'
+        Title  = 'A notificação de registo de dispositivos está configurada e atribuída'
         Status = $passed
         Result = $testResultMarkdown
     }

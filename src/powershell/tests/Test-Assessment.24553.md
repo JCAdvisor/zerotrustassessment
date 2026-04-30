@@ -1,17 +1,16 @@
-If Windows Update policies aren't enforced across all corporate Windows devices, threat actors can exploit unpatched vulnerabilities to gain unauthorized access, escalate privileges, and move laterally within the environment. The attack chain often begins with device compromise via phishing, malware, or exploitation of known vulnerabilities, and is followed by attempts to bypass security controls. Without enforced update policies, attackers leverage outdated software to persist in the environment, increasing the risk of privilege escalation and domain-wide compromise.
+Se as políticas do Windows Update não forem aplicadas em todos os dispositivos Windows corporativos, os agentes de ameaças podem explorar vulnerabilidades não corrigidas para obter acesso não autorizado, escalar privilégios e mover-se lateralmente dentro do ambiente. A cadeia de ataque começa frequentemente com o comprometimento do dispositivo através de phishing, malware ou exploração de vulnerabilidades conhecidas, seguida de tentativas de contornar os controlos de segurança. Sem políticas de atualização aplicadas, os atacantes aproveitam o software desatualizado para persistir no ambiente, aumentando o risco de escalonamento de privilégios e comprometimento de todo o domínio.
 
-Enforcing Windows Update policies ensures timely patching of security flaws, disrupting attacker persistence, and reducing the risk of widespread compromise.
+A aplicação de políticas do Windows Update garante a correção atempada de falhas de segurança, interrompendo a persistência do atacante e reduzindo o risco de comprometimento generalizado.
 
-**Remediation action**
+**Ação de correção**
 
-Start with [Manage Windows software updates in Intune](https://learn.microsoft.com/intune/device-updates/windows/configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to understand the available Windows Update policy types and how to configure them.
+Comece por consultar [Gerir atualizações de software do Windows no Intune](https://learn.microsoft.com/intune/device-updates/windows/configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para compreender os tipos de política do Windows Update disponíveis e como configurá-los.
 
-Intune includes the following Windows update policy type: 
-- [Windows quality updates policy](https://learn.microsoft.com/intune/device-updates/windows/quality-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) - *to install the regular monthly updates for Windows.*
-- [Expedite updates policy](https://learn.microsoft.com/intune/device-updates/windows/expedite-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) - *to quickly install critical security patches.*
-- [Feature updates policy](https://learn.microsoft.com/intune/device-updates/windows/feature-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Update rings policy](https://learn.microsoft.com/intune/device-updates/windows/update-rings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) - *to manage how and when devices install feature and quality updates.*
-- [Windows driver updates](https://learn.microsoft.com/intune/device-updates/windows/driver-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) - *to update hardware components.*
+O Intune inclui os seguintes tipos de política de atualização do Windows:
+- [Política de atualizações de qualidade do Windows](https://learn.microsoft.com/intune/device-updates/windows/quality-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) - *para instalar as atualizações mensais regulares do Windows.*
+- [Política de atualizações aceleradas](https://learn.microsoft.com/intune/device-updates/windows/expedite-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) - *para instalar rapidamente patches de segurança críticos.*
+- [Política de atualizações de funcionalidades](https://learn.microsoft.com/intune/device-updates/windows/feature-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Política de anéis de atualização](https://learn.microsoft.com/intune/device-updates/windows/update-rings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) - *para gerir como e quando os dispositivos instalam atualizações de funcionalidades e de qualidade.*
+- [Atualizações de controladores do Windows](https://learn.microsoft.com/intune/device-updates/windows/driver-updates?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

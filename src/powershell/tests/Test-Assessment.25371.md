@@ -1,16 +1,15 @@
-Universal Continuous Access Evaluation (Universal CAE) validates network access tokens every time a connection is established through Global Secure Access tunnels. Without Universal CAE, tokens remain valid for 60 to 90 minutes regardless of changes to user state.
+A Avaliação de Acesso Contínuo Universal (Universal CAE) valida os tokens de acesso à rede sempre que uma conexão é estabelecida através de túneis do Global Secure Access. Sem o Universal CAE, os tokens permanecem válidos por 60 a 90 minutos, independentemente de mudanças no estado do usuário.
 
-Without this protection:
+Sem essa proteção:
 
-- A threat actor who obtains a token through theft or replay can continue accessing all Global Secure Access-protected resources even after the user's account is disabled or password is reset.
-- Critical events like session revocation or high user risk detection don't prompt immediate reauthentication.
-- Departing employees or malicious insiders maintain network-level access to private corporate resources for up to 90 minutes after remediation action is taken.
-- Token replay attacks from different IP addresses aren't blocked without Strict Enforcement mode.
+- Um agente de ameaça que obtém um token por meio de roubo ou repetição pode continuar acessando todos os recursos protegidos pelo Global Secure Access mesmo após a conta do usuário ser desativada ou a senha ser redefinida.
+- Eventos críticos, como revogação de sessão ou detecção de alto risco do usuário, não solicitam reautenticação imediata.
+- Funcionários que saem da empresa ou usuários internos mal-intencionados mantêm acesso em nível de rede a recursos corporativos privados por até 90 minutos após a ação de remediação ser tomada.
+- Ataques de repetição de token de endereços IP diferentes não são bloqueados sem o modo de Imposição Estrita.
 
-**Remediation action**
-- Review the [Universal CAE](https://learn.microsoft.com/entra/global-secure-access/concept-universal-continuous-access-evaluation?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) capabilities for Global Secure Access.
-- Remove or modify Conditional Access policies that disable CAE for Global Secure Access workloads. For more information, see [Continuous access evaluation](https://learn.microsoft.com/entra/identity/conditional-access/concept-continuous-access-evaluation?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Configure Universal CAE to use Strict Enforcement mode for enhanced token replay protection. For more information, see [Universal Continuous Access Evaluation](https://learn.microsoft.com/entra/global-secure-access/concept-universal-continuous-access-evaluation?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#strict-enforcement-mode).
-<!--- Results --->
+**Ação de remediação**
+- Revise os recursos do [Universal CAE](https://learn.microsoft.com/entra/global-secure-access/concept-universal-continuous-access-evaluation?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para Global Secure Access.
+- Remova ou modifique as políticas de Acesso Condicional que desabilitam o CAE para cargas de trabalho do Global Secure Access.
+- Configure o Universal CAE para usar o modo de Imposição Estrita para proteção aprimorada contra repetição de token.
+<!--- Resultados --->
 %TestResult%
-

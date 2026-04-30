@@ -1,18 +1,13 @@
-If Wi-Fi profiles aren't properly configured and assigned, Android devices can fail to connect to secure networks or connect insecurely, exposing corporate data to interception or unauthorized access. Without centralized management, devices rely on manual configuration, increasing the risk of misconfiguration, weak authentication, and connection to rogue networks.
+Se os perfis de Wi-Fi não forem configurados e atribuídos corretamente, os dispositivos Android podem não conseguir ligar-se a redes seguras ou ligar-se de forma insegura, expondo os dados corporativos a interceção ou acesso não autorizado. Sem uma gestão centralizada, os dispositivos dependem da configuração manual, aumentando o risco de configuração incorreta, autenticação fraca e ligação a redes não fidedignas.
 
-Centrally managing Wi-Fi profiles for Android devices in Intune ensures secure and consistent connectivity to enterprise networks. This enforces authentication and encryption standards, simplifies onboarding, and supports Zero Trust by reducing exposure to untrusted networks.
+A gestão centralizada de perfis de Wi-Fi para dispositivos Android no Intune garante uma conetividade segura e consistente às redes empresariais. Isto impõe normas de autenticação e encriptação, simplifica a integração e apoia o Zero Trust ao reduzir a exposição a redes não fidedignas.
 
+**Ação de remediação**
 
+Utilize o Intune para configurar e atribuir perfis de Wi-Fi seguros para dispositivos Android para impor normas de autenticação e encriptação:  
+- [Implementar perfis de Wi-Fi em dispositivos no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
 
-Use Intune to configure secure Wi-Fi profiles that enforce authentication and encryption standards.
-
-**Remediation action**
-
-Use Intune to configure and assign secure Wi-Fi profiles for Android devices to enforce authentication and encryption standards:  
-- [Deploy Wi-Fi profiles to devices in Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
-
-For more information, see:  
-- [Review the available Wi-Fi settings for Android devices in Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-android-enterprise?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+Para mais informações, consulte:  
+- [Reveja as definições de Wi-Fi disponíveis para dispositivos Android no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-android-enterprise?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+<!--- Resultados --->
 %TestResult%
-

@@ -4,5 +4,5 @@ Sem limitar o acesso de convidados a locatários (tenants) aprovados, atores de 
 
 - [Configurar listas de permissão ou negação baseadas em domínio](https://learn.microsoft.com/en-us/entra/external-id/allow-deny-list)
 
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

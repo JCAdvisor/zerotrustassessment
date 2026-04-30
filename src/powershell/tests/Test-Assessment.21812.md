@@ -3,5 +3,5 @@ Um número excessivo de contas de Administrador Global cria uma superfície de a
 **Ação de correção**
 
 - [Siga as melhores práticas para funções do Microsoft Entra](https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

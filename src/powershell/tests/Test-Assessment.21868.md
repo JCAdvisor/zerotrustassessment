@@ -5,5 +5,5 @@ Este vetor de ataque é perigoso porque os aplicativos de propriedade de convida
 **Ação de correção**
 - Remova usuários convidados como proprietários de aplicativos e principais de serviço e implemente controles para evitar a propriedade futura de aplicativos por usuários convidados.
 - [Restringir as permissões de acesso de usuários convidados](https://learn.microsoft.com/entra/identity/users/users-restrict-guest-permissions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

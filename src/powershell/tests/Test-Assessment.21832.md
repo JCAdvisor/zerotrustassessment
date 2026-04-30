@@ -4,5 +4,5 @@ Este teste verifica se todos os grupos incluídos em políticas de Acesso Condic
 - [Unidades administrativas de gerenciamento restrito no Microsoft Entra ID](https://learn.microsoft.com/entra/identity/role-based-access-control/restricted-management-administrative-units?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 - Garanta que grupos usados em políticas críticas de Acesso Condicional sejam membros de uma UA de gerenciamento restrito.
 
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

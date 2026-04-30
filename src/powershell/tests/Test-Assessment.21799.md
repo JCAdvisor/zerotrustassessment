@@ -5,5 +5,5 @@ Uma vez estabelecido o acesso através de logons de alto risco não controlados,
 **Ação de remediação**
 
 - [Implantar uma política de Acesso Condicional para exigir MFA para risco de logon elevado](https://learn.microsoft.com/entra/identity/conditional-access/policy-risk-based-sign-in?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-<!--- Results --->
+<!--- Resultados --->
 %TestResult%

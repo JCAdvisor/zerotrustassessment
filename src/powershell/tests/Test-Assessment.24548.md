@@ -1,15 +1,14 @@
-Without app protection policies, corporate data accessed on iOS/iPadOS devices is vulnerable to leakage through unmanaged or personal apps. Users can unintentionally copy sensitive information into unsecured apps, store data outside corporate boundaries, or bypass authentication controls. This risk is especially high on BYOD devices, where personal and work contexts coexist, increasing the likelihood of data exfiltration or unauthorized access.
+Sem políticas de proteção de aplicativos, os dados corporativos acedidos em dispositivos iOS/iPadOS são vulneráveis a fugas através de aplicações não geridas ou pessoais. Os utilizadores podem copiar involuntariamente informações confidenciais para aplicações não seguras, armazenar dados fora dos limites corporativos ou contornar controlos de autenticação. Este risco é especialmente elevado em dispositivos BYOD, onde os contextos pessoal e de trabalho coexistem, aumentando a probabilidade de exfiltração de dados ou acesso não autorizado.
 
-App protection policies ensure corporate data remains secure within approved apps, even on personal devices. These policies enforce encryption, restrict data sharing, and require authentication, reducing the risk of data leakage and aligning with Zero Trust principles of data protection and Conditional Access.
+As políticas de proteção de aplicativos garantem que os dados corporativos permaneçam seguros em aplicações aprovadas, mesmo em dispositivos pessoais. Estas políticas aplicam criptografia, restringem a partilha de dados e exigem autenticação, reduzindo o risco de fuga de dados e alinhando-se com os princípios Zero Trust de proteção de dados e Acesso Condicional.
  
-**Remediation action**
+**Ação de correção**
 
-Deploy Intune app protection policies that encrypt corporate data, restrict sharing, and require authentication in approved iOS/iPadOS apps:  
-- [Deploy Intune app protection policies](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policies?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-an-iosipados-or-android-app-protection-policy)
-- [Review the iOS app protection settings reference](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy-settings-ios?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Implemente políticas de proteção de aplicativos do Intune que criptografem dados corporativos, restrinjam a partilha e exijam autenticação em aplicações iOS/iPadOS aprovadas:
+- [Implementar políticas de proteção de aplicativos do Intune](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policies?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-an-iosipados-or-android-app-protection-policy)
+- [Rever a referência de configurações de proteção de aplicativos iOS](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy-settings-ios?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 
-For more information, see:  
-- [Learn about using app protection policies](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Para mais informações, veja:
+- [Saiba mais sobre a utilização de políticas de proteção de aplicativos](https://learn.microsoft.com/intune/intune-service/apps/app-protection-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

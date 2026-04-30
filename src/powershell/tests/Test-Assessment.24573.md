@@ -1,12 +1,11 @@
-Without properly configured and assigned Intune security baselines for Windows, devices remain vulnerable to a wide array of attack vectors that threat actors exploit to gain persistence and escalate privileges. Adversaries leverage default Windows configurations that lack hardened security settings to perform lateral movement using techniques like credential dumping, privilege escalation via unpatched vulnerabilities, and exploitation of weak authentication mechanisms. In the absence of enforced security baselines, threat actors can bypass critical security controls, maintain persistence through registry modifications, and exfiltrate sensitive data through unmonitored channels. Failing to implement a defense-in-depth strategy makes devices easier to exploit as attackers progress through the attack chain—from initial access to data exfiltration—ultimately compromising the organization’s security posture and increasing the risk of compliance violations.
+Sem as linhas de base de segurança (security baselines) do Intune devidamente configuradas e atribuídas para Windows, os dispositivos permanecem vulneráveis a uma vasta gama de vetores de ataque que os agentes de ameaças exploram para ganhar persistência e escalar privilégios. Os adversários aproveitam as configurações predefinidas do Windows, que carecem de definições de segurança reforçadas, para realizar movimentos laterais utilizando técnicas como despejo de credenciais (credential dumping), escalonamento de privilégios via vulnerabilidades não corrigidas e exploração de mecanismos de autenticação fracos. Na ausência de linhas de base de segurança impostas, os atacantes podem contornar controlos de segurança críticos e exfiltrar dados sensíveis.
 
-Applying security baselines ensures Windows devices are configured with hardened settings, reducing attack surface, enforcing defense-in-depth, and supporting Zero Trust by standardizing security controls across the environment.
+A aplicação de linhas de base de segurança garante que os dispositivos Windows sejam configurados com definições reforçadas, reduzindo a superfície de ataque, impondo a defesa em profundidade e apoiando o Zero Trust através da padronização de controlos de segurança em todo o ambiente.
 
-**Remediation action**
+**Ação de correção**
 
-Configure and assign Intune security baselines to Windows devices to enforce standardized security settings and monitor compliance:
-- [Deploy security baselines to help secure Windows devices](https://learn.microsoft.com/intune/intune-service/protect/security-baselines-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-profile-for-a-security-baseline)
-- [Monitor security baseline compliance](https://learn.microsoft.com/intune/intune-service/protect/security-baselines-monitor?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Configure e atribua as linhas de base de segurança do Intune a dispositivos Windows para impor definições de segurança padronizadas e monitorizar a conformidade:
+- [Implementar linhas de base de segurança para ajudar a proteger dispositivos Windows](https://learn.microsoft.com/intune/intune-service/protect/security-baselines-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-profile-for-a-security-baseline)
+- [Monitorizar a conformidade da linha de base de segurança](https://learn.microsoft.com/intune/intune-service/protect/security-baselines-monitor?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

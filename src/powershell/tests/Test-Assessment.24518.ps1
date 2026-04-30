@@ -1,21 +1,21 @@
-﻿<#!
+<#!
 .SYNOPSIS
-Checks that all enterprise applications have owners assigned and lists permission names with classifications.
+Verifica se todos os aplicativos empresariais possuem proprietários atribuídos e lista os nomes das permissões com classificações.
 #>
 
 function Test-Assessment-24518 {
 
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gestão de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect engineering systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce'),
     	TestId = 24518,
-    	Title = 'Enterprise applications have owners',
-    	UserImpact = 'Low'
+    	Title = 'Aplicativos empresariais possuem proprietários',
+    	UserImpact = 'Baixo'
     )]
 
     [CmdletBinding()]
@@ -27,8 +27,8 @@ function Test-Assessment-24518 {
         -Database $Database `
         -TestId '24518' `
         -PrivilegeLevel 'Medium', 'Low', 'Unranked' `
-        -PassMessage 'All enterprise applications have at least two owners.' `
-        -FailMessage 'Not all enterprise applications have at least two owners.' `
-        -ReportTitle 'Enterprise Application Ownership' `
-        -Activity 'Checking enterprise application ownership'
+        -PassMessage 'Todos os aplicativos empresariais possuem pelo menos dois proprietários.' `
+        -FailMessage 'Nem todos os aplicativos empresariais possuem pelo menos dois proprietários.' `
+        -ReportTitle 'Propriedade de Aplicativos Empresariais' `
+        -Activity 'Verificando a propriedade de aplicativos empresariais'
 }
