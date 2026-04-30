@@ -1,6 +1,6 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checking App registrations must not have dangling or abandoned domain redirect URIs
+    Verifica se os registros de aplicativos não possuem URIs de redirecionamento com domínios pendentes ou abandonados.
 #>
 
 function Test-Assessment-21888{
@@ -13,7 +13,7 @@ function Test-Assessment-21888{
     	SfiPillar = 'Protect engineering systems',
     	TenantType = ('Workforce','External'),
     	TestId = 21888,
-    	Title = 'App registrations must not have dangling or abandoned domain redirect URIs',
+    	Title = 'Registros de aplicativos não devem ter URIs de redirecionamento de domínios pendentes ou abandonados',
     	UserImpact = 'Low'
     )]
     [CmdletBinding()]
@@ -22,10 +22,10 @@ function Test-Assessment-21888{
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking App registrations must not have dangling or abandoned domain redirect URIs"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se os registros de aplicativos possuem URIs de redirecionamento pendentes"
+    Write-ZtProgress -Activity $activity -Status "Analisando políticas"
 
     $results = Get-ZtAppWithUnsafeRedirectUris -Database $Database -Type 'Application' -DnsCheckOnly
 
@@ -33,7 +33,7 @@ function Test-Assessment-21888{
     $testResultMarkdown = $results.TestResultMarkdown
 
 
-    Add-ZtTestResultDetail -TestId '21888' -Title "App registrations must not have dangling or abandoned domain redirect URIs" `
+    Add-ZtTestResultDetail -TestId '21888' -Title "Registros de aplicativos não devem ter URIs de redirecionamento de domínios pendentes ou abandonados" `
         -UserImpact Low -Risk High -ImplementationCost Low `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown

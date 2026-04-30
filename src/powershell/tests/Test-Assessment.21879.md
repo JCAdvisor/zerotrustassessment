@@ -1,9 +1,8 @@
-Access package assignment policies that allow external users to request access should require approval. Without an approval gate, external users can self-provision access to organizational resources without oversight. Requiring approval ensures that a designated approver reviews each request, providing an opportunity to validate the requestor's identity and business justification before granting access.
+Políticas de atribuição de pacotes de acesso que permitem que usuários externos solicitem acesso devem exigir aprovação. Sem uma etapa de aprovação, usuários externos podem auto-provisionar acesso a recursos organizacionais sem supervisão. Exigir aprovação garante que um aprovador designado revise cada solicitação, proporcionando uma oportunidade para validar a identidade do solicitante e a justificativa comercial antes de conceder o acesso.
 
-**Remediation action**
+**Ação de correção**
 
-- [Configure approval for access package assignment policies](https://learn.microsoft.com/entra/id-governance/entitlement-management-access-package-approval-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Review access package policies for external users](https://learn.microsoft.com/entra/id-governance/entitlement-management-access-package-request-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar aprovação para políticas de atribuição de pacotes de acesso](https://learn.microsoft.com/entra/id-governance/entitlement-management-access-package-approval-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Revisar políticas de pacotes de acesso para usuários externos](https://learn.microsoft.com/entra/id-governance/entitlement-management-access-package-request-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

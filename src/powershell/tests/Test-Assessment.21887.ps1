@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
@@ -12,23 +12,23 @@ function Test-Assessment-21887{
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce','External'),
     	TestId = 21887,
-    	Title = 'All registered redirect URIs must have proper DNS records and ownerships',
+    	Title = 'URIs de redirecionamento registradas devem ter registros DNS e propriedades adequadas',
     	UserImpact = 'Low'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking All registered redirect URIs must have proper DNS records and ownerships"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se URIs de redirecionamento registradas possuem registros DNS e propriedades adequadas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para lançamento futuro."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21887' -Title "All registered redirect URIs must have proper DNS records and ownerships" `
+    Add-ZtTestResultDetail -TestId '21887' -Title "URIs de redirecionamento registradas devem ter registros DNS e propriedades adequadas" `
         -UserImpact Low -Risk Medium -ImplementationCost Medium `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

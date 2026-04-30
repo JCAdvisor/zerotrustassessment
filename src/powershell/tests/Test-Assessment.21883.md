@@ -1,8 +1,7 @@
-Set up risk-based Conditional Access policies for workload identities based on risk policy in Microsoft Entra ID to make sure only trusted and verified workloads use sensitive resources. Without these policies, threat actors can compromise workload identities with minimal detection and perform further attacks. Without conditional controls to detect anomalous activity and other risks, there's no check against malicious operations like token forgery, access to sensitive resources, and disruption of workloads. The lack of automated containment mechanisms increases dwell time and affects the confidentiality, integrity, and availability of critical services.   
+Configure políticas de Acesso Condicional baseadas em risco para identidades de carga de trabalho (workload identities) no Microsoft Entra ID para garantir que apenas cargas de trabalho confiáveis e verificadas utilizem recursos confidenciais. Sem essas políticas, atores de ameaças podem comprometer identidades de carga de trabalho com detecção mínima e realizar novos ataques. Sem controles condicionais para detectar atividades anômalas e outros riscos, não há verificação contra operações maliciosas, como falsificação de tokens, acesso a recursos confidenciais e interrupção de cargas de trabalho. A falta de mecanismos automáticos de contenção aumenta o tempo de permanência do invasor (dwell time) e afeta a confidencialidade, integridade e disponibilidade de serviços críticos.
 
-**Remediation action**
-Create a risk-based Conditional Access policy for workload identities.
-- [Create a risk-based Conditional Access policy](https://learn.microsoft.com/entra/identity/conditional-access/workload-identity?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-risk-based-conditional-access-policy)
+**Ação de correção**
+Crie uma política de Acesso Condicional baseada em risco para identidades de carga de trabalho.
+- [Criar uma política de Acesso Condicional baseada em risco](https://learn.microsoft.com/entra/identity/conditional-access/workload-identity?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-risk-based-conditional-access-policy)
 <!--- Results --->
 %TestResult%
-

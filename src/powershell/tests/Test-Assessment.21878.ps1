@@ -1,6 +1,6 @@
-﻿<#
+<#
 .SYNOPSIS
-    Assessment 21878 – Verifies that all entitlement management policies have expiration dates configured
+    Avaliação 21878 – Verifica se todas as políticas de gerenciamento de direitos possuem datas de expiração configuradas.
 #>
 
 function Test-Assessment-21878 {
@@ -13,15 +13,15 @@ function Test-Assessment-21878 {
     	SfiPillar = 'Protect tenants and isolate production systems',
     	TenantType = ('Workforce','External'),
     	TestId = 21878,
-    	Title = 'All entitlement management policies have an expiration date',
+    	Title = 'Todas as políticas de gerenciamento de direitos possuem uma data de expiração',
     	UserImpact = 'Medium'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if ((Get-MgContext).Environment -ne 'Global') {
-        Write-PSFMessage "This test is only applicable to the Global environment." -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Este teste é aplicável apenas ao ambiente Global." -Tag Test -Level VeryVerbose
         return
     }
 
@@ -30,10 +30,10 @@ function Test-Assessment-21878 {
         return
     }
 
-    $activity = 'Checking entitlement management assignment policies for expiration dates'
-    Write-ZtProgress -Activity $activity -Status 'Getting assignment policies'
+    $activity = 'Verificando políticas de atribuição de gerenciamento de direitos para datas de expiração'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de atribuição'
 
-    # Query entitlement management assignment policies (do not use $select for properties not supported by API)
+    # Consultar políticas de atribuição de gerenciamento de direitos
     $policies = Invoke-ZtGraphRequest -RelativeUri 'identityGovernance/entitlementManagement/assignmentPolicies' -ApiVersion v1.0
 
     $matchingPolicies    = @()
@@ -75,16 +75,16 @@ function Test-Assessment-21878 {
     $testResultMarkdown = ''
 
     if ($passed) {
-        $testResultMarkdown += '✅ All entitlement management policies have expiration dates configured.'
+        $testResultMarkdown += '✅ Todas as políticas de gerenciamento de direitos possuem datas de expiração configuradas.'
     } else {
-        $testResultMarkdown += '❌ Not all entitlement management policies have expiration dates configured.'
+        $testResultMarkdown += '❌ Nem todas as políticas de gerenciamento de direitos possuem datas de expiração configuradas.'
     }
 
     if (-not $matchingPolicies) {
-        $testResultMarkdown += "`nNo entitlement management policies were found with expiration dates configured."
+        $testResultMarkdown += "`nNenhuma política de gerenciamento de direitos foi encontrada com data de expiração configurada."
     } else {
-        $testResultMarkdown += "`n### Entitlement Management Assignment Policies with Expiration Dates`n"
-        $testResultMarkdown += '| Name | Expiration Type | Duration / End DateTime |' + "`n"
+        $testResultMarkdown += "`n### Políticas de Atribuição de Gerenciamento de Direitos com Datas de Expiração`n"
+        $testResultMarkdown += '| Nome | Tipo de Expiração | Duração / Data de Término |' + "`n"
         $testResultMarkdown += '| :--- | :--- | ---: |' + "`n"
         foreach ($item in $matchingPolicies) {
             $duration = if ($item.Duration) { $item.Duration } else { '' }
@@ -96,8 +96,8 @@ function Test-Assessment-21878 {
     }
 
     if ($nonMatchingPolicies.Count -gt 0) {
-        $testResultMarkdown += "`n#### Policies missing expiration:`n"
-        $testResultMarkdown += '| Name | Expiration Type | Duration / End DateTime |' + "`n"
+        $testResultMarkdown += "`n#### Políticas sem expiração:`n"
+        $testResultMarkdown += '| Nome | Tipo de Expiração | Duração / Data de Término |' + "`n"
         $testResultMarkdown += '| :--- | :--- | ---: |' + "`n"
         foreach ($item in $nonMatchingPolicies) {
             $duration = if ($item.Duration) { $item.Duration } else { '' }

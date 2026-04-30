@@ -1,8 +1,7 @@
-Configuring password reset notifications for administrator roles in Microsoft Entra ID enhances security by notifying privileged administrators when another administrator resets their password. This visibility helps detect unauthorized or suspicious activity that could indicate credential compromise or insider threats. Without these notifications, malicious actors could exploit elevated privileges to establish persistence, escalate access, or extract sensitive data. Proactive notifications support quick action, preserve privileged access integrity, and strengthen the overall security posture.   
+A configuração de notificações de redefinição de senha para funções de administrador no Microsoft Entra ID aumenta a segurança ao notificar administradores privilegiados quando outro administrador redefine sua senha. Essa visibilidade ajuda a detectar atividades não autorizadas ou suspeitas que poderiam indicar comprometimento de credenciais ou ameaças internas. Sem essas notificações, atores maliciosos poderiam explorar privilégios elevados para estabelecer persistência, escalar o acesso ou extrair dados confidenciais. Notificações proativas apoiam a ação rápida, preservam a integridade do acesso privilegiado e fortalecem a postura geral de segurança.
 
-**Remediation action**
+**Ação de correção**
 
-- [Notify all admins when other admins reset their passwords](https://learn.microsoft.com/entra/identity/authentication/concept-sspr-howitworks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#notify-all-admins-when-other-admins-reset-their-passwords)
+- [Notificar todos os administradores quando outros administradores redefinirem suas senhas](https://learn.microsoft.com/entra/identity/authentication/concept-sspr-howitworks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#notify-all-admins-when-other-admins-reset-their-passwords)
 <!--- Results --->
 %TestResult%
-

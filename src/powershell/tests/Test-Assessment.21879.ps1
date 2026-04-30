@@ -1,6 +1,6 @@
-﻿<#
+<#
 .SYNOPSIS
-    Checks if all entitlement management policies that apply to external users require approval
+    Verifica se todas as políticas de gerenciamento de direitos que se aplicam a usuários externos exigem aprovação.
 #>
 
 function Test-Assessment-21879 {
@@ -13,47 +13,47 @@ function Test-Assessment-21879 {
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce','External'),
     	TestId = 21879,
-    	Title = 'All entitlement management assignment policies that apply to external users require approval',
+    	Title = 'Todas as políticas de atribuição de pacotes de acesso que se aplicam a usuários externos exigem aprovação',
     	UserImpact = 'Medium'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking All entitlement management policies that apply to external users require approval'
-    Write-ZtProgress -Activity $activity -Status 'Getting assignment policies'
+    $activity = 'Verificando se todas as políticas de gerenciamento de direitos que se aplicam a usuários externos exigem aprovação'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de atribuição'
 
     if ( -not (Get-ZtLicense EntraIDP2) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP2
         return
     }
 
-    # Query assignment policies directly with expanded access package information (more efficient than expanding from access packages)
+    # Consultar políticas de atribuição diretamente com informações expandidas do pacote de acesso
     $assignmentPolicies = Invoke-ZtGraphRequest -RelativeUri 'identityGovernance/entitlementManagement/assignmentPolicies' -QueryParameters @{'$expand' = 'accessPackage' } -ApiVersion v1.0
 
-    # Handle case where no policies exist or API returns null
+    # Lidar com o caso onde não existem políticas ou a API retorna nulo
     if ($null -eq $assignmentPolicies -or $assignmentPolicies.Count -eq 0) {
-        Write-PSFMessage 'No assignment policies found in the tenant' -Level Verbose
-        $testResultMarkdown = 'No access package assignment policies found in the tenant.'
+        Write-PSFMessage 'Nenhuma política de atribuição encontrada no tenant' -Level Verbose
+        $testResultMarkdown = 'Nenhuma política de atribuição de pacotes de acesso encontrada no tenant.'
         $passed = $true
     }
     else {
-        Write-ZtProgress -Activity $activity -Status 'Filtering policies for external users'
+        Write-ZtProgress -Activity $activity -Status 'Filtrando políticas para usuários externos'
 
-        # Client-side filter for policies that apply to external users
+        # Filtro do lado do cliente para políticas que se aplicam a usuários externos
         $externalUserPolicies = @()
 
         foreach ($policy in $assignmentPolicies) {
-            # Skip if requestorSettings is null or missing
+            # Pular se requestorSettings for nulo ou estiver ausente
             if ($null -eq $policy.requestorSettings) {
-                Write-PSFMessage "Skipping policy $($policy.id) - no requestorSettings" -Level Debug
+                Write-PSFMessage "Pulando política $($policy.id) - sem requestorSettings" -Level Debug
                 continue
             }
 
-            # Check if policy accepts requests
+            # Verificar se a política aceita solicitações
             if ($policy.requestorSettings.acceptRequests -eq $true) {
-                # Use the existing Test-ZtExternalUserScope function to check if policy applies to external users
+                # Usar a função Test-ZtExternalUserScope existente para verificar se a política se aplica a usuários externos
                 $appliesToExternal = Test-ZtExternalUserScope -TargetScope $policy.allowedTargetScope
 
                 if ($appliesToExternal) {
@@ -69,31 +69,31 @@ function Test-Assessment-21879 {
             }
         }
 
-        Write-ZtProgress -Activity $activity -Status 'Evaluating approval requirements'
+        Write-ZtProgress -Activity $activity -Status 'Avaliando requisitos de aprovação'
 
         if ($externalUserPolicies.Count -eq 0) {
-            $testResultMarkdown = 'No access package assignment policies found that apply to external users.'
+            $testResultMarkdown = 'Nenhuma política de atribuição de pacotes de acesso encontrada que se aplique a usuários externos.'
             $passed = $true
         }
         else {
-            # Pass/Fail Logic: If there is at least one result where isApprovalRequired == "false", fail the test. Else pass the test
+            # Lógica Passa/Falha: Se houver pelo menos um resultado onde isApprovalRequired == "false", reprovar o teste. Caso contrário, aprovar.
             $policiesWithoutApproval = $externalUserPolicies | Where-Object { $_.IsApprovalRequired -eq $false }
 
             if ($policiesWithoutApproval.Count -eq 0) {
-                # PASS: No policies without approval
+                # PASSA: Nenhuma política sem aprovação
                 $passed = $true
-                $testResultMarkdown = 'All access package assignment policies for external users require approval'
+                $testResultMarkdown = 'Todas as políticas de atribuição de pacotes de acesso para usuários externos exigem aprovação'
             }
             else {
-                # FAIL: At least one policy without approval
+                # FALHA: Pelo menos uma política sem aprovação
                 $passed = $false
-                $testResultMarkdown = 'Access package assignment policies for external users without approval are found in the tenant'
+                $testResultMarkdown = 'Foram encontradas no tenant políticas de atribuição de pacotes de acesso para usuários externos sem aprovação'
             }
 
-            # Details: For each policy found
-            $testResultMarkdown += "`n`n## Details`n`n"
-            $testResultMarkdown += "Assignment policies that apply to external users:`n`n"
-            $testResultMarkdown += '| Access package ID | Access package name | Assignment policy ID | Assignment policy Name | Assignment policy scopeType | Assignment policy isApprovalRequired |`n'
+            # Detalhes: Para cada política encontrada
+            $testResultMarkdown += "`n`n## Detalhes`n`n"
+            $testResultMarkdown += "Políticas de atribuição que se aplicam a usuários externos:`n`n"
+            $testResultMarkdown += '| ID do Pacote de Acesso | Nome do Pacote de Acesso | ID da Política de Atribuição | Nome da Política de Atribuição | Tipo de Escopo da Política | Aprovação Necessária |`n'
             $testResultMarkdown += '|:---|:---|:---|:---|:---|:---|`n'
 
             foreach ($policy in $externalUserPolicies) {

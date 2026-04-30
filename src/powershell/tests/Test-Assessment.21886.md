@@ -1,16 +1,15 @@
-When applications that support both authentication and provisioning through Microsoft Entra aren't configured for automatic provisioning, organizations become vulnerable to identity lifecycle gaps that threat actors can exploit. Without automated provisioning, user accounts might persist in applications after employees leave the organization. This vulnerability creates dormant accounts that threat actors can discover through reconnaissance activities. These orphaned accounts often retain their original access permissions but lack active monitoring, making them attractive targets for initial access.
+Quando aplicações que suportam autenticação e provisionamento através do Microsoft Entra não estão configuradas para provisionamento automático, as organizações tornam-se vulneráveis a lacunas no ciclo de vida da identidade que atores de ameaças podem explorar. Sem o provisionamento automatizado, as contas de usuário podem persistir em aplicações após os funcionários deixarem a organização. Essa vulnerabilidade cria contas inativas que invasores podem descobrir através de atividades de reconhecimento. Essas contas órfãs frequentemente mantêm suas permissões de acesso originais, mas carecem de monitoramento ativo, tornando-as alvos atraentes para o acesso inicial.
 
-Threat actors who gain access to these dormant accounts can use them to establish persistence in the target application, as the accounts appear legitimate and might not trigger security alerts. From these compromised application accounts, attackers can:
+Atores de ameaças que ganham acesso a essas contas inativas podem usá-las para estabelecer persistência na aplicação alvo, já que as contas parecem legítimas e podem não disparar alertas de segurança. A partir dessas contas de aplicação comprometidas, os invasores podem:
 
-- Attempt to escalate their privileges by exploring application-specific permissions
-- Access sensitive data stored within the application
-- Use the application as a pivot point to access other connected systems
+- Tentar escalar seus privilégios explorando permissões específicas da aplicação.
+- Acessar dados confidenciais armazenados na aplicação.
+- Usar a aplicação como um ponto de pivô para acessar outros sistemas conectados.
 
-The lack of centralized identity lifecycle management also makes it difficult for security teams to detect when an attacker is using these orphaned accounts, as the accounts might not be properly correlated with the organization's active user directory. 
+A falta de gerenciamento centralizado do ciclo de vida da identidade também dificulta a detecção pelas equipes de segurança quando um invasor está usando essas contas órfãs, pois as contas podem não estar devidamente correlacionadas com o diretório de usuários ativos da organização.
 
-**Remediation action**
+**Ação de correção**
 
-- [Configure application provisioning for missing applications](https://learn.microsoft.com/entra/identity/app-provisioning/configure-automatic-user-provisioning-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar o provisionamento de aplicativos para aplicações ausentes](https://learn.microsoft.com/entra/identity/app-provisioning/configure-automatic-user-provisioning-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

@@ -1,6 +1,6 @@
-﻿<#
+<#
 .SYNOPSIS
-Tests if all guest users have assigned sponsors in the tenant.
+Testa se todos os usuários convidados possuem padrinhos (sponsors) atribuídos no tenant.
 #>
 
 function Test-Assessment-21877 {
@@ -13,7 +13,7 @@ function Test-Assessment-21877 {
     	SfiPillar = 'Protect tenants and isolate production systems',
     	TenantType = ('Workforce','External'),
     	TestId = 21877,
-    	Title = 'All guests have a sponsor',
+    	Title = 'Todos os convidados possuem um padrinho',
     	UserImpact = 'Medium'
     )]
     [CmdletBinding()]
@@ -21,16 +21,16 @@ function Test-Assessment-21877 {
         $Database
     )
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if ((Get-MgContext).Environment -ne 'Global') {
-        Write-PSFMessage "This test is only applicable to the Global environment." -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Este teste é aplicável apenas ao ambiente Global." -Tag Test -Level VeryVerbose
         return
     }
 
-    $activity = "Checking All guests have a sponsor"
-    Write-ZtProgress -Activity $activity -Status "Getting guest users"
+    $activity = "Verificando se todos os convidados possuem um padrinho"
+    Write-ZtProgress -Activity $activity -Status "Obtendo usuários convidados"
 
-    # Get all guest users
+    # Buscar todos os usuários convidados
     $sqlGuests = @"
 SELECT id, userPrincipalName, displayName, userType
 FROM User
@@ -39,35 +39,35 @@ WHERE userType = 'Guest'
     $guestUsers = Invoke-DatabaseQuery -Database $Database -Sql $sqlGuests
     $totalGuestCount = $guestUsers.Count
 
-    # Early return if no guests exist
+    # Retorno antecipado se não existirem convidados
     if ($totalGuestCount -eq 0) {
         $testParams = @{
             TestId             = '21877'
-            Title              = 'All guests have a sponsor'
+            Title              = 'Todos os convidados possuem um padrinho'
             UserImpact         = 'Medium'
             Risk               = 'Medium'
             ImplementationCost = 'Medium'
             AppliesTo          = 'Identity'
             Tag                = 'Identity'
             Status             = $true
-            Result             = "✅ No guest accounts found in the tenant."
+            Result             = "✅ Nenhuma conta de convidado encontrada no tenant."
         }
         Add-ZtTestResultDetail @testParams
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status "Checking sponsors for $totalGuestCount guest users"
+    Write-ZtProgress -Activity $activity -Status "Verificando padrinhos para $totalGuestCount usuários convidados"
 
-    # Process guests and check sponsors efficiently
+    # Processar convidados e verificar padrinhos de forma eficiente
     $guestsWithoutSponsors = [System.Collections.Generic.List[object]]::new()
     $guestsWithSponsorsCount = 0
 
     foreach ($guest in $guestUsers) {
         try {
-            # Get the sponsors for the guest user
+            # Obter os padrinhos para o usuário convidado
             $guestUserWithSponsors = Invoke-ZtGraphRequest -RelativeUri "users/$($guest.id)?`$expand=sponsors" -ApiVersion 'v1.0'
 
-            # Check if guest has sponsors
+            # Verificar se o convidado tem padrinhos
             if ($guestUserWithSponsors.sponsors -and $guestUserWithSponsors.sponsors.Count -gt 0) {
                 $guestsWithSponsorsCount++
             }
@@ -76,8 +76,8 @@ WHERE userType = 'Guest'
             }
         }
         catch {
-            Write-PSFMessage "Failed to get sponsors for guest $($guest.userPrincipalName): $($_.Exception.Message)" -Level Verbose
-            # Treat as guest without sponsor if API call fails
+            Write-PSFMessage "Falha ao obter padrinhos para o convidado $($guest.userPrincipalName): $($_.Exception.Message)" -Level Verbose
+            # Tratar como convidado sem padrinho se a chamada da API falhar
             $guestsWithoutSponsors.Add($guest)
         }
     }
@@ -85,12 +85,12 @@ WHERE userType = 'Guest'
     $guestsWithoutSponsorsCount = $guestsWithoutSponsors.Count
     $passed = $guestsWithoutSponsorsCount -eq 0
 
-    # Build result markdown
+    # Construir markdown de resultado
     if ($passed) {
-        $testResultMarkdown = "✅ All guest accounts in the tenant have an assigned sponsor."
+        $testResultMarkdown = "✅ Todas as contas de convidados no tenant possuem um padrinho atribuído."
     }
     else {
-        # Build table rows efficiently using StringBuilder
+        # Construir linhas da tabela de forma eficiente usando StringBuilder
         $tableRowsBuilder = [System.Text.StringBuilder]::new()
 
         foreach ($guest in $guestsWithoutSponsors) {
@@ -100,23 +100,23 @@ WHERE userType = 'Guest'
         }
 
         $detailedReport = @"
-## Guest users without sponsors
+## Usuários convidados sem padrinhos
 
-- Total count of guests in the tenant: $totalGuestCount
-- Total count of guests with sponsors: $guestsWithSponsorsCount
-- Total count of guests without sponsors: $guestsWithoutSponsorsCount
+- Contagem total de convidados no tenant: $totalGuestCount
+- Contagem total de convidados com padrinhos: $guestsWithSponsorsCount
+- Contagem total de convidados sem padrinhos: $guestsWithoutSponsorsCount
 
-| User Display Name | User Principal Name |
+| Nome de Exibição do Usuário | User Principal Name |
 | :---------------- | :------------------ |
 $($tableRowsBuilder.ToString())
 "@
 
-        $testResultMarkdown = "❌ One or more guest accounts have no sponsor recorded.`n`n$detailedReport"
+        $testResultMarkdown = "❌ Uma ou mais contas de convidados não possuem padrinho registrado.`n`n$detailedReport"
     }
 
     $testParams = @{
         TestId             = '21877'
-        Title              = 'All guests have a sponsor'
+        Title              = 'Todos os convidados possuem um padrinho'
         UserImpact         = 'Medium'
         Risk               = 'Medium'
         ImplementationCost = 'Medium'

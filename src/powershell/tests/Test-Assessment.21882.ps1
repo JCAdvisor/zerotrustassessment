@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 
 #>
@@ -12,23 +12,23 @@ function Test-Assessment-21882{
     	SfiPillar = 'Protect identities and secrets',
     	TenantType = ('Workforce','External'),
     	TestId = 21882,
-    	Title = 'No nested groups in PIM for groups',
+    	Title = 'Sem grupos aninhados no PIM para grupos',
     	UserImpact = 'Low'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking No nested groups in PIM for groups"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se não há grupos aninhados no PIM para grupos"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para lançamento futuro."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21882' -Title "No nested groups in PIM for groups" `
+    Add-ZtTestResultDetail -TestId '21882' -Title "Sem grupos aninhados no PIM para grupos" `
         -UserImpact Low -Risk Medium -ImplementationCost Medium `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

@@ -1,6 +1,6 @@
-﻿<#
+<#
 .SYNOPSIS
-   Checks if workload identities are configured with risk-based policies
+   Verifica se as identidades de carga de trabalho estão configuradas com políticas baseadas em risco.
 #>
 
 function Test-Assessment-21883 {
@@ -13,25 +13,25 @@ function Test-Assessment-21883 {
     	SfiPillar = 'Accelerate response and remediation',
     	TenantType = ('Workforce','External'),
     	TestId = 21883,
-    	Title = 'Workload Identities are configured with risk-based policies',
+    	Title = 'Identidades de Carga de Trabalho configuradas com políticas baseadas em risco',
     	UserImpact = 'High'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if ( -not (Get-ZtLicense EntraWorkloadID) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraWorkloadID
         return
     }
 
-    $activity = "Checking Workload identities based on risk policies are configured"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se as identidades de carga de trabalho baseadas em políticas de risco estão configuradas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo políticas"
 
-    # Query for all CA policies
+    # Consultar todas as políticas de CA
     $allCAPolicies = Invoke-ZtGraphRequest -RelativeUri 'policies/conditionalAccessPolicies' -ApiVersion beta
 
-    # Local filtering for blocked authentication transfer policies - only consider enabled policies
+    # Filtragem local para políticas habilitadas que bloqueiam e incluem Service Principals
     $matchedPolicies = $allCAPolicies | Where-Object {
         $_.grantControls.builtInControls -contains "block" -and
         $_.conditions.clientApplications.includeServicePrincipals -and
@@ -42,16 +42,16 @@ function Test-Assessment-21883 {
 
     if (($matchedPolicies | Measure-Object).Count -ge 1) {
         $passed = $true
-        $testResultMarkdown += "Workload identities based on risk policies are configured.`n`n%TestResult%"
+        $testResultMarkdown += "Políticas de identidades de carga de trabalho baseadas em risco estão configuradas.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown += "Workload identities based on risk policy is not configured."
+        $testResultMarkdown += "Políticas de identidades de carga de trabalho baseadas em risco não estão configuradas."
     }
 
     $params = @{
         TestId             = '21883'
-        Title              = "Workload identities are configured with risk-based policies"
+        Title              = "Identidades de Carga de Trabalho configuradas com políticas baseadas em risco"
         UserImpact         = 'Low'
         Risk               = 'High'
         ImplementationCost = 'Low'
