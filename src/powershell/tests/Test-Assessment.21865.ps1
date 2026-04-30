@@ -69,7 +69,8 @@ Total de locais nomeados: [{1}]({2})
         $modifiedDateTime = Get-FormattedDate -DateString $namedLocation.modifiedDateTime
 
         $tableRows += @"
-| $name | $locationType | $trusted | $createdDateTime | $modifiedDateTime |`n"@
+| $name | $locationType | $trusted | $createdDateTime | $modifiedDateTime |`n
+"@
     }
 
     # Format the template by replacing placeholders with values
