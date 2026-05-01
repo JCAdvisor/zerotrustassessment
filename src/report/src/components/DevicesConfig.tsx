@@ -1,5 +1,6 @@
 import { reportData } from "@/config/report-data";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
+import { translateText } from "@/lib/pt";
 
 export default function DevicesConfig() {
     const enrollment = reportData.TenantInfo?.ConfigWindowsEnrollment;
@@ -8,89 +9,89 @@ export default function DevicesConfig() {
     const appProtectionPolicies = reportData.TenantInfo?.ConfigDeviceAppProtectionPolicies;
     return (
         <div className="p-4">
-            <h2 className="text-lg font-semibold mb-4">Windows automatic enrollment</h2>
+            <h2 className="text-lg font-semibold mb-4">Inscrição automática do Windows</h2>
             <p className="text-sm text-gray-600 mb-4">
-                Configure Windows devices to enroll when they join or register with Azure Active Directory. We recommend setting this to all instead of selected groups and using enrollment restrictions to configure the intake of users.
+                Configure os dispositivos Windows para se inscreverem quando entrarem ou forem registrados no Azure Active Directory. Recomendamos aplicar isso a todos, em vez de a grupos selecionados, e usar restrições de inscrição para controlar a entrada de usuários.
             </p>
             {enrollment && enrollment.length > 0 ? (
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Type</TableHead>
-                            <TableHead>Policy Name</TableHead>
-                            <TableHead>Applies To</TableHead>
-                            <TableHead>Groups</TableHead>
+                            <TableHead>Tipo</TableHead>
+                            <TableHead>Nome da política</TableHead>
+                            <TableHead>Aplica-se a</TableHead>
+                            <TableHead>Grupos</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {enrollment.map((row, idx) => (
                             <TableRow key={idx}>
-                                <TableCell>{row.Type}</TableCell>
-                                <TableCell>{row.PolicyName}</TableCell>
-                                <TableCell>{row.AppliesTo}</TableCell>
-                                <TableCell>{row.Groups}</TableCell>
+                                <TableCell>{translateText(row.Type)}</TableCell>
+                                <TableCell>{translateText(row.PolicyName)}</TableCell>
+                                <TableCell>{translateText(row.AppliesTo)}</TableCell>
+                                <TableCell>{translateText(row.Groups)}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             ) : (
-                <p>No Windows enrollment configuration found.</p>
+                <p>Nenhuma configuração de inscrição do Windows encontrada.</p>
             )}
 
-            <h2 className="text-lg font-semibold mb-4 mt-8">Enrollment device platform restrictions</h2>
+            <h2 className="text-lg font-semibold mb-4 mt-8">Restrições de plataforma para inscrição de dispositivos</h2>
             <p className="text-sm text-gray-600 mb-4">
-                Device enrollment restrictions let you restrict devices from enrolling in Intune based on certain device attributes. Device platform restrictions restrict devices based on device platform, version, manufacturer, or ownership type.
+                As restrições de inscrição de dispositivos permitem impedir que dispositivos se inscrevam no Intune com base em determinados atributos. As restrições de plataforma limitam a inscrição com base na plataforma, versão, fabricante ou tipo de propriedade do dispositivo.
             </p>
             {enrollmentRestrictions && enrollmentRestrictions.length > 0 ? (
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Platform</TableHead>
-                            <TableHead>Priority</TableHead>
-                            <TableHead>Name</TableHead>
+                            <TableHead>Plataforma</TableHead>
+                            <TableHead>Prioridade</TableHead>
+                            <TableHead>Nome</TableHead>
                             <TableHead>MDM</TableHead>
-                            <TableHead>Min Ver</TableHead>
-                            <TableHead>Max Ver</TableHead>
-                            <TableHead>Personally owned</TableHead>
-                            <TableHead>Blocked manuf.</TableHead>
-                            <TableHead>Scope</TableHead>
-                            <TableHead>Assigned to</TableHead>
+                            <TableHead>Versão mín.</TableHead>
+                            <TableHead>Versão máx.</TableHead>
+                            <TableHead>De propriedade pessoal</TableHead>
+                            <TableHead>Fabricantes bloqueados</TableHead>
+                            <TableHead>Escopo</TableHead>
+                            <TableHead>Atribuído a</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
                         {enrollmentRestrictions.map((row, idx) => (
                             <TableRow key={idx}>
-                                <TableCell>{row.Platform}</TableCell>
-                                <TableCell>{row.Priority}</TableCell>
-                                <TableCell>{row.Name}</TableCell>
-                                <TableCell>{row.MDM}</TableCell>
-                                <TableCell>{row.MinVer}</TableCell>
-                                <TableCell>{row.MaxVer}</TableCell>
-                                <TableCell>{row.PersonallyOwned}</TableCell>
-                                <TableCell>{row.BlockedManufacturers}</TableCell>
-                                <TableCell>{row.Scope}</TableCell>
-                                <TableCell>{row.AssignedTo}</TableCell>
+                                <TableCell>{translateText(row.Platform)}</TableCell>
+                                <TableCell>{translateText(row.Priority)}</TableCell>
+                                <TableCell>{translateText(row.Name)}</TableCell>
+                                <TableCell>{translateText(row.MDM)}</TableCell>
+                                <TableCell>{translateText(row.MinVer)}</TableCell>
+                                <TableCell>{translateText(row.MaxVer)}</TableCell>
+                                <TableCell>{translateText(row.PersonallyOwned)}</TableCell>
+                                <TableCell>{translateText(row.BlockedManufacturers)}</TableCell>
+                                <TableCell>{translateText(row.Scope)}</TableCell>
+                                <TableCell>{translateText(row.AssignedTo)}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             ) : (
-                <p>No device enrollment restrictions found.</p>
+                <p>Nenhuma restrição de inscrição de dispositivo encontrada.</p>
             )}
 
-            <h2 className="text-lg font-semibold mb-4 mt-8">Compliance policies</h2>
+            <h2 className="text-lg font-semibold mb-4 mt-8">Políticas de conformidade</h2>
             <p className="text-sm text-gray-600 mb-4">
-                Device compliance policies define the rules and settings that devices must meet to be considered compliant. These policies help ensure that devices accessing organizational resources meet minimum security requirements.
+                As políticas de conformidade definem as regras e configurações que os dispositivos devem atender para serem considerados em conformidade. Essas políticas ajudam a garantir que os dispositivos que acessam os recursos da organização atendam aos requisitos mínimos de segurança.
             </p>
             {compliancePolicies && compliancePolicies.length > 0 ? (
                 <div className="overflow-x-auto">
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="font-semibold">Setting</TableHead>
+                                <TableCell className="font-semibold">Configuração</TableCell>
                                 {compliancePolicies.map((policy, idx) => (
                                     <TableHead key={idx} className="min-w-[150px]">
-                                        {policy.PolicyName}
+                                        {translateText(policy.PolicyName)}
                                     </TableHead>
                                 ))}
                             </TableRow>
@@ -99,31 +100,31 @@ export default function DevicesConfig() {
                             <TableRow>
                                 <TableCell className="font-medium">Platform</TableCell>
                                 {compliancePolicies.map((policy, idx) => (
-                                    <TableCell key={idx}>{policy.Platform}</TableCell>
+                                    <TableCell key={idx}>{translateText(policy.Platform)}</TableCell>
                                 ))}
                             </TableRow>
                             <TableRow>
                                 <TableCell className="font-medium">Defender ATP</TableCell>
                                 {compliancePolicies.map((policy, idx) => (
-                                    <TableCell key={idx}>{policy.DefenderForEndPoint}</TableCell>
+                                    <TableCell key={idx}>{translateText(policy.DefenderForEndPoint)}</TableCell>
                                 ))}
                             </TableRow>
                             <TableRow>
-                                <TableCell className="font-medium">Min OS Version</TableCell>
+                                <TableCell className="font-medium">Versão mín. do SO</TableCell>
                                 {compliancePolicies.map((policy, idx) => (
-                                    <TableCell key={idx}>{policy.MinOsVersion}</TableCell>
+                                    <TableCell key={idx}>{translateText(policy.MinOsVersion)}</TableCell>
                                 ))}
                             </TableRow>
                             <TableRow>
-                                <TableCell className="font-medium">Max OS Version</TableCell>
+                                <TableCell className="font-medium">Versão máx. do SO</TableCell>
                                 {compliancePolicies.map((policy, idx) => (
-                                    <TableCell key={idx}>{policy.MaxOsVersion}</TableCell>
+                                    <TableCell key={idx}>{translateText(policy.MaxOsVersion)}</TableCell>
                                 ))}
                             </TableRow>
                             <TableRow>
-                                <TableCell className="font-medium">Require Password</TableCell>
+                                <TableCell className="font-medium">Exigir senha</TableCell>
                                 {compliancePolicies.map((policy, idx) => (
-                                    <TableCell key={idx}>{policy.RequirePswd}</TableCell>
+                                    <TableCell key={idx}>{translateText(policy.RequirePswd)}</TableCell>
                                 ))}
                             </TableRow>
                             <TableRow>

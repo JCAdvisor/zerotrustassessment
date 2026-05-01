@@ -63,13 +63,13 @@ function Test-Assessment-21896 {
     }
     else {
         $passed = $false
-        $testResultMarkdown = "Foram encontradas Entidades de Serviço com credenciais configuradas no locatário, o que representa um risco de segurança.`n`n%TestResult%"
+        $testResultMarkdown = "Foram encontradas Entidades de Serviço com credenciais configuradas no tenant, o que representa um risco de segurança.`n`n%TestResult%"
     }
 
     # Construir as seções detalhadas do markdown
 
     # Definir variáveis para inserir na string de formato
-    $reportTitle = 'Entidades de Serviço com credenciais configuradas no locatário'
+    $reportTitle = 'Entidades de Serviço com credenciais configuradas no tenant'
     $tableRows = ""
 
     if ($resultsPassCreds.Count -gt 0 -or $resultsKeyCreds.Count -gt 0) {

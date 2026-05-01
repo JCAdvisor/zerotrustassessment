@@ -10,7 +10,7 @@ function Test-Assessment-24554 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24554,
     	Title = 'Políticas de atualização para iOS/iPadOS são aplicadas para reduzir o risco de vulnerabilidades não corrigidas',

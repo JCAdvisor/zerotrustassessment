@@ -26,19 +26,19 @@ function Test-Assessment-21847 {
     $activity = "Verificando se a proteção de senha para ambientes locais está habilitada"
     Write-ZtProgress -Activity $activity -Status "Obtendo detalhes da organização"
 
-    # Q1: Verifica se o locatário possui sincronização local
+    # Q1: Verifica se o tenant possui sincronização local
     $orgResponse = Invoke-ZtGraphRequest -RelativeUri "organization?`$select=id,displayName,onPremisesSyncEnabled,onPremisesLastSyncDateTime" -ApiVersion v1.0
 
     if ($orgResponse.onPremisesSyncEnabled -ne $true) {
         $passed = $true
-        $testResultMarkdown = "✅ **Passou**: Este locatário não está sincronizado com um ambiente local.%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: Este tenant não está sincronizado com um ambiente local.%TestResult%"
     }
     else {
         # Q2: Verifica as configurações de proteção de senha
         Write-ZtProgress -Activity $activity -Status "Verificando configurações de proteção de senha"
 
         $pwdSettings = Invoke-ZtGraphRequest -RelativeUri "groupSettings" -ApiVersion v1.0 | Where-Object { $_.displayName -eq "Password Rule Settings" }
-        
+
         $mdInfo = ""
         if ($null -eq $pwdSettings) {
              $passed = $false

@@ -1,11 +1,11 @@
 function Test-Assessment-24794 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24794,
     	Title = 'Políticas de Termos e Condições protegem o acesso a dados confidenciais',

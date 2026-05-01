@@ -10,7 +10,7 @@ function Test-Assessment-21954{
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'High',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21954,
     	Title = 'Restringir usuários não administradores de recuperar as chaves do BitLocker para seus dispositivos próprios',

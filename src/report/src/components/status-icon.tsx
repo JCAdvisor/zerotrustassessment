@@ -1,6 +1,7 @@
 import { Test } from "@/config/report-data"
 import { statuses } from "./test-table/data-icons"
 import { Badge } from "./ui/badge"
+import { translateStatusLabel } from "@/lib/pt"
 
 interface StatusIconProps {
     Item: Test
@@ -17,7 +18,7 @@ export function StatusIcon({ Item }: StatusIconProps) {
     return (
         <div className="flex items-center">
             <Badge variant={status.variant as "default" | "destructive" | "secondary" | "outline" | "warning" | "success" | null | undefined}>
-                <span>{status.label}</span>
+                <span>{translateStatusLabel(status.label)}</span>
             </Badge>
         </div>
     )

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    O acesso de convidados é limitado a locatários aprovados
+    O acesso de convidados é limitado a tenants aprovados
 #>
 
 function Test-Assessment-21822 {
@@ -13,7 +13,7 @@ function Test-Assessment-21822 {
         SfiPillar = 'Protect identities and secrets',
         TenantType = ('Workforce'),
         TestId = 21822,
-        Title = 'O acesso de convidados é limitado a locatários aprovados',
+        Title = 'O acesso de convidados é limitado a tenants aprovados',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -21,15 +21,15 @@ function Test-Assessment-21822 {
 
     Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se o acesso de convidados é limitado a locatários aprovados"
+    $activity = "Verificando se o acesso de convidados é limitado a tenants aprovados"
     Write-ZtProgress -Activity $activity
 
     $passed = $true # Lógica de avaliação
-    
+
     if ($passed) {
-        $testResultMarkdown = "O acesso de convidados é limitado a locatários aprovados.`n"
+        $testResultMarkdown = "O acesso de convidados é limitado a tenants aprovados.`n"
     } else {
-        $testResultMarkdown = "O acesso de convidados não é limitado a locatários aprovados.`n"
+        $testResultMarkdown = "O acesso de convidados não é limitado a tenants aprovados.`n"
     }
 
     $testResultMarkdown += "## Restrições de colaboração`n`n"

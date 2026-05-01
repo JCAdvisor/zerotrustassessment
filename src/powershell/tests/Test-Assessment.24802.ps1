@@ -1,14 +1,14 @@
 function Test-Assessment-24802 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Baixo',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24802,
-    	Title = 'Regras de limpeza de dispositivos mantêm a higiene do locatário ocultando dispositivos inativos',
+    	Title = 'Regras de limpeza de dispositivos mantêm a higiene do tenant ocultando dispositivos inativos',
     	UserImpact = 'Baixo'
     )]
     # ...

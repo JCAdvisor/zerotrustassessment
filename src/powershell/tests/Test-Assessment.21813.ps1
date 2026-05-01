@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Verifica a proporção de atribuições de Administrador Global em relação ao total de atribuições de funções privilegiadas no locatário.
+    Verifica a proporção de atribuições de Administrador Global em relação ao total de atribuições de funções privilegiadas no tenant.
 #>
 
 function Test-Assessment-21813{

@@ -38,63 +38,47 @@ export const ZtResponsiveSankey = ({ isDark, data }: { isDark:boolean, data: San
 
     return (
     <div className={`h-full w-full ${isDark ? 'sankey-dark-mode' : 'sankey-light-mode'}`}>
-        <ResponsiveSankey
-        data={data}
-        theme={theme}
-        margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-        align="justify"
-        colors={node => node.nodeColor}
-        //colors={{ scheme: 'category10' }}
-        nodeOpacity={1}
-        nodeHoverOthersOpacity={0.35}
-        nodeThickness={18}
-        nodeSpacing={24}
-        nodeBorderWidth={0}
-        nodeBorderColor={{
-            from: 'color',
-            modifiers: [
-                [
-                    'darker',
-                    0.8
-                ]
-            ]
-        }}
-        nodeBorderRadius={3}
-        linkOpacity={0.5}
-        linkHoverOthersOpacity={0.1}
-        linkContract={3}
-        linkBlendMode={isDark ? "lighten": "multiply" }
-        enableLinkGradient={true}
-        labelPosition="inside"
-        labelOrientation="horizontal"
-        labelPadding={16}
-        labelTextColor={isDark ? '#ffffff' : '#000000'}
-        sort='input'
-        legends={[]}
-        valueFormat={value =>
-            `${value}`
-        }
-        // legends={[
-        //     {
-        //         anchor: 'bottom-right',
-        //         direction: 'column',
-        //         translateX: 130,
-        //         itemWidth: 100,
-        //         itemHeight: 14,
-        //         itemDirection: 'right-to-left',
-        //         itemsSpacing: 2,
-        //         itemTextColor: '#999',
-        //         symbolSize: 14,
-        //         effects: [
-        //             {
-        //                 on: 'hover',
-        //                 style: {
-        //                     itemTextColor: '#000'
-        //                 }
-        //             }
-        //         ]
-        //     }
-        // ]}
-        />
+        {/* cast to any to allow passing nodeId prop which isn't in current TS types */}
+        {(() => {
+            const SankeyComponent: any = ResponsiveSankey
+            return (
+                <SankeyComponent
+                    data={data}
+                    nodeId="id"
+                    theme={theme}
+                    margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+                    align="justify"
+                    colors={(node: any) => node.nodeColor}
+                    nodeOpacity={1}
+                    nodeHoverOthersOpacity={0.35}
+                    nodeThickness={18}
+                    nodeSpacing={24}
+                    nodeBorderWidth={0}
+                    nodeBorderColor={{
+                        from: 'color',
+                        modifiers: [
+                            [
+                                'darker',
+                                0.8
+                            ]
+                        ]
+                    }}
+                    nodeBorderRadius={3}
+                    linkOpacity={0.5}
+                    linkHoverOthersOpacity={0.1}
+                    linkContract={3}
+                    linkBlendMode={isDark ? "lighten" : "multiply"}
+                    enableLinkGradient={true}
+                    labelPosition="inside"
+                    labelOrientation="horizontal"
+                    labelPadding={16}
+                    labelTextColor={isDark ? '#ffffff' : '#000000'}
+                    sort={'input'}
+                    legends={[]}
+                    valueFormat={(value: number) => `${value}`}
+                />
+            )
+        })()}
     </div>
-)}
+    )
+}

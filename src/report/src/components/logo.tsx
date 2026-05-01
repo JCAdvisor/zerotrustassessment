@@ -9,7 +9,7 @@ export function Logo() {
             <div className="flex flex-col">
                 <p className="font-bold">{ztAppConfig.name}</p>
                 <p className="font-light text-xs text-muted-foreground">
-                    boosted by <img src={jc2Logo} alt="JC2SEC" className="inline h-4" />
+                    apoiado por <img src={jc2Logo} alt="JC2SEC" className="inline h-4" />
                 </p>
             </div>
 

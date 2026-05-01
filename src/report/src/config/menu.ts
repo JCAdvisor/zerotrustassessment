@@ -17,31 +17,31 @@ interface NavItemWithChildren extends NavItem {
 
 const allMenuItems: NavItemWithChildren[] = [
     {
-        title: 'Overview',
+        title: 'Visão geral',
         to: '',
     },
     {
-        title: 'Identity',
+        title: 'Identidade',
         to: 'identity',
     },
     {
-        title: 'Devices',
+        title: 'Dispositivos',
         to: 'devices',
     },
     // {
-    //     title: 'Apps',
+    //     title: 'Aplicativos',
     //     to: 'apps',
     // },
     {
-        title: 'Network',
+        title: 'Rede',
         to: 'network',
     },
     // {
-    //     title: 'Infrastructure',
+    //     title: 'Infraestrutura',
     //     to: 'infrastructure',
     // },
     {
-        title: 'Data',
+        title: 'Dados',
         to: 'data',
     },
 ]

@@ -13,7 +13,7 @@ function Test-Assessment-21793 {
     	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 21793,
-    	Title = 'A política de Restrições de Locatário v2 está configurada',
+    	Title = 'A política de Restrições de tenant v2 está configurada',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -21,7 +21,7 @@ function Test-Assessment-21793 {
 
     Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se as Restrições de Locatário v2 estão configuradas"
+    $activity = "Verificando se as Restrições de tenant v2 estão configuradas"
     Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     if((Get-MgContext).Environment -ne 'Global')
@@ -42,13 +42,13 @@ function Test-Assessment-21793 {
     $passed = $null -ne $result
 
     if ($passed) {
-        $testResultMarkdown = "✅ **Passou**: A política de Restrições de Locatário v2 foi encontrada.`n`n%TestResult%"
+        $testResultMarkdown = "✅ **Passou**: A política de Restrições de tenant v2 foi encontrada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ **Falha**: Nenhuma política de Restrições de Locatário v2 foi encontrada.`n`n"
+        $testResultMarkdown = "❌ **Falha**: Nenhuma política de Restrições de tenant v2 foi encontrada.`n`n"
     }
 
-    $reportTitle = "Configuração de Restrições de Locatário v2"
+    $reportTitle = "Configuração de Restrições de tenant v2"
     $tableRows = ""
 
     if ($passed) {

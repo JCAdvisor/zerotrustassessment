@@ -4,128 +4,99 @@ import { ArrowUpDown } from "lucide-react"
 import { Button } from "../ui/button"
 import { impacts } from "./data-icons"
 import { StatusIcon } from "../status-icon"
+import { translateText } from "@/lib/pt"
 
 export const columns: ColumnDef<Test>[] = [
     {
         accessorKey: "TestId",
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    ID
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                ID
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         meta: {
-            label: "ID"
-        }
+            label: "ID",
+        },
     },
     {
         accessorKey: "TestTitle",
-        meta: { label: "Name" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Name
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        meta: { label: "Nome" },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Nome
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
     },
     {
         accessorKey: "TestCategory",
-        meta: { label: "Category" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Category
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        meta: { label: "Categoria" },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Categoria
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         cell: ({ row }) => {
-            const category = row.getValue("TestCategory") as string;
+            const category = row.getValue("TestCategory") as string
+
             if (!category) {
-                return (
-                    <div className="flex items-center">
-                        <span className="text-muted-foreground">N/A</span>
-                    </div>
-                );
+                return <span className="text-muted-foreground">N/D</span>
             }
-            return (
-                <div className="flex items-center">
-                    <span>{category}</span>
-                </div>
-            )
+
+            return <span>{translateText(category)}</span>
         },
     },
     {
         accessorKey: "TestSfiPillar",
-        meta: { label: "SFI Pillar" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    SFI Pillar
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        meta: { label: "Pilar SFI" },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Pilar SFI
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         cell: ({ row }) => {
-            const sfiPillar = row.getValue("TestSfiPillar") as string;
+            const sfiPillar = row.getValue("TestSfiPillar") as string
+
             if (!sfiPillar) {
-                return (
-                    <div className="flex items-center">
-                        <span className="text-muted-foreground">N/A</span>
-                    </div>
-                );
+                return <span className="text-muted-foreground">N/D</span>
             }
+
             return (
-                <div className="flex items-center">
-                    <span className="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-md">
-                        {sfiPillar}
-                    </span>
-                </div>
+                <span className="rounded-md bg-purple-100 px-2 py-1 text-xs font-medium text-purple-900">
+                    {translateText(sfiPillar)}
+                </span>
             )
         },
     },
     {
         accessorKey: "TestMinimumLicense",
-        meta: { label: "Minimum License" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Min. License
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        meta: { label: "Licença mínima" },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Lic. mínima
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         cell: ({ row }) => {
-            const licensesValue = row.getValue("TestMinimumLicense");
+            const licensesValue = row.getValue("TestMinimumLicense")
 
-            // Handle null or undefined
             if (!licensesValue) {
-                return (
-                    <div className="flex items-center">
-                        <span className="text-muted-foreground">N/A</span>
-                    </div>
-                );
+                return <span className="text-muted-foreground">N/D</span>
             }
 
-            // Ensure we have an array
-            const licenses = Array.isArray(licensesValue) ? licensesValue : [licensesValue];
+            const licenses = Array.isArray(licensesValue) ? licensesValue : [licensesValue]
 
             if (licenses.length === 0) {
-                return (
-                    <div className="flex items-center">
-                        <span className="text-muted-foreground">N/A</span>
-                    </div>
-                );
+                return <span className="text-muted-foreground">N/D</span>
             }
 
             return (
-                <div className="flex items-center gap-1 flex-wrap">
+                <div className="flex flex-wrap items-center gap-1">
                     {licenses.map((license, index) => (
-                        <span key={index} className="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-md">
+                        <span key={index} className="rounded-md bg-purple-100 px-2 py-1 text-xs font-medium text-purple-800">
                             {license}
                         </span>
                     ))}
@@ -135,73 +106,53 @@ export const columns: ColumnDef<Test>[] = [
     },
     {
         accessorKey: "TestImpact",
-        meta: { label: "User Impact" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    User Impact
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        meta: { label: "Impacto ao usuário" },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Impacto ao usuário
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         cell: ({ row }) => {
-            const impact = impacts.find(
-                (impact) => impact.value === row.getValue("TestImpact")
-            )
+            const impact = impacts.find((item) => item.value === row.getValue("TestImpact"))
 
             if (!impact) {
                 return null
             }
 
-            return (
-                <div className="flex items-center">
-                    <span>{impact.label}</span>
-                </div>
-            )
+            return <span>{impact.label}</span>
         },
     },
     {
         accessorKey: "TestImplementationCost",
-        meta: { label: "Implementation Effort" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Imp. Effort
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        meta: { label: "Esforço de implementação" },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Esf. implementação
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         cell: ({ row }) => {
-            const impact = impacts.find(
-                (impact) => impact.value === row.getValue("TestImplementationCost")
-            )
+            const impact = impacts.find((item) => item.value === row.getValue("TestImplementationCost"))
 
             if (!impact) {
                 return null
             }
 
-            return (
-                <div className="flex items-center">
-                    <span>{impact.label}</span>
-                </div>
-            )
+            return <span>{impact.label}</span>
         },
     },
     {
         accessorKey: "TestRisk",
-        meta: { label: "Risk" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Risk
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
+        meta: { label: "Risco" },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Risco
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         cell: ({ row }) => {
-            const impact = impacts.find(
-                (impact) => impact.value === row.getValue("TestRisk")
-            )
+            const impact = impacts.find((item) => item.value === row.getValue("TestRisk"))
 
             if (!impact) {
                 return null
@@ -209,9 +160,7 @@ export const columns: ColumnDef<Test>[] = [
 
             return (
                 <div className="flex items-center">
-                    {impact.icon && (
-                        <impact.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
+                    {impact.icon && <impact.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
                     <span>{impact.label}</span>
                 </div>
             )
@@ -220,19 +169,12 @@ export const columns: ColumnDef<Test>[] = [
     {
         accessorKey: "TestStatus",
         meta: { label: "Status" },
-        header: ({ column }) => {
-            return (
-                <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-                    Status
-                    <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
-            )
-        },
-        cell: ({ row }) => {
-            return (
-                <StatusIcon Item={row.original} />
-            )
-        },
+        header: ({ column }) => (
+            <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
+                Status
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => <StatusIcon Item={row.original} />,
     },
-
 ]

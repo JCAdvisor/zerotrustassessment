@@ -1,4 +1,4 @@
-Atores de ameaça que comprometem contas privilegiadas atribuídas permanentemente ganham acesso contínuo a operações de diretório de alto impacto. Esse acesso estendido permite que os invasores estabeleçam backdoors persistentes, modifiquem configurações de segurança e desativem sistemas de monitoramento. Sem controles de acesso limitados por tempo, as contas privilegiadas comprometidas fornecem controle indefinido do locatário.
+Atores de ameaça que comprometem contas privilegiadas atribuídas permanentemente ganham acesso contínuo a operações de diretório de alto impacto. Esse acesso estendido permite que os invasores estabeleçam backdoors persistentes, modifiquem configurações de segurança e desativem sistemas de monitoramento. Sem controles de acesso limitados por tempo, as contas privilegiadas comprometidas fornecem controle indefinido do tenant.
 
 Exigir que as atribuições de funções qualificadas sejam ativadas just-in-time reduz a superfície de ataque e limita o tempo de permanência do invasor.
 

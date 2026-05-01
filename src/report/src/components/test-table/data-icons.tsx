@@ -11,46 +11,46 @@ import {
   export const labels = [
     {
       value: "bug",
-      label: "Bug",
+      label: "Erro",
     },
     {
       value: "feature",
-      label: "Feature",
+      label: "Funcionalidade",
     },
     {
       value: "documentation",
-      label: "Documentation",
+      label: "Documentação",
     },
   ]
 
   export const statuses = [
     {
       value: "Passed",
-      label: "Passed",
+      label: "Aprovado",
       icon: CheckCircledIcon,
       variant: "success"
     },
     {
       value: "Failed",
-      label: "Failed",
+      label: "Reprovado",
       icon: CrossCircledIcon,
       variant: "destructive"
     },
     {
       value: "Investigate",
-      label: "Investigate",
+      label: "Investigar",
       icon: QuestionMarkCircledIcon,
       variant: "warning"
     },
     {
       value: "Skipped",
-      label: "Skipped",
+      label: "Ignorado",
       icon: StopwatchIcon,
       variant: "secondary"
     },
     {
       value: "Planned",
-      label: "Planned",
+      label: "Planejado",
       icon: StopwatchIcon,
       variant: "secondary"
     },
@@ -58,17 +58,17 @@ import {
 
   export const impacts = [
     {
-      label: "Low",
+      label: "Baixo",
       value: "Low",
       icon: ArrowDownIcon,
     },
     {
-      label: "Medium",
+      label: "Médio",
       value: "Medium",
       icon: ArrowRightIcon,
     },
     {
-      label: "High",
+      label: "Alto",
       value: "High",
       icon: ArrowUpIcon,
     },

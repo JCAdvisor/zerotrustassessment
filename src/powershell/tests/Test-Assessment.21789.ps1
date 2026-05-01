@@ -13,7 +13,7 @@ function Test-Assessment-21789{
     	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce'),
     	TestId = 21789,
-    	Title = 'Eventos de criação de locatário são triados',
+    	Title = 'Eventos de criação de tenant são triados',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -21,14 +21,14 @@ function Test-Assessment-21789{
 
     Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se eventos de criação de locatário são triados"
+    $activity = "Verificando se eventos de criação de tenant são triados"
     Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
     $testResultMarkdown = "Planejado para uma versão futura."
     $passed = $result
 
-    Add-ZtTestResultDetail -TestId '21789' -Title "Eventos de criação de locatário são triados" `
+    Add-ZtTestResultDetail -TestId '21789' -Title "Eventos de criação de tenant são triados" `
         -UserImpact Low -Risk Medium -ImplementationCost Low `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

@@ -5,12 +5,12 @@
 
 function Test-Assessment-24576 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Baixo',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24576,
     	Title = 'A análise de pontos de extremidade está ativada para ajudar a identificar riscos em dispositivos Windows',

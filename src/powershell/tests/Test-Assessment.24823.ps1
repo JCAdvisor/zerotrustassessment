@@ -1,11 +1,11 @@
 function Test-Assessment-24823 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24823,
     	Title = 'Configurações de marca e suporte do Portal da Empresa melhoram a experiência e a confiança do usuário',

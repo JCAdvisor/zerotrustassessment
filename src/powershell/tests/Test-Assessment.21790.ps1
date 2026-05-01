@@ -10,10 +10,10 @@ function Test-Assessment-21790 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21790,
-    	Title = 'Configurações de acesso de saída entre locatários estão configuradas',
+    	Title = 'Configurações de acesso de saída entre tenants estão configuradas',
     	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -21,7 +21,7 @@ function Test-Assessment-21790 {
 
     Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se as configurações de acesso de saída entre locatários estão configuradas"
+    $activity = "Verificando se as configurações de acesso de saída entre tenants estão configuradas"
     Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = Invoke-ZtGraphRequest -RelativeUri 'policies/crossTenantAccessPolicy/default' -ApiVersion v1.0

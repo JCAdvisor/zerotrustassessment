@@ -2,7 +2,7 @@ A implantação abrangente do cliente Global Secure Access é fundamental para a
 
 Sem o cliente Global Secure Access:
 
-- Os dispositivos não podem se beneficiar de verificações de rede em conformidade em políticas de Acesso Condicional, restauração de IP de origem ou restrições de locatário.
+- Os dispositivos não podem se beneficiar de verificações de rede em conformidade em políticas de Acesso Condicional, restauração de IP de origem ou restrições de tenant.
 - Roubo de credenciais e ataques de repetição de token são mais difíceis de detectar quando o tráfego ignora o perímetro de segurança.
 - Endpoints gerenciados não podem acessar aplicativos privados através do Microsoft Entra Private Access.
 

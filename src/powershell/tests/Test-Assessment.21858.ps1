@@ -9,10 +9,10 @@ function Test-Assessment-21858 {
         MinimumLicense = ('Free'),
         Pillar = 'Identity',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+        SfiPillar = 'Proteger tenants e isolar sistemas de produção',
         TenantType = ('Workforce', 'External'),
         TestId = 21858,
-        Title = 'Identidades de convidados inativas são desativadas ou removidas do locatário',
+        Title = 'Identidades de convidados inativas são desativadas ou removidas do tenant',
         UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -26,14 +26,14 @@ function Test-Assessment-21858 {
         return
     }
 
-    $activity = 'Verificando se identidades de convidados inativas são removidas do locatário'
+    $activity = 'Verificando se identidades de convidados inativas são removidas do tenant'
     Write-ZtProgress -Activity $activity -Status 'Consultando usuários convidados ativos'
 
     # Lógica simplificada de tradução
     $passed = $true # Exemplo
     $testResultMarkdown = "Identidades de convidados inativas foram analisadas.`n`n%TestResult%"
-    
-    $reportTitle = 'Contas de convidados inativas no locatário'
+
+    $reportTitle = 'Contas de convidados inativas no tenant'
     $mdInfo = "## $reportTitle`n`n| Nome de exibição | UPN | Último login | Data de criação |`n| :----------- | :------------------ | :---------------- | :----------- |`n"
 
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo

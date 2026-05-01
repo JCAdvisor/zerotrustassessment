@@ -5,7 +5,7 @@ export default function Apps() {
     return (
         <>
             <PageHeader>
-                <PageHeaderHeading>Apps</PageHeaderHeading>
+                <PageHeaderHeading>Aplicativos</PageHeaderHeading>
             </PageHeader>
             <Card>
                 <CardHeader>

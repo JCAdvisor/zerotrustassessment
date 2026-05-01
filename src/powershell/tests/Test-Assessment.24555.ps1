@@ -5,12 +5,12 @@
 
 function Test-Assessment-24555 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24555,
     	Title = 'A configuração de Tags de Escopo é aplicada para apoiar a administração delegada e o acesso com o menor privilégio',

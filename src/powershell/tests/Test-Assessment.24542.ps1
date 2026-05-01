@@ -5,12 +5,12 @@
 
 function Test-Assessment-24542 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Baixo',
         MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24542,
     	Title = 'Políticas de conformidade protegem dispositivos macOS',
@@ -47,7 +47,7 @@ function Test-Assessment-24542 {
     foreach ($policy in $macOSCompliancePolicies) {
         $assignmentsUri = "deviceManagement/deviceCompliancePolicies/$($policy.id)/assignments"
         $assignments = Invoke-ZtGraphRequest -RelativeUri $assignmentsUri -ApiVersion v1.0
-        
+
         $isAssigned = $assignments.Count -gt 0
         if ($isAssigned) {
             $passed = $true
@@ -111,7 +111,7 @@ function Test-Assessment-24542 {
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
     else {
-        $mdInfo = "Nenhuma política de conformidade para macOS encontrada neste locatário.`n"
+        $mdInfo = "Nenhuma política de conformidade para macOS encontrada neste tenant.`n"
     }
 
     # Substituir o espaço reservado pelas informações detalhadas

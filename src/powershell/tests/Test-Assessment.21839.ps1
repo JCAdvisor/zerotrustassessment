@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Verifica se o método de autenticação por Passkey (FIDO2) está ativado e configurado para usuários no locatário.
+    Verifica se o método de autenticação por Passkey (FIDO2) está ativado e configurado para usuários no tenant.
 #>
 
 function Test-Assessment-21839 {
@@ -46,10 +46,10 @@ function Test-Assessment-21839 {
 
     if ($fido2Enabled -and $hasIncludeTargets) {
         $passed = $true
-        $testResultMarkdown = "O método de autenticação por Passkey está ativado e configurado para usuários em seu locatário.$mdInfo"
+        $testResultMarkdown = "O método de autenticação por Passkey está ativado e configurado para usuários em seu tenant.$mdInfo"
     } else {
         $passed = $false
-        $testResultMarkdown = "O método de autenticação por Passkey não está ativado ou não está configurado para nenhum usuário em seu locatário.$mdInfo"
+        $testResultMarkdown = "O método de autenticação por Passkey não está ativado ou não está configurado para nenhum usuário em seu tenant.$mdInfo"
     }
 
     $params = @{

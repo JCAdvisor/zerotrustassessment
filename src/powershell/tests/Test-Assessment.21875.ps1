@@ -9,7 +9,7 @@ function Test-Assessment-21875 {
     	MinimumLicense = ('P2','Governance'),
     	Pillar = 'Identity',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21875,
     	Title = 'Todas as políticas de atribuição do gerenciamento de direitos para usuários externos exigem organizações conectadas',

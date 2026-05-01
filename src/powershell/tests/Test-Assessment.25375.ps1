@@ -8,7 +8,7 @@ function Test-Assessment-25375 {
     	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 25375,
-    	Title = 'As licenças GSA estão disponíveis no locatário e atribuídas aos usuários'
+    	Title = 'As licenças GSA estão disponíveis no tenant e atribuídas aos usuários'
     )]
     # ...
 }

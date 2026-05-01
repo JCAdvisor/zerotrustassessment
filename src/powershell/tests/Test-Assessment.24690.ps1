@@ -10,7 +10,7 @@ function Test-Assessment-24690 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24690,
     	Title = 'Políticas de atualização para macOS são aplicadas para reduzir o risco de vulnerabilidades não corrigidas',

@@ -31,7 +31,7 @@ function Test-Assessment-21838 {
 
     if ($fido2Enabled) {
         $passed = $true
-        $testResultMarkdown = "O método de autenticação por chave de segurança está ativado em seu locatário, fornecendo autenticação resistente a phishing baseada em hardware.`n`n%TestResult%"
+        $testResultMarkdown = "O método de autenticação por chave de segurança está ativado em seu tenant, fornecendo autenticação resistente a phishing baseada em hardware.`n`n%TestResult%"
         $statusEmoji = '✅'
     } else {
         $passed = $false

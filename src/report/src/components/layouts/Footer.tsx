@@ -13,11 +13,11 @@ export function Footer() {
                 day: 'numeric'
             });
         } catch {
-            return 'Invalid Date';
+            return 'Data inválida';
         }
     };
 
-    const assessmentDate = reportData.ExecutedAt ? formatDate(reportData.ExecutedAt) : 'Not Available';
+    const assessmentDate = reportData.ExecutedAt ? formatDate(reportData.ExecutedAt) : 'Não disponível';
 
     return (
         <footer className="border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -30,13 +30,13 @@ export function Footer() {
                             <span className="font-semibold text-foreground">Zero Trust Assessment</span>
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                            An automated assessment tool that evaluates your Microsoft tenant's zero trust security posture.
+                            Uma ferramenta de avaliação automatizada que analisa a postura de segurança Zero Trust do seu tenant Microsoft.
                         </p>
                     </div>
 
                     {/* Center Section - Links */}
                     <div className="space-y-4">
-                        <h4 className="font-semibold text-foreground">Resources</h4>
+                        <h4 className="font-semibold text-foreground">Recursos</h4>
                         <div className="space-y-2">
                             <a
                                 href="https://aka.ms/zerotrust/assessment"
@@ -52,14 +52,14 @@ export function Footer() {
                                 rel="noreferrer noopener"
                                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline underline-offset-4"
                             >
-                                Zero Trust Workshop
+                                Workshop de Zero Trust
                             </a>
                         </div>
                     </div>
 
                     {/* Right Section - Support */}
                     <div className="space-y-4">
-                        <h4 className="font-semibold text-foreground">Support</h4>
+                        <h4 className="font-semibold text-foreground">Suporte</h4>
                         <div className="space-y-2">
                             <a
                                 href="https://aka.ms/zerotrust/feedback"
@@ -67,7 +67,7 @@ export function Footer() {
                                 rel="noreferrer noopener"
                                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline underline-offset-4"
                             >
-                                Share Feedback
+                                Compartilhar feedback
                             </a>
                             <a
                                 href="https://aka.ms/zerotrust/issues"
@@ -75,7 +75,7 @@ export function Footer() {
                                 rel="noreferrer noopener"
                                 className="block text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 hover:underline underline-offset-4"
                             >
-                                Report Issues
+                                Reportar problemas
                             </a>
                             <a
                                 href="https://github.com/microsoft/zerotrustassessment"
@@ -94,10 +94,10 @@ export function Footer() {
                 <div className="border-t mt-8 pt-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                     <div className="text-center md:text-left">
                         <p className="text-xs text-muted-foreground">
-                            © {new Date().getFullYear()} Microsoft Corporation. All rights reserved.
+                            © {new Date().getFullYear()} Microsoft Corporation. Todos os direitos reservados.
                         </p>
                         <p className="text-xs text-muted-foreground mt-1">
-                            This is a community project and not an official Microsoft product.
+                            Este é um projeto da comunidade e não é um produto oficial da Microsoft.
                         </p>
                     </div>
 
@@ -108,7 +108,7 @@ export function Footer() {
                             rel="noreferrer noopener"
                             className="hover:text-foreground transition-colors duration-200"
                         >
-                            Privacy
+                            Privacidade
                         </a>
                         <span>•</span>
                         <a
@@ -117,7 +117,7 @@ export function Footer() {
                             rel="noreferrer noopener"
                             className="hover:text-foreground transition-colors duration-200"
                         >
-                            Terms
+                            Termos
                         </a>
                         <span>•</span>
                         <span>{assessmentDate}</span>

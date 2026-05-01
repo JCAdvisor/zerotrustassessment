@@ -5,12 +5,12 @@
 
 function Test-Assessment-24573 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24573,
     	Title = 'Linhas de base de segurança são aplicadas a dispositivos Windows para reforçar a postura de segurança',

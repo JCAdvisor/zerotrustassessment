@@ -1,5 +1,5 @@
 Quando identidades de convidados permanecem ativas, mas sem uso por longos períodos, atores de ameaça podem explorar essas contas dormentes como vetores de entrada na organização. Contas de convidados inativas representam uma superfície de ataque significativa porque muitas vezes mantêm permissões de acesso persistentes a recursos, aplicativos e dados, enquanto permanecem sem monitoramento pelas equipes de segurança. Atores de ameaça frequentemente visam essas contas por meio de preenchimento de credenciais (credential stuffing), pulverização de senhas (password spraying) ou comprometendo a organização de origem do convidado para obter acesso lateral. Uma vez que uma conta de convidado inativa é comprometida, os atacantes podem utilizar as concessões de acesso existentes para:
-- Mover-se lateralmente dentro do locatário (tenant).
+- Mover-se lateralmente dentro do tenant (tenant).
 - Escalar privilégios por meio de associações a grupos ou permissões de aplicativos.
 - Estabelecer persistência por meio de técnicas como a criação de mais entidades de serviço ou modificação de permissões existentes.
 

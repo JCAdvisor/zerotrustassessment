@@ -25,10 +25,10 @@ export function formatNumber(value: number | undefined | null): string {
  * Get metric descriptions for tooltips
  */
 export const metricDescriptions = {
-  users: 'Total number of user accounts in the tenant (excluding guests)',
-  guests: 'Total number of guest user accounts',
-  groups: 'Total number of groups (security, Microsoft 365, etc.)',
-  apps: 'Total number of registered applications',
-  devices: 'Including both managed and unmanaged devices',
-  managed: 'Total number of Intune managed devices'
+  users: 'Total de contas de usuários no tenant, excluindo convidados',
+  guests: 'Total de contas de usuários convidados',
+  groups: 'Total de grupos (segurança, Microsoft 365 etc.)',
+  apps: 'Total de aplicativos registrados',
+  devices: 'Inclui dispositivos gerenciados e não gerenciados',
+  managed: 'Total de dispositivos gerenciados pelo Intune'
 };

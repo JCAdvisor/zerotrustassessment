@@ -40,7 +40,7 @@ function Test-Assessment-21863{
 
     # Prepare the markdown output
     if ($result) {
-        $testResultMarkdown = "Não há logins de risco sem triagem no locatário.%TestResult%"
+        $testResultMarkdown = "Não há logins de risco sem triagem no tenant.%TestResult%"
     }
     else {
         $testResultMarkdown = "Encontrados **$($riskDetections.Count)** logins de alto risco sem triagem.%TestResult%"

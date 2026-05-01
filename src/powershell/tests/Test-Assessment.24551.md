@@ -5,7 +5,7 @@ A imposição do WHfB interrompe esta cadeia de ataque ao exigir uma autenticaç
 **Ação de correção**
 
 Implemente o Windows Hello para Empresas no Intune para forçar uma autenticação forte e multifator:
-- [Configurar uma política de Windows Hello para Empresas ao nível do locatário](https://learn.microsoft.com/intune/intune-service/protect/windows-hello?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-windows-hello-for-business-policy-for-device-enrollment) que se aplica no momento em que um dispositivo se regista no Intune.
+- [Configurar uma política de Windows Hello para Empresas ao nível do tenant](https://learn.microsoft.com/intune/intune-service/protect/windows-hello?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-windows-hello-for-business-policy-for-device-enrollment) que se aplica no momento em que um dispositivo se regista no Intune.
 - Após o registo, [configure perfis de proteção de conta](https://learn.microsoft.com/intune/intune-service/protect/endpoint-security-account-protection-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#account-protection-profiles) e [atribua](https://learn.microsoft.com/intune/intune-service/configuration/device-profile-assign?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-a-policy-to-users-or-groups) diferentes configurações de Windows Hello para Empresas a diferentes grupos de utilizadores e dispositivos.
 <!--- Results --->
 %TestResult%

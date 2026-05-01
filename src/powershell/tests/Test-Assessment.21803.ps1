@@ -25,10 +25,10 @@ function Test-Assessment-21803 {
     Write-ZtProgress -Activity $activity -Status 'Obtendo política'
 
     $result = Invoke-ZtGraphRequest -RelativeUri 'policies/authenticationMethodsPolicy' -ApiVersion beta
-    
+
     if ($result.policyMigrationState -eq 'migrationComplete' -or $null -eq $result.policyMigrationState) {
         $passed = $true
-        $testResultMarkdown = if ($null -eq $result.policyMigrationState) { "Nenhuma política legada para migrar. Este locatário já usa métodos modernos.`n`n" }
+        $testResultMarkdown = if ($null -eq $result.policyMigrationState) { "Nenhuma política legada para migrar. Este tenant já usa métodos modernos.`n`n" }
         else { "✅ Migração concluída. O registro combinado está habilitado.`n`n" }
     }
     else {

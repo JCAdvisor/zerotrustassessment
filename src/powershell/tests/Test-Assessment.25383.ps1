@@ -9,7 +9,7 @@ function Test-Assessment-25383 {
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 25383,
-    	Title = 'Privilégios de administrador Global e GSA são estritamente limitados para evitar comprometimento do locatário',
+    	Title = 'Privilégios de administrador Global e GSA são estritamente limitados para evitar comprometimento do tenant',
     	UserImpact = 'Baixo'
     )]
     # ...

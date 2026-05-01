@@ -88,7 +88,7 @@ function Test-Assessment-21788 {
 
         $params = @{
             TestId = '21788'
-            Title  = "Administradores Globais não possuem acesso persistente elevado a todas as assinaturas do Azure no locatário"
+            Title  = "Administradores Globais não possuem acesso persistente elevado a todas as assinaturas do Azure no tenant"
             Status = $passed
             Result = $testResultMarkdown
         }

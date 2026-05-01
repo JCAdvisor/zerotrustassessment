@@ -32,7 +32,7 @@ function Test-Assessment-24551 {
     $activity = "A verificar se a Política de Windows Hello para Empresas está configurada e atribuída"
     Write-ZtProgress -Activity $activity
 
-    # Consulta 1: Obter atribuição para Políticas de Configuração de Windows Hello para Empresas ao nível do locatário
+    # Consulta 1: Obter atribuição para Políticas de Configuração de Windows Hello para Empresas ao nível do tenant
     $windowsHelloTenantConfig = Invoke-ZtGraphRequest -RelativeUri "deviceManagement/deviceEnrollmentConfigurations?`$filter=deviceEnrollmentConfigurationType eq 'windowsHelloForBusiness'" -ApiVersion beta
 
     # Consulta 2: Obter atribuição para Políticas MDM relacionadas com Windows Hello para Empresas
@@ -65,7 +65,7 @@ function Test-Assessment-24551 {
 
     #region Geração de Relatório
     if ($passed) {
-        $testResultMarkdown = "✅ O Windows Hello para Empresas está configurado através de políticas ao nível do locatário ou MDM.`n`n"
+        $testResultMarkdown = "✅ O Windows Hello para Empresas está configurado através de políticas ao nível do tenant ou MDM.`n`n"
     }
     else {
         $testResultMarkdown = "❌ O Windows Hello para Empresas não parece estar configurado ou atribuído.`n`n"
@@ -78,7 +78,7 @@ function Test-Assessment-24551 {
 
 ## {0}
 
-Estado da Configuração do Locatário: **{2}**
+Estado da Configuração do tenant: **{2}**
 
 | Nome da Política | Estado | Alvo da Atribuição |
 | :---------- | :----- | :---------------- |

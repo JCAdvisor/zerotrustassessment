@@ -35,7 +35,7 @@ function Test-Assessment-21804 {
     }
     else {
         $passed = $true
-        $testResultMarkdown += "Os métodos de autenticação SMS e chamadas de voz estão desabilitados no locatário.`n`n%TestResult%"
+        $testResultMarkdown += "Os métodos de autenticação SMS e chamadas de voz estão desabilitados no tenant.`n`n%TestResult%"
     }
 
     $reportTitle = "Métodos de autenticação fracos"

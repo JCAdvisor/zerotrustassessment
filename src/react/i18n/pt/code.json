@@ -451,13 +451,13 @@
         "message": "Iniciar workshop"
     },
     "products.assessment.label": {
-        "message": "Análise automatizada do locatário"
+        "message": "Análise automatizada do tenant"
     },
     "products.assessment.name": {
         "message": "Avaliação de Confiança Zero"
     },
     "products.assessment.description": {
-        "message": "Conecte-se ao seu locatário Microsoft Entra e obtenha uma avaliação automatizada da sua postura de Confiança Zero. Analise configurações nos pilares de Identidade, Dispositivos, Dados e Rede com insights acionáveis e painéis visuais."
+        "message": "Conecte-se ao seu tenant Microsoft Entra e obtenha uma avaliação automatizada da sua postura de Confiança Zero. Analise configurações nos pilares de Identidade, Dispositivos, Dados e Rede com insights acionáveis e painéis visuais."
     },
     "products.assessment.tag.identity": {
         "message": "Identidade"
@@ -505,7 +505,7 @@
         "message": "Avalie"
     },
     "howItWorks.step3.description": {
-        "message": "Execute a avaliação no seu locatário Microsoft Entra para medir sua postura atual, identificar lacunas e acompanhar o progresso ao longo do tempo."
+        "message": "Execute a avaliação no seu tenant Microsoft Entra para medir sua postura atual, identificar lacunas e acompanhar o progresso ao longo do tempo."
     },
     "howItWorks.step3.link": {
         "message": "Executar avaliação"

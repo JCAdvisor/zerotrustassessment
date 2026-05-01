@@ -30,7 +30,7 @@ function Test-Assessment-21844 {
     $passed = $false
     if ($sp.accountEnabled -eq $false) {
         $passed = $true
-        $testResultMarkdown = "O Azure AD PowerShell está bloqueado no locatário desativando o logon do usuário no Aplicativo Corporativo."
+        $testResultMarkdown = "O Azure AD PowerShell está bloqueado no tenant desativando o logon do usuário no Aplicativo Corporativo."
     } else {
         $testResultMarkdown = "O Azure AD PowerShell não foi bloqueado pela organização."
     }

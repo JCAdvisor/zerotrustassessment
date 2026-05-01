@@ -10,10 +10,10 @@ function Test-Assessment-21868 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21868,
-    	Title = 'Convidados não possuem aplicativos no locatário',
+    	Title = 'Convidados não possuem aplicativos no tenant',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -23,7 +23,7 @@ function Test-Assessment-21868 {
 
     Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se convidados possuem aplicativos no locatário"
+    $activity = "Verificando se convidados possuem aplicativos no tenant"
     Write-ZtProgress -Activity $activity -Status "Obtendo aplicativos e entidades de serviço"
 
     $sqlApp = @'
@@ -53,10 +53,10 @@ function Test-Assessment-21868 {
     $passed = ($guestAppOwners.Count -eq 0) -and ($guestSpOwners.Count -eq 0)
 
     if ($passed) {
-        $testResultMarkdown = "✅ **Passou**: Não foram encontrados usuários convidados como proprietários de aplicativos no locatário."
+        $testResultMarkdown = "✅ **Passou**: Não foram encontrados usuários convidados como proprietários de aplicativos no tenant."
     }
     else {
-        $testResultMarkdown = "❌ **Falha**: Foram encontrados usuários convidados como proprietários de aplicativos ou entidades de serviço no locatário.`n`n%TestResult%"
+        $testResultMarkdown = "❌ **Falha**: Foram encontrados usuários convidados como proprietários de aplicativos ou entidades de serviço no tenant.`n`n%TestResult%"
     }
 
     $mdInfo = ""
@@ -82,7 +82,7 @@ function Test-Assessment-21868 {
 
     $params = @{
         TestId             = '21868'
-        Title              = "Convidados não possuem aplicativos no locatário"
+        Title              = "Convidados não possuem aplicativos no tenant"
         UserImpact         = 'Baixo'
         Risk               = 'Médio'
         ImplementationCost = 'Médio'

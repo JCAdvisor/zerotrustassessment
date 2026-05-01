@@ -54,11 +54,13 @@ import {
 import { reportData } from "@/config/report-data";
 import { CaSankey } from "@/components/overview/ca-sankey";
 import { CaDeviceSankey } from "@/components/overview/caDevice-sankey";
-import { AuthMethodSankey } from "@/components/overview/authMethod-sankey";
+import { AuthMethodSankey } from "../components/overview/authMethod-sankey";
 import { DesktopDevicesSankey } from "@/components/overview/desktop-devices-sankey";
 import { MobileSankey } from "@/components/overview/mobile-sankey";
 import { Separator } from "@/components/ui/separator";
 import { formatNumber, metricDescriptions } from "@/lib/format-utils";
+import { DataTable } from "@/components/test-table/data-table";
+import { columns } from "@/components/test-table/columns";
 
 export default function Dashboard() {
 
@@ -73,7 +75,7 @@ export default function Dashboard() {
                         <CardHeader className="pb-3">
                             <CardTitle className="flex items-center gap-2">
                                 <Building2 className="size-5" />
-                                Tenant (Locatário)
+                                Locatário
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -108,7 +110,7 @@ export default function Dashboard() {
                             <TooltipTrigger asChild>
                                 <div className="flex items-center gap-3 rounded-md border px-4 py-3">
                                     <Avatar className="size-8.5 rounded-sm">
-                                        <AvatarFallback className="text-blue-600 shrink-0 rounded-sm">
+                                        <AvatarFallback className="shrink-0 rounded-sm" style={{ color: 'hsl(262, 58%, 46%)' }}>
                                             <User className="size-8" />
                                         </AvatarFallback>
                                     </Avatar>
@@ -133,7 +135,7 @@ export default function Dashboard() {
                             <TooltipTrigger asChild>
                                 <div className="flex items-center gap-3 rounded-md border px-4 py-3">
                                     <Avatar className="size-8.5 rounded-sm">
-                                        <AvatarFallback className="text-indigo-600 shrink-0 rounded-sm">
+                                        <AvatarFallback className="shrink-0 rounded-sm" style={{ color: 'hsl(270, 60%, 54%)' }}>
                                             <Luggage className="size-8" />
                                         </AvatarFallback>
                                     </Avatar>
@@ -158,7 +160,7 @@ export default function Dashboard() {
                             <TooltipTrigger asChild>
                                 <div className="flex items-center gap-3 rounded-md border px-4 py-3">
                                     <Avatar className="size-8.5 rounded-sm">
-                                        <AvatarFallback className="text-purple-600 shrink-0 rounded-sm">
+                                        <AvatarFallback className="shrink-0 rounded-sm" style={{ color: 'hsl(266, 58%, 50%)' }}>
                                             <Users className="size-8" />
                                         </AvatarFallback>
                                     </Avatar>
@@ -183,7 +185,7 @@ export default function Dashboard() {
                             <TooltipTrigger asChild>
                                 <div className="flex items-center gap-3 rounded-md border px-4 py-3">
                                     <Avatar className="size-8.5 rounded-sm">
-                                        <AvatarFallback className="text-rose-600 shrink-0 rounded-sm">
+                                        <AvatarFallback className="shrink-0 rounded-sm" style={{ color: 'hsl(278, 55%, 52%)' }}>
                                             <Layers3 className="size-8" />
                                         </AvatarFallback>
                                     </Avatar>
@@ -208,7 +210,7 @@ export default function Dashboard() {
                             <TooltipTrigger asChild>
                                 <div className="flex items-center gap-3 rounded-md border px-4 py-3">
                                     <Avatar className="size-8.5 rounded-sm">
-                                        <AvatarFallback className="text-orange-600 shrink-0 rounded-sm">
+                                        <AvatarFallback className="shrink-0 rounded-sm" style={{ color: 'hsl(0, 0%, 40%)' }}>
                                             <MonitorSmartphone className="size-8" />
                                         </AvatarFallback>
                                     </Avatar>
@@ -233,7 +235,7 @@ export default function Dashboard() {
                             <TooltipTrigger asChild>
                                 <div className="flex items-center gap-3 rounded-md border px-4 py-3">
                                     <Avatar className="size-8.5 rounded-sm">
-                                        <AvatarFallback className="text-emerald-600 shrink-0 rounded-sm">
+                                        <AvatarFallback className="shrink-0 rounded-sm" style={{ color: 'hsl(262, 58%, 46%)' }}>
                                             <MonitorSmartphone className="size-8" />
                                         </AvatarFallback>
                                     </Avatar>
@@ -261,7 +263,7 @@ export default function Dashboard() {
                                         </AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col gap-0.5">
-                                        <span className="text-muted-foreground text-sm font-medium">Last Scan</span>
+                                        <span className="text-muted-foreground text-sm font-medium">Última verificação</span>
                                         <span className="text-sm font-medium">
                                             {reportData.ExecutedAt ? new Date(reportData.ExecutedAt).toLocaleDateString() : 'Not Available'}
                                         </span>
@@ -277,7 +279,7 @@ export default function Dashboard() {
                         <CardHeader className="pb-3">
                             <CardTitle className="flex items-center gap-2">
                                 <ShieldCheck className="size-5" />
-                                Assessment
+                                Avaliação
                             </CardTitle>
                         </CardHeader>
                         <CardContent className="flex gap-6">
@@ -327,19 +329,19 @@ export default function Dashboard() {
                                 config={{
                                     move: {
                                         label: "Identidade",
-                                        color: "hsl(var(--chart-1))",
+                                                color: "hsl(274, 70%, 68%)",
                                     },
                                     exercise: {
                                         label: "Dispositivos",
-                                        color: "hsl(var(--chart-2))",
+                                                color: "hsl(270, 63%, 56%)",
                                     },
                                     stand: {
                                         label: "Dados",
-                                        color: "hsl(var(--chart-3))",
+                                                color: "hsl(266, 60%, 46%)",
                                     },
                                     network: {
                                         label: "Rede",
-                                        color: "hsl(var(--chart-4))",
+                                                color: "hsl(262, 58%, 36%)",
                                     },
                                 }}
                                 className="mx-auto aspect-square w-full max-w-[80%]"
@@ -417,7 +419,7 @@ export default function Dashboard() {
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Passos",
+                                            label: "Etapas",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -453,7 +455,7 @@ export default function Dashboard() {
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Passos",
+                                            label: "Etapas",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -469,7 +471,7 @@ export default function Dashboard() {
                             </CardContent>
                             <CardFooter className="flex-col items-start gap-1">
                                 <CardDescription>
-                                    {reportData.TenantInfo?.OverviewAuthMethodsAllUsers?.description || "No description available"}
+                                    {reportData.TenantInfo?.OverviewAuthMethodsAllUsers?.description || "Sem descrição disponível"}
                                 </CardDescription>
                             </CardFooter>
                         </Card>
@@ -734,7 +736,7 @@ export default function Dashboard() {
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Steps",
+                                            label: "Etapas",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -750,7 +752,7 @@ export default function Dashboard() {
                             </CardContent>
                             <CardFooter className="flex-col items-start gap-1">
                                 <CardDescription>
-                                    {reportData.TenantInfo?.OverviewCaMfaAllUsers?.description || "No description available"}
+                                    {reportData.TenantInfo?.OverviewCaMfaAllUsers?.description || "Sem descrição disponível"}
                                 </CardDescription>
                             </CardFooter>
                         </Card>
@@ -763,14 +765,14 @@ export default function Dashboard() {
                             <CardHeader className="space-y-0 pb-2 flex-row">
                                 <MonitorSmartphone className="pr-2 size-8" />
                                 <CardTitle className="text-2xl tabular-nums ">
-                                    Device sign-ins
+                                    Entradas de dispositivos
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Steps",
+                                            label: "Etapas",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -779,14 +781,14 @@ export default function Dashboard() {
                                         <CaDeviceSankey data={reportData.TenantInfo.OverviewCaDevicesAllUsers.nodes} />
                                     ) : (
                                         <div className="flex items-center justify-center h-32 text-muted-foreground">
-                                            No data available
+                                            Sem dados disponíveis
                                         </div>
                                     )}
                                 </ChartContainer>
                             </CardContent>
                             <CardFooter className="flex-col items-start gap-1">
                                 <CardDescription>
-                                    {reportData.TenantInfo?.OverviewCaDevicesAllUsers?.description || "No description available"}
+                                    {reportData.TenantInfo?.OverviewCaDevicesAllUsers?.description || "Sem descrição disponível"}
                                 </CardDescription>
                             </CardFooter>
                         </Card>
@@ -805,13 +807,13 @@ export default function Dashboard() {
                                     <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                         453
                                         <span className="text-sm font-normal text-muted-foreground">
-                                            sign-ins/day
+                                            entradas/dia
                                         </span>
                                     </div>
                                     <ChartContainer
                                         config={{
                                             steps: {
-                                                label: "Steps",
+                                                label: "Etapas",
                                                 color: "hsl(var(--chart-1))",
                                             },
                                         }}
@@ -856,13 +858,13 @@ export default function Dashboard() {
                                     <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                         314
                                         <span className="text-sm font-normal text-muted-foreground">
-                                            sign-ins/day
+                                            entradas/dia
                                         </span>
                                     </div>
                                     <ChartContainer
                                         config={{
                                             steps: {
-                                                label: "Steps",
+                                                label: "Etapas",
                                                 color: "hsl(var(--muted))",
                                             },
                                         }}
@@ -919,13 +921,13 @@ export default function Dashboard() {
                                 <div className="flex items-baseline gap-1 text-3xl font-bold tabular-nums leading-none">
                                     130
                                     <span className="text-sm font-normal text-muted-foreground">
-                                        triggers/day
+                                        acionamentos/dia
                                     </span>
                                 </div>
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Steps",
+                                            label: "Etapas",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -1028,31 +1030,31 @@ export default function Dashboard() {
                                                 dataKey: "Windows",
                                                 value: reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.windowsCount || 0,
                                                 label: `${reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.windowsCount || 0}`,
-                                                fill: "hsl(var(--chart-1))",
+                                                fill: "hsl(208, 100%, 42%)",
                                             },
                                             {
                                                 dataKey: "macOS",
                                                 value: reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.macOSCount || 0,
                                                 label: `${reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.macOSCount || 0}`,
-                                                fill: "hsl(var(--chart-2))",
+                                                fill: "hsl(265, 60%, 62%)",
                                             },
                                             {
                                                 dataKey: "iOS",
                                                 value: reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.iosCount || 0,
                                                 label: `${reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.iosCount || 0}`,
-                                                fill: "hsl(var(--chart-3))",
+                                                fill: "hsl(285, 55%, 62%)",
                                             },
                                             {
                                                 dataKey: "Android",
                                                 value: reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.androidCount || 0,
                                                 label: `${reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.androidCount || 0}`,
-                                                fill: "hsl(var(--chart-5))",
+                                                fill: "hsl(141, 71%, 48%)",
                                             },
                                             {
                                                 dataKey: "Linux",
                                                 value: reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.linuxCount || 0,
                                                 label: `${reportData.TenantInfo?.DeviceOverview?.ManagedDevices?.deviceOperatingSystemSummary?.linuxCount || 0}`,
-                                                fill: "hsl(var(--chart-4))",
+                                                fill: "hsl(36, 100%, 50%)",
                                             },
                                         ]}
                                         layout="vertical"
@@ -1129,11 +1131,11 @@ export default function Dashboard() {
                                         config={{
                                             compliant: {
                                                 label: "Compliant",
-                                                color: "hsl(142, 76%, 36%)",
+                                                color: "hsl(142, 71%, 45%)",
                                             },
                                             nonCompliant: {
                                                 label: "Non-compliant",
-                                                color: "hsl(0, 84%, 60%)",
+                                                color: "hsl(0, 89%, 60%)",
                                             },
                                         }}
                                         className="mx-auto aspect-square w-full max-h-full"
@@ -1171,7 +1173,7 @@ export default function Dashboard() {
                                     <div className="flex w-full items-center gap-2">
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                <div className="w-3 h-3 rounded-sm bg-green-600"></div>
+                                                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'hsl(142, 71%, 45%)' }}></div>
                                                 Em conformidade
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
@@ -1189,7 +1191,7 @@ export default function Dashboard() {
                                         <Separator orientation="vertical" className="mx-2 h-10 w-px" />
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                <div className="w-3 h-3 rounded-sm bg-red-500"></div>
+                                                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'hsl(0, 89%, 60%)' }}></div>
                                                 Não-conforme
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
@@ -1222,15 +1224,15 @@ export default function Dashboard() {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="flex pb-2 h-[250px]">
-                                    <ChartContainer
+                                        <ChartContainer
                                         config={{
                                             corporate: {
                                                 label: "Corporativo",
-                                                color: "hsl(217, 91%, 60%)",
+                                                color: "hsl(265, 60%, 62%)",
                                             },
                                             personal: {
                                                 label: "Pessoal",
-                                                color: "hsl(280, 85%, 60%)",
+                                                color: "hsl(0, 0%, 25%)",
                                             },
                                         }}
                                         className="mx-auto aspect-square w-full max-h-full"
@@ -1241,12 +1243,12 @@ export default function Dashboard() {
                                                     {
                                                         name: "Corporativo",
                                                         value: reportData.TenantInfo?.DeviceOverview?.DeviceOwnership?.corporateCount || 0,
-                                                        fill: "var(--color-corporate)",
+                                                        fill: "hsl(265, 60%, 62%)",
                                                     },
                                                     {
                                                         name: "Pessoal",
                                                         value: reportData.TenantInfo?.DeviceOverview?.DeviceOwnership?.personalCount || 0,
-                                                        fill: "var(--color-personal)",
+                                                        fill: "hsl(0, 0%, 25%)",
                                                     },
                                                 ]}
                                                 cx="50%"
@@ -1257,8 +1259,8 @@ export default function Dashboard() {
                                                 dataKey="value"
                                                 cornerRadius={5}
                                             >
-                                                <Cell fill="var(--color-corporate)" />
-                                                <Cell fill="var(--color-personal)" />
+                                                <Cell fill="hsl(265, 60%, 62%)" />
+                                                <Cell fill="hsl(0, 0%, 25%)" />
                                             </Pie>
                                             <ChartTooltip content={<ChartTooltipContent />} />
                                         </PieChart>
@@ -1268,7 +1270,7 @@ export default function Dashboard() {
                                     <div className="flex w-full items-center gap-2">
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                <div className="w-3 h-3 rounded-sm bg-blue-500"></div>
+                                                <div className="w-3 h-3 rounded-sm bg-purple-500"></div>
                                                 Corporativo
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
@@ -1286,7 +1288,7 @@ export default function Dashboard() {
                                         <Separator orientation="vertical" className="mx-2 h-10 w-px" />
                                         <div className="grid flex-1 auto-rows-min gap-0.5">
                                             <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                                <div className="w-3 h-3 rounded-sm bg-purple-500"></div>
+                                                <div className="w-3 h-3 rounded-sm bg-gray-700"></div>
                                                 Pessoal
                                             </div>
                                             <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
@@ -1319,7 +1321,7 @@ export default function Dashboard() {
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Steps",
+                                            label: "Etapas",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -1329,7 +1331,7 @@ export default function Dashboard() {
                                         <DesktopDevicesSankey data={reportData.TenantInfo.DeviceOverview.DesktopDevicesSummary.nodes} />
                                     ) : (
                                         <div className="flex items-center justify-center h-32 text-muted-foreground">
-                                            No data available
+                                            Sem dados disponíveis
                                         </div>
                                     )}
                                 </ChartContainer>
@@ -1397,14 +1399,14 @@ export default function Dashboard() {
                             <CardHeader className="space-y-0 pb-2 flex-row">
                                 <MonitorSmartphone className="pr-2 size-8" />
                                 <CardTitle className="text-2xl tabular-nums">
-                                    Mobile devices
+                                    Dispositivos móveis
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <ChartContainer
                                     config={{
                                         steps: {
-                                            label: "Steps",
+                                            label: "Etapas",
                                             color: "hsl(var(--chart-1))",
                                         },
                                     }}
@@ -1414,7 +1416,7 @@ export default function Dashboard() {
                                         <MobileSankey data={reportData.TenantInfo.DeviceOverview.MobileSummary.nodes} />
                                     ) : (
                                         <div className="flex items-center justify-center h-32 text-muted-foreground">
-                                            No data available
+                                            Sem dados disponíveis
                                         </div>
                                     )}
                                 </ChartContainer>
@@ -1422,7 +1424,7 @@ export default function Dashboard() {
                             <CardFooter className="flex flex-row border-t p-4">
                                 <div className="flex w-full items-center gap-2">
                                     <div className="grid flex-1 auto-rows-min gap-0.5">
-                                        <div className="text-xs text-muted-foreground">Android compliant</div>
+                                        <div className="text-xs text-muted-foreground">Android em conformidade</div>
                                         <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                             {(() => {
                                                 const nodes = reportData.TenantInfo?.DeviceOverview?.MobileSummary?.nodes || [];
@@ -1437,7 +1439,7 @@ export default function Dashboard() {
                                     </div>
                                     <Separator orientation="vertical" className="mx-2 h-10 w-px" />
                                     <div className="grid flex-1 auto-rows-min gap-0.5">
-                                        <div className="text-xs text-muted-foreground">iOS compliant</div>
+                                        <div className="text-xs text-muted-foreground">iOS em conformidade</div>
                                         <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                             {(() => {
                                                 const nodes = reportData.TenantInfo?.DeviceOverview?.MobileSummary?.nodes || [];
@@ -1452,7 +1454,7 @@ export default function Dashboard() {
                                     </div>
                                     <Separator orientation="vertical" className="mx-2 h-10 w-px" />
                                     <div className="grid flex-1 auto-rows-min gap-0.5">
-                                        <div className="text-xs text-muted-foreground">Total devices</div>
+                                        <div className="text-xs text-muted-foreground">Total de dispositivos</div>
                                         <div className="flex items-baseline gap-1 text-2xl font-bold tabular-nums leading-none">
                                             {(() => {
                                                 const nodes = reportData.TenantInfo?.DeviceOverview?.MobileSummary?.nodes || [];
@@ -1468,6 +1470,21 @@ export default function Dashboard() {
                     )}
 
                 </div>
+            </div>
+
+            {/* Recommendations Table Section */}
+            <div className="flex max-w-7xl flex-col gap-6 mt-6 mx-auto">
+                <Card className="w-full lg:col-span-3 mt-6">
+                    <CardHeader className="space-y-0 pb-2 flex-row">
+                        <Monitor className="pr-2 size-8" />
+                        <CardTitle className="text-2xl tabular-nums">
+                            JC2Sec | Recomendações
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <DataTable columns={columns} data={reportData.Tests} isOverview={true}/>
+                    </CardContent>
+                </Card>
             </div>
         </TooltipProvider>
     )

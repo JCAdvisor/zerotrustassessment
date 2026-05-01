@@ -10,7 +10,7 @@ function Test-Assessment-22128 {
         MinimumLicense = ('Free'),
         Pillar = 'Identidade',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+        SfiPillar = 'Proteger tenants e isolar sistemas de produção',
         TenantType = ('Workforce', 'External'),
         TestId = 22128,
         Title = 'Usuários convidados não possuem funções de diretório altamente privilegiadas atribuídas',

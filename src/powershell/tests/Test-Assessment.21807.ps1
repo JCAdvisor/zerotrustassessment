@@ -29,10 +29,10 @@ function Test-Assessment-21807 {
     $passed = $result.defaultUserRolePermissions.allowedToCreateApps -eq $false
 
     if ($passed) {
-        $testResultMarkdown = "O locatário está configurado para impedir que usuários comuns registrem aplicativos.`n`n**[Usuários podem registrar aplicativos](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **Não** ✅"
+        $testResultMarkdown = "O tenant está configurado para impedir que usuários comuns registrem aplicativos.`n`n**[Usuários podem registrar aplicativos](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **Não** ✅"
     }
     else {
-        $testResultMarkdown = "O locatário permite que todos os usuários não privilegiados registrem aplicativos.`n`n**[Usuários podem registrar aplicativos](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **Sim** ❌"
+        $testResultMarkdown = "O tenant permite que todos os usuários não privilegiados registrem aplicativos.`n`n**[Usuários podem registrar aplicativos](https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserManagementMenuBlade/~/UserSettings/menuId/UserSettings)** → **Sim** ❌"
     }
 
     Add-ZtTestResultDetail -TestId '21807' -Title 'A criação de novos aplicativos e entidades de serviço é restrita a usuários privilegiados' `

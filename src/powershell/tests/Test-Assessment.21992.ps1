@@ -44,10 +44,10 @@ function Test-Assessment-21992{
 
     $passed = ($resultsApp.Count -eq 0) -and ($resultsSP.Count -eq 0)
     if ($passed) {
-        $testResultMarkdown += "Certificados para aplicativos em seu locatário (tenant) foram emitidos nos últimos 180 dias."
+        $testResultMarkdown += "Certificados para aplicativos em seu tenant (tenant) foram emitidos nos últimos 180 dias."
     }
     else {
-        $testResultMarkdown += "Encontrados $($resultsApp.Count) aplicativos e $($resultsSP.Count) entidades de serviço em seu locatário com certificados que não foram rotacionados nos últimos 180 dias.`n`n%TestResult%"
+        $testResultMarkdown += "Encontrados $($resultsApp.Count) aplicativos e $($resultsSP.Count) entidades de serviço em seu tenant com certificados que não foram rotacionados nos últimos 180 dias.`n`n%TestResult%"
     }
     if ($resultsApp.Count -gt 0) {
         $mdInfo = "`n## Aplicativos com certificados que não foram rotacionados nos últimos 180 dias`n`n"
@@ -60,7 +60,7 @@ function Test-Assessment-21992{
     }
     if ($resultsSP.Count -gt 0) {
         $mdInfo += "`n`n## Entidades de serviço com certificados que não foram rotacionados nos últimos 180 dias`n`n"
-        $mdInfo += "| Entidade de serviço | Locatário proprietário | Data de Início do Certificado |`n"
+        $mdInfo += "| Entidade de serviço | tenant proprietário | Data de Início do Certificado |`n"
         $mdInfo += "| :--- | :--- | :--- |`n"
         foreach ($item in $resultsSP) {
             $tenant = Get-ZtTenant -tenantId $item.appOwnerOrganizationId

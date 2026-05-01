@@ -5,12 +5,12 @@
 
 function Test-Assessment-24568 {
     [ZtTest(
-        Category = 'Locatário',
+        Category = 'tenant',
         ImplementationCost = 'Médio',
         MinimumLicense = ('Intune'),
         Pillar = 'Dispositivos',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+        SfiPillar = 'Proteger tenants e isolar sistemas de produção',
         TenantType = ('Workforce'),
         TestId = 24568,
         Title = 'O SSO de plataforma está configurado para fortalecer a autenticação em dispositivos macOS',

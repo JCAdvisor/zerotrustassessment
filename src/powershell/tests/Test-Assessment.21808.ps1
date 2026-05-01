@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Verifica se o fluxo de código do dispositivo está restrito no locatário.
+    Verifica se o fluxo de código do dispositivo está restrito no tenant.
 #>
 
 function Test-Assessment-21808 {
@@ -31,7 +31,7 @@ function Test-Assessment-21808 {
     $allCAPolicies = Invoke-ZtGraphRequest -RelativeUri "identity/conditionalAccess/policies" -ApiVersion 'beta'
 
     $enabledPolicies = $allCAPolicies | Where-Object { $_.state -eq 'enabled' }
-    
+
     $deviceCodeFlowPolicies = $enabledPolicies | Where-Object {
         $_.conditions.authenticationFlows.transferMethod -contains 'deviceCodeFlow'
     }

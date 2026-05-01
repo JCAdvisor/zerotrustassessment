@@ -13,7 +13,7 @@ function Test-Assessment-21780 {
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21780,
-    	Title = 'Nenhum uso de ADAL no locatário',
+    	Title = 'Nenhum uso de ADAL no tenant',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -21,7 +21,7 @@ function Test-Assessment-21780 {
 
     Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se não há uso de ADAL no locatário"
+    $activity = "Verificando se não há uso de ADAL no tenant"
     Write-ZtProgress -Activity $activity -Status "Obtendo recomendações"
 
     $adalRecommendations = Invoke-ZtGraphRequest -RelativeUri "directory/recommendations" -filter "recommendationType eq 'adalToMsalMigration'" -ApiVersion beta
@@ -30,7 +30,7 @@ function Test-Assessment-21780 {
 
     if ($adalRecommendations.Count -gt 0) {
         $passed = $false
-        $testResultMarkdown = "Aplicativos ADAL encontrados no locatário.%TestResult%"
+        $testResultMarkdown = "Aplicativos ADAL encontrados no tenant.%TestResult%"
 
         $mdInfo = "`n## Aplicativos ADAL Encontrados`n`n"
         $mdInfo += "| Aplicativo |`n"
@@ -43,7 +43,7 @@ function Test-Assessment-21780 {
     }
     else {
         $passed = $true
-        $testResultMarkdown = "Nenhum aplicativo ADAL encontrado no locatário.%TestResult%"
+        $testResultMarkdown = "Nenhum aplicativo ADAL encontrado no tenant.%TestResult%"
     }
 
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo

@@ -9,7 +9,7 @@ function Test-Assessment-25378 {
         SfiPillar = 'Proteger identidades e segredos',
         TenantType = ('Workforce'),
         TestId = 25378,
-        Title = 'A colaboração externa é governada por Políticas de Acesso Entre Locatários explícitas',
+        Title = 'A colaboração externa é governada por Políticas de Acesso Entre tenants explícitas',
         UserImpact = 'Alto'
     )]
     # ...

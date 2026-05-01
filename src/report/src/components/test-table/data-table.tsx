@@ -24,6 +24,7 @@ import {
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { AlertTriangle, Settings, Users, Shield, Eye, Wrench, Lock, Building, Zap, Columns } from "lucide-react"
+import { translateSfiPillar, translateStatusLabel } from "@/lib/pt"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -38,6 +39,7 @@ interface DataTableProps<TData extends Test, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
     pillar?: string
+    isOverview?: boolean
 }
 
 import {
@@ -54,7 +56,96 @@ export function DataTable<TData extends Test, TValue>({
     columns,
     data,
     pillar,
+    isOverview = false,
 }: DataTableProps<TData, TValue>) {
+    // Recomendations and benefits dictionaries
+    const benefitsDict: {[key: string]: string} = {
+        "Gerenciamento de Credenciais": "Facilita gerenciamento centralizado de identidades, alinhando com suas experiências em avaliações de risco de credenciais.",
+        "Gerenciamento de Aplicativos": "Beneficia com controle centralizado de acessos, monitoramento de riscos, SSO seguro e conformidade automatizada, reduzindo violações e elevando produtividade.",
+        "Acesso Privilegiado": "Gerenciamento de Acesso Privilegiado no Microsoft 365 via PIM no Entra ID beneficia com acesso just-in-time, ativação aprovada, MFA, monitoramento de sessões e auditorias para minimizar riscos de abuso e conformidade com LGPD/ISO 27001.",
+        "Controle de Acesso": "Controle de Acesso no Microsoft 365 via Entra ID beneficia com autenticação condicional, MFA, princípio do menor privilégio, detecção de riscos e automação de revisões para prevenir acessos indevidos, elevar segurança e garantir conformidade.",
+        "Tenant": "Gerenciamento no nível de Tenant do Microsoft 365 beneficia com isolamento lógico de dados e configurações, governança multi-tenant via Entra ID, escalabilidade segura e conformidade centralizada para múltiplas organizações ou ambientes.",
+        "Dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 via Intune beneficia com controle centralizado remoto, conformidade de políticas de segurança, suporte BYOD, implantação automática de apps e atualizações, proteção de dados e integração com Defender para ambientes híbridos.",
+        "Colaboração Externa": "Colaboração externa no Microsoft 365, via Entra, beneficia com compartilhamento seguro de apps e dados com parceiros externos usando suas próprias identidades, sem sincronização de contas, mantendo controle granular, auditoria e conformidade para colaboração eficiente e reduzida sobrecarga administrativa.",
+        "Auditoria": "Auditoria no Entra ID beneficia com logs detalhados de atividades de usuários, grupos e apps, permitindo rastrear alterações, entradas suspeitas, investigações de incidentes, relatórios de conformidade e integração com Azure Monitor para alertas e análises avançadas.",
+        "Infraestrutura Híbrida": "Infraestrutura Híbrida no Microsoft 365, via Entra ID Connect e identidade híbrida, beneficia com identidade unificada local-nuvem, SSO seamless, gerenciamento centralizado, migração gradual, alta disponibilidade e governança consistente para recursos on-premises e SaaS."
+    };
+
+    const descriptionDict: {[key: string]: string} = {
+        "Gerenciamento de Credenciais": "Processo de criar, armazenar, atualizar e revogar identidades e autenticações (como senhas, tokens e certificados) durante todo o ciclo de vida do usuário para garantir segurança e controle de acesso.",
+        "Gerenciamento de Aplicativos": "Gerenciamento de Aplicativos no Microsoft 365 envolve controlar apps via Entra ID e Centro de Administração Teams, permitindo, bloqueando e governando acesso com políticas de permissão, instalação e conformidade para segurança e produtividade.",
+        "Acesso Privilegiado": "Gerenciamento de Acesso Privilegiado (PAM) no Microsoft 365 é um recurso do Entra ID Governance (PIM) que concede permissões elevadas temporariamente e sob aprovação, com monitoramento e auditoria para reduzir riscos de abuso.",
+        "Controle de Acesso":"Controle de Acesso no Microsoft 365 via Entra ID é o gerenciamento de identidades e permissões baseado em funções (RBAC), com políticas de acesso condicional, MFA e menor privilégio para autorizar usuários aos recursos certos no momento adequado.",
+        "Tenant": "Tenant no Microsoft 365 é uma instância dedicada e isolada de serviços (Entra ID, Exchange, Teams), gerenciando identidades, acessos, políticas e dados para uma organização única com controle administrativo centralizado.",
+        "Dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 é feito via Intune, solução unificada em nuvem que registra, configura, protege e monitora endpoints (Windows, iOS, Android, macOS) com políticas MDM/MAM, implantação de apps e conformidade para acesso seguro a recursos corporativos.",
+        "Colaboração Externa": "Colaboração externa no Microsoft 365 permite colaboração segura com usuários externos via Entra ID B2B, convidando parceiros como convidados para acessar Teams, SharePoint e apps sem contas internas, com políticas de acesso granular e monitoramento.",
+        "Auditoria": "Auditoria no Entra ID registra logs de atividades como criações de usuários, alterações de permissões e entradas, disponíveis no portal Microsoft Entra para consulta, exportação e integração com ferramentas SIEM para monitoramento e conformidade.",
+        "Infraestrutura Híbrida": "Infraestrutura Híbrida no Microsoft 365 integra ambientes on-premises (Active Directory) com nuvem via Entra Connect, sincronizando identidades, habilitando SSO, join híbrido de dispositivos e políticas unificadas para gerenciamento contínuo de acesso e segurança."
+    };
+
+    // Organize data by category for overview mode
+    const overviewData = React.useMemo(() => {
+        const result: { [key: string]: TData[] } = {};
+        data.forEach((test: TData) => {
+            const category = (test as any).TestCategory;
+            if (category) {
+                if (!result[category]) {
+                    result[category] = [];
+                }
+                result[category].push(test);
+            }
+        });
+        return result;
+    }, [data]);
+
+    // Early return for overview mode rendering
+    if (isOverview) {
+        return (
+            <div className="rounded-md border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Categoria da funcionalidade</TableHead>
+                            <TableHead>Descrição</TableHead>
+                            <TableHead>Total</TableHead>
+                            <TableHead>Falhas</TableHead>
+                            <TableHead>Benefícios</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {Object.entries(overviewData).map(([category, tests]: [string, TData[]]) => {
+                            const failedCount = tests.filter(
+                                (test: TData) => (test as any).TestStatus === "Failed"
+                            ).length;
+
+                            return (
+                                <TableRow key={category}>
+                                    <TableCell className="font-medium">{category}</TableCell>
+                                    <TableCell className="max-w-xs">
+                                        <p className="text-sm text-muted-foreground">
+                                            {descriptionDict[category] || "Descrição não disponível"}
+                                        </p>
+                                    </TableCell>
+                                    <TableCell className="text-center">{tests.length}</TableCell>
+                                    <TableCell className="text-center">
+                                        <span className="text-red-600 font-semibold">
+                                            {failedCount}
+                                        </span>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p className="text-sm">
+                                            {benefitsDict[category] || "Benefícios não disponíveis"}
+                                        </p>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </div>
+        );
+    }
+
     const [sorting, setSorting] = React.useState<SortingState>(
         pillar === "Devices"
             ? [
@@ -219,10 +310,11 @@ export function DataTable<TData extends Test, TValue>({
     return (
 
         <div>
+            {!isOverview && (
             <div className="flex items-center py-4 justify-between">
                 <div className="flex items-center gap-4">
                     <Input
-                        placeholder="Search by name..."
+                        placeholder="Buscar por nome..."
                         value={globalFilter ?? ''}
                         onChange={(e) => table.setGlobalFilter(String(e.target.value))}
                         className="max-w-sm"
@@ -230,7 +322,7 @@ export function DataTable<TData extends Test, TValue>({
 
                     {/* Risk Filter Toggles */}
                     <div className="flex items-center gap-1">
-                        <span className="text-xs font-medium text-muted-foreground mr-1">Risk:</span>
+                        <span className="text-xs font-medium text-muted-foreground mr-1">Risco:</span>
                         {uniqueRisks.map((risk) => {
                             const isSelected = selectedRisks.includes(risk);
                             const riskCount = data.filter(item => item.TestRisk === risk).length;
@@ -247,9 +339,9 @@ export function DataTable<TData extends Test, TValue>({
                                         }
                                     }}
                                     className={`text-xs h-6 px-3 py-1 rounded-full ${isSelected ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 dark:hover:bg-purple-950 dark:hover:text-purple-300'}`}
-                                    title={`${risk} (${riskCount} tests)`}
+                                    title={`${translateStatusLabel(risk)} (${riskCount} testes)`}
                                 >
-                                    {risk}
+                                    {translateStatusLabel(risk)}
                                 </Button>
                             );
                         })}
@@ -266,16 +358,16 @@ export function DataTable<TData extends Test, TValue>({
                             const getStatusColors = (status: string, isSelected: boolean) => {
                                 if (status === 'Passed') {
                                     return isSelected
-                                        ? 'bg-green-600 hover:bg-green-700 text-white'
-                                        : 'hover:bg-green-50 hover:text-green-700 hover:border-green-300 dark:hover:bg-green-950 dark:hover:text-green-300';
+                                        ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                                        : 'hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 dark:hover:bg-purple-950 dark:hover:text-purple-300';
                                 } else if (status === 'Failed') {
                                     return isSelected
                                         ? 'bg-red-600 hover:bg-red-700 text-white'
                                         : 'hover:bg-red-50 hover:text-red-700 hover:border-red-300 dark:hover:bg-red-950 dark:hover:text-red-300';
                                 } else { // Planned and other statuses
                                     return isSelected
-                                        ? 'bg-gray-600 hover:bg-gray-700 text-white'
-                                        : 'hover:bg-gray-50 hover:text-gray-700 hover:border-gray-300 dark:hover:bg-gray-950 dark:hover:text-gray-300';
+                                        ? 'bg-orange-500 hover:bg-orange-600 text-white'
+                                        : 'hover:bg-orange-50 hover:text-orange-700 hover:border-orange-300 dark:hover:bg-orange-950 dark:hover:text-orange-300';
                                 }
                             };
 
@@ -292,9 +384,9 @@ export function DataTable<TData extends Test, TValue>({
                                         }
                                     }}
                                     className={`text-xs h-6 px-3 py-1 rounded-full ${getStatusColors(status, isSelected)}`}
-                                    title={`${status} (${statusCount} tests)`}
+                                    title={`${translateStatusLabel(status)} (${statusCount} testes)`}
                                 >
-                                    {status}
+                                    {translateStatusLabel(status)}
                                 </Button>
                             );
                         })}
@@ -332,12 +424,13 @@ export function DataTable<TData extends Test, TValue>({
                     </DropdownMenu>
                 </div>
             </div>
+            )}
 
-            {/* SFI Pillar Toggle Buttons */}
+            {!isOverview && (
             <div className="mb-4">
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium">Filter by SFI Pillar:</span>
+                        <span className="text-sm font-medium">Filtrar por pilar SFI:</span>
                         {selectedSfiPillars.length > 0 && (
                             <Button
                                 variant="ghost"
@@ -345,7 +438,7 @@ export function DataTable<TData extends Test, TValue>({
                                 onClick={() => setSelectedSfiPillars([])}
                                 className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground"
                             >
-                                Clear All ({selectedSfiPillars.length})
+                                Limpar tudo ({selectedSfiPillars.length})
                             </Button>
                         )}
                     </div>
@@ -366,7 +459,7 @@ export function DataTable<TData extends Test, TValue>({
                             </Button>
                         )}
                         <div className="text-xs text-muted-foreground">
-                            Showing {filteredData.length} of {pillarFilteredData.length} tests
+                            Exibindo {filteredData.length} de {pillarFilteredData.length} testes
                         </div>
                     </div>
                 </div>
@@ -387,18 +480,19 @@ export function DataTable<TData extends Test, TValue>({
                                         setSelectedSfiPillars(prev => [...prev, pillar]);
                                     }
                                 }}
-                                className={`text-xs max-w-96 h-auto py-1 px-4 rounded-full ${isSelected ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 dark:hover:bg-blue-950 dark:hover:text-blue-300'}`}
-                                title={`${pillar} (${pillarCount} tests)`} // Show full text and count on hover
+                                className={`text-xs max-w-96 h-auto py-1 px-4 rounded-full ${isSelected ? 'bg-purple-600 hover:bg-purple-700 text-white' : 'hover:bg-purple-50 hover:text-purple-700 hover:border-purple-300 dark:hover:bg-purple-950 dark:hover:text-purple-300'}`}
+                                title={`${translateSfiPillar(pillar)} (${pillarCount} testes)`}
                             >
                                 <PillarIcon className="mr-2 h-3 w-3 flex-shrink-0" />
                                 <span className="whitespace-normal text-left leading-tight">
-                                    {pillar}
+                                    {translateSfiPillar(pillar)}
                                 </span>
                             </Button>
                         );
                     })}
                 </div>
             </div>
+            )}
 
             <div className="rounded-md border">
                 <Table>
@@ -442,7 +536,7 @@ export function DataTable<TData extends Test, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    Sem resultados.
                                 </TableCell>
                             </TableRow>
                         )}
@@ -462,20 +556,20 @@ export function DataTable<TData extends Test, TValue>({
                                     {/* Risk */}
                                     <div className="flex items-center gap-2">
                                         <AlertTriangle className="h-4 w-4 text-foreground" />
-                                        <span className="font-semibold">Risk:</span>
-                                        <span>{selectedRow?.TestRisk ?? "N/A"}</span>
+                                        <span className="font-semibold">Risco:</span>
+                                        <span>{translateStatusLabel(selectedRow?.TestRisk ?? "N/D")}</span>
                                     </div>
                                     {/* Impact */}
                                     <div className="flex items-center gap-2">
                                         <Users className="h-4 w-4 text-foreground" />
-                                        <span className="font-semibold">User Impact:</span>
-                                        <span>{selectedRow?.TestImpact ?? "N/A"}</span>
+                                        <span className="font-semibold">Impacto ao usuário:</span>
+                                        <span>{translateStatusLabel(selectedRow?.TestImpact ?? "N/D")}</span>
                                     </div>
                                     {/* Implementation Cost */}
                                     <div className="flex items-center gap-2">
                                         <Settings className="h-4 w-4 text-foreground" />
-                                        <span className="font-semibold">Implementation Effort:</span>
-                                        <span>{selectedRow?.TestImplementationCost ?? "N/A"}</span>
+                                        <span className="font-semibold">Esforço de implementação:</span>
+                                        <span>{translateStatusLabel(selectedRow?.TestImplementationCost ?? "N/D")}</span>
                                     </div>
                                 </div>
                             </CardHeader>
@@ -485,7 +579,7 @@ export function DataTable<TData extends Test, TValue>({
                         <Card>
                             <CardHeader><CardTitle>
                                 <div className="flex">
-                                    <span className="pr-3"> Test result → </span><StatusIcon Item={selectedRow!} />
+                                    <span className="pr-3"> Resultado do teste → </span><StatusIcon Item={selectedRow!} />
                                 </div></CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -494,7 +588,7 @@ export function DataTable<TData extends Test, TValue>({
                         </Card>
 
                         <Card>
-                            <CardHeader><CardTitle>What was checked</CardTitle></CardHeader>
+                            <CardHeader><CardTitle>O que foi verificado</CardTitle></CardHeader>
                             <CardContent>
                                 <Markdown className="prose max-w-fit dark:prose-invert" remarkPlugins={[remarkGfm]}>{selectedRow?.TestDescription}</Markdown>
                             </CardContent>

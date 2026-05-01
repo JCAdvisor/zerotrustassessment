@@ -9,10 +9,10 @@ function Test-Assessment-21874 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identity',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21874,
-    	Title = 'O acesso de convidados é limitado a locatários aprovados',
+    	Title = 'O acesso de convidados é limitado a tenants aprovados',
     	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -40,7 +40,7 @@ function Test-Assessment-21874 {
 
     $params = @{
         TestId             = '21874'
-        Title              = "O acesso de convidados é limitado a locatários aprovados"
+        Title              = "O acesso de convidados é limitado a tenants aprovados"
         UserImpact         = 'Médio'
         Risk               = 'Médio'
         ImplementationCost = 'Alto'

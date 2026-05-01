@@ -5,12 +5,12 @@
 
 function Test-Assessment-24546 {
     [ZtTest(
-    	Category = 'Locatário',
+    	Category = 'tenant',
     	ImplementationCost = 'Baixo',
         MinimumLicense = ('P1'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 24546,
     	Title = 'O registro automático de dispositivos Windows é aplicado para eliminar riscos de endpoints não gerenciados',
@@ -54,7 +54,7 @@ function Test-Assessment-24546 {
     #region Geração de Relatório
     $testResultMarkdown = ""
     if ($passed) {
-        $testResultMarkdown = "✅ O Registro Automático do Windows está habilitado e aplicado no locatário.`n`n"
+        $testResultMarkdown = "✅ O Registro Automático do Windows está habilitado e aplicado no tenant.`n`n"
     }
     else {
         $testResultMarkdown = "❌ O Registro Automático do Windows não está habilitado ou está configurado como 'Nenhum'.`n`n"

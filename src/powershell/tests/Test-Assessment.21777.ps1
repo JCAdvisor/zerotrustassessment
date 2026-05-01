@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Teste para verificar se o bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários.
+    Teste para verificar se o bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multitenants.
 #>
 
 function Test-Assessment-21777 {
@@ -10,10 +10,10 @@ function Test-Assessment-21777 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21777,
-    	Title = 'O bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários',
+    	Title = 'O bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multitenants',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -23,7 +23,7 @@ function Test-Assessment-21777 {
 
     Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se o bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários"
+    $activity = "Verificando se o bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multitenants"
     Write-ZtProgress -Activity $activity -Status "Obtendo aplicativos"
 
     $sqlCount = "SELECT COUNT(*) ItemCount FROM Application WHERE ID IS NOT NULL"
@@ -52,13 +52,13 @@ function Test-Assessment-21777 {
     $passed = $null -eq $failedApps -or $failedApps.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "✅ **Passou**: Todos os aplicativos multilocatários possuem o bloqueio de instância configurado.`n`n"
+        $testResultMarkdown = "✅ **Passou**: Todos os aplicativos multitenants possuem o bloqueio de instância configurado.`n`n"
     }
     else {
-        $testResultMarkdown = "❌ **Falha**: Foram encontrados aplicativos multilocatários sem o bloqueio de propriedade de instância configurado.`n`n"
+        $testResultMarkdown = "❌ **Falha**: Foram encontrados aplicativos multitenants sem o bloqueio de propriedade de instância configurado.`n`n"
     }
 
-    $reportTitle = "Aplicativos multilocatários e configuração de Bloqueio de Instância"
+    $reportTitle = "Aplicativos multitenants e configuração de Bloqueio de Instância"
     $tableRows = ""
 
     if ($resultsApp.Count -gt 0) {
@@ -84,7 +84,7 @@ function Test-Assessment-21777 {
 
     $params = @{
         TestId             = '21777'
-        Title              = "O bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multilocatários"
+        Title              = "O bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multitenants"
         UserImpact         = 'Baixo'
         Risk               = 'Alto'
         ImplementationCost = 'Baixo'

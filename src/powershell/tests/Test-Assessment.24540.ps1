@@ -47,7 +47,7 @@ function Test-Assessment-24540 {
     if ($passed) {
         $testResultMarkdown = "✅ Políticas do Firewall do Windows foram encontradas e atribuídas."
     } else {
-        $testResultMarkdown = "❌ Nenhuma política de configuração do Firewall do Windows encontrada neste locatário."
+        $testResultMarkdown = "❌ Nenhuma política de configuração do Firewall do Windows encontrada neste tenant."
     }
 
     # Criar informações detalhadas em tabela se houver políticas
@@ -88,7 +88,7 @@ function Test-Assessment-24540 {
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
     else {
-        $mdInfo = "Nenhuma política de configuração do Firewall do Windows encontrada neste locatário.`n"
+        $mdInfo = "Nenhuma política de configuração do Firewall do Windows encontrada neste tenant.`n"
     }
 
     # Substituir o espaço reservado pelas informações detalhadas
