@@ -23,38 +23,60 @@ function Test-Assessment-21801 {
 
     Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
+    $activity = "Verificando autenticação resistente a phishing para usuário"
+    Write-ZtProgress -Activity $activity -Status "Obtendo métodos de autenticação"
+
     if( -not (Get-ZtLicense EntraIDP1) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP1
         return
     }
 
-    $activity = "Verificando autenticação resistente a phishing para usuários"
-    Write-ZtProgress -Activity $activity -Status "Obtendo métodos de autenticação"
+    $EntraIDPlan = Get-ZtLicenseInformation -Product EntraID
+    if ($EntraIDPlan -eq "Free") {
+        Write-PSFMessage '🟦 Ignorando: Esse teste exige uma Licensa Premium' -Tag Test -Level VeryVerbose
+        return
+    }
+
 
     $sql = @"
 select distinct u.id, u.displayName, list_has_any(['passKeyDeviceBound', 'passKeyDeviceBoundAuthenticator', 'windowsHelloForBusiness'], methodsRegistered) as phishResistantAuthMethod,
     u.signInActivity.lastSuccessfulSignInDateTime
-from UserRegistrationDetails u
+from User u
+    inner join UserRegistrationDetails ur on u.id = ur.id
+where u.accountEnabled
 "@
     $results = Invoke-DatabaseQuery -Database $Database -Sql $sql
 
+    $totalUserCount = $results.Length
     $phishResistantUsers = $results | Where-Object { $_.phishResistantAuthMethod }
     $phishableUsers = $results | Where-Object { !$_.phishResistantAuthMethod }
 
-    $passed = $phishableUsers.Count -eq 0
+    $phishResistantUserCount = $phishResistantPrivUsers.Length
+
+    $passed = $totalUserCount -eq $phishResistantUserCount
 
     if ($passed) {
-        $testResultMarkdown = "✅ **Passou**: Todos os usuários possuem métodos resistentes a phishing registrados.`n`n%TestResult%"
+        $testResultMarkdown += "Todos os usuários têm métodos de autenticação resistente a phishing registrados.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ **Falha**: Foram encontrados usuários que ainda não registraram métodos fortes de autenticação.`n`n%TestResult%"
+        $testResultMarkdown += "Encontrados usuários que não registraram métodos de autenticação resistente a phishing.`n`n%TestResult%"
     }
 
-    $mdInfo = "## Status de Autenticação dos Usuários`n`n"
-    $mdInfo += "| Usuário | Último Logon | Resistente a Phishing |`n"
+    $mdInfo = "## Métodos de autenticação resistente a phishing`n`n"
+
+    if ($passed) {
+        $mdInfo += "Todos os usuários têm métodos de autenticação resistente a phishing registrados.`n`n"
+    }
+    else{
+        $mdInfo += "Encontrados usuários que não registraram métodos de autenticação resistente a phishing.`n`n"
+    }
+
+
+    $mdInfo += "Usuário | Último acesso | Método resistente a phishing registrado |`n"
     $mdInfo += "| :--- | :--- | :---: |`n"
 
     $userLinkFormat = "https://entra.microsoft.com/#view/Microsoft_AAD_UsersAndTenants/UserProfileMenuBlade/~/UserAuthMethods/userId/{0}/hidePreviewBanner~/true"
+
 
     foreach ($user in $phishableUsers | Sort-Object displayName) {
         $userLink = $userLinkFormat -f $user.id
@@ -69,5 +91,9 @@ from UserRegistrationDetails u
     }
 
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    Add-ZtTestResultDetail -TestId '21801' -Status $passed -Result $testResultMarkdown
+
+    Add-ZtTestResultDetail -TestId '21801' -Title 'Usuários têm métodos de autenticação fortes configurados' `
+        -UserImpact Medium -Risk Medium -ImplementationCost Medium `
+        -AppliesTo Identity -Tag Credential `
+        -Status $passed -Result $testResultMarkdown
 }

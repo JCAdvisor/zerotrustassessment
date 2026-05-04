@@ -26,40 +26,51 @@ function Test-Assessment-24553 {
         return
     }
 
-    #region Recolha de Dados
-    $activity = 'A verificar se a política do Intune Windows Update está configurada e atribuída'
+    #region Data Collection
+    $activity = 'Verificando se a política do Intune Windows Update está configurada e atribuída'
     Write-ZtProgress -Activity $activity
 
+    # Retrieve all Windows Update Policies and their assignments
     $windowsUpdatePolicy = Invoke-ZtGraphRequest -RelativeUri 'deviceManagement/deviceConfigurations?$expand=assignments' -ApiVersion beta | Where-Object {
         $_.'@odata.type' -eq '#microsoft.graph.windowsUpdateForBusinessConfiguration'
     }
-    #endregion Recolha de Dados
+    #endregion Data Collection
 
-    #region Lógica de Avaliação
+    #region Assessment Logic
+    # Check if at least one policy has assignments
     $hasAssignments = $false
     foreach ($policy in $windowsUpdatePolicy) {
-        if ($policy.assignments.Count -gt 0) {
+        if ($policy.assignments -and $policy.assignments.Count -gt 0) {
             $hasAssignments = $true
             break
         }
     }
-    $passed = $hasAssignments
-    #endregion Lógica de Avaliação
 
-    #region Geração de Relatório
-    $testResultMarkdown = ""
+    $passed = $windowsUpdatePolicy.Count -gt 0 -and $hasAssignments
+
     if ($passed) {
-        $testResultMarkdown = "✅ Pelo menos uma política de anéis de atualização do Windows (Update Rings) foi encontrada e atribuída.`n`n"
+        $testResultMarkdown = "Política do Windows Update está atribuída e aplicada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Nenhuma política de anéis de atualização do Windows foi encontrada ou nenhuma está atribuída.`n`n"
+        if ($windowsUpdatePolicy.Count -eq 0) {
+            $testResultMarkdown = "Nenhuma política do Windows Update encontrada.`n`n%TestResult%"
+        } else {
+            $testResultMarkdown = "Política do Windows Update não está atribuída ou não está aplicada.`n`n%TestResult%"
+        }
     }
+    #endregion Assessment Logic
 
+    #region Report Generation
+    # Build the detailed sections of the markdown
+
+    # Generate markdown table rows for each policy
+    $mdInfo = ""
     if ($windowsUpdatePolicy.Count -gt 0) {
+        # Create a here-string with format placeholder
         $formatTemplate = @'
 
-| Nome da Política | Estado | Atribuição |
-| :---------- | :------------- | :--------- |
+| Nome da Política | Status | Alvo da Atribuição |
+| :--------------- | :----- | :----------------- |
 {0}
 
 '@
@@ -75,7 +86,7 @@ function Test-Assessment-24553 {
             }
 
             $policyName = Get-SafeMarkdown -Text $policy.displayName
-            $assignmentTarget = 'Nenhum'
+            $assignmentTarget = 'None'
 
             if ($policy.assignments -and $policy.assignments.Count -gt 0) {
                 $assignmentTarget = Get-PolicyAssignmentTarget -Assignments $policy.assignments
@@ -84,11 +95,13 @@ function Test-Assessment-24553 {
             $tableRows += "| [$policyName]($portalLink) | $status | $assignmentTarget |`n"
         }
 
+         # Format the template by replacing placeholder with table rows
         $mdInfo = $formatTemplate -f $tableRows
     }
 
+    # Replace the placeholder in the test result markdown with the generated details
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
-    #endregion Geração de Relatório
+    #endregion Report Generation
 
     $params = @{
         TestId             = '24553'

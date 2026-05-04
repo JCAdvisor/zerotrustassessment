@@ -19,38 +19,77 @@ function Test-Assessment-21802 {
     [CmdletBinding()]
     param()
 
+
     Write-PSFMessage '🟦 Iniciando' -Tag Test -Level VeryVerbose
 
-    $activity = 'Verificando se o Authenticator exibe contexto de logon'
-    Write-ZtProgress -Activity $activity -Status 'Obtendo política'
+    $activity = 'Verificando se o aplicativo Microsoft Authenticator exibe contexto de logon'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo política de método de autenticação'
 
+    # Query Microsoft Authenticator authentication method configuration
     $authenticatorConfig = Invoke-ZtGraphRequest -RelativeUri 'authenticationMethodsPolicy/authenticationMethodConfigurations/MicrosoftAuthenticator' -ApiVersion 'beta'
+    function Test-AuthenticatorFeatureSetting {
+        [CmdletBinding()]
+        param(
+            [Parameter(Mandatory)]
+            [object]$FeatureSetting
+        )
 
-    $appInfoEnabled = $authenticatorConfig.featureSettings.displayAppInformationRequiredState.state -eq 'enabled'
-    $locationInfoEnabled = $authenticatorConfig.featureSettings.displayLocationInformationRequiredState.state -eq 'enabled'
-    
-    $passed = $appInfoEnabled -and $locationInfoEnabled
+        $FeatureSetting.state -eq 'enabled' -and
+        $FeatureSetting.includeTarget.id -eq 'all_users' -and
+        $FeatureSetting.excludeTarget.id -eq '00000000-0000-0000-0000-000000000000'
+    }
 
-    $reportTitle = "Configurações de Contexto do Microsoft Authenticator"
-    $appEmoji = if ($appInfoEnabled) { "✅" } else { "❌" }
-    $locationEmoji = if ($locationInfoEnabled) { "✅" } else { "❌" }
+    # Check if both app information and location information are properly configured
+    $appInfoEnabled = Test-AuthenticatorFeatureSetting -FeatureSetting $authenticatorConfig.featureSettings.displayAppInformationRequiredState
+    $locationInfoEnabled = Test-AuthenticatorFeatureSetting -FeatureSetting $authenticatorConfig.featureSettings.displayLocationInformationRequiredState
 
+    if ($appInfoEnabled -and $locationInfoEnabled) {
+        $passed = $true
+        $testResultMarkdown = "O Microsoft Authenticator exibe o nome do aplicativo e a localização geográfica em notificações push.`n`n%TestResult%"
+    } else {
+        $passed = $false
+        $testResultMarkdown = "As notificações do Microsoft Authenticator não exibem contexto de logon.`n`n%TestResult%"
+    }
+
+    if ($appInfoEnabled) {$appEmoji = '✅'} else {$appEmoji = '❌'}
+    if ($locationInfoEnabled) {$locationEmoji = '✅'} else {$locationEmoji = '❌'}
+
+    # Build the detailed sections of the markdown
+
+    # Define variables to insert into the format string
+    $reportTitle = 'Configurações do Microsoft Authenticator'
+
+    # Create a here-string with format placeholders {0}, {1}, etc.
     $formatTemplate = @"
+
 ## {0}
 
-Configurações de Recursos:
 
-$appEmoji **Nome do Aplicativo**
+Ajustes de Funcionalidade:
+
+$appEmoji **Nome da Aplicação**
 - Status: $((Get-Culture).TextInfo.ToTitleCase($authenticatorConfig.featureSettings.displayAppInformationRequiredState.state.ToLower()))
-- Alvo Incluído: $(Get-ztAuthenticatorFeatureSettingTarget -Target $authenticatorConfig.featureSettings.displayAppInformationRequiredState.includeTarget)
+- Incluir Alvo: $(Get-ztAuthenticatorFeatureSettingTarget -Target $authenticatorConfig.featureSettings.displayAppInformationRequiredState.includeTarget)
+- Excluir Alvo: $(Get-ztAuthenticatorFeatureSettingTarget -Target $authenticatorConfig.featureSettings.displayAppInformationRequiredState.excludeTarget)
 
 $locationEmoji **Localização Geográfica**
 - Status: $((Get-Culture).TextInfo.ToTitleCase($authenticatorConfig.featureSettings.displayLocationInformationRequiredState.state.ToLower()))
-- Alvo Incluído: $(Get-ztAuthenticatorFeatureSettingTarget -Target $authenticatorConfig.featureSettings.displayLocationInformationRequiredState.includeTarget)
+- Incluir Alvo: $(Get-ztAuthenticatorFeatureSettingTarget -Target $authenticatorConfig.featureSettings.displayLocationInformationRequiredState.includeTarget)
+- Excluir Alvo: $(Get-ztAuthenticatorFeatureSettingTarget -Target $authenticatorConfig.featureSettings.displayLocationInformationRequiredState.excludeTarget)
+
 "@
 
+    # Format the template by replacing placeholders with values
     $mdInfo = $formatTemplate -f $reportTitle
+
+    # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '21802' -Status $passed -Result $testResultMarkdown
+    $params = @{
+        TestId = '21802'
+        Status = $passed
+        Result = $testResultMarkdown
+    }
+    Add-ZtTestResultDetail @params
+
 }

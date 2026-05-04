@@ -21,12 +21,12 @@ function Test-Assessment-21861 {
 
     Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Verificando se todos os usuários de risco passaram por triagem"
-    Write-ZtProgress -Activity $activity -Status "Obtendo usuários de risco"
+    $activity = "Verificando se todos os usuários em risco passaram por triagem"
+    Write-ZtProgress -Activity $activity -Status "Obtendo usuários em risco"
 
     $EntraIDPlan = Get-ZtLicenseInformation -Product EntraID
     if ($EntraIDPlan -eq "Free" -or $EntraIDPlan -eq "P1") {
-        Write-PSFMessage '🟦 Pulando teste: Requer plano P2 ou de Governança' -Tag Test -Level VeryVerbose
+        Write-PSFMessage '🟦 Ignorando: Esse teste exige uma licença P2 ou do Entra ID Governance' -Tag Test -Level VeryVerbose
         return
     }
 
@@ -40,18 +40,18 @@ function Test-Assessment-21861 {
 
     # Prepare the markdown output
     if ($result) {
-        $testResultMarkdown = "Todos os usuários de alto risco passaram devidamente pela triagem no Entra ID Protection.%TestResult%"
+        $testResultMarkdown = "Todos os usuários de alto risco estão devidamente verificados pela triagem do Entra ID Protection.%TestResult%"
     }
     else {
-        $testResultMarkdown = "Encontrados **$($riskyUsers.Count)** usuários de alto risco sem triagem no Entra ID Protection.%TestResult%"
+        $testResultMarkdown = "Encontrados **$($riskyUsers.Count)** usuários de alto risco não verificados pela triagem do Entra ID Protection.%TestResult%"
     }
 
     # Build the detailed sections of the markdown
     $mdInfo = ""
 
     if (!$result) {
-        $mdInfo += "`n## Usuários de alto risco sem triagem`n`n"
-        $mdInfo += "| Usuário | Nível de risco | Última atualização | Detalhes do risco |`n"
+        $mdInfo += "`n## Usuários de Alto Risco Não Verificados`n`n"
+        $mdInfo += "| Usuário | Nível de Risco | Última Atualização | Detalhe do Risco |`n"
         $mdInfo += "| :----------------- | :--------- | :-------------------- | :---------- |`n"
 
         foreach ($user in $riskyUsers) {
@@ -65,8 +65,8 @@ function Test-Assessment-21861 {
     # Replace the placeholder with the detailed information
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
-    Add-ZtTestResultDetail -TestId '21861' -Title "Todos os usuários de risco passaram por triagem" `
-        -UserImpact Baixo -Risk Alto -ImplementationCost Alto `
+    Add-ZtTestResultDetail -TestId '21861' -Title "Todos os usuários em risco estão verificados" `
+        -UserImpact Low -Risk High -ImplementationCost High `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown
 }
