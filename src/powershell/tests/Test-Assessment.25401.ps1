@@ -22,16 +22,16 @@
 function Test-Assessment-25401 {
     [ZtTest(
     	Category = 'Application Proxy',
-    	ImplementationCost = 'Medium',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('AAD_PREMIUM'),
     	CompatibleLicense = ('AAD_PREMIUM','AAD_PREMIUM_P2'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 25401,
-    	Title = 'Application Proxy applications require preauthentication to block anonymous access',
-    	UserImpact = 'Medium'
+     Title = 'Os aplicativos do Application Proxy requerem pré-autenticação para bloquear acesso anônimo',
+     UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param(
@@ -39,15 +39,14 @@ function Test-Assessment-25401 {
     )
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Application Proxy pre-authentication configuration'
-    Write-ZtProgress -Activity $activity -Status 'Querying Application Proxy applications'
-
+    $activity = 'Verificando a configuração de pré-autenticação do Application Proxy'
+    Write-ZtProgress -Activity $activity -Status 'Consultando aplicativos do Application Proxy'
     $appProxyAppsFailed = $false
     $appProxyApps = @()
 
-    # Query 1: Retrieve the list of Application Proxy-enabled applications
+        # Consulta 1: Retrieve the list of Application Proxy-enabled applications
     try {
         $appProxyApps = Invoke-ZtGraphRequest `
             -RelativeUri 'applications' `
@@ -60,10 +59,10 @@ function Test-Assessment-25401 {
         Write-PSFMessage "Failed to retrieve Application Proxy applications: $_" -Tag Test -Level Warning
     }
 
-    # Query 2: Collect detailed configuration for all applications
+        # Consulta 2: Collect detailed configuration for all applications
     $appDetailsCollection = @()
     if (-not $appProxyAppsFailed -and $appProxyApps.Count -gt 0) {
-        Write-ZtProgress -Activity $activity -Status 'Retrieving application details'
+        Write-ZtProgress -Activity $activity -Status 'Recuperando detalhes dos aplicativos'
 
         foreach ($app in $appProxyApps) {
             try {
@@ -79,7 +78,7 @@ function Test-Assessment-25401 {
                 $appDetailsCollection += $appDetail
             }
             catch {
-                Write-PSFMessage "Failed to retrieve details for application $($app.id): $_" -Tag Test -Level Warning
+                Write-PSFMessage "Falha ao recuperar detalhes do aplicativo $($app.id): $_" -Tag Test -Level Warning
             }
         }
     }
@@ -121,19 +120,19 @@ function Test-Assessment-25401 {
 
     # Check if query failed
     if ($appProxyAppsFailed) {
-        Write-PSFMessage 'Failed to query Application Proxy applications due to API/permission error.' -Tag Test -Level Warning
-        $testResultMarkdown = "⚠️ Unable to determine Application Proxy pre-authentication configuration due to query failure, connection issues, or insufficient permissions.`n`n%TestResult%"
+        Write-PSFMessage 'Falha ao consultar aplicativos do Application Proxy devido a erro de API/permissão.' -Tag Test -Level Warning
+        $testResultMarkdown = "⚠️ Não foi possível determinar a configuração de pré-autenticação do Application Proxy devido a falha na consulta, problemas de conexão ou permissões insuficientes.`n`n%TestResult%"
         $passed = $false
         $customStatus = 'Investigate'
     }
     # No Application Proxy applications found
     elseif ($null -eq $appProxyApps -or $appProxyApps.Count -eq 0) {
         Write-PSFMessage 'No Application Proxy applications found in this tenant.' -Tag Test -Level Verbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Application Proxy applications are configured in this tenant.'
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhum aplicativo do Application Proxy está configurado neste locatário.'
         return
     }
     else {
-        Write-ZtProgress -Activity $activity -Status 'Analyzing pre-authentication settings'
+        Write-ZtProgress -Activity $activity -Status 'Analisando configurações de pré-autenticação'
 
         # Process application details and build final list
         foreach ($appDetail in $appDetailsCollection) {
@@ -153,18 +152,14 @@ function Test-Assessment-25401 {
                 DisplayName              = $appDetail.displayName
                 ExternalAuthenticationType = $authType
                 IsCompliant              = $isCompliant
-                ComplianceStatus         = if ($isCompliant) { '✅ Yes' } else { '❌ No' }
+                    ComplianceStatus         = if ($isCompliant) { '✅ Sim' } else { '❌ Não' }
             }
 
-            $allApplications.Add($appInfo)
-        }
-
-        # Guard: If we couldn't retrieve details for any of the applications, treat as query failure
-        if ($allApplications.Count -eq 0 -and $appProxyApps.Count -gt 0) {
             Write-PSFMessage 'Failed to retrieve details for any Application Proxy applications.' -Tag Test -Level Warning
             $testResultMarkdown = "⚠️ Unable to determine Application Proxy pre-authentication configuration due to query failure, connection issues, or insufficient permissions.`n`n%TestResult%"
             $passed = $false
             $customStatus = 'Investigate'
+
         }
         # Evaluate test result
         elseif ($allApplications.Count -gt 0) {
@@ -173,12 +168,12 @@ function Test-Assessment-25401 {
             if ($nonCompliantCount -eq 0) {
                 # All applications use pre-authentication - pass
                 $passed = $true
-                $testResultMarkdown = "✅ All Application Proxy applications are configured with Microsoft Entra pre-authentication, ensuring users must authenticate before accessing on-premises resources.`n`n%TestResult%"
+                $testResultMarkdown = "✅ Todos os aplicativos do Application Proxy estão configurados com pré-autenticação do Microsoft Entra, garantindo que os usuários se autentiquem antes de acessar recursos locais.`n`n%TestResult%"
             }
             else {
                 # One or more applications are not configured with Microsoft Entra pre-authentication - fail
                 $passed = $false
-                $testResultMarkdown = "❌ One or more Application Proxy applications are configured with passthrough authentication, allowing unauthenticated access to on-premises resources.`n`n%TestResult%"
+                $testResultMarkdown = "❌ Um ou mais aplicativos do Application Proxy estão configurados com autenticação passthrough, permitindo acesso não autenticado a recursos locais.`n`n%TestResult%"
             }
         }
     }
@@ -188,14 +183,14 @@ function Test-Assessment-25401 {
     $mdInfo = ''
 
     if ($allApplications.Count -gt 0) {
-        $reportTitle = 'Application Proxy Pre-Authentication Configuration'
+        $reportTitle = 'Configuração de pré-autenticação do Application Proxy'
 
         $formatTemplate = @'
 
 
 ## {0}
 
-| Application name | Pre-Authentication type | Compliant |
+| Nome do aplicativo | Tipo de pré-autenticação | Conformidade |
 | :--------------- | :---------------------- | :-------- |
 {1}
 
@@ -229,7 +224,7 @@ function Test-Assessment-25401 {
 
     $params = @{
         TestId = '25401'
-        Title  = 'Application Proxy applications require pre-authentication to block anonymous access to on-premises resources'
+        Title  = 'Os aplicativos do Application Proxy requerem pré-autenticação para bloquear acesso anônimo a recursos locais'
         Status = $passed
         Result = $testResultMarkdown
     }

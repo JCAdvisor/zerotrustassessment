@@ -14,28 +14,28 @@
 
 function Test-Assessment-25396 {
     [ZtTest(
-        Category = 'Global Secure Access',
-        ImplementationCost = 'Medium',
+        Category = 'Acesso Seguro Global',
+        ImplementationCost = 'Médio',
         MinimumLicense = ('Entra_Premium_Private_Access', 'AAD_PREMIUM'),
         CompatibleLicense = ('Entra_Premium_Private_Access'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect identities and secrets',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger identidades e segredos',
         TenantType = ('Workforce'),
         TestId = 25396,
-        Title = 'Conditional Access policies enforce strong authentication for private apps',
-        UserImpact = 'Medium'
+        Title = 'Políticas de Conditional Access aplicam autenticação forte para aplicativos privados',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Private Access authentication controls'
-    Write-ZtProgress -Activity $activity -Status 'Getting Private Access applications'
+    $activity = 'Verificando controles de autenticação do Private Access'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo aplicativos do Private Access'
 
-    # Query Q1: Get all Private Access service principals with tags and CSAs
+        # Consulta Q1: Get all Private Access service principals with tags and CSAs
     $privateAccessApps = Invoke-ZtGraphRequest -RelativeUri 'servicePrincipals' -Filter "(tags/any(t:t eq 'PrivateAccessNonWebApplication') or tags/any(t:t eq 'NetworkAccessQuickAccessApplication'))" -Select 'id,displayName,appId,tags,customSecurityAttributes' -ApiVersion v1.0 -ConsistencyLevel eventual -QueryParameters @{ '$count' = 'true' }
 
     # Initialize test variables
@@ -68,9 +68,9 @@ function Test-Assessment-25396 {
 
     # Status sort order for reporting
     $statusSortOrder = @{
-        'Protected'     = 3
-        'Manual Review' = 2
-        'Unprotected'   = 1
+        'Protegido'     = 3
+        'Revisão manual' = 2
+        'Não protegido'   = 1
     }
 
     # Phishing-resistant methods
@@ -83,19 +83,19 @@ function Test-Assessment-25396 {
         $testResultMarkdown = @"
 ⚠️ No Private Access applications are configured.
 
-## Portal Links
+## Links do portal
 
-- [Global Secure Access > Applications > Enterprise applications](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/EnterpriseApplicationListBladeV3/fromNav/globalSecureAccess/applicationType/GlobalSecureAccessApplication)
-- [Conditional Access > Policies](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Overview/menuId//fromNav/Identity)
-- [Authentication methods > Authentication strengths](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/AuthStrengths)
+- [Acesso Seguro Global > Aplicativos > Aplicativos corporativos](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/EnterpriseApplicationListBladeV3/fromNav/globalSecureAccess/applicationType/GlobalSecureAccessApplication)
+- [Conditional Access > Políticas](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Overview/menuId//fromNav/Identity)
+- [Métodos de autenticação > Forças de autenticação](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/AuthStrengths)
 "@
     }
     else {
         $totalApps = $privateAccessApps.Count
 
-        Write-ZtProgress -Activity $activity -Status 'Getting Conditional Access policies'
+        Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de Conditional Access'
 
-        # Query Q2: Get all enabled CA policies
+            # Consulta Q2: Get all enabled CA policies
         $caPolicies = Get-ZtConditionalAccessPolicy | Where-Object { $_.state -eq 'enabled' }
 
         # Count policies with applicationFilter
@@ -105,7 +105,7 @@ function Test-Assessment-25396 {
         # Cache for authentication strength policies
         $authStrengthCache = @{}
 
-        Write-ZtProgress -Activity $activity -Status 'Evaluating authentication controls for each app'
+        Write-ZtProgress -Activity $activity -Status 'Avaliando controles de autenticação para cada aplicativo'
 
         foreach ($app in $privateAccessApps) {
             $appId = $app.appId
@@ -222,7 +222,7 @@ function Test-Assessment-25396 {
 
             # Determine status
             if ($authLevel -ne 'None') {
-                $status = 'Protected'
+                $status = 'Protegido'
 
                 # Update counters
                 switch ($authLevel) {
@@ -232,7 +232,7 @@ function Test-Assessment-25396 {
                 }
             }
             elseif ($hasCSA -and $filterPoliciesCount -gt 0) {
-                $status = 'Manual Review'
+                $status = 'Revisão manual'
                 $manualReviewApps++
             }
             else {
@@ -260,17 +260,17 @@ function Test-Assessment-25396 {
 
         if ($unprotectedApps -eq 0 -and $manualReviewApps -eq 0) {
             $passed = $true
-            $testResultMarkdown = "All Private Access applications are targeted by at least one enabled CA policy that requires authentication strength or MFA.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Todos os aplicativos Private Access são direcionados por pelo menos uma política de CA habilitada que requer força de autenticação ou MFA.`n`n%TestResult%"
         }
         elseif ($unprotectedApps -eq 0 -and $manualReviewApps -gt 0) {
             # Investigate state
             $passed = $false
-            $testResultMarkdown = "Private Access applications have Custom Security Attributes assigned but no direct CA policy coverage. CA policies use applicationFilter targeting. Manual review required to verify if these apps are protected by applicationFilter-based policies.`n`n%TestResult%"
+            $testResultMarkdown = "⚠️ Os aplicativos Private Access têm Custom Security Attributes atribuídos, mas não possuem cobertura direta de política de CA. As políticas de CA usam direcionamento por applicationFilter. Revisão manual necessária para verificar se esses aplicativos estão protegidos por políticas com direcionamento por applicationFilter.`n`n%TestResult%"
         }
         else {
             # Fail state
             $passed = $false
-            $testResultMarkdown = "One or more Private Access applications are not protected by Conditional Access policies requiring strong authentication.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Um ou mais aplicativos Private Access não estão protegidos por políticas de Conditional Access que exigem autenticação forte.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -285,48 +285,48 @@ function Test-Assessment-25396 {
 
         $mdInfo += @"
 
-## Summary
+## Resumo
 
-- **Total Private Access Apps:** $totalApps
-- **Apps with Phishing-Resistant MFA:** $phishingResistantApps
-- **Apps with Passwordless MFA:** $passwordlessMfaApps
-- **Apps with MFA (baseline):** $mfaApps
-- **Apps without Strong Auth:** $unprotectedApps
-- **Apps Requiring Manual Review:** $manualReviewApps
-- **Apps without CSAs:** $appsWithoutCSA
-- **CA Policies using applicationFilter:** $filterPoliciesCount
+- **Total de aplicativos Private Access:** $totalApps
+- **Aplicativos com MFA resistente a phishing:** $phishingResistantApps
+- **Aplicativos com MFA sem senha:** $passwordlessMfaApps
+- **Aplicativos com MFA (padrão):** $mfaApps
+- **Aplicativos sem autenticação forte:** $unprotectedApps
+- **Aplicativos que exigem revisão manual:** $manualReviewApps
+- **Aplicativos sem CSAs:** $appsWithoutCSA
+- **Políticas de CA usando applicationFilter:** $filterPoliciesCount
 
-## [Application Details](${portalAppsLink})
+## [Detalhes do aplicativo](${portalAppsLink})
 
-| App name | App id | App type | Has CSAs | CA policy | Auth strength | Level | Status |
+| Nome do aplicativo | App id | Tipo de aplicativo | Possui CSAs | Política de CA | Força de autenticação | Nível | Status |
 | :------- | :----- | :------- | :------- | :-------- | :------------ | :---- | :----- |
 
 "@
 
         foreach ($app in ($allAppDetails | Sort-Object StatusSort, AppName)) {
             $statusIcon = switch ($app.Status) {
-                'Protected' { '✅' }
-                'Unprotected' { '❌' }
-                'Manual Review' { '⚠️' }
+                'Protegido' { '✅' }
+                'Não protegido' { '❌' }
+                'Revisão manual' { '⚠️' }
                 default { '' }
             }
             $mdInfo += "| $($app.AppName) | $($app.AppId) | $($app.AppType) | $($app.HasCSA) | $($app.CAPolicies) | $($app.AuthStrength) | $($app.Level) | $statusIcon $($app.Status) |`n"
         }
 
         $mdInfo += @"
-## Portal Links
-- [Conditional Access Policies](${portalCaLink})
-- [Authentication Strengths](${portalAuthStrengthLink})
+## Links do portal
+- [Políticas de Conditional Access](${portalCaLink})
+- [Forças de autenticação](${portalAuthStrengthLink})
 "@
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25396'
-        Title  = 'Conditional Access policies enforce strong authentication for private apps'
+        Title  = 'Políticas de Conditional Access aplicam autenticação forte para aplicativos privados'
         Status = $passed
         Result = $testResultMarkdown
     }

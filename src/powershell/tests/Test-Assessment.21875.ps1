@@ -7,7 +7,7 @@ function Test-Assessment-21875 {
     	Category = 'Colaboração externa',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('P2','Governance'),
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
     	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),

@@ -5,16 +5,16 @@
 
 function Test-Assessment-21886 {
     [ZtTest(
-    	Category = 'Applications management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21886,
     	Title = 'Aplicativos configurados para provisionamento automático de usuários',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
@@ -113,7 +113,7 @@ ORDER BY LOWER(displayName) ASC
         Title              = 'Aplicações que usam o Microsoft Entra para autenticação e suportam provisionamento estão configuradas'
         UserImpact         = 'Low'
         Risk               = 'Medium'
-        ImplementationCost = 'Medium'
+        ImplementationCost = 'Médio'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

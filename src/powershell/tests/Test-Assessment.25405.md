@@ -1,8 +1,7 @@
-Intelligent Local Access (ILA) routes Microsoft Entra Private Access traffic locally instead of through the cloud, improving performance while maintaining policy enforcement. Without ILA, users might disable the Global Secure Access client to improve performance and bypass Conditional Access policies. Configure private networks for your user sites to ensure local routing while preserving security controls.
+O Intelligent Local Access (ILA) direciona o tráfego do Microsoft Entra Private Access localmente em vez de passar pela nuvem, melhorando o desempenho enquanto mantém a aplicação de políticas. Sem ILA, os usuários podem desabilitar o cliente Global Secure Access para melhorar o desempenho e contornar as políticas de Conditional Access. Configure redes privadas para seus sites de usuários para garantir roteamento local mantendo os controles de segurança.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Enable Intelligent Local Network](https://learn.microsoft.com/entra/global-secure-access/enable-intelligent-local-access?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Habilite a Rede Local Inteligente](https://learn.microsoft.com/entra/global-secure-access/enable-intelligent-local-access?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

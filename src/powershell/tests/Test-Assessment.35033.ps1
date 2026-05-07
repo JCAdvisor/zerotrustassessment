@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Custom sensitive information types are configured
+    Tipos de informação sensível personalizado estão configurados
 
 .DESCRIPTION
     This test checks if custom Sensitive Information Types are configured, enabling detection of
@@ -33,10 +33,10 @@ function Test-Assessment-35033 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Custom Sensitive Information Types Configuration'
-    Write-ZtProgress -Activity $activity -Status 'Getting custom SIT configuration'
+    $activity = 'Verificando configuração de tipos de informação sensível personalizado'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configuração de SIT personalizado'
 
     # Get all custom Sensitive Information Types
     $customSITs = $null
@@ -49,7 +49,7 @@ function Test-Assessment-35033 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to retrieve custom SIT configuration: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar configuração de SIT personalizado: $_" -Tag Test -Level Warning
     }
     #endregion Data Collection
 
@@ -85,10 +85,10 @@ function Test-Assessment-35033 {
         $testResultMarkdown += "Unable to determine custom SIT status due to permissions issues or service connection failure."
     }
     elseif ($passed) {
-        $testResultMarkdown = "✅ Custom Sensitive Information Types are configured, enabling detection of organization-specific sensitive data patterns.`n`n"
+        $testResultMarkdown = "✅ Tipos de informação sensível personalizado estão configurados, habilitando detecção de padrões de dados sensíveis específicos da organização.`n`n"
     }
     else {
-        $testResultMarkdown = "❌ No custom Sensitive Information Types are configured; relying solely on built-in SIT patterns.`n`n"
+        $testResultMarkdown = "❌ Nenhum tipo de informação sensível personalizado está configurado; dependendo apenas de padrões SIT internos.`n`n"
     }
 
     # Build detailed information if we have data

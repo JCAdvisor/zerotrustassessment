@@ -1,10 +1,9 @@
-﻿<#
+<#
 .SYNOPSIS
-    Validates that TLS inspection bypass policies are regularly reviewed to prevent security protection gaps.
+    Valida que as regras de bypass de inspeção de TLS são revisadas regularmente para evitar lacunas de proteção de segurança.
 
 .DESCRIPTION
-    This test checks whether TLS inspection policies containing custom bypass rules have been
-    reviewed within the last 90 days. Bypass rules that are not regularly reviewed can create
+    Este teste verifica se as políticas de inspeção de TLS contendo regras de bypass personalizadas foram revisadas nos últimos 90 dias.
     security blind spots, as threat actors specifically target uninspected traffic channels.
 
 .NOTES
@@ -15,28 +14,28 @@
 
 function Test-Assessment-27001 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+        Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 27001,
-    	Title = 'TLS inspection bypass rules are regularly reviewed',
-    	UserImpact = 'Low'
+            Title = 'As regras de bypass de inspeção de TLS são revisadas regularmente',
+            UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking TLS inspection policy review status'
+    $activity = 'Verificando status de revisão de política de inspeção de TLS'
 
-    # Query 1: Retrieve all TLS Inspection Policies
-    Write-ZtProgress -Activity $activity -Status 'Retrieving TLS inspection policies'
+        # Query 1: Retrieve all TLS Inspection Policies
+    Write-ZtProgress -Activity $activity -Status 'Recuperando políticas de inspeção de TLS'
 
     $tlsInspectionPolicies = $null
     $errorMsg = $null
@@ -45,13 +44,13 @@ function Test-Assessment-27001 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Unable to retrieve TLS inspection policies: $errorMsg" -Level Warning
+        Write-PSFMessage "Não foi possível recuperar políticas de inspeção de TLS: $errorMsg" -Level Warning
     }
 
     if(-not $errorMsg){
         # Check if we got any policies
         if (-not $tlsInspectionPolicies -or $tlsInspectionPolicies.Count -eq 0) {
-            Write-PSFMessage "No TLS inspection policies found." -Tag Test -Level Verbose
+            Write-PSFMessage "Nenhuma política de inspeção de TLS encontrada." -Tag Test -Level Verbose
             Add-ZtTestResultDetail -SkippedBecause NotApplicable
             return
         }
@@ -60,7 +59,7 @@ function Test-Assessment-27001 {
         $policiesWithCustomBypass = @()
 
         foreach ($policy in $tlsInspectionPolicies) {
-            Write-ZtProgress -Activity $activity -Status "Checking policy: $($policy.name)"
+            Write-ZtProgress -Activity $activity -Status "Verificando política: $($policy.name)"
 
             $policyRules = $policy.policyRules
 
@@ -108,7 +107,7 @@ function Test-Assessment-27001 {
     # Check if no policies with custom bypass rules were found
     elseif ($policiesWithCustomBypass.Count -eq 0) {
         $passed = $true
-        $testResultMarkdown = "✅ No TLS inspection policies with custom bypass rules found.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Nenhuma política de inspeção de TLS com regras de bypass personalizadas encontrada.`n`n%TestResult%"
     }
     else {
         # Check if any policies require review
@@ -116,11 +115,11 @@ function Test-Assessment-27001 {
 
         if ($policiesRequiringReview.Count -gt 0) {
             $passed = $false
-            $testResultMarkdown = "❌ One or more TLS inspection policies with custom bypass rules have not been modified in over 90 days and require review.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Uma ou mais políticas de inspeção de TLS com regras de bypass personalizadas não foram modificadas há mais de 90 dias e requerem revisão.`n`n%TestResult%"
         }
         else {
             $passed = $true
-            $testResultMarkdown = "✅ All TLS inspection policies with custom bypass rules have been reviewed within the last 90 days.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Todas as políticas de inspeção de TLS com regras de bypass personalizadas foram revisadas nos últimos 90 dias.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -129,7 +128,7 @@ function Test-Assessment-27001 {
     $mdInfo = ''
 
     if ($policiesWithCustomBypass.Count -gt 0) {
-        $reportTitle = 'TLS inspection policies'
+        $reportTitle = 'Políticas de inspeção de TLS'
         $portalLink = 'https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/TLSInspectionPolicy.ReactView'
 
         # Prepare table rows
@@ -148,7 +147,7 @@ function Test-Assessment-27001 {
 
 ## [{0}]({1})
 
-| Policy name | Last modified | Days since modified | Custom Bypass rule count | Status |
+| Nome da política | Última modificação | Dias desde modificação | Contagem de regras de bypass personalizadas | Status |
 | :---------- | :------------ | :------------------ | :----------------------- | :----- |
 {2}
 
@@ -165,7 +164,7 @@ function Test-Assessment-27001 {
 
     $params = @{
         TestId = '27001'
-        Title  = 'TLS inspection bypass policies are regularly reviewed to prevent security protection gaps'
+        Title  = 'As regras de bypass de inspeção de TLS são revisadas regularmente para evitar lacunas de proteção de segurança'
         Status = $passed
         Result = $testResultMarkdown
     }

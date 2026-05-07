@@ -29,10 +29,10 @@ function Test-Assessment-35029 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Mail flow rules with rights protection'
-    Write-ZtProgress -Activity $activity -Status 'Querying transport rules from Exchange Online'
+    $activity = 'Verificando regras de fluxo de email com proteção de direitos'
+    Write-ZtProgress -Activity $activity -Status 'Consultando regras de transporte do Exchange Online'
 
     $protectionRules = @()
     $allProtectionRulesDetailed = @()
@@ -68,7 +68,7 @@ function Test-Assessment-35029 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying transport rules: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar regras de transporte: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -91,10 +91,10 @@ function Test-Assessment-35029 {
     $testResultMarkdown = ''
 
     if ($passed) {
-        $testResultMarkdown = "✅ Mail flow rules with rights protection are configured, automatically protecting sensitive emails through encryption and restriction policies.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Regras de fluxo de email com proteção de direitos estão configuradas, protegendo automaticamente emails sensíveis através de políticas de criptografia e restrição.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ No mail flow rules with rights protection are configured; sensitive emails are not automatically protected in transit.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma regra de fluxo de email com proteção de direitos está configurada; emails sensíveis não são automaticamente protegidos em trânsito.`n`n%TestResult%"
     }
 
     # Build detailed content

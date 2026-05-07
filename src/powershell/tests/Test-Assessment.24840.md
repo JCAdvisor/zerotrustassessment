@@ -1,13 +1,17 @@
-Se os perfis de Wi-Fi não forem configurados e atribuídos corretamente, os dispositivos Android podem não conseguir ligar-se a redes seguras ou ligar-se de forma insegura, expondo os dados corporativos a interceção ou acesso não autorizado. Sem uma gestão centralizada, os dispositivos dependem da configuração manual, aumentando o risco de configuração incorreta, autenticação fraca e ligação a redes não fidedignas.
+Se os perfis de Wi-Fi não estiverem devidamente configurados e atribuídos, dispositivos Android podem falhar ao se conectar a redes seguras ou se conectar de forma insegura, expondo dados corporativos à interceptação ou acesso não autorizado. Sem gerenciamento centralizado, os dispositivos dependem de configuração manual, aumentando o risco de má configuração, autenticação fraca e conexão a redes maliciosas.
 
-A gestão centralizada de perfis de Wi-Fi para dispositivos Android no Intune garante uma conetividade segura e consistente às redes empresariais. Isto impõe normas de autenticação e encriptação, simplifica a integração e apoia o Zero Trust ao reduzir a exposição a redes não fidedignas.
+Gerenciar centralmente perfis de Wi-Fi para dispositivos Android no Intune garante conectividade segura e consistente com redes empresariais. Isso aplica padrões de autenticação e criptografia, simplifica a integração e apoia o Zero Trust ao reduzir a exposição a redes não confiáveis.
+
+
+
+Use o Intune para configurar perfis de Wi-Fi seguros que apliquem padrões de autenticação e criptografia.
 
 **Ação de remediação**
 
-Utilize o Intune para configurar e atribuir perfis de Wi-Fi seguros para dispositivos Android para impor normas de autenticação e encriptação:  
-- [Implementar perfis de Wi-Fi em dispositivos no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
+Use o Intune para configurar e atribuir perfis de Wi-Fi seguros para dispositivos Android, a fim de aplicar padrões de autenticação e criptografia:  
+- [Implantar perfis de Wi-Fi em dispositivos no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
 
-Para mais informações, consulte:  
-- [Reveja as definições de Wi-Fi disponíveis para dispositivos Android no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-android-enterprise?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Para mais informações, veja:  
+- [Revisar as configurações de Wi-Fi disponíveis para dispositivos Android no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-android-enterprise?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%

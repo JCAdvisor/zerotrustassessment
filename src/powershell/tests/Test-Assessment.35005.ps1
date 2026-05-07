@@ -1,9 +1,9 @@
-﻿<#
+<#
 .SYNOPSIS
-    Sensitivity labels are enabled in SharePoint Online
+    Os rótulos de sensibilidade estão habilitados no SharePoint Online
 
 .DESCRIPTION
-    SharePoint Online and OneDrive for Business require explicit enablement of sensitivity label integration to allow users to apply Microsoft Information Protection labels to files stored in these services. When EnableAIPIntegration is disabled, organizations lose the ability to classify and protect documents at rest in their primary collaboration platform. The contant is opaque to SharePoint capabilities and Purview services like eDiscovery is not available.
+    SharePoint Online e OneDrive for Business requerem habilitação explícita da integração de rótulo de sensibilidade to allow users to apply Microsoft Information Protection labels to files stored in these services. When EnableAIPIntegration is disabled, organizations lose the ability to classify and protect documents at rest in their primary collaboration platform. The contant is opaque to SharePoint capabilities and Purview services like eDiscovery is not available.
 
 .NOTES
     Test ID: 35005
@@ -14,36 +14,36 @@
 function Test-Assessment-35005 {
     [ZtTest(
     	Category = 'SharePoint Online',
-    	ImplementationCost = 'Low',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('MIP_P1'),
     	Service = ('SharePointOnline'),
-    	Pillar = 'Data',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 35005,
-    	Title = 'Sensitivity labels are enabled for SharePoint and OneDrive',
-    	UserImpact = 'Low'
+        Title = 'Os rótulos de sensibilidade estão habilitados para SharePoint e OneDrive',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Sensitivity Labels in SharePoint Online'
-    Write-ZtProgress -Activity $activity -Status 'Getting SharePoint Tenant Settings'
+    $activity = 'Verificando Rótulos de Sensibilidade no SharePoint Online'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo Configurações de Locaário do SharePoint'
 
     $spoTenant = $null
     $errorMsg = $null
 
     try {
-        # Query: Retrieve SharePoint Online tenant sensitivity label integration status
+            # Consulta: Retrieve SharePoint Online tenant sensitivity label integration status
         $spoTenant = Get-SPOTenant -ErrorAction Stop
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying SharePoint Tenant Settings: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar Configurações de Locaário do SharePoint: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -64,29 +64,29 @@ function Test-Assessment-35005 {
     #region Report Generation
     if ($errorMsg) {
         $testResultMarkdown = "### Investigate`n`n"
-        $testResultMarkdown += "Unable to query SharePoint Tenant Settings due to error: $errorMsg"
+        $testResultMarkdown += "Não foi possível consultar Configurações de Locaário do SharePoint devido a erro: $errorMsg"
     }
     else {
         if ($passed) {
-            $testResultMarkdown = "✅ Sensitivity labels are enabled in SharePoint Online and OneDrive, allowing users to classify and protect documents stored in these services.`n`n"
+            $testResultMarkdown = "✅ Os rótulos de sensibilidade estão habilitados no SharePoint Online e OneDrive, permitindo que os usuários classifiquem e protejam documentos armazenados nesses serviços.`n`n"
         }
         else {
-            $testResultMarkdown = "❌ Sensitivity labels are NOT enabled in SharePoint Online and OneDrive. Documents cannot be labeled or protected with encryption/access controls.`n`n"
+            $testResultMarkdown = "❌ Os rótulos de sensibilidade NÃO estão habilitados no SharePoint Online e OneDrive. Os documentos não podem ser rotulados ou protegidos com controles de criptografia/acesso.`n`n"
         }
 
-        $testResultMarkdown += "### SharePoint Online Configuration Summary`n`n"
-        $testResultMarkdown += "**Tenant Settings:**`n"
+        $testResultMarkdown += "### Resumo da Configuração do SharePoint Online`n`n"
+        $testResultMarkdown += "**Configurações de Locaário:**`n"
 
         $enableAIPIntegration = if ($spoTenant.EnableAIPIntegration) { "True" } else { "False" }
         $testResultMarkdown += "* EnableAIPIntegration: $enableAIPIntegration`n"
 
-        $testResultMarkdown += "`n[Manage Information protection in SharePoint Admin Center](https://admin.microsoft.com/sharepoint?page=classicSettings&modern=true)`n"
+        $testResultMarkdown += "`n[Gerenciar Proteção de Informações no Centro de Administração do SharePoint](https://admin.microsoft.com/sharepoint?page=classicSettings&modern=true)`n"
     }
     #endregion Report Generation
 
     $params = @{
         TestId             = '35005'
-        Title              = 'Sensitivity Labels Enabled in SharePoint Online'
+        Title              = 'Rótulos de Sensibilidade Habilitados no SharePoint Online'
         Status             = $passed
         Result             = $testResultMarkdown
     }

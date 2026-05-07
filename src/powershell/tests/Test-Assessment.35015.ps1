@@ -1,9 +1,9 @@
-﻿<#
+<#
 .SYNOPSIS
-    Globally published sensitivity labels don't exceed the recommended maximum
+    Os rótulos de sensibilidade publicados globalmente não excedem o máximo recomendado
 
 .DESCRIPTION
-    Sensitivity label policies control which labels are available to users and can be scoped to specific users, groups, or the entire organization. Publishing too many labels globally creates confusion and decision paralysis for end users. Microsoft recommends publishing no more than 25 labels in globally-scoped policies to maintain usability and reduce misclassification.
+    As políticas de rótulo de sensibilidade controlam quais rótulos estão disponíveis para os usuários e podem ser escopo para usuários específicos, grupos ou toda a organização. Publicar muitos rótulos globalmente cria confusão e paralisia de decisão para os usuários finais. A Microsoft recomenda publicar no máximo 25 rótulos em políticas com escopo global para manter a usabilidade e reduzir o erro de classificação.
 
 .NOTES
     Test ID: 35015
@@ -13,27 +13,27 @@
 
 function Test-Assessment-35015 {
     [ZtTest(
-    	Category = 'sensitivity-labels',
-    	ImplementationCost = 'Medium',
+        Category = 'Rótulos de sensibilidade',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Microsoft 365 E3'),
     	Service = ('SecurityCompliance'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 35015,
-    	Title = 'Globally published sensitivity labels don''t exceed the recommended maximum',
-    	UserImpact = 'High'
+        Title = 'Os rótulos de sensibilidade publicados globalmente não excedem o máximo recomendado',
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Global Scope Label Count'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando contagem de rótulo de escopo global'
 
     # Q1: Get all enabled label policies
-    Write-ZtProgress -Activity $activity -Status 'Getting label policies'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de rótulo'
 
     $errorMsg = $null
     $maxRecommendedLabels = 25
@@ -44,14 +44,14 @@ function Test-Assessment-35015 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying label policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar políticas de rótulo: $_" -Level Error
     }
     #endregion Data Collection
 
     #region Assessment Logic
     $customStatus = $null
     if ($errorMsg) {
-        $testResultMarkdown = "⚠️ Unable to determine global label count due to permissions issues or query failure.`n`n"
+        $testResultMarkdown = "⚠️ Não foi possível determinar a contagem de rótulo global devido a problemas de permissões ou falha na consulta.`n`n"
         $customStatus = 'Investigate'
     }
     else {
@@ -79,17 +79,17 @@ function Test-Assessment-35015 {
 
     #region Report Generation
     if ($errorMsg) {
-        $testResultMarkdown = "### Investigate`n`n"
-        $testResultMarkdown += "Unable to determine global label count due to error: $errorMsg"
+        $testResultMarkdown = "### Investigar`n`n"
+        $testResultMarkdown += "Não foi possível determinar a contagem de rótulos globais devido a erro: $errorMsg"
     }
     else {
         $status = if ($passed) { '✅' } else { '❌' }
-        $statusText = if ($passed) { 'within' } else { 'exceeding' }
-        $testResultMarkdown = "$status $totalUniqueLabels sensitivity labels are published in globally-scoped policies, $statusText the recommended limit of $maxRecommendedLabels.`n`n"
+        $statusText = if ($passed) { 'dentro' } else { 'excedendo' }
+        $testResultMarkdown = "$status $totalUniqueLabels rótulos de sensibilidade são publicados em políticas com escopo global, $statusText o limite recomendado de $maxRecommendedLabels.`n`n"
 
         if ($globalPolicies) {
-            $testResultMarkdown += "### [Global Label Policies](https://purview.microsoft.com/informationprotection/labelpolicies)`n`n"
-            $testResultMarkdown += "| Policy Name | Global Workloads | Labels Published | Sample Labels |`n"
+            $testResultMarkdown += "### [Políticas de rótulo global](https://purview.microsoft.com/informationprotection/labelpolicies)`n`n"
+            $testResultMarkdown += "| Nome da política | Cargas de trabalho globais | Rótulos publicados | Exemplo de rótulos |`n"
             $testResultMarkdown += "| :--- | :--- | :---: | :--- |`n"
 
             $policyLink = "https://purview.microsoft.com/informationprotection/labelpolicies"
@@ -108,7 +108,7 @@ function Test-Assessment-35015 {
 
                 $workloadsText = if ($globalWorkloads.Count -gt 0) {
                     $globalWorkloads -join ', '
-                } else { 'None' }
+                } else { 'Nenhum' }
 
                 # Get sample labels (up to 5)
                 $sampleLabels = if ($policy.Labels) {
@@ -116,26 +116,26 @@ function Test-Assessment-35015 {
                     $labelText = ($samples | ForEach-Object { Get-SafeMarkdown -Text $_ }) -join ', '
                     if (@($policy.Labels).Count -gt 5) { $labelText += ', ...' }
                     $labelText
-                } else { 'None' }
+                } else { 'Nenhum' }
 
                 $testResultMarkdown += "| [$policyName]($policyLink) | $workloadsText | $labelCount | $sampleLabels |`n"
             }
 
-            $statusText = if ($passed) { 'Pass' } else { 'Fail' }
-            $testResultMarkdown += "`n### Summary`n`n"
-            $testResultMarkdown += "* **Total Unique Labels Published Globally:** $totalUniqueLabels`n"
-            $testResultMarkdown += "* **Recommended Maximum:** $maxRecommendedLabels`n"
+            $statusText = if ($passed) { 'Aprovado' } else { 'Falhou' }
+            $testResultMarkdown += "`n### Resumo`n`n"
+            $testResultMarkdown += "* **Total de rótulos únicos publicados globalmente:** $totalUniqueLabels`n"
+            $testResultMarkdown += "* **Máximo recomendado:** $maxRecommendedLabels`n"
             $testResultMarkdown += "* **Status:** $statusText`n"
-            $testResultMarkdown += "`n*Note: Labels appearing in multiple global policies are counted once (deduplicated).*`n"
+            $testResultMarkdown += "`n*Nota: Os rótulos que aparecem em várias políticas globais são contados uma vez (desduplicados).*`n"
         } else {
-            $testResultMarkdown += "No globally-scoped label policies found.`n"
+            $testResultMarkdown += "Nenhuma política de rótulo com escopo global encontrada.`n"
         }
     }
     #endregion Report Generation
 
     $params = @{
         TestId = '35015'
-        Title  = 'Global Scope Label Count'
+        Title  = 'Contagem de rótulos de escopo global'
         Status = $passed
         Result = $testResultMarkdown
     }

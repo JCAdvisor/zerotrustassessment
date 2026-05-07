@@ -8,7 +8,7 @@ function Test-Assessment-21872 {
     	Category = 'Controle de acesso',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),

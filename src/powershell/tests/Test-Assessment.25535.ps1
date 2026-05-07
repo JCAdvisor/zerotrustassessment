@@ -1,24 +1,24 @@
     <#
 .SYNOPSIS
-    Test to check if outbound traffic from VNET integrated workloads is routed through Azure Firewall
+    Teste para verificar se o tráfego de saída de cargas de trabalho integradas de VNET é roteado através do Azure Firewall
 
 .NOTES
-    Some Azure Firewall documentation links may return 404 errors.
-    This test uses the Azure REST API version 2025-03-01.
+    Alguns links de documentação do Azure Firewall podem retornar erros 404.
+    Este teste usa a versão da API REST do Azure 2025-03-01.
 #>
 
 function Test-Assessment-25535 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Medium',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Médio',
         MinimumLicense = ('Azure_Firewall_Basic', 'Azure_Firewall_Standard', 'Azure_Firewall_Premium'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce', 'External'),
         TestId = 25535,
-        Title = 'Outbound traffic from VNET integrated workloads is routed through Azure Firewall',
-        UserImpact = 'Low'
+        Title = 'O tráfego de saída de cargas de trabalho integradas de VNET é roteado através do Azure Firewall',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -35,7 +35,7 @@ function Test-Assessment-25535 {
             $fwItems = ($fwResp.Content | ConvertFrom-Json).value
         }
         catch {
-            Write-PSFMessage "Unable to list Azure Firewalls in subscription $SubscriptionId." -Tag Test -Level Warning
+            Write-PSFMessage "Não foi possível listar o Azure Firewalls na assinatura $SubscriptionId." -Tag Test -Level Warning
             return $firewalls
         }
 
@@ -94,7 +94,7 @@ function Test-Assessment-25535 {
             }
         }
         catch {
-            Write-PSFMessage "Unable to list network interfaces in subscription $($Subscription.Name)." -Tag Test -Level Warning
+            Write-PSFMessage "Não foi possível listar as interfaces de rede na assinatura $($Subscription.Name)." -Tag Test -Level Warning
             return $asyncOperations
         }
 
@@ -261,7 +261,7 @@ function Test-Assessment-25535 {
     #endregion Helper Functions
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
     if ((Get-AzContext).Environment.name -ne 'AzureCloud') {
         Write-PSFMessage "This test is only applicable to the Global environment." -Tag Test -Level VeryVerbose
@@ -319,17 +319,17 @@ function Test-Assessment-25535 {
     $nonCompliantCount = @($nicFindings | Where-Object { -not $_.IsCompliant }).Count
     if ($nonCompliantCount -eq 0) {
         $passed = $true
-        $testResultMarkdown = "✅ Outbound traffic is routed through Azure Firewall.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O tráfego de saída é roteado através do Azure Firewall.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown = "❌ Outbound traffic is not routed through Azure Firewall.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O tráfego de saída não é roteado através do Azure Firewall.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
     #region Report Generation
-    $mdInfo = "## Outbound traffic routing evidence`n`n"
-    $mdInfo += "| Subscription | Network interface | Subnet | Azure firewall private IP | Default route next hop type | Next hop IP address | Result |`n"
+    $mdInfo = "## Evidências de roteamento de tráfego de saída`n`n"
+    $mdInfo += "| Assinatura | Interface de rede | Sub-rede | IP privado do Azure Firewall | Tipo de próximo salto da rota padrão | Endereço IP do próximo salto | Resultado |`n"
     $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`n"
 
     foreach ($item in $nicFindings | Sort-Object SubscriptionName, NicName) {
@@ -356,7 +356,7 @@ function Test-Assessment-25535 {
 
     $params = @{
         TestId = '25535'
-        Title  = 'Outbound traffic from VNET integrated workloads is routed through Azure Firewall'
+        Title  = 'O tráfego de saída de cargas de trabalho integradas de VNET é roteado através do Azure Firewall'
         Status = $passed
         Result = $testResultMarkdown
     }

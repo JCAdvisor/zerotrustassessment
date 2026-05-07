@@ -1,17 +1,17 @@
-Azure Firewall processes all inbound and outbound network traffic for protected workloads, making it a critical control point for network security monitoring. When diagnostic logging is not enabled, security operations teams lose visibility into traffic patterns, denied connection attempts, threat intelligence matches, and IDPS signature detections. A threat actor who gains initial access to an environment can move laterally through the network without detection because no firewall logs are being captured or analyzed. The absence of logging prevents correlation of network events with other security telemetry, eliminating the ability to construct attack timelines during incident investigations. Furthermore, compliance frameworks such as PCI-DSS, HIPAA, and SOC 2 require organizations to maintain audit logs of network security events, and the lack of firewall diagnostic logging creates audit failures. Azure Firewall provides multiple log categories including application rule logs, network rule logs, NAT rule logs, threat intelligence logs, IDPS signature logs, and DNS proxy logs, all of which must be routed to a destination such as Log Analytics, Storage Account, or Event Hub to enable security monitoring and forensic analysis.
+O Azure Firewall processa todo o tráfego de rede de entrada e saída das cargas protegidas, sendo um ponto crítico de controle para monitoramento de segurança. Sem log de diagnóstico habilitado, a equipe de segurança perde visibilidade sobre padrões de tráfego, tentativas negadas, correspondências de inteligência de ameaças e detecções de assinaturas IDPS. Isso compromete investigações, correlação com outras telemetrias e requisitos de conformidade.
 
-**Remediation action**
+**Ação de remediação**
 
-Create a Log Analytics workspace for storing Azure Firewall logs
-- [Create a Log Analytics workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace)
+Crie um workspace do Log Analytics para armazenar logs do Azure Firewall
+- [Criar um workspace do Log Analytics](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace)
 
-Configure diagnostic settings for Azure Firewall to enable log collection
-- [Create diagnostic settings in Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/create-diagnostic-settings)
+Configure as definições de diagnóstico do Azure Firewall para habilitar a coleta de logs
+- [Criar definições de diagnóstico no Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/create-diagnostic-settings)
 
-Enable structured logs (resource-specific mode) for improved query performance and cost optimization
-- [Azure Firewall structured logs](https://learn.microsoft.com/en-us/azure/firewall/monitor-firewall#structured-azure-firewall-logs)
+Habilite logs estruturados (modo específico do recurso) para melhorar desempenho de consulta e otimização de custos
+- [Logs estruturados do Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/monitor-firewall#structured-azure-firewall-logs)
 
-Use Azure Firewall Workbook for visualizing and analyzing firewall logs
+Use o Azure Firewall Workbook para visualizar e analisar logs do firewall
 - [Azure Firewall Workbook](https://learn.microsoft.com/en-us/azure/firewall/firewall-workbook)
 
 Monitor Azure Firewall metrics and logs for security operations

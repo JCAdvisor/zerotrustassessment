@@ -5,16 +5,16 @@
 
 function Test-Assessment-21893{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P2'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Low',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Baixo',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21893,
     	Title = 'Todos os usuários devem se registrar para MFA',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

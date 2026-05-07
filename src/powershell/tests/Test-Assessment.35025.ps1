@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Internal Rights Management licensing is enabled
+    O licenciamento interno de Gerenciamento de Direitos está habilitado
 
 .DESCRIPTION
-    This test checks if internal RMS licensing is enabled, which allows users and services within the
-    organization to license protected content for internal distribution and sharing. Without internal
-    RMS licensing enabled, users cannot share rights-protected content with internal recipients.
+    Este teste verifica se o licenciamento interno de RMS está habilitado, o que permite que usuários e serviços
+    dentro da organização licenciem conteúdo protegido para distribuição interna e compartilhamento. Sem o licenciamento
+    interno de RMS habilitado, os usuários não podem compartilhar conteúdo protegido por direitos com destinatários internos.
 
 .NOTES
     Test ID: 35025
@@ -33,10 +33,10 @@ function Test-Assessment-35025 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Internal RMS Licensing Status'
-    Write-ZtProgress -Activity $activity -Status 'Getting IRM configuration'
+    $activity = 'Verificando status de licenciamento interno de RMS'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configuração de IRM'
 
     # Get IRM licensing configuration
     $irmConfig = $null
@@ -47,7 +47,7 @@ function Test-Assessment-35025 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to retrieve IRM configuration: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar configuração de IRM: $_" -Tag Test -Level Warning
     }
     #endregion Data Collection
 
@@ -77,15 +77,15 @@ function Test-Assessment-35025 {
 
     #region Report Generation
     if ($customStatus -eq 'Investigate') {
-        $testResultMarkdown = "### Investigate`n`n"
-        $testResultMarkdown += "Unable to determine internal RMS licensing status due to permissions issues or incomplete configuration data."
+        $testResultMarkdown = "### Investigar`n`n"
+        $testResultMarkdown += "Não foi possível determinar o status de licenciamento de RMS interno devido a problemas de permissões ou dados de configuração incompletos."
     }
     else {
         if ($passed) {
-            $testResultMarkdown = "✅ Internal RMS licensing is enabled, allowing internal users to license and share protected content within the organization.`n`n"
+            $testResultMarkdown = "✅ O licenciamento interno de RMS está habilitado, permitindo que usuários internos licenciem e compartilhem conteúdo protegido dentro da organização.`n`n"
         }
         else {
-            $testResultMarkdown = "❌ Internal RMS licensing is not enabled or licensing endpoints are not configured.`n`n"
+            $testResultMarkdown = "❌ O licenciamento interno de RMS não está habilitado ou os pontos de extremidade de licenciamento não estão configurados.`n`n"
         }
 
         # Build detailed information if we have data
@@ -130,8 +130,8 @@ function Test-Assessment-35025 {
             }
 
             # Build table
-            $testResultMarkdown += "**[Internal RMS Licensing Status](https://purview.microsoft.com/settings/encryption)**`n"
-            $testResultMarkdown += "| Setting | Status |`n"
+            $testResultMarkdown += "**[Status de licenciamento de RMS interno](https://purview.microsoft.com/settings/encryption)**`n"
+            $testResultMarkdown += "| Configuração | Status |`n"
             $testResultMarkdown += "| :--- | :--- |`n"
             $testResultMarkdown += "| InternalLicensingEnabled | $internalLicensingValue |`n"
             $testResultMarkdown += "| ExternalLicensingEnabled | $externalLicensingValue |`n"
@@ -139,9 +139,9 @@ function Test-Assessment-35025 {
             $testResultMarkdown += "| LicensingLocation | $licensingLocationValue |`n`n"
 
             # Summary section
-            $testResultMarkdown += "**Summary:**`n"
-            $testResultMarkdown += "* Internal Licensing Configuration: $internalLicensingConfig`n"
-            $testResultMarkdown += "* Licensing Endpoints: $licensingEndpoints`n"
+            $testResultMarkdown += "`n### Resumo`n"
+            $testResultMarkdown += "* Configuração de licenciamento interno: $internalLicensingConfig`n"
+            $testResultMarkdown += "* Pontos de extremidade de licenciamento: $licensingEndpoints`n"
         }
     }
     #endregion Report Generation

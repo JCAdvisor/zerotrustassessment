@@ -1,10 +1,9 @@
-Without Data Loss Prevention (DLP) policies, employees can freely share sensitive information through email, file uploads, or Microsoft Teams communications, increasing the risk of data breaches and regulatory violations.
+Sem políticas de Prevenção contra Perda de Dados (DLP), os funcionários podem compartilhar livremente informações sensíveis por email, upload de arquivo ou comunicações do Microsoft Teams, aumentando o risco de brechas de dados e violações regulatórias.
 
-DLP policies automatically monitor, detect, and prevent the disclosure of sensitive information across Microsoft 365 workloads, providing automated protection against unauthorized data exfiltration.
+As políticas DLP monitoram, detectam e previnem automaticamente a divulgação de informações sensíveis em cargas de trabalho do Microsoft 365, fornecendo proteção automatizada contra exfiltração de dados não autorizada.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Create and configure DLP policies](https://learn.microsoft.com/purview/dlp-create-deploy-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Criar e configurar políticas DLP](https://learn.microsoft.com/purview/dlp-create-deploy-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

@@ -5,30 +5,30 @@
 
 function Test-Assessment-21912{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21912,
-    	Title = 'Azure resources used by Microsoft Entra only allow access from privileged roles',
-    	UserImpact = 'Low'
+    	Title = 'Os recursos do Azure usados pelo Microsoft Entra permitem acesso somente a partir de funções privilegiadas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking Azure resources used by Microsoft Entra only allow access from privileged roles"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se os recursos do Azure usados pelo Microsoft Entra permitem acesso somente a partir de funções privilegiadas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para lançamento futuro."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21912' -Title "Azure resources used by Microsoft Entra only allow access from privileged roles" `
+    Add-ZtTestResultDetail -TestId '21912' -Title "Os recursos do Azure usados pelo Microsoft Entra permitem acesso somente a partir de funções privilegiadas" `
         -UserImpact Low -Risk High -ImplementationCost Low `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

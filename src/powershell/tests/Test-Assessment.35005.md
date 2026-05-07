@@ -1,10 +1,9 @@
-When sensitivity label integration is disabled (the default) in SharePoint, files in SharePoint and OneDrive can't be labeled or display existing labels, and can't benefit from the additional protection of sensitivity labels that apply encryption. This protection gap leaves sensitive files unclassified and vulnerable to unauthorized access and external sharing.
+Quando a integracao de rotulos de sensibilidade esta desabilitada (padrao) no SharePoint, os arquivos no SharePoint e no OneDrive nao podem ser rotulados nem exibir rotulos existentes, e nao se beneficiam da protecao adicional de rotulos de sensibilidade que aplicam criptografia. Essa lacuna de protecao deixa arquivos sensiveis sem classificacao e vulneraveis a acesso nao autorizado e compartilhamento externo.
 
-Enabling sensitivity labels in SharePoint allows users to apply labels by using Office for the web and SharePoint. It's also a requirement for default labeling for these locations, and for auto-labeling policies that can classify files automatically. Sensitivity labels for these files can also strengthen security for Microsoft 365 Copilot, and be used with data loss prevention policies and other Microsoft Purview solutions.
+Habilitar rotulos de sensibilidade no SharePoint permite que os usuarios apliquem rotulos usando o Office para a Web e o SharePoint. Isso tambem e um requisito para rotulagem padrao nesses locais e para politicas de rotulagem automatica que classificam arquivos automaticamente. Rotulos de sensibilidade nesses arquivos tambem podem fortalecer a seguranca para o Microsoft 365 Copilot e ser usados com politicas de prevencao contra perda de dados e outras solucoes do Microsoft Purview.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Enable sensitivity labels for files in SharePoint and OneDrive](https://learn.microsoft.com/purview/sensitivity-labels-sharepoint-onedrive-files?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Habilitar rotulos de sensibilidade para arquivos no SharePoint e no OneDrive](https://learn.microsoft.com/purview/sensitivity-labels-sharepoint-onedrive-files?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

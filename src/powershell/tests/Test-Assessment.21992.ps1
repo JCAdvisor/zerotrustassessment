@@ -76,7 +76,7 @@ function Test-Assessment-21992{
         Title              = 'Certificados de aplicativos precisam ser rotacionados regularmente'
         UserImpact         = 'Low'
         Risk               = 'High'
-        ImplementationCost = 'High'
+        ImplementationCost = 'Alto'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

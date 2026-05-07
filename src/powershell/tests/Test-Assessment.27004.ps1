@@ -1,10 +1,9 @@
 ﻿<#
 .SYNOPSIS
-    Validates that custom TLS inspection bypass rules do not duplicate system bypass destinations.
+    Valida que as regras de bypass de inspeção de TLS personalizadas não duplicam destinos de bypass do sistema.
 
 .DESCRIPTION
-    This test checks whether custom TLS inspection bypass rules contain destinations that are
-    already covered by Microsoft's system bypass list. Redundant rules:
+    Este teste verifica se as regras de bypass de inspeção de TLS personalizadas contém destinos que já são cobertos pela lista de bypass do sistema.
     - Consume policy capacity unnecessarily
     - Create administrative overhead
     - May cause confusion about necessary vs. duplicated rules
@@ -21,17 +20,17 @@
 
 function Test-Assessment-27004 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Low',
+        Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Low',
-    	SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Baixo',
+        SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 27004,
-    	Title = 'TLS inspection custom bypass rules don''t duplicate system bypass destinations',
-    	UserImpact = 'Low'
+            Title = 'As regras personalizadas de bypass de inspeção de TLS não duplicam os destinos de bypass do sistema',
+            UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -42,15 +41,15 @@ function Test-Assessment-27004 {
     [int]$MAX_DESTINATIONS_PER_RULE = 10
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking TLS inspection bypass rules for redundant system destinations'
-    Write-ZtProgress -Activity $activity -Status 'Loading system bypass reference list'
+    $activity = 'Verificando regras de bypass de inspeção de TLS para destinos de sistema redundantes'
+    Write-ZtProgress -Activity $activity -Status 'Carregando lista de referéncia de bypass do sistema'
 
     # Load system bypass FQDN list from config file.
     $dataFilePath = Join-Path $PSScriptRoot '..' 'assets' '27004-system-bypass-fqdns.json' | Resolve-Path -ErrorAction SilentlyContinue
     if (-not $dataFilePath -or -not (Test-Path $dataFilePath)) {
-        Write-PSFMessage "System bypass FQDN config file not found: $dataFilePath" -Tag Test -Level Warning
+        Write-PSFMessage "Arquivo de configuração FQDN de bypass do sistema não encontrado: $dataFilePath" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -60,18 +59,18 @@ function Test-Assessment-27004 {
         $bypassConfig = Get-Content $dataFilePath -Raw | ConvertFrom-Json
         $systemFqdns = @($bypassConfig.fqdns)
         $systemFqdnsLower = $systemFqdns | ForEach-Object { $_.ToLower() }
-        Write-PSFMessage "Loaded $($systemFqdns.Count) system bypass FQDNs from config (last updated: $($bypassConfig.metadata.lastUpdated))" -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Carregados $($systemFqdns.Count) FQDNs de bypass do sistema a partir da configuração (última atualização: $($bypassConfig.metadata.lastUpdated))" -Tag Test -Level VeryVerbose
     }
     catch {
         $jsonErrorMsg = $_
-        Write-PSFMessage "Failed to parse system bypass config file: $jsonErrorMsg" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao analisar arquivo de configuração de bypass do sistema: $jsonErrorMsg" -Tag Test -Level Warning
     }
 
     # System recommended bypass categories (from priority 65000 rule)
     $systemCategories = @('Education', 'Finance', 'Government', 'HealthAndMedicine')
     $systemCategoriesLower = $systemCategories | ForEach-Object { $_.ToLower() }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying TLS inspection policies and rules'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de inspeção de TLS e regras'
 
     $tlsPolicies = @()
     $errorMsg = $null
@@ -84,7 +83,7 @@ function Test-Assessment-27004 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to retrieve TLS inspection policies: $errorMsg" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar políticas de inspeção de TLS: $errorMsg" -Tag Test -Level Warning
     }
     #endregion Data Collection
 
@@ -97,23 +96,23 @@ function Test-Assessment-27004 {
         # JSON parsing failed - unable to load system bypass configuration
         $passed = $false
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to load system bypass configuration due to JSON parsing error.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível carregar a configuração de bypass do sistema devido a erro de análise de JSON.`n`n%TestResult%"
     }
     elseif ($errorMsg) {
         # API call failed - unable to determine status
         $passed = $false
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to retrieve TLS inspection policies due to API error or insufficient permissions.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível recuperar políticas de inspeção de TLS devido a erro de API ou permissões insuficientes.`n`n%TestResult%"
     }
     elseif ($null -eq $tlsPolicies -or $tlsPolicies.Count -eq 0) {
         # No TLS inspection policies configured - prerequisite not met
-        Write-PSFMessage 'TLS inspection is not configured in this tenant.' -Tag Test -Level Verbose
+        Write-PSFMessage 'A inspeção de TLS não está configurada neste locaário.' -Tag Test -Level Verbose
         Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'TLS inspection is not configured in this tenant. This check is not applicable until a TLS inspection policy is created.'
         return
     }
     else {
 
-    Write-ZtProgress -Activity $activity -Status 'Analyzing bypass rules for redundancies'
+    Write-ZtProgress -Activity $activity -Status 'Analisando regras de bypass para redundâncias'
 
     $allBypassRules = [System.Collections.Generic.List[object]]::new()
     $redundantRules = [System.Collections.Generic.List[object]]::new()
@@ -266,12 +265,12 @@ function Test-Assessment-27004 {
         if ($redundantRules.Count -eq 0) {
             # No custom bypass rules OR custom rules exist but none are redundant - pass
             $passed = $true
-            $testResultMarkdown = "✅ All custom TLS inspection bypass rules target unique destinations not covered by the system bypass list.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Todas as regras de bypass de inspeção de TLS personalizadas visam destinos exclusivos não cobertos pela lista de bypass do sistema.`n`n%TestResult%"
         }
         else {
             # Any matches found - fail with list of redundant rules
             $passed = $false
-            $testResultMarkdown = "❌ Found custom bypass rules that duplicate system bypass destinations; these rules are redundant and can be removed to simplify policy management.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Encontradas regras de bypass personalizadas que duplicam destinos de bypass do sistema; essas regras são redundantes e podem ser removidas para simplificar o gerenciamento de políticas.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -280,7 +279,7 @@ function Test-Assessment-27004 {
     $mdInfo = ''
 
     if ($allBypassRules.Count -gt 0) {
-        $reportTitle = 'TLS Inspection Bypass Rule Analysis'
+        $reportTitle = 'Análise de Regra de Bypass de Inspeção de TLS'
         $portalLink = 'https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/TLSInspectionPolicy.ReactView'
 
         # Calculate totals
@@ -293,8 +292,8 @@ function Test-Assessment-27004 {
         $sortedRules = $allBypassRules | Sort-Object { $statusPriority[$_.Status] }, @{ Expression = { $_.RedundantCount }; Descending = $true }
 
         # Build rule-level summary table with row cap
-        $rulesTable = "#### Rule-level summary`n`n"
-        $rulesTable += "| Policy name | Rule name | Total destinations | Redundant destinations | Status |`n"
+        $rulesTable = "#### Resumo de nível de regra`n`n"
+        $rulesTable += "| Nome da política | Nome da regra | Destinos totais | Destinos redundantes | Status |`n"
         $rulesTable += "| :---------- | :-------- | :----------------- | :--------------------- | :----- |`n"
 
         $displayedRules = $sortedRules | Select-Object -First $MAX_RULES_DISPLAYED
@@ -318,7 +317,7 @@ function Test-Assessment-27004 {
         # Build redundant destination detail grouped by rule
         $redundantDetail = ''
         if ($redundantRules.Count -gt 0) {
-            $redundantDetail = "#### Redundant destination detail`n`n"
+            $redundantDetail = "#### Detalhe de destino redundante`n`n"
 
             # Sort redundant rules by same criteria: Status priority then redundant count desc
             $sortedRedundantRules = $redundantRules | Sort-Object { $statusPriority[$_.Status] }, @{ Expression = { $_.RedundantCount }; Descending = $true }
@@ -329,8 +328,8 @@ function Test-Assessment-27004 {
             foreach ($rule in $displayedRuleGroups) {
                 $policyName = Get-SafeMarkdown -Text $rule.PolicyName
                 $ruleName = Get-SafeMarkdown -Text $rule.RuleName
-                $redundantDetail += "**Rule: $ruleName** (Policy: $policyName) — $($rule.RedundantCount) of $($rule.TotalDestinations) destinations redundant`n`n"
-                $redundantDetail += "| # | Custom bypass destination | Destination type | Matched system bypass entry | Match type |`n"
+                $redundantDetail += "**Regra: $ruleName** (Política: $policyName) — $($rule.RedundantCount) de $($rule.TotalDestinations) destinos redundantes`n`n"
+                $redundantDetail += "| # | Destino de bypass personalizado | Tipo de destino | Entrada de bypass do sistema correspondida | Tipo de correspondência |`n"
                 $redundantDetail += "| :- | :----------------------- | :--------------- | :-------------------------- | :--------- |`n"
 
                 # Cap at maximum destination entries per rule group
@@ -365,11 +364,11 @@ function Test-Assessment-27004 {
 
 ## [{0}]({1})
 
-**Overview:**
-- Total custom bypass rules: {2}
-- Total custom bypass destinations: {3}
-- Redundant destinations found: {4}
-- Unique destinations: {5}
+**Resumo:**
+- Total de regras de bypass personalizadas: {2}
+- Total de destinos de bypass personalizados: {3}
+- Destinos redundantes encontrados: {4}
+- Destinos exclusivos: {5}
 
 {6}
 
@@ -384,7 +383,7 @@ function Test-Assessment-27004 {
 
     $params = @{
         TestId = '27004'
-        Title  = 'TLS inspection custom bypass rules do not duplicate system bypass destinations'
+        Title  = 'As regras de bypass de inspeção de TLS personalizadas não duplicam destinos de bypass do sistema'
         Status = $passed
         Result = $testResultMarkdown
     }

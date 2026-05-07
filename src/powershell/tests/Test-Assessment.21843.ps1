@@ -6,9 +6,9 @@ function Test-Assessment-21843 {
     [ZtTest(
     	Category = 'Controle de acesso',
     	ImplementationCost = 'Alto',
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Baixo',
-    	SfiPillar = 'Protect identities and secrets',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 21843,
     	Title = 'Bloquear o módulo legado Microsoft Online PowerShell',

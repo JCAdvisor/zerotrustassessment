@@ -17,17 +17,17 @@
 function Test-Assessment-25395 {
 
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'High',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('Entra_Premium_Private_Access'),
     	CompatibleLicense = ('Entra_Premium_Private_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 25395,
-    	Title = 'Entra Private Access Application segments are defined to enforce least-privilege access',
-    	UserImpact = 'Medium'
+    	Title = 'Os segmentos de aplicação do Entra Private Access são definidos para aplicar o acesso de menor privilégio',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
@@ -144,23 +144,23 @@ function Test-Assessment-25395 {
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating Private Access application segmentation'
-    Write-ZtProgress -Activity $activity -Status 'Querying applications'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando a segmentação de aplicativos do Private Access'
+    Write-ZtProgress -Activity $activity -Status 'Consultando aplicativos'
 
-    # Query Q1: List all Private Access enterprise applications
+        # Consulta Q1: List all Private Access enterprise applications
     $apps = Invoke-ZtGraphRequest -RelativeUri "applications?`$filter=(tags/any(t:t eq 'PrivateAccessNonWebApplication') or tags/any(t:t eq 'NetworkAccessQuickAccessApplication'))&`$select=id,displayName,appId,tags" -ApiVersion beta
 
-    # Query Q2: Retrieve service principals with Custom Security Attributes
+        # Consulta Q2: Retrieve service principals with Custom Security Attributes
     $servicePrincipals = Invoke-ZtGraphRequest -RelativeUri "servicePrincipals?`$filter=(tags/any(t:t eq 'PrivateAccessNonWebApplication') or tags/any(t:t eq 'NetworkAccessQuickAccessApplication'))&`$select=id,appId,displayName,customSecurityAttributes&`$count=true" -ApiVersion beta -ConsistencyLevel eventual
 
-    # Query Q3: Retrieve enabled Conditional Access policies
+        # Consulta Q3: Retrieve enabled Conditional Access policies
     $caPolicies     = $null
     $filterPolicies = @()
 
     if ($null -ne $apps -and $apps.Count -gt 0) {
 
-        Write-ZtProgress -Activity $activity -Status 'Checking Conditional Access policies'
+        Write-ZtProgress -Activity $activity -Status 'Verificando políticas de Conditional Access'
 
         $allCAPolicies = Get-ZtConditionalAccessPolicy
         $caPolicies    = $allCAPolicies | Where-Object { $_.state -eq 'enabled' }
@@ -187,11 +187,11 @@ function Test-Assessment-25395 {
     # Step 1: Check if any per-app Private Access applications exist
     if ($null -ne $apps -and $apps.Count -gt 0) {
 
-        Write-ZtProgress -Activity $activity -Status 'Evaluating application segments'
+        Write-ZtProgress -Activity $activity -Status 'Avaliando segmentos de aplicativos'
 
         foreach ($app in $apps) {
 
-            # Query Q4: Retrieve application segments for the current app
+                # Consulta Q4: Retrieve application segments for the current app
             $segments = Invoke-ZtGraphRequest -RelativeUri "applications/$($app.id)/onPremisesPublishing/segmentsConfiguration/microsoft.graph.ipSegmentConfiguration/applicationSegments" -ApiVersion beta
 
             $hasBroadSegment = $false
@@ -200,7 +200,7 @@ function Test-Assessment-25395 {
             $segmentSummary  = @()
 
             if (-not $segments -or $segments.Count -eq 0) {
-                $segmentSummary = @('No segments configured')
+                $segmentSummary = @('Nenhum segmento configurado')
             }
 
             foreach ($segment in $segments) {
@@ -277,13 +277,13 @@ function Test-Assessment-25395 {
 
             # Determine per-app status including Manual Review when filterPolicies exist
             $appStatus = if (-not $sp.customSecurityAttributes) {
-                'Fail – Missing CSA'
+                'Falha – CSA ausente'
             } elseif ($hasBroadSegment -or $hasWildcardDns -or $hasBroadPorts) {
-                'Fail – Broad segment'
+                'Falha – Segmento amplo'
             } elseif ($filterPolicies.Count -gt 0) {
-                'Manual Review'
+                'Revisão manual'
             } else {
-                'Pass'
+                'Aprovado'
             }
 
             $appResults += [PSCustomObject]@{
@@ -306,7 +306,7 @@ function Test-Assessment-25395 {
 
         $customStatus = 'Investigate'
         $testResultMarkdown =
-            "⚠️ No per-app Private Access applications configured. Please review the documentation on how to configure Private Access applications with granular network segments.`n`n%TestResult%"
+            "⚠️ Nenhum aplicativo Private Access por aplicativo configurado. Revise a documentação sobre como configurar aplicativos Private Access com segmentos de rede granulares.`n`n%TestResult%"
 
     }
     elseif ($broadAccessApps.Count -eq 0 -and $appsWithoutCSA.Count -eq 0) {
@@ -316,14 +316,14 @@ function Test-Assessment-25395 {
             # Pass conditions met but filterPolicies exist - requires manual review
             $customStatus = 'Investigate'
             $testResultMarkdown =
-                "⚠️ Private Access applications exist with appropriate segmentation and CSAs assigned. CA policies use applicationFilter targeting. Manual review required to verify CA policy coverage for these apps.`n`n%TestResult%"
+                "⚠️ Aplicativos Private Access existem com segmentação apropriada e CSAs atribuídas. As políticas de CA usam direcionamento por applicationFilter. Revisão manual necessária para verificar a cobertura de políticas de CA para esses aplicativos.`n`n%TestResult%"
 
         }
         else {
 
             $passed = $true
             $testResultMarkdown =
-                "✅ All Private Access applications are configured with granular network segments and are protected by Conditional Access policies using Custom Security Attributes, enforcing least-privilege access.`n`n%TestResult%"
+                "✅ Todos os aplicativos Private Access estão configurados com segmentos de rede granulares e são protegidos por políticas de Conditional Access usando Custom Security Attributes, impondo acesso com o menor privilégio.`n`n%TestResult%"
 
         }
 
@@ -332,7 +332,7 @@ function Test-Assessment-25395 {
 
         $passed = $false
         $testResultMarkdown =
-            "❌ One or more Private Access applications have overly broad network segments or lack Custom Security Attribute-based Conditional Access policies, potentially allowing excessive network access.`n`n%TestResult%"
+            "❌ Um ou mais aplicativos Private Access têm segmentos de rede excessivamente amplos ou não possuem políticas de Conditional Access baseadas em Custom Security Attributes, potencialmente permitindo acesso excessivo à rede.`n`n%TestResult%"
 
     }
 
@@ -340,20 +340,20 @@ function Test-Assessment-25395 {
 
     #region Report Generation
 
-    $mdInfo  = "`n## Summary`n`n"
-    $mdInfo += "| Metric | Value |`n|---|---|`n"
-    $mdInfo += "| Total Private Access apps | $($apps.Count) |`n"
-    $mdInfo += "| Apps with broad segments | $($broadAccessApps.Count) |`n"
-    $mdInfo += "| Apps with CSA assigned | $($apps.Count - $appsWithoutCSA.Count) |`n"
-    $mdInfo += "| Apps without CSA | $($appsWithoutCSA.Count) |`n"
-    $mdInfo += "| CA policies using applicationFilter | $($filterPolicies.Count) |`n`n"
+    $mdInfo  = "`n## Resumo`n`n"
+    $mdInfo += "| Métrica | Valor |`n|---|---|`n"
+    $mdInfo += "| Total de aplicativos Private Access | $($apps.Count) |`n"
+    $mdInfo += "| Aplicativos com segmentos amplos | $($broadAccessApps.Count) |`n"
+    $mdInfo += "| Aplicativos com CSA atribuído | $($apps.Count - $appsWithoutCSA.Count) |`n"
+    $mdInfo += "| Aplicativos sem CSA | $($appsWithoutCSA.Count) |`n"
+    $mdInfo += "| Políticas de CA usando applicationFilter | $($filterPolicies.Count) |`n`n"
 
     if ($appResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-## [Application details](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/EnterpriseApplicationListBladeV3/fromNav/globalSecureAccess/applicationType/GlobalSecureAccessApplication)
+## [Detalhes do aplicativo](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/EnterpriseApplicationListBladeV3/fromNav/globalSecureAccess/applicationType/GlobalSecureAccessApplication)
 
-| App name | Segment type | Segment scope | Has CSAs | Status |
+| Nome do aplicativo | Tipo de segmento | Escopo do segmento | Possui CSAs | Status |
 |---|---|---|---|---|
 {0}
 
@@ -361,7 +361,7 @@ function Test-Assessment-25395 {
         foreach ($r in $appResults) {
             $appLink = "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/overview/appId/$($r.AppId)"
             $linkedAppName = "[{0}]({1})" -f (Get-SafeMarkdown $r.AppName), $appLink
-            $hasCSAText = if ($r.HasCSA) {'Yes'} else {'No'}
+            $hasCSAText = if ($r.HasCSA) {'Sim'} else {'Não'}
             $tableRows += "| $linkedAppName | $($r.SegmentType) | $($r.SegmentScope) | $hasCSAText | $($r.Status) |`n"
         }
         $mdInfo += $formatTemplate -f $tableRows
@@ -371,9 +371,9 @@ function Test-Assessment-25395 {
     if ($segmentFindings.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-## Segment findings
+## Resultados de segmentação
 
-| App name | Issue | Destination | Ports | Recommendation |
+| Nome do aplicativo | Problema | Destino | Portas | Recomendação |
 |---|---|---|---|---|
 {0}
 
@@ -381,17 +381,17 @@ function Test-Assessment-25395 {
         foreach ($f in $segmentFindings) {
             $appLink = "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/overview/appId/$($f.AppId)"
             $linkedAppName = "[{0}]({1})" -f (Get-SafeMarkdown $f.AppName), $appLink
-            $tableRows += "| $linkedAppName | $($f.Issue) | $($f.Destination) | $($f.Ports) | Narrow destination and ports |`n"
+            $tableRows += "| $linkedAppName | $($f.Issue) | $($f.Destination) | $($f.Ports) | Reduzir destino e portas |`n"
         }
         $mdInfo += $formatTemplate -f $tableRows
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
     $params = @{
         TestId = '25395'
-        Title  = 'Private Access application segments enforce least-privilege access'
+        Title  = 'Os segmentos de aplicativo de Private Access impõem acesso com o menor privilégio'
         Status = $passed
         Result = $testResultMarkdown
     }

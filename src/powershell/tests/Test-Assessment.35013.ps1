@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Sensitivity labels with encryption are configured
+    Os rótulos de sensibilidade com criptografia estão configurados
 
 .DESCRIPTION
-    This test checks if encryption-enabled sensitivity labels exist by:
-    1. Retrieving all sensitivity labels with LabelActions
-    2. Parsing LabelActions JSON to identify encrypt actions
-    3. Analyzing encryption settings (type, permissions, co-authoring)
+    Este teste verifica se existem rótulos de sensibilidade com criptografia habilitada:
+    1. Recuperando todos os rótulos de sensibilidade com LabelActions
+    2. Analisando JSON de LabelActions para identificar ações de criptografia
+    3. Analisando configurações de criptografia (tipo, permissões, coautoria)
 
 .NOTES
     Test ID: 35013
@@ -17,32 +17,32 @@
 
 function Test-Assessment-35013 {
     [ZtTest(
-        Category = 'Sensitivity Labels Configuration',
-        ImplementationCost = 'Medium',
+        Category = 'Configuração de rótulos de sensibilidade',
+        ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         MinimumLicense = 'Microsoft 365 E3',
-        Pillar = 'Data',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce', 'External'),
         TestId = 35013,
-        Title = 'Sensitivity labels with encryption are configured',
-        UserImpact = 'High'
+        Title = 'Os rótulos de sensibilidade com criptografia estão configurados',
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking encryption-enabled sensitivity labels'
-    Write-ZtProgress -Activity $activity -Status 'Querying sensitivity labels'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando rótulos de sensibilidade com criptografia habilitada'
+    Write-ZtProgress -Activity $activity -Status 'Consultando rótulos de sensibilidade'
 
     $getCmdletFailed = $false
     $parsingFailed = $false
     $allLabels = $null
     $encryptedLabels = @()
 
-    # Query: Get all sensitivity labels
+        # Consulta: Get all sensitivity labels
     try {
         $allLabels = Get-Label -ErrorAction Stop
 
@@ -89,19 +89,19 @@ function Test-Assessment-35013 {
                         Name                  = $label.DisplayName
                         EncryptionType        = $encryptionType
                         RightsDefinitions     = $rightsDef
-                        CoAuthoringBlocked    = if ($coAuthoringBlocked) { 'Yes' } else { 'No' }
+                        CoAuthoringBlocked    = if ($coAuthoringBlocked) { 'Sim' } else { 'Não' }
                     }
                 }
             }
             catch {
-                Write-PSFMessage "Failed to parse LabelActions for label '$($label.DisplayName)': $_" -Tag Test -Level Warning
+                Write-PSFMessage "Falha ao analisar LabelActions para rótulo '$($label.DisplayName)': $_" -Tag Test -Level Warning
                 $parsingFailed = $true
             }
         }
     }
     catch {
         $getCmdletFailed = $true
-        Write-PSFMessage "Failed to retrieve sensitivity labels: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar rótulos de sensibilidade: $_" -Tag Test -Level Warning
     }
     #endregion Data Collection
 
@@ -112,23 +112,23 @@ function Test-Assessment-35013 {
 
     # Check if Get-Label cmdlet failed
     if ($getCmdletFailed) {
-        $testResultMarkdown = "⚠️ Unable to determine encryption-enabled label configuration due to query failure, connection issues, or insufficient permissions.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar a configuração do rótulo com criptografia habilitada devido a falha na consulta, problemas de conexão ou permissões insuficientes.`n`n%TestResult%"
         $passed = $false
         $customStatus = 'Investigate'
     }
     # Check if labels were retrieved but parsing failed
     elseif ($parsingFailed) {
-        $testResultMarkdown = "⚠️ Labels exist but encryption configuration cannot be determined for some labels.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Os rótulos existem, mas a configuração de criptografia não pode ser determinada para alguns rótulos.`n`n%TestResult%"
         $passed = $false
         $customStatus = 'Investigate'
     }
     # Check encrypted label count
     elseif ($encryptedLabels.Count -eq 0) {
-        $testResultMarkdown = "❌ No encryption-enabled labels exist; all labels provide classification only.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhum rótulo com criptografia habilitada existe; todos os rótulos fornecem apenas classificação.`n`n%TestResult%"
         $passed = $false
     }
     else {
-        $testResultMarkdown = "✅ At least one encryption-enabled sensitivity label is configured.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Pelo menos um rótulo de sensibilidade com criptografia habilitada está configurado.`n`n%TestResult%"
         $passed = $true
     }
     #endregion Assessment Logic
@@ -141,13 +141,13 @@ function Test-Assessment-35013 {
 
 ## [{0}]({1})
 
-| Label name | Encryption type | Default permissions identities | Co-Authoring blocked |
+| Nome do rótulo | Tipo de criptografia | Identidades com permissões padrão | Co-autoria bloqueada |
 | :--------- | :-------------- | :----------------------------- | :------------------: |
 {2}
 
 '@
 
-        $reportTitle = 'Encryption Label Details'
+        $reportTitle = 'Detalhes do rótulo de criptografia'
         $portalLink = 'https://purview.microsoft.com/informationprotection/informationprotectionlabels/sensitivitylabels'
 
         # Build table rows
@@ -157,12 +157,12 @@ function Test-Assessment-35013 {
             $encType = switch ($encLabel.EncryptionType) {
                 'template' { 'Standard RMS' }
                 'dke' { 'Double Key Encryption (DKE)' }
-                'userdefined' { 'User-Defined' }
+                'userdefined' { 'Definido pelo usuário' }
                 default { $encLabel.EncryptionType }
             }
 
             # Format rights definitions - show first 5 identities (users, groups, or domains)
-            $rights = 'Not specified'
+            $rights = 'Não especificado'
             if ($encLabel.RightsDefinitions -and $encLabel.RightsDefinitions -ne 'Not specified') {
                 try {
                     # Parse the JSON string containing rights definitions
@@ -179,7 +179,7 @@ function Test-Assessment-35013 {
                 }
                 catch {
                     # If parsing fails, show fallback message
-                    $rights = 'Unable to parse permissions'
+                    $rights = 'Não foi possível analisar permissões'
                 }
             }
 
@@ -188,8 +188,8 @@ function Test-Assessment-35013 {
             $labelDetails += "| $name | $encType | $rights | $coAuthBlocked |`n"
         }
 
-        $labelDetails += "`n**Summary:**`n"
-        $labelDetails += "* Total Encryption-Enabled Labels: $($encryptedLabels.Count)`n"
+        $labelDetails += "`n**Resumo:**`n"
+        $labelDetails += "* Total de rótulos habilitados para criptografia: $($encryptedLabels.Count)`n"
 
         # Count by encryption type
         $standardRMS = @($encryptedLabels | Where-Object { $_.EncryptionType -eq 'template' }).Count
@@ -197,19 +197,19 @@ function Test-Assessment-35013 {
         $dkeLabels = @($encryptedLabels | Where-Object { $_.EncryptionType -eq 'dke' }).Count
 
         $labelDetails += "* Standard RMS: $standardRMS`n"
-        $labelDetails += "* User-Defined: $userDefined`n"
+        $labelDetails += "* Definido pelo usuário: $userDefined`n"
         $labelDetails += "* Double Key Encryption (DKE): $dkeLabels"
 
         $mdInfo = $formatTemplate -f $reportTitle, $portalLink, $labelDetails
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '35013'
-        Title  = 'Encryption-Enabled Labels'
+        Title  = 'Rótulos habilitados para criptografia'
         Status = $passed
         Result = $testResultMarkdown
     }

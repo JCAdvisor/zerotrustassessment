@@ -1,15 +1,15 @@
-Azure Front Door Web Application Firewall (WAF) provides centralized, edge-based protection for globally distributed web applications through managed rulesets that contain pre-configured detection signatures for known attack patterns. The Microsoft Default Ruleset is a continuously updated managed ruleset that protects against the most common and dangerous web vulnerabilities without requiring security expertise to configure. When no managed ruleset is enabled, the WAF policy provides no protection against known attack patterns, effectively operating as a pass-through despite being deployed at the edge. Threat actors routinely scan for unprotected web applications and exploit well-documented vulnerabilities using automated toolkits; without managed rules, attackers can execute SQL injection to extract or modify database contents, perform cross-site scripting to hijack user sessions and steal credentials, exploit local file inclusion to read sensitive configuration files, and leverage command injection to gain shell access on backend servers. These attack techniques have known signatures that managed rulesets detect and block at the edge before malicious traffic reaches origin servers, but an empty or disabled ruleset configuration means the WAF cannot recognize these patterns and will allow malicious requests to pass through to the application.
+O Web Application Firewall (WAF) do Azure Front Door fornece proteção centralizada na borda para aplicações web distribuídas globalmente por meio de conjuntos de regras gerenciadas com assinaturas pré-configuradas para ataques conhecidos. O Microsoft Default Ruleset é atualizado continuamente e protege contra vulnerabilidades web comuns e críticas sem exigir configuração avançada. Quando nenhum ruleset gerenciado está habilitado, a política de WAF atua praticamente como pass-through, sem bloquear padrões de ataque conhecidos. Isso expõe a aplicação a SQL injection, cross-site scripting, inclusão local de arquivos e injeção de comandos.
 
-**Remediation action**
+**Ação de remediação**
 
-Overview of WAF capabilities on Azure Front Door including managed rulesets
-- [Azure Web Application Firewall on Azure Front Door](https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview)
+Visão geral dos recursos de WAF no Azure Front Door, incluindo rulesets gerenciados
+- [Azure Web Application Firewall no Azure Front Door](https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview)
 
-Detailed documentation of Default Rule Set groups and rules for Azure Front Door
-- [Web Application Firewall DRS rule groups and rules](https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/waf-front-door-drs)
+Documentação detalhada dos grupos e regras do Default Rule Set no Azure Front Door
+- [Grupos e regras de DRS do Web Application Firewall](https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/waf-front-door-drs)
 
-Step-by-step guidance on creating and configuring WAF policies with managed rulesets
-- [Tutorial: Create a Web Application Firewall policy on Azure Front Door](https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/waf-front-door-create-portal)
+Guia passo a passo para criar e configurar políticas de WAF com rulesets gerenciados
+- [Tutorial: Criar uma política de Web Application Firewall no Azure Front Door](https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/waf-front-door-create-portal)
 
 <!--- Results --->
 %TestResult%

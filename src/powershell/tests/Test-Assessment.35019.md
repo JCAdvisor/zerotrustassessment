@@ -1,10 +1,9 @@
-Auto-labeling greatly extends your labeling reach, by automatically labeling items based on content inspection. When you rely on just manual labeling, users might not always recognize what counts as sensitive data or might forget to label information during their daily tasks. Default labels offer a baseline of protection but don't take into consideration content that requires a higher level of protection. This leads to gaps in classification, allowing sensitive content to move through Microsoft 365 applications without proper labels or protection.
+A aplicação automática de rótulos estende muito seu alcance de rotulagem, rotulando automaticamente itens com base na inspeção de conteúdo. Quando você depende apenas da rotulagem manual, os usuários podem nem sempre reconhecer o que é considerado dado sensível ou podem esquecer de rotular informações durante suas tarefas diárias. Rótulos padrão oferecem uma linha de base de proteção, mas não levam em consideração o conteúdo que requer um nível mais alto de proteção. Isso leva a lacunas na classificação, permitindo que o conteúdo sensível se mova pelos aplicativos do Microsoft 365 sem rótulos ou proteção apropriados.
 
-You can configure auto-labeling settings for labels that trigger when users open files in their Office apps, and auto-labeling policies that require no user interactions. Setting up at least one auto-labeling policy to detect sensitive content automatically labels this content, no matter what actions people take. In turn, this labeled content can be used with other Microsoft Purview solutions to increase your security, such as data loss prevention (DLP) rules and access restrictions.
+Você pode configurar configurações de aplicação automática de rótulos para rótulos que são acionados quando os usuários abrem arquivos em seus aplicativos do Office, e políticas de aplicação automática de rótulos que não exigem interação do usuário. Configurar pelo menos uma política de aplicação automática de rótulo para detectar conteúdo sensível rotula automaticamente esse conteúdo, independentemente das ações que as pessoas executem. Por sua vez, esse conteúdo rotulado pode ser usado com outras soluções do Microsoft Purview para aumentar sua segurança, como regras de prevenção de perda de dados (DLP) e restrições de acesso.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Automatically apply a sensitivity label to Microsoft 365 data](https://learn.microsoft.com/purview/apply-sensitivity-label-automatically?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Aplicar automaticamente um rótulo de sensibilidade aos dados do Microsoft 365](https://learn.microsoft.com/purview/apply-sensitivity-label-automatically?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

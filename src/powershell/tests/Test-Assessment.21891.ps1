@@ -5,16 +5,16 @@
 
 function Test-Assessment-21891{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21891,
     	Title = 'Exigir notificações de redefinição de senha para funções de administrador',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

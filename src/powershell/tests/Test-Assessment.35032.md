@@ -1,10 +1,9 @@
-Adaptive Protection ensures that data loss prevention (DLP) policies are tailored to each user's risk profile, rather than applying the same rules to everyone. Without Adaptive Protection, organizations miss the chance to prevent insider threats because they can't respond to behavioral indicators like unusual data access or risky activities.
+A Proteção Adaptativa garante que as políticas de Prevenção contra Perda de Dados (DLP) sejam adaptadas ao perfil de risco de cada usuário, em vez de aplicar as mesmas regras a todos. Sem a Proteção Adaptativa, as organizações perdem a oportunidade de impedir ameaças internas porque não podem responder a indicadores comportamentais como acesso incomum a dados ou atividades arriscadas.
 
-By integrating Insider Risk Management with DLP, Adaptive Protection uses machine learning to identify users as high, moderate, or low risk. This lets Adaptive Protection automatically apply stricter DLP controls to those at higher risk, while allowing more flexibility for others, an approach that helps protect sensitive data and supports operational efficiency.
+Ao integrar o Gerenciamento de Riscos Internos com DLP, a Proteção Adaptativa usa aprendizado de máquina para identificar os usuários como risco alto, moderado ou baixo. Isso permite que a Proteção Adaptativa aplique automaticamente controles DLP mais rigorosos aos de risco mais alto, enquanto permite mais flexibilidade para outros, uma abordagem que ajuda a proteger dados sensíveis e suporta eficiência operacional.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Help dynamically mitigate risks with Adaptive Protection](https://learn.microsoft.com/purview/insider-risk-management-adaptive-protection?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Ajude a mitigar dinamicamente os riscos com Proteção Adaptativa](https://learn.microsoft.com/purview/insider-risk-management-adaptive-protection?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

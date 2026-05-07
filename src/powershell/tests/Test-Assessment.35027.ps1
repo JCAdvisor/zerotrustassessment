@@ -1,6 +1,6 @@
-﻿<#
+<#
 .SYNOPSIS
-    Custom branding templates are configured for Office 365 Message Encryption
+    Modelos de marca personalizada estão configurados para o Criptografia de Mensagens do Microsoft Purview
 
 .DESCRIPTION
     Office 365 Message Encryption (OME) allows organizations to send encrypted emails and protect sensitive information.
@@ -33,10 +33,10 @@ function Test-Assessment-35027 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking OME Custom Branding Configuration'
-    Write-ZtProgress -Activity $activity -Status 'Getting OME Configuration'
+    $activity = 'Verificando configuração de marca personalizada de OME'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configuração de OME'
 
     $omeConfig = $null
     $errorMsg = $null
@@ -45,7 +45,7 @@ function Test-Assessment-35027 {
     $configDetails = @()
 
     try {
-        # Query Q1: Get all OME template branding configurations
+            # Consulta Q1: Get all OME template branding configurations
         $omeConfig = Get-OMEConfiguration | Select-Object -Property Identity, ImageUrl, BackgroundColor, IntroductionText, PortalText, DisclaimerText, EmailText
 
         # Extract and normalize data
@@ -81,7 +81,7 @@ function Test-Assessment-35027 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying OME Configuration: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar configuração de OME: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -93,17 +93,17 @@ function Test-Assessment-35027 {
     if ($errorMsg) {
         # Investigate scenario
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine OME branding configuration status due to permissions issues or query failure.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status de configuração de marca de OME devido a problemas de permissões ou falha na consulta.`n`n%TestResult%"
     }
     elseif ($configsWithBranding -gt 0) {
         # Pass scenario
         $passed = $true
-        $testResultMarkdown = "✅ Custom OME branding has been configured, providing a branded encryption portal experience for external recipients.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Marca personalizada de OME foi configurada, fornecendo uma experiência de portal de criptografia marcada para destinatários externos.`n`n%TestResult%"
     }
     else {
         # Fail scenario
         $passed = $false
-        $testResultMarkdown = "❌ OME custom branding is not configured; the encryption portal uses generic Microsoft branding.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Marca personalizada de OME não está configurada; o portal de criptografia usa marca genérica da Microsoft.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -113,14 +113,14 @@ function Test-Assessment-35027 {
     if ($totalConfigs -gt 0) {
         # Build summary and configuration details table for both pass and fail scenarios
         $formatTemplate = @'
-**Summary:**
+**Resumo:**
 
-- Total OME Configurations: {0}
-- Configured with Custom Branding: {1}
+- Total de configurações de OME: {0}
+- Configuradas com marca personalizada: {1}
 
-**Configuration Details:**
+**Detalhes de configuração:**
 
-| Configuration identity | Email text | Logo configured | Background color | Portal text | Introduction text | Disclaimer text |
+| Identidade da configuração | Texto de email | Logo configurada | Cor de fundo | Texto do portal | Texto de introdução | Texto de aviso |
 |:-----------------------|:-----------|:----------------|:-----------------|:------------|:------------------|:----------------|
 {2}
 '@

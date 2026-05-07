@@ -1,14 +1,13 @@
-When Microsoft Entra Private Access applications lack user or group assignments, users can't establish tunnels through the application to reach the configured fully qualified domain names (FQDNs) and IP addresses. This restriction prevents access to protected internal resources. Without assignments, organizations can't enforce Conditional Access policies because these policies require explicit user-to-application relationships to evaluate risk signals, device compliance, and authentication strength requirements.
+Quando os aplicativos do Microsoft Entra Private Access carecem de atribuições de usuário ou grupo, os usuários não conseguem estabelecer túneis através do aplicativo para alcançar os nomes de domínio totalmente qualificados (FQDNs) e endereços IP configurados. Essa restrição impede o acesso aos recursos internos protegidos. Sem atribuições, as organizações não conseguem impor políticas do Conditional Access porque essas políticas exigem relações explícitas de usuário para aplicação para avaliar sinais de risco, conformidade de dispositivo e requisitos de força de autenticação.
 
-Without user assignments on Private Access applications:
+Sem atribuições de usuário em aplicações do Private Access:
 
-- Organizations lose the ability to enforce least privilege access controls where users get access only to the specific resources they need.
-- Organizations can't apply risk-based access policies that block or challenge authentication based on sign-in risk, user risk, or device compliance.
-- Identity protection signals that detect credential compromise, impossible travel, or anonymous IP addresses can't protect private resources.
+- As organizações perdem a capacidade de impor controles de acesso com o menor privilégio em que os usuários obtêm acesso apenas aos recursos específicos de que precisam.
+- As organizações não conseguem aplicar políticas de acesso baseadas em risco que bloqueiam ou desafiam a autenticação com base no risco de entrada, risco do usuário ou conformidade do dispositivo.
+- Os sinais de proteção de identidade que detectam comprometimento de credenciais, viagem impossível ou endereços IP anônimos não conseguem proteger recursos privados.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Assign users and groups to Private Access applications](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-per-app-access?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-users-and-groups) to enable Zero Trust access controls and Conditional Access enforcement.
+- [Atribua usuários e grupos aos aplicativos do Private Access](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-per-app-access?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci#assign-users-and-groups) para ativar os controles de acesso Zero Trust e a imposição do Conditional Access.
 <!--- Results --->
 %TestResult%
-

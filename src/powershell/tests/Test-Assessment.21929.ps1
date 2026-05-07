@@ -5,35 +5,35 @@
 
 function Test-Assessment-21929{
     [ZtTest(
-    	Category = 'Identity governance',
-    	ImplementationCost = 'Medium',
+    	Category = 'Governança de identidade',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P2','Governance'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21929,
-    	Title = 'All entitlement management packages that apply to guests have expirations or access reviews configured in their assignment policies',
-    	UserImpact = 'Medium'
+    	Title = 'Todos os pacotes de gerenciamento de direitos aplicáveis a convidados têm expirações ou revisões de acesso configuradas em suas políticas de atribuição',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if( -not (Get-ZtLicense EntraIDP2) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP2
         return
     }
 
-    $activity = 'Checking entitlement management packages for external users have proper controls'
-    Write-ZtProgress -Activity $activity -Status 'Getting assignment policies'
+    $activity = 'Verificando se os pacotes de gerenciamento de direitos para usuários externos possuem controles adequados'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de atribuição'
 
     # Query 1: Get all assignment policies with expanded access package information
     $assignmentPolicies = Invoke-ZtGraphRequest -RelativeUri 'identityGovernance/entitlementManagement/assignmentPolicies' -QueryParameters @{'$expand' = 'accessPackage'} -ApiVersion v1.0
 
     # Handle case where no policies exist or API returns null
     if ($null -eq $assignmentPolicies -or $assignmentPolicies.Count -eq 0) {
-        Write-PSFMessage 'No assignment policies found in the tenant' -Level Verbose
+        Write-PSFMessage 'Nenhuma política de atribuição encontrada no tenant' -Level Verbose
         $assignmentPolicies = @()
     }
 
@@ -43,7 +43,7 @@ function Test-Assessment-21929{
     foreach ($policy in $assignmentPolicies) {
         # Skip if requestorSettings is null or missing
         if ($null -eq $policy.requestorSettings) {
-            Write-PSFMessage "Skipping policy $($policy.id) - no requestorSettings" -Level Debug
+            Write-PSFMessage "Pulando política $($policy.id) - sem requestorSettings" -Level Debug
             continue
         }
 
@@ -69,7 +69,7 @@ function Test-Assessment-21929{
 
     }
 
-    Write-PSFMessage "Found $($externalUserPolicies.Count) assignment policies that apply to external users" -Level Verbose
+    Write-PSFMessage "Encontradas $($externalUserPolicies.Count) políticas de atribuição que se aplicam a usuários externos" -Level Verbose
 
     # Query 2: Evaluate expiration and access review controls for each policy
     $policiesWithoutControls = @()
@@ -93,7 +93,7 @@ function Test-Assessment-21929{
 
         # Skip policies with missing access package information
         if ($null -eq $policy.accessPackage) {
-            Write-PSFMessage "Skipping policy $($policy.id) - no accessPackage information" -Level Verbose
+            Write-PSFMessage "Pulando política $($policy.id) - sem informações de pacote de acesso" -Level Verbose
             continue
         }
 
@@ -123,16 +123,16 @@ function Test-Assessment-21929{
     $portalLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_ERM/DashboardBlade/~/elmEntitlement'
 
     if ($passed) {
-        $testResultMarkdown = "All access package assignment policies for external users include expiration or access reviews.`n`n%PolicyDetails%"
+        $testResultMarkdown = "Todas as políticas de atribuição de pacotes de acesso para usuários externos incluem expiração ou revisões de acesso.`n`n%PolicyDetails%"
     } else {
-        $testResultMarkdown = "Access package assignment policies without expiration and without access reviews were found for external users.`n`n%PolicyDetails%"
+        $testResultMarkdown = "Foram encontradas políticas de atribuição de pacotes de acesso sem expiração e sem revisões de acesso para usuários externos.`n`n%PolicyDetails%"
     }
 
     # Build policy details table
-    $mdInfo = "## [Access package assignment policies for external users]($portalLink)`n`n"
+    $mdInfo = "## [Políticas de atribuição de pacotes de acesso para usuários externos]($portalLink)`n`n"
 
     if ($allPoliciesData.Count -gt 0) {
-        $mdInfo += "| Access package | Assignment policy | Expiry configured | Access review configured | Status |`n"
+        $mdInfo += "| Pacote de acesso | Política de atribuição | Expiração configurada | Revisão de acesso configurada | Status |`n"
         $mdInfo += "| :------------- | :---------------- | :------------------ | :--------------------- | :----- |`n"
 
         # Sort to show non-compliant policies first, then by access package and policy name
@@ -140,14 +140,14 @@ function Test-Assessment-21929{
             $packageName = $policyData.AccessPackageName
             $policyName = $policyData.AssignmentPolicyName
 
-            $expirationStatus = if ($policyData.HasExpiration) { 'Yes' } else { 'No' }
-            $reviewStatus = if ($policyData.HasAccessReview) { 'Yes' } else { 'No' }
-            $overallStatus = if ($policyData.HasControls) { '✅ Compliant' } else { '❌ Non-compliant' }
+            $expirationStatus = if ($policyData.HasExpiration) { 'Sim' } else { 'Não' }
+            $reviewStatus = if ($policyData.HasAccessReview) { 'Sim' } else { 'Não' }
+            $overallStatus = if ($policyData.HasControls) { '✅ Conforme' } else { '❌ Não conforme' }
 
             $mdInfo += "| $packageName | $policyName | $expirationStatus | $reviewStatus | $overallStatus |`n"
         }
     } else {
-        $mdInfo += "No access package assignment policies found that apply to external users.`n"
+        $mdInfo += "Nenhuma política de atribuição de pacotes de acesso encontrada para usuários externos.`n"
     }
 
     # Replace placeholder in test result markdown

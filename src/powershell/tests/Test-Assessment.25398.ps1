@@ -8,27 +8,27 @@
 
 function Test-Assessment-25398 {
     [ZtTest(
-        Category = 'Global Secure Access',
-        ImplementationCost = 'Medium',
+        Category = 'Acesso Seguro Global',
+        ImplementationCost = 'Médio',
         MinimumLicense = ('AAD_PREMIUM', 'Entra_Premium_Private_Access'),
         CompatibleLicense = ('Entra_Premium_Private_Access'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce', 'External'),
         TestId = 25398,
-        Title = 'Domain controller RDP access is protected by phishing-resistant authentication through Global Secure Access',
-        UserImpact = 'Low'
+        Title = 'O acesso RDP a controladores de domínio está protegido por autenticação resistente a phishing via Global Secure Access',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(
         $Database
     )
 
-    Write-PSFMessage '🟦 Start Global Secure Access DC RDP protection evaluation' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início da avaliação de proteção RDP de controladores de domínio no Acesso Seguro Global' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking domain controller RDP access protection'
-    Write-ZtProgress -Activity $activity -Status 'Checking Microsoft Graph connection'
+    $activity = 'Verificando a proteção de acesso RDP a controladores de domínio'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com o Microsoft Graph'
 
     #region Helper Functions
 
@@ -47,7 +47,7 @@ function Test-Assessment-25398 {
     #region Data Collection
 
     # Q1: Get all Private Access apps
-    Write-ZtProgress -Activity $activity -Status 'Retrieving Private Access applications'
+    Write-ZtProgress -Activity $activity -Status 'Recuperando aplicativos do Private Access'
 
     $privateAccessApps = $null
 
@@ -71,7 +71,7 @@ WHERE list_contains(tags, 'PrivateAccessNonWebApplication')
 
     if (-not $privateAccessApps) {
         Write-PSFMessage 'No Private Access applications found' -Tag Test -Level VeryVerbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Private Access applications configured in this tenant.'
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhum aplicativo Private Access configurado neste locatário.'
         return
     }
 
@@ -83,10 +83,10 @@ WHERE list_contains(tags, 'PrivateAccessNonWebApplication')
 
     # Q2A: Retrieve segments for each app and identify DC hosts
     # DC hosts are identified by having BOTH port 88 (Kerberos) AND port 389 (LDAP) explicitly configured
-    Write-ZtProgress -Activity $activity -Status 'Analyzing application segments for DC indicators'
+    Write-ZtProgress -Activity $activity -Status 'Analisando segmentos de aplicativo para indicadores de controladores de domínio'
 
     foreach ($app in $privateAccessApps) {
-        Write-ZtProgress -Activity $activity -Status "Checking segments for $($app.displayName)"
+Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.displayName)"
 
         try {
             $segmentsUri = "applications/$($app.id)/onPremisesPublishing/segmentsConfiguration/microsoft.graph.ipSegmentConfiguration/applicationSegments"
@@ -152,7 +152,7 @@ WHERE list_contains(tags, 'PrivateAccessNonWebApplication')
 
     if ($dcHosts.Count -gt 0) {
         # Q2A: DC hosts identified - search for RDP apps targeting those specific DC hosts
-        Write-ZtProgress -Activity $activity -Status 'Searching for RDP apps targeting DC hosts'
+        Write-ZtProgress -Activity $activity -Status 'Procurando aplicativos RDP direcionados a hosts de controladores de domínio'
 
         foreach ($appId in $allAppSegments.Keys) {
             $appData = $allAppSegments[$appId]
@@ -183,7 +183,7 @@ WHERE list_contains(tags, 'PrivateAccessNonWebApplication')
     else {
         # Q2B: Fallback - no DC hosts identified, search for any general RDP apps
         # These require manual investigation to determine if they target domain controllers
-        Write-ZtProgress -Activity $activity -Status 'No DC hosts found, searching for general RDP apps'
+        Write-ZtProgress -Activity $activity -Status 'Nenhum host de controladores de domínio encontrado, procurando aplicativos RDP gerais'
 
         foreach ($appId in $allAppSegments.Keys) {
             $appData = $allAppSegments[$appId]
@@ -213,28 +213,28 @@ WHERE list_contains(tags, 'PrivateAccessNonWebApplication')
     Write-PSFMessage "Found $($rdpApps.Count) RDP application(s)" -Tag Test -Level VeryVerbose
 
     if ($rdpApps.Count -eq 0) {
-        Write-PSFMessage 'No RDP applications found' -Tag Test -Level VeryVerbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Private Access applications with RDP access (port 3389) were found.'
+        Write-PSFMessage 'Nenhum aplicativo RDP encontrado' -Tag Test -Level VeryVerbose
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhum aplicativo Private Access com acesso RDP (porta 3389) foi encontrado.'
         return
     }
 
     # Q3: Get phishing-resistant MFA authentication strength
-    Write-ZtProgress -Activity $activity -Status 'Retrieving phishing-resistant MFA authentication strength'
+    Write-ZtProgress -Activity $activity -Status 'Recuperando a força de autenticação MFA resistente a phishing'
 
     $authStrength = Invoke-ZtGraphRequest -RelativeUri 'policies/authenticationStrengthPolicies' -QueryParameters @{
         '$filter' = "policyType eq 'builtIn' and displayName eq 'Phishing-resistant MFA'"
     } -ApiVersion beta
 
     if (-not $authStrength -or $authStrength.Count -eq 0) {
-        Write-PSFMessage 'Phishing-resistant MFA authentication strength not found' -Tag Test -Level Warning
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Phishing-resistant MFA authentication strength policy not found.'
+        Write-PSFMessage 'Força de autenticação MFA resistente a phishing não encontrada' -Tag Test -Level Warning
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Política de força de autenticação MFA resistente a phishing não encontrada.'
         return
     }
 
     $authStrengthId = $authStrength[0].id
 
     # Q4: Get CA policies using this authentication strength
-    Write-ZtProgress -Activity $activity -Status 'Checking Conditional Access policies'
+    Write-ZtProgress -Activity $activity -Status 'Verificando políticas de Conditional Access'
 
     $caPolicies = Invoke-ZtGraphRequest -RelativeUri "policies/authenticationStrengthPolicies/$authStrengthId/usage" -ApiVersion beta
 
@@ -328,20 +328,20 @@ WHERE list_contains(tags, 'PrivateAccessNonWebApplication')
         $investigateApps = $results | Where-Object { $_.Status -eq 'Investigate' }
 
         if ($failedApps.Count -gt 0) {
-            $testResultMarkdown = "❌ RDP access (port 3389) to identified domain controller hosts is not protected by a Conditional Access policy requiring phishing-resistant authentication.`n`n%TestResult%"
+            $testResultMarkdown = "❌ O acesso RDP (porta 3389) aos hosts de controladores de domínio identificados não está protegido por uma política de Conditional Access que exija autenticação resistente a phishing.`n`n%TestResult%"
         }
         elseif ($investigateApps.Count -gt 0) {
             $customStatus = 'Investigate'
-            $testResultMarkdown = "⚠️ A Conditional Access policy requiring phishing-resistant authentication targets applications via custom security attributes - manual verification required to confirm the domain controller RDP application has the required attribute assigned (Global Admin cannot read custom security attributes by default).`n`n%TestResult%"
+            $testResultMarkdown = "⚠️ Uma política de Conditional Access que exige autenticação resistente a phishing direciona aplicativos via Custom Security Attributes - verificação manual necessária para confirmar se o aplicativo RDP do controlador de domínio possui o atributo exigido atribuído (o Global Admin não pode ler Custom Security Attributes por padrão).`n`n%TestResult%"
         }
         else {
             $passed = $true
-            $testResultMarkdown = "✅ RDP access (port 3389) to identified domain controller hosts is protected by a Conditional Access policy requiring phishing-resistant authentication (FIDO2, Windows Hello for Business, or Certificate-based MFA).`n`n%TestResult%"
+            $testResultMarkdown = "✅ O acesso RDP (porta 3389) aos hosts de controladores de domínio identificados está protegido por uma política de Conditional Access que exige autenticação resistente a phishing (FIDO2, Windows Hello for Business ou MFA baseada em certificado).`n`n%TestResult%"
         }
     }
     else {
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ No domain controller hosts identified, but RDP-enabled Private Access applications (port 3389) were found - manual verification recommended to confirm these are not domain controllers and to ensure appropriate protection.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Nenhum host de controlador de domínio identificado, mas aplicativos Private Access com RDP habilitado (porta 3389) foram encontrados - verificação manual recomendada para confirmar que não são controladores de domínio e garantir proteção adequada.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -363,7 +363,7 @@ WHERE list_contains(tags, 'PrivateAccessNonWebApplication')
 
         $dcHostsSection = @"
 
-## [Identified domain controller hosts]($privateAccessLink)
+## [Hosts de controladores de domínio identificados]($privateAccessLink)
 
 | DC host (FQDN/IP) | Source application | Ports configured | RDP app found | RDP app name |
 | :--- | :--- | :--- | :--- | :--- |
@@ -389,9 +389,9 @@ $dcHostRows
 
     $rdpAppsSection = @"
 
-## [Private Access RDP applications requiring protection]($privateAccessLink)
+## [Aplicativos RDP do Private Access que exigem proteção]($privateAccessLink)
 
-| Application name | App ID | Target host | App type | Protected by CA policy | Authentication strength | Status |
+| Nome do aplicativo | App ID | Host de destino | Tipo de aplicativo | Protegido por política de CA | Força de autenticação | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 $rdpAppRows
 "@

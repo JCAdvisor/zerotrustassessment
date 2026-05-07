@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Checks if Intelligent Local Access is enabled and configured by verifying private networks exist.
 
@@ -14,28 +14,27 @@
 
 function Test-Assessment-25405 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 25405,
-    	Title = 'Intelligent Local Access is enabled and configured',
-    	UserImpact = 'Medium'
+     Title = 'O Intelligent Local Access está habilitado e configurado',
+     UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Intelligent Local Access configuration'
-    Write-ZtProgress -Activity $activity -Status 'Getting private networks'
-
-    # Query private networks from Global Secure Access
+    $activity = 'Verificando a configuração do Intelligent Local Access'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo redes privadas'
+        # Consulta private networks from Global Secure Access
     $privateNetworks = Invoke-ZtGraphRequest -RelativeUri 'networkaccess/privateNetworks' -ApiVersion beta
     #endregion Data Collection
 
@@ -47,13 +46,13 @@ function Test-Assessment-25405 {
     if ($null -eq $privateNetworks -or $privateNetworks.Count -eq 0) {
         # No private networks configured - test fails
         $passed = $false
-        $testResultMarkdown = "❌ No private networks are configured in your tenant.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma rede privada está configurada em seu locatário.`n`n%TestResult%"
     }
     else {
         # At least one private network exists - test passes
         $networkCount = $privateNetworks.Count
         $passed = $true
-        $testResultMarkdown = "✅ At least one private network is configured in your tenant.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Pelo menos uma rede privada está configurada em seu locatário.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -62,14 +61,14 @@ function Test-Assessment-25405 {
     $mdInfo = ''
 
     if ($passed) {
-        $reportTitle = "Private Networks"
+        $reportTitle = "Redes privadas"
         $tableRows = ""
 
         $mdInfo += "`n## $reportTitle`n`n"
-        $mdInfo += "Found $networkCount private network(s) configured for Intelligent Local Access.`n`n"
+        $mdInfo += "Encontradas $networkCount rede(s) privada(s) configuradas para o Intelligent Local Access.`n`n"
 
         $formatTemplate = @'
-| Network name | Id |
+| Nome da rede | Id |
 | :--- | :--- |
 {0}
 
@@ -82,17 +81,17 @@ function Test-Assessment-25405 {
         $mdInfo += $formatTemplate -f $tableRows
     }
     else {
-        $mdInfo += "`n## Private Networks`n`n"
-        $mdInfo += "No private networks are currently configured. To enable Intelligent Local Access, you need to set up at least one private network in Global Secure Access.`n"
+        $mdInfo += "`n## Redes privadas`n`n"
+        $mdInfo += "Nenhuma rede privada está configurada no momento. Para habilitar o Intelligent Local Access, você precisa configurar pelo menos uma rede privada no Global Secure Access.`n"
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25405'
-        Title  = 'Intelligent Local Access is enabled and configured'
+        Title  = 'O Intelligent Local Access está habilitado e configurado'
         Status = $passed
         Result = $testResultMarkdown
     }

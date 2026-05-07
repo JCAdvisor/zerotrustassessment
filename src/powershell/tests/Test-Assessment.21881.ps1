@@ -5,15 +5,15 @@
 
 function Test-Assessment-21881{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21881,
     	Title = 'Assinaturas do Azure usadas pela Governança de Identidade são protegidas consistentemente com as funções da Governança de Identidade',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

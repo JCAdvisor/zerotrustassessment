@@ -1,16 +1,15 @@
-When Conditional Access policies don't protect Private Access applications by requiring strong authentication, threat actors can use phishing attacks, credential stuffing, or password spraying to get user credentials and sign in to private applications with just a compromised password.
+Quando as políticas de Conditional Access não protegem os aplicativos Private Access exigindo autenticação forte, agentes de ameaça podem usar ataques de phishing, credential stuffing ou password spraying para obter credenciais de usuário e entrar em aplicativos privados apenas com uma senha comprometida.
 
-Without strong authentication:
+Sem autenticação forte:
 
-- Threat actors gain initial access to internal resources that should be protected by stronger controls.
-- If multifactor authentication is missing or phishable methods like SMS or voice are used, adversary-in-the-middle attacks can happen where threat actors intercept authentication tokens and session cookies.
-- Threat actors can move laterally from the initially compromised private application to other internal resources.
+- Agentes de ameaça ganham acesso inicial a recursos internos que deveriam ser protegidos por controles mais fortes.
+- Se a autenticação multifator estiver ausente ou métodos suscetíveis a phishing como SMS ou voz forem usados, ataques de adversário no meio podem ocorrer, nos quais os agentes de ameaça interceptam tokens de autenticação e cookies de sessão.
+- Agentes de ameaça podem mover-se lateralmente a partir do aplicativo privado inicialmente comprometido para outros recursos internos.
 
-Microsoft recommends enforcing phishing-resistant authentication methods such as FIDO2 security keys, Windows Hello for Business, or certificate-based authentication for access to private applications, with multifactor authentication as the minimum acceptable baseline.
+A Microsoft recomenda aplicar métodos de autenticação resistente a phishing, como chaves de segurança FIDO2, Windows Hello for Business ou autenticação baseada em certificado para acesso a aplicativos privados, com autenticação multifator como o mínimo aceitável.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure Conditional Access policies to require phishing-resistant authentication](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Configure políticas de Conditional Access para exigir autenticação resistente a phishing](https://learn.microsoft.com/entra/identity/conditional-access/policy-all-users-mfa-strength?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

@@ -1,11 +1,11 @@
-﻿<#
+<#
 .SYNOPSIS
-    Super user membership is configured for Azure Information Protection
+    A associação de superusuário está configurada para o Azure Information Protection
 
 .DESCRIPTION
-    Evaluates whether the Azure Information Protection (AIP) super user feature is properly configured.
+    Avalia se o recurso de superusuário do Azure Information Protection (AIP) está configurado corretamente.
 
-    The cmdlets require the AipService module (v3.0+) which is only supported on Windows PowerShell 5.1. A PowerShell 7 subprocess workaround is automatically employed if running under PowerShell Core.
+    Os cmdlets exigem o módulo AipService (v3.0+) que só tem suporte no Windows PowerShell 5.1. Uma solução alternativa do processo do PowerShell 7 é empregada automaticamente se estiver em execução no PowerShell Core.
 
 .NOTES
     Test ID: 35011
@@ -15,26 +15,26 @@
 
 function Test-Assessment-35011 {
     [ZtTest(
-    	Category = 'Advanced Label Features',
-    	ImplementationCost = 'Medium',
+        Category = 'Recursos avançados de rótulos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Microsoft 365 E5'),
     	Service = ('AipService','Graph'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 35011,
-    	Title = 'Super user membership is configured for Microsoft Purview Information Protection',
-    	UserImpact = 'Low'
+        Title = 'A associação de superusuário está configurada para o Microsoft Purview Information Protection',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Azure Information Protection Super User Configuration'
-    Write-ZtProgress -Activity $activity -Status 'Querying AIP super user settings'
+    $activity = 'Verificando configuração de superusuário do Azure Information Protection'
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de superusuário AIP'
 
     $superUserFeatureEnabled = $null
     $superUsers = @()
@@ -45,11 +45,11 @@ function Test-Assessment-35011 {
         # Note: AipService must be authenticated in Connect-ZtAssessment first
         # This test only performs queries against the authenticated service
 
-        # Query Q1: Check if super user feature is enabled
+            # Consulta Q1: Check if super user feature is enabled
         $superUserFeatureRaw = Get-AipServiceSuperUserFeature -ErrorAction Stop
         $superUserFeatureEnabled = $superUserFeatureRaw.Value
 
-        # Query Q2: Get list of configured super users
+            # Consulta Q2: Get list of configured super users
         $superUsers = Get-AipServiceSuperUser -ErrorAction Stop
 
         # Process superusers and create PSObjects with type classification
@@ -93,7 +93,7 @@ function Test-Assessment-35011 {
                     }
                 }
                 catch {
-                    Write-PSFMessage "Warning: Could not lookup service principal details for $userIdentifier : $_" -Tag Test -Level Warning
+                    Write-PSFMessage "Aviso: Não foi possível procurar detalhes do principal de serviço para $userIdentifier : $_" -Tag Test -Level Warning
                 }
             }
 
@@ -110,7 +110,7 @@ function Test-Assessment-35011 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying AIP Super User configuration: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar configuração de superusuário AIP: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -156,35 +156,35 @@ function Test-Assessment-35011 {
 
     if ($investigateFlag) {
         if ($errorMsg) {
-            $testResultMarkdown = "⚠️ Unable to determine super user configuration due to permissions or connection issues.`n`n%TestResult%"
+            $testResultMarkdown = "⚠️ Não foi possível determinar a configuração de superusuário devido a problemas de permissões ou conexão.`n`n%TestResult%"
         }
         else {
-            $testResultMarkdown = "⚠️ Super user feature is enabled with members configured (review accounts and consider using Azure PIM for just-in-time access instead of permanent enablement).`n`n%TestResult%"
+            $testResultMarkdown = "⚠️ O recurso de superusuário está ativado com membros configurados (revise as contas e considere usar o Azure PIM para acesso just-in-time em vez de ativação permanente).`n`n%TestResult%"
         }
         $customStatus = 'Investigate'
     }
     elseif ($passed) {
-        $testResultMarkdown = "✅ Super user feature is disabled with at least one member pre-configured for emergency access (review members to ensure they're still needed).`n`n%TestResult%"
+        $testResultMarkdown = "✅ O recurso de superusuário está desabilitado com pelo menos um membro pré-configurado para acesso de emergência (revise os membros para garantir que ainda sejam necessários).`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Super user feature is disabled with no members configured, OR feature is enabled with no members.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O recurso de superusuário está desabilitado sem membros configurados, OU o recurso está ativado sem membros.`n`n%TestResult%"
     }
 
     # Build detailed information section
-    $mdInfo = "## Azure Information Protection Super User Configuration`n`n"
+    $mdInfo = "## Configuração de Superusuário do Azure Information Protection`n`n"
 
     if ($errorMsg) {
         # Show explicit "Unknown" values when an error occurred
-        $mdInfo += "**Super User Feature:** Unknown (unable to query)`n`n"
-        $mdInfo += "**Super Users Configured:** Unknown`n`n"
+        $mdInfo += "**Recurso de Superusuário:** Desconhecido (não foi possível consultar)`n`n"
+        $mdInfo += "**Superusuários Configurados:** Desconhecido`n`n"
     }
     else {
-        $mdInfo += "**Super User Feature:** $superUserFeatureEnabled`n`n"
-        $mdInfo += "**Super Users Configured:** $superUserCount`n`n"
+        $mdInfo += "**Recurso de Superusuário:** $superUserFeatureEnabled`n`n"
+        $mdInfo += "**Superusuários Configurados:** $superUserCount`n`n"
     }
 
     if (-not $errorMsg -and $superUserCount -gt 0) {
-        $mdInfo += "| Super User Display | Account Type |`n"
+        $mdInfo += "| Nome do Superusuário | Tipo de Conta |`n"
         $mdInfo += "| :--- | :--- |`n"
 
         foreach ($superUserObj in $superUserObjects) {
@@ -202,7 +202,7 @@ function Test-Assessment-35011 {
         $mdInfo += "`n"
     }
 
-    $mdInfo += "**Note:** Super user configuration is not available through the Azure portal and must be managed via PowerShell using the AipService module.`n"
+    $mdInfo += "**Nota:** A configuração de superusuário não está disponível por meio do portal do Azure e deve ser gerenciada via PowerShell usando o módulo AipService.`n"
 
     # Replace placeholder with actual detailed info
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo

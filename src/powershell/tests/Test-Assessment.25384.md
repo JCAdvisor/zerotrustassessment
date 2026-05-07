@@ -1,15 +1,16 @@
-Uma função de Administrador de Aplicativos com escopo no nível do tenant pode gerenciar todos os registros de aplicativos e aplicativos corporativos. Se um agente de ameaças comprometer um Administrador de Aplicativos com escopo em todo o tenant, ele poderá adicionar credenciais a qualquer entidade de serviço, consentir com APIs maliciosas, modificar ou criar aplicativos que permitam a exfiltração de dados e desativar ou adulterar aplicativos de Acesso Privado. Definir o escopo da função apenas para os aplicativos corporativos de Acesso Privado necessários impõe o privilégio mínimo e limita o raio de explosão (blast radius).
+Um administrador de aplicações com escopo ao nível do locatário pode gerenciar todos os registros de aplicativo e aplicações empresariais. Se um agente de ameaça comprometer um administrador de aplicações com escopo em todo o locatário, ele pode adicionar credenciais a qualquer service principal, consentir APIs maliciosas, modificar ou criar aplicações que permitam exfiltração de dados e desabilitar ou manipular apps Private Access. Escopar a função apenas para apps Private Access necessários aplica o menor privilégio e limita a área de impacto.
 
-Se você não definir o escopo das atribuições de Administrador de Aplicativos para aplicativos específicos:
+Se você não escopar as atribuições de Application Administrator para aplicativos específicos:
 
-- Um Administrador de Aplicativos comprometido pode gerenciar cada registro de aplicativo e aplicativo corporativo em seu tenant.
-- Invasores podem adicionar credenciais a qualquer entidade de serviço, permitindo persistência e movimentação lateral.
-- Não há contenção do raio de explosão; uma única identidade comprometida pode afetar todos os aplicativos.
+- Um Application Administrator comprometido pode gerenciar todos os registros de aplicativo e aplicações empresariais em seu locatário.
+- Agentes de ameaça podem adicionar credenciais a qualquer service principal, permitindo persistência e movimento lateral.
+- Não há contenção da área de impacto; uma única identidade comprometida pode afetar todas as aplicações.
 
 **Ação de remediação**
 
-- [Atribua funções de Administrador de Aplicativos com escopo para registros de aplicativos específicos](https://learn.microsoft.com/entra/identity/role-based-access-control/custom-enterprise-app-permissions?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) em vez de em todo o tenant.
-- [Atribua funções do Microsoft Entra](https://learn.microsoft.com/entra/identity/role-based-access-control/manage-roles-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) com o privilégio mínimo necessário para realizar as tarefas exigidas.
-- [Use o Privileged Identity Management para gerenciar a ativação de função just-in-time](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Atribua funções de Application Administrator escopadas a registros de aplicativo específicos](https://learn.microsoft.com/entra/identity/role-based-access-control/custom-enterprise-app-permissions?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) em vez de em todo o locatário.
+- [Atribua funções do Microsoft Entra](https://learn.microsoft.com/entra/identity/role-based-access-control/manage-roles-portal?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) com o menor privilégio necessário para executar as tarefas requeridas.
+- [Use o Privileged Identity Management para gerenciar a ativação sob demanda de funções](https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Gerencie atribuições de função do Microsoft Entra no centro de administração](https://learn.microsoft.com/entra/identity/role-based-access-control/manage-roles-portal?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%

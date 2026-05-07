@@ -1,9 +1,8 @@
-The policy setting **Require users to apply a label** ensures a sensitivity label must be applied before users can save files and send emails or meeting invites, create new groups or sites, and use Power BI content. This setting also prevents users from completely removing a sensitivity label. Unlabeled items create security and compliance risks. For example, threat actors can exfiltrate sensitive data that could be prevented by protection solutions that trigger based on label detection.
+A configuracao de politica **Exigir que os usuarios apliquem um rotulo** garante que um rotulo de sensibilidade seja aplicado antes que os usuarios possam salvar arquivos, enviar emails ou convites de reuniao, criar novos grupos ou sites e usar conteudo do Power BI. Essa configuracao tambem impede que os usuarios removam completamente um rotulo de sensibilidade. Itens sem rotulo criam riscos de seguranca e conformidade. Por exemplo, agentes mal-intencionados podem exfiltrar dados sensiveis que poderiam ser bloqueados por solucoes de protecao acionadas com base na deteccao de rotulo.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Publish sensitivity labels by creating a label policy](https://learn.microsoft.com/purview/create-sensitivity-labels?tabs=modern-label-scheme&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
-- [Require users to apply a label to their email and documents](https://learn.microsoft.com/purview/sensitivity-labels-office-apps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#require-users-to-apply-a-label-to-their-email-and-documents)
+- [Publicar rotulos de sensibilidade criando uma politica de rotulo](https://learn.microsoft.com/purview/create-sensitivity-labels?tabs=modern-label-scheme&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
+- [Exigir que os usuarios apliquem um rotulo aos seus emails e documentos](https://learn.microsoft.com/purview/sensitivity-labels-office-apps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#require-users-to-apply-a-label-to-their-email-and-documents)
 <!--- Results --->
 %TestResult%
-

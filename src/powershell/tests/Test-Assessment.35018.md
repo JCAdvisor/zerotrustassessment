@@ -1,12 +1,11 @@
-When users aren't required to provide a justification for changing a label, they can silently replace a label with one that has a lower sensitivity. For example, replace the "Confidential" label that applies additional protection settings, with "General". This action creates security and compliance risk. Requiring a justification reason makes this risk more obvious to users, and forces them to provide a reason as a visible audit trail.
+Quando os usuarios nao sao obrigados a fornecer justificativa para alterar um rotulo, eles podem substituir silenciosamente um rotulo por outro de menor sensibilidade. Por exemplo, trocar o rotulo "Confidencial", que aplica configuracoes adicionais de protecao, por "Geral". Essa acao cria risco de seguranca e conformidade. Exigir um motivo de justificativa torna esse risco mais evidente para os usuarios e os obriga a registrar uma razao, criando uma trilha de auditoria visivel.
 
-Compromised accounts or departing employees could downgrade labels to enable data exfiltration. Requiring justification is a lightweight control that increases accountability with low impact on user workflows.
+Contas comprometidas ou funcionarios em desligamento podem rebaixar rotulos para facilitar exfiltracao de dados. Exigir justificativa e um controle leve que aumenta a responsabilidade com baixo impacto nos fluxos de trabalho do usuario.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Publish sensitivity labels by creating a label policy](https://learn.microsoft.com/purview/create-sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
-- [What label policies can do](https://learn.microsoft.com/purview/sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#what-label-policies-can-do)
-- [Review labeling activities in activity explorer](https://learn.microsoft.com/purview/data-classification-activity-explorer-available-events?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#protection-removed)
+- [Publicar rotulos de sensibilidade criando uma politica de rotulo](https://learn.microsoft.com/purview/create-sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
+- [O que as politicas de rotulo podem fazer](https://learn.microsoft.com/purview/sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#what-label-policies-can-do)
+- [Revisar atividades de rotulagem no Activity Explorer](https://learn.microsoft.com/purview/data-classification-activity-explorer-available-events?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#protection-removed)
 <!--- Results --->
 %TestResult%
-

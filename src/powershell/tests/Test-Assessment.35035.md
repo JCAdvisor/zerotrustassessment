@@ -1,9 +1,8 @@
-Named entity sensitive information types (SITs) are prebuilt Microsoft classifiers that detect common sensitive entities like people's names, physical addresses, and medical terminology. They extend data protection beyond pattern matching into context aware classification, and can be used in auto-labeling policies and DLP rules without any custom development.
+Os tipos de informação sensível de entidade nomeada (SITs) são classificadores Microsoft pré-construídos que detectam entidades sensíveis comuns como nomes de pessoas, endereços físicos e terminologia médica. Eles estendem a proteção de dados além da correspondência de padrões em classificação ciente de contexto e podem ser usados em políticas de aplicação automática de rótulo e regras DLP sem qualquer desenvolvimento personalizado.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Learn about named entities](https://learn.microsoft.com/purview/sit-named-entities-learn?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Use named entities in your data loss prevention policies](https://learn.microsoft.com/purview/sit-named-entities-use?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Saiba mais sobre entidades nomeadas](https://learn.microsoft.com/purview/sit-named-entities-learn?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Use entidades nomeadas nas suas políticas de prevenção de perda de dados](https://learn.microsoft.com/purview/sit-named-entities-use?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

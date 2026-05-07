@@ -17,17 +17,17 @@
 
 function Test-Assessment-27003 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+        Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 27003,
-    	Title = 'TLS inspection failure rate is below 1%',
-    	UserImpact = 'Medium'
+            Title = 'A taxa de falha da inspeção de TLS está abaixo de 1%',
+            UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
@@ -74,37 +74,37 @@ function Test-Assessment-27003 {
     #endregion Helper Functions
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start TLS inspection failure rate evaluation' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Avaliação de taxa de falha de inspeção de TLS iniciada' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking TLS inspection failure rate'
-    Write-ZtProgress -Activity $activity -Status 'Checking connections'
+    $activity = 'Verificando taxa de falha de inspeção de TLS'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexões'
 
     # Check Azure connection and cloud environment first to avoid unnecessary API calls
     # in sovereign clouds (this test is only applicable to the Global/AzureCloud environment)
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Tag Test -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
-        Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
+        Write-PSFMessage 'Este teste é aplicável apenas ao ambiente AzureCloud.' -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
 
     # Prerequisite: TLS inspection must be configured
-    Write-ZtProgress -Activity $activity -Status 'Checking TLS inspection policies'
+    Write-ZtProgress -Activity $activity -Status 'Verificando políticas de inspeção de TLS'
 
     try {
         $tlsInspectionPolicies = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/tlsInspectionPolicies' -ApiVersion beta
     }
     catch {
         if ($_.Exception.Message -match '403|Forbidden') {
-            Write-PSFMessage 'Access denied to networkAccess/tlsInspectionPolicies. The tenant may not be licensed for Global Secure Access or the app is missing required permissions.' -Tag Test -Level Warning
+            Write-PSFMessage 'Acesso negado a networkAccess/tlsInspectionPolicies. O locaário pode não estar licenciado para Global Secure Access ou o aplicativo está faltando permissões necessárias.' -Tag Test -Level Warning
             Add-ZtTestResultDetail -SkippedBecause NotSupported
             return
         }
@@ -112,21 +112,21 @@ function Test-Assessment-27003 {
     }
 
     if (-not $tlsInspectionPolicies -or $tlsInspectionPolicies.Count -eq 0) {
-        Write-PSFMessage 'No TLS inspection policies configured.' -Tag Test -Level VeryVerbose
-        Add-ZtTestResultDetail -SkippedBecause NotSupported -Result "TLS inspection is not configured in this tenant. This check is not applicable until a TLS inspection policy is created."
+        Write-PSFMessage 'Nenhuma política de inspeção de TLS configurada.' -Tag Test -Level VeryVerbose
+        Add-ZtTestResultDetail -SkippedBecause NotSupported -Result "A inspeção de TLS não está configurada neste locaário. Esta verificação não é aplicável até que uma política de inspeção de TLS seja criada."
         return
     }
 
     Write-PSFMessage "Found $($tlsInspectionPolicies.Count) TLS inspection policy/policies." -Tag Test -Level VeryVerbose
 
     # Find Log Analytics workspace from Entra diagnostic settings
-    Write-ZtProgress -Activity $activity -Status 'Querying diagnostic settings for Log Analytics workspace'
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de diagnóstico para espaço de trabalho do Log Analytics'
 
     try {
         $diagResult = Invoke-ZtAzureRequest -Path '/providers/microsoft.aadiam/diagnosticsettings?api-version=2017-04-01-preview' -FullResponse
 
         if ($diagResult.StatusCode -eq 403) {
-            Write-PSFMessage 'The signed-in user does not have access to check diagnostic settings.' -Tag Test -Level Verbose
+            Write-PSFMessage 'O usuário conectado não tem acesso para verificar as configurações de diagnóstico.' -Tag Test -Level Verbose
             Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
             return
         }
@@ -158,8 +158,8 @@ function Test-Assessment-27003 {
     }
 
     if (-not $workspaceResourceId) {
-        Write-PSFMessage 'No diagnostic setting exports NetworkAccessTrafficLogs to a Log Analytics workspace.' -Tag Test -Level Warning
-        Add-ZtTestResultDetail -SkippedBecause NotSupported -Result "No diagnostic setting is configured to export NetworkAccessTrafficLogs to a Log Analytics workspace. Configure diagnostic settings to enable this check."
+        Write-PSFMessage 'Nenhuma configuração de diagnóstico exporta NetworkAccessTrafficLogs para um espaço de trabalho do Log Analytics.' -Tag Test -Level Warning
+        Add-ZtTestResultDetail -SkippedBecause NotSupported -Result "Nenhuma configuração de diagnóstico está configurada para exportar NetworkAccessTrafficLogs para um espaço de trabalho do Log Analytics. Configure as configurações de diagnóstico para habilitar esta verificação."
         return
     }
 
@@ -168,7 +168,7 @@ function Test-Assessment-27003 {
     $logAnalyticsQueryUri = "$workspaceResourceId/query?api-version=2017-10-01"
 
     # Q1: Calculate TLS inspection failure rate over the last 7 days
-    Write-ZtProgress -Activity $activity -Status 'Querying TLS inspection failure rate (last 7 days)'
+    Write-ZtProgress -Activity $activity -Status 'Consultando taxa de falha de inspeção de TLS (últimos 7 dias)'
 
     $q1Kql = @"
 NetworkAccessTraffic
@@ -186,8 +186,8 @@ NetworkAccessTraffic
         $q1Results = @(Invoke-LogAnalyticsQuery -Path $logAnalyticsQueryUri -Query $q1Kql)
     }
     catch {
-        Write-PSFMessage "Failed to query Log Analytics: $_" -Tag Test -Level Warning
-        Add-ZtTestResultDetail -SkippedBecause NotSupported -Result "Unable to query Log Analytics workspace. Ensure the signed-in user has Log Analytics Reader access. Error: $_"
+        Write-PSFMessage "Falha ao consultar o Log Analytics: $_" -Tag Test -Level Warning
+        Add-ZtTestResultDetail -SkippedBecause NotSupported -Result "Não foi possível consultar o espaço de trabalho do Log Analytics. Certifique-se de que o usuário conectado tem acesso ao Log Analytics Reader. Erro: $_"
         return
     }
 
@@ -217,7 +217,7 @@ NetworkAccessTraffic
     # Q2: Top failure destinations (only query if there are failures)
     $q2Results = @()
     if ($failureCount -gt 0) {
-        Write-ZtProgress -Activity $activity -Status 'Querying top failure destinations'
+        Write-ZtProgress -Activity $activity -Status 'Consultando destinos com falha principais'
 
         $q2Kql = @"
 NetworkAccessTraffic
@@ -232,14 +232,14 @@ NetworkAccessTraffic
             $q2Results = @(Invoke-LogAnalyticsQuery -Path $logAnalyticsQueryUri -Query $q2Kql)
         }
         catch {
-            Write-PSFMessage "Failed to query top failure destinations: $_" -Tag Test -Level Warning
+            Write-PSFMessage "Falha ao consultar destinos com falha principais: $_" -Tag Test -Level Warning
         }
     }
 
     # Q3: Daily trend analysis
     $q3Results = @()
     if ($totalIntercepted -gt 0) {
-        Write-ZtProgress -Activity $activity -Status 'Querying daily failure rate trend'
+        Write-ZtProgress -Activity $activity -Status 'Consultando tendência de taxa de falha diária'
 
         $q3Kql = @"
 NetworkAccessTraffic
@@ -258,7 +258,7 @@ NetworkAccessTraffic
             $q3Results = @(Invoke-LogAnalyticsQuery -Path $logAnalyticsQueryUri -Query $q3Kql)
         }
         catch {
-            Write-PSFMessage "Failed to query daily trend: $_" -Tag Test -Level Warning
+            Write-PSFMessage "Falha ao consultar tendência diária: $_" -Tag Test -Level Warning
         }
     }
 
@@ -272,16 +272,16 @@ NetworkAccessTraffic
     if ($totalIntercepted -eq 0) {
         # No intercepted traffic — TLS inspection not actively in use
         $passed = $true
-        $testResultMarkdown = "✅ No TLS-intercepted traffic was found in the last 7 days. TLS inspection policies exist but no traffic was intercepted during the evaluation period.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Nenhum tráfego interceptado por TLS foi encontrado nos últimos 7 dias. As políticas de inspeção de TLS existem mas nenhum tráfego foi interceptado durante o período de avaliação.`n`n%TestResult%"
     }
     elseif ($failureRate -ge 1) {
         # Fail: failure rate is 1% or higher
-        $testResultMarkdown = "❌ TLS inspection failure rate exceeds 1% threshold ($failureRate%). Investigate failing destinations and consider adding bypass rules for incompatible applications or resolving certificate trust issues.`n`n%TestResult%"
+        $testResultMarkdown = "❌ A taxa de falha de inspeção de TLS excede 1% de limite ($failureRate%). Investigue destinos que falharam e considere adicionar regras de bypass para aplicações incompatíveis ou resolvendo problemas de confiança de certificado.`n`n%TestResult%"
     }
     else {
         # Pass: failure rate below 1%
         $passed = $true
-        $testResultMarkdown = "✅ TLS inspection failure rate is below 1% ($failureRate%) over the last 7 days, indicating healthy encrypted traffic visibility.`n`n%TestResult%"
+        $testResultMarkdown = "✅ A taxa de falha de inspeção de TLS está abaixo de 1% ($failureRate%) nos últimos 7 dias, indicando visibilidade saudável de tráfego criptografado.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -297,16 +297,16 @@ NetworkAccessTraffic
 
     $mdInfo = @"
 
-## [TLS inspection health summary]($tlsInspectionLink)
+## [Resumo de integridade de inspeção de TLS]($tlsInspectionLink)
 
-| Metric | Value |
+| Métrica | Valor |
 | :--- | :--- |
-| Evaluation period | Last 7 days |
-| Log Analytics workspace | [$(Get-SafeMarkdown $workspaceName)]($workspacePortalLink) |
-| Total intercepted transactions | $totalIntercepted |
-| Successful inspections | $successCount |
-| Failed inspections | $failureCount |
-| Failure rate | $failureRate% |
+| Período de avaliação | Últimos 7 dias |
+| Espaço de trabalho do Log Analytics | [$(Get-SafeMarkdown $workspaceName)]($workspacePortalLink) |
+| Transações interceptadas totais | $totalIntercepted |
+| Inspeções bem-sucedidas | $successCount |
+| Inspeções falhadas | $failureCount |
+| Taxa de falha | $failureRate% |
 | Status | $statusText |
 
 "@
@@ -320,9 +320,9 @@ NetworkAccessTraffic
 
         $mdInfo += @"
 
-## Top failing destinations
+## Destinos com falha principal
 
-| Destination FQDN | Failure count |
+| FQDN de destino | Contagem de falhas |
 | :--- | :--- |
 $destRows
 "@
@@ -339,9 +339,9 @@ $destRows
 
         $mdInfo += @"
 
-## Daily trend
+## Tendência diária
 
-| Date | Total intercepted | Failures | Failure rate |
+| Data | Total interceptado | Falhas | Taxa de falha |
 | :--- | :--- | :--- | :--- |
 $trendRows
 "@
@@ -353,7 +353,7 @@ $trendRows
 
     $params = @{
         TestId = '27003'
-        Title  = 'TLS inspection failure rate remains below 1% to ensure consistent traffic visibility'
+        Title  = 'A taxa de falha de inspeção de TLS permanece abaixo de 1% para garantir visibilidade de tráfego consistente'
         Status = $passed
         Result = $testResultMarkdown
     }

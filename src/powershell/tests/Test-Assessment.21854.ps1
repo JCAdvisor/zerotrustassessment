@@ -7,7 +7,7 @@ function Test-Assessment-21854{
     	Category = 'Acesso privilegiado',
     	ImplementationCost = 'Médio',
     	MinimumLicense = $null,
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),

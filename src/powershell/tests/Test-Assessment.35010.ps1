@@ -1,19 +1,19 @@
 <#
 .SYNOPSIS
-    Double Key Encryption labels are configured
+    Os rótulos de criptografia de chave dupla estão configurados
 
 .DESCRIPTION
-    Double Key Encryption (DKE) provides an additional layer of protection for highly sensitive data by requiring two keys to decrypt content:
-    one managed by Microsoft and one managed by the customer. This "hold your own key" approach ensures Microsoft cannot decrypt customer
-    content even with legal compulsion, meeting stringent regulatory requirements for data sovereignty and control.
+    A criptografia de chave dupla (DKE) fornece uma camada adicional de proteção para dados altamente sensíveis, exigindo duas chaves para descriptografar conteúdo:
+    uma gerenciada pela Microsoft e outra gerenciada pelo cliente. Essa abordagem de "manter sua própria chave" garante que a Microsoft não possa descriptografar conteúdo do cliente
+    nem mesmo com compulsão legal, atendendo aos rigorosos requisitos regulatórios de soberania de dados e controle.
 
-    However, DKE introduces significant operational complexity including dedicated key service infrastructure, reduced feature compatibility,
-    and increased support burden. Organizations that deploy DKE should maintain 1-3 labels reserved for truly mission-critical or heavily
-    regulated data. Excessive DKE label proliferation (4 or more labels) indicates potential misuse and creates management overhead, user
-    confusion about when to apply DKE versus standard encryption, and reduces collaboration capabilities.
+    No entanto, a DKE introduz complexidade operacional significativa, incluindo infraestrutura dedicada de serviço de chave, compatibilidade de recursos reduzida
+    e aumento de carga de suporte. As organizações que implantam DKE devem manter 1-3 rótulos reservados para dados realmente críticos para a missão ou altamente
+    regulados. A proliferação excessiva de rótulos DKE (4 ou mais rótulos) indica possível uso indevido e cria sobrecarga de gerenciamento, confusão do usuário
+    sobre quando aplicar DKE versus criptografia padrão e reduz capacidades de colaboração.
 
-    DKE should never be broadly deployed across general business content. Overuse of DKE creates operational risk where key service
-    unavailability prevents access to business-critical documents.
+    A DKE nunca deve ser implantada amplamente em conteúdo geral de negócios. O uso excessivo de DKE cria risco operacional onde a indisponibilidade do serviço de chave
+    impede o acesso a documentos críticos para os negócios.
 
 .NOTES
     Test ID: 35010
@@ -23,25 +23,25 @@
 
 function Test-Assessment-35010 {
     [ZtTest(
-    	Category = 'Encryption',
-    	ImplementationCost = 'Medium',
+        Category = 'Criptografia',
+    	ImplementationCost = 'Médio',
     	Service = ('SecurityCompliance'),
     	MinimumLicense = ('Microsoft 365 E5'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Low',
-    	SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Baixo',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 35010,
-    	Title = 'Double Key Encryption labels are configured',
-    	UserImpact = 'High'
+        Title = 'Os rótulos de criptografia de chave dupla estão configurados',
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Double Key Encryption (DKE) label configuration'
-    Write-ZtProgress -Activity $activity -Status 'Querying sensitivity labels'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando configuração de rótulo de criptografia de chave dupla (DKE)'
+    Write-ZtProgress -Activity $activity -Status 'Consultando rótulos de sensibilidade'
 
     $allLabels = @()
     $errorMsg = $null
@@ -49,7 +49,7 @@ function Test-Assessment-35010 {
     $totalLabelsCount = 0
 
     try {
-        # Query Q1: Retrieve all sensitivity labels
+            # Consulta Q1: Retrieve all sensitivity labels
         $labels = Get-Label -ErrorAction Stop | Select-Object -Property Name, Disabled, Capabilities, LabelActions
 
         # Extract and normalize data
@@ -82,7 +82,7 @@ function Test-Assessment-35010 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying Sensitivity Labels: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar rótulos de sensibilidade: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -94,22 +94,22 @@ function Test-Assessment-35010 {
     if ($errorMsg) {
         # Investigate scenario - Query failed
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine DKE label configuration due to query failure, connection issues, or insufficient permissions.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar a configuração de rótulo DKE devido a falha na consulta, problemas de conexão ou permissões insuficientes.`n`n%TestResult%"
     }
     elseif ($dkeLabelsCount -eq 0) {
         # Fail scenario - No DKE labels
         $passed = $false
-        $testResultMarkdown = "❌ No DKE labels found - organization should evaluate deployment for mission-critical or highly regulated data.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhum rótulo DKE encontrado - a organização deve avaliar a implantação para dados críticos para a missão ou altamente regulados.`n`n%TestResult%"
     }
     elseif ($dkeLabelsCount -ge 1 -and $dkeLabelsCount -le 3) {
         # Pass scenario - 1-3 DKE labels
         $passed = $true
-        $testResultMarkdown = "✅ DKE labels appropriately deployed (1-3 labels for mission-critical and regulated data).`n`n%TestResult%"
+        $testResultMarkdown = "✅ Rótulos DKE implantados apropriadamente (1-3 rótulos para dados críticos para a missão e regulados).`n`n%TestResult%"
     }
     else {
         # Investigate scenario - 4+ DKE labels (excessive)
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ 4 or more DKE labels detected - review each label's business justification to confirm appropriate use; excessive DKE beyond critical data indicates potential misuse.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ 4 ou mais rótulos DKE detectados - revise a justificativa comercial de cada rótulo para confirmar o uso apropriado; DKE excessivo além de dados críticos indica possível uso indevido.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -117,19 +117,19 @@ function Test-Assessment-35010 {
     $mdInfo = ''
 
     if ($totalLabelsCount -gt 0) {
-        $title = 'Sensitivity Label Details'
+        $title = 'Detalhes do rótulo de sensibilidade'
         $portalLink = 'https://purview.microsoft.com/informationprotection/informationprotectionlabels/sensitivitylabels'
 
         $formatTemplate = @'
 
-### Summary
+### Resumo
 
-- Total Sensitivity Labels: {0}
-- DKE Enabled Labels: {1}
+- Total de rótulos de sensibilidade: {0}
+- Rótulos com DKE habilitado: {1}
 
 ### [{2}]({3})
 
-| Label name | Disabled | DKE enabled | DKE endpoint url |
+| Nome do rótulo | Desabilitado | DKE habilitado | URL do endpoint DKE |
 |:-----------|:---------|:------------|:-----------------|
 {4}
 
@@ -148,7 +148,7 @@ function Test-Assessment-35010 {
 
     $params = @{
         TestId = '35010'
-        Title  = 'Double Key Encryption (DKE) Labels'
+        Title  = 'Rótulos de Criptografia de Chave Dupla (DKE)'
         Status = $passed
         Result = $testResultMarkdown
     }

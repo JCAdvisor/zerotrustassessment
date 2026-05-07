@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Validates that rate limiting is enabled in Azure Front Door WAF policies.
+    Valida que a limitação de taxa está habilitada nas políticas de WAF do Azure Front Door.
 
 .DESCRIPTION
-    This test evaluates Azure Front Door WAF policies across all subscriptions to verify
+    Este teste avalia políticas de WAF do Azure Front Door em todas as assinaturas para verificar
     that at least one rate limiting custom rule (RateLimitRule) is configured and enabled.
     Only policies attached to an Azure Front Door are evaluated.
 
@@ -16,46 +16,46 @@
 function Test-Assessment-27018 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Medium',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Médio',
         MinimumLicense = 'Azure_WAF',
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 27018,
-        Title = 'Rate Limiting is Enabled in Azure Front Door WAF',
-        UserImpact = 'Low'
+        Title = 'A limitação de taxa está habilitada no WAF do Azure Front Door',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Azure Front Door WAF rate limiting configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando configuração de limitação de taxa do WAF do Azure Front Door'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Tag Test -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
     # Check the supported environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
-        Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
+        Write-PSFMessage 'Este teste é aplicável apenas ao ambiente AzureCloud.' -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
 
-    # Query all Front Door WAF policies attached to an Azure Front Door via Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Front Door WAF policies'
+        # Consulta all Front Door WAF policies attached to an Azure Front Door via Azure Resource Graph
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de WAF do Azure Front Door'
 
     $argQuery = @"
 resources
@@ -82,7 +82,7 @@ resources
         Write-PSFMessage "ARG Query returned $($policies.Count) records" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Failed to query Azure Front Door WAF policies via Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao consultar políticas de WAF do Azure Front Door via Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -93,8 +93,8 @@ resources
 
     # Skip test if no policies found
     if ($policies.Count -eq 0) {
-        Write-PSFMessage 'No Azure Front Door WAF policies attached to Azure Front Door found.' -Tag Test -Level Verbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Azure Front Door WAF policies attached to Azure Front Door found.'
+        Write-PSFMessage 'Nenhuma política de WAF do Azure Front Door anexada ao Azure Front Door encontrada.' -Tag Test -Level Verbose
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhuma política de WAF do Azure Front Door anexada ao Azure Front Door encontrada.'
         return
     }
 
@@ -108,10 +108,10 @@ resources
     $passed = $failingPolicies.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "✅ All Azure Front Door WAF policies attached to Azure Front Door are enabled, running in Prevention mode, and have at least one rate limiting rule configured and enabled.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas de WAF do Azure Front Door anexadas ao Azure Front Door estão habilitadas, executando no modo Prevenção e têm pelo menos uma regra de limitação de taxa configurada e habilitada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ One or more Azure Front Door WAF policies attached to Azure Front Door are either disabled, not in Prevention mode, or do not have rate limiting rules configured and enabled, leaving applications vulnerable to brute force and volumetric attacks at the global edge.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas de WAF do Azure Front Door anexadas ao Azure Front Door estão desabilitadas, não estão no modo Prevenção ou não têm regras de limitação de taxa configuradas e habilitadas, deixando aplicativos vulneráveis a ataques de força bruta e volumétricos na borda global.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -122,11 +122,11 @@ resources
     $portalResourceBaseLink = 'https://portal.azure.com/#resource'
     $portalSubscriptionBaseLink = 'https://portal.azure.com/#resource/subscriptions'
 
-    $mdInfo = "`n## [Azure Front Door WAF policies]($portalWafBrowseLink)`n`n"
+    $mdInfo = "`n## [Políticas de WAF do Azure Front Door]($portalWafBrowseLink)`n`n"
 
     $tableRows = ''
     $formatTemplate = @'
-| Policy name | Subscription name | Rule state | Enabled state | WAF mode | Rate limit rules count | Status |
+| Nome da política | Nome da assinatura | Estado da regra | Estado habilitado | Modo WAF | Contagem de regras de limitação de taxa | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 {0}
 
@@ -174,7 +174,7 @@ resources
 
     $params = @{
         TestId = '27018'
-        Title  = 'Rate Limiting is Enabled in Azure Front Door WAF'
+        Title  = 'Limitação de Taxa está habilitada no WAF do Azure Front Door'
         Status = $passed
         Result = $testResultMarkdown
     }

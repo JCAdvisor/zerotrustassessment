@@ -1,15 +1,14 @@
-Without Microsoft Entra preauthentication configured on Application Proxy applications, threat actors can directly reach the internal URL of published on-premises applications without first proving their identity. When you use passthrough authentication, Application Proxy forwards traffic without validating the requestor, and all authentication responsibility falls to the internal application.
+Sem pré-autenticação do Microsoft Entra configurada nos aplicativos do Application Proxy, agentes de ameaça podem atingir diretamente a URL interna de aplicativos locais publicados sem primeiro comprovar sua identidade. Quando você usa autenticação passthrough, o Application Proxy encaminha o tráfego sem validar o solicitante, e toda a responsabilidade de autenticação recai sobre o aplicativo interno.
 
-If you don't configure preauthentication on Application Proxy applications:
+Se você não configurar pré-autenticação nos aplicativos do Application Proxy:
 
-- Threat actors can access internal application endpoints without identity verification, enabling reconnaissance and exploitation of backend vulnerabilities.
-- Conditional Access policies can't be enforced, so you can't require multifactor authentication, evaluate sign-in risk, or apply location-based restrictions.
-- You can't integrate with Microsoft Defender for Cloud Apps for real-time session monitoring and control.
+- Agentes de ameaça podem acessar endpoints de aplicativos internos sem verificação de identidade, permitindo reconhecimento e exploração de vulnerabilidades de backend.
+- Políticas de Conditional Access não podem ser aplicadas, então você não pode exigir autenticação multifator, avaliar risco de login ou aplicar restrições baseadas em localização.
+- Você não pode integrar com o Microsoft Defender for Cloud Apps para monitoramento e controle de sessão em tempo real.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure Microsoft Entra preauthentication for Application Proxy applications](https://learn.microsoft.com/entra/identity/app-proxy/application-proxy-add-on-premises-application?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-an-on-premises-app-to-microsoft-entra-id) by changing the Pre-Authentication method from **Passthrough** to **Microsoft Entra ID**.
-- [Use Microsoft Graph API to programmatically update Application Proxy settings](https://learn.microsoft.com/graph/application-proxy-configure-api?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Configure a pré-autenticação do Microsoft Entra para aplicativos do Application Proxy](https://learn.microsoft.com/entra/identity/app-proxy/application-proxy-add-on-premises-application?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-an-on-premises-app-to-microsoft-entra-id) alterando o método de Pré-autenticação de **Passthrough** para **Microsoft Entra ID**.
+- [Use a API Microsoft Graph para atualizar programaticamente as configurações do Application Proxy](https://learn.microsoft.com/graph/application-proxy-configure-api?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

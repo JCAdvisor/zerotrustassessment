@@ -1,14 +1,14 @@
-Azure Firewall Premium offers Transport Layer Security (TLS) inspection to decrypt and inspect outbound and east-west TLS traffic, and inbound TLS traffic when used with Azure Application Gateway. TLS inspection is critical for detecting advanced threats that use encrypted channels to evade traditional security controls.
+O Azure Firewall Premium oferece inspeção de TLS (Transport Layer Security) para descriptografar e inspecionar tráfego de saída e leste-oeste, e tráfego de entrada de TLS quando usado com o Azure Application Gateway. A inspeção de TLS é crítica para detectar ameaças avançadas que usam canais criptografados para contornar controles de segurança tradicionais.
 
-When TLS inspection is enabled, Azure Firewall uses a customer-provided CA certificate stored in Azure Key Vault to decrypt, inspect, and then re-encrypt traffic before forwarding it to its destination. This enables advanced security capabilities such as IDPS and URL filtering to analyze encrypted traffic and identify malicious activity that would otherwise remain hidden.
+Quando a inspeção de TLS está ativada, o Azure Firewall usa um certificado de autoridade de certificação (CA) fornecido pelo cliente armazenado no Azure Key Vault para descriptografar, inspecionar e depois criptografar novamente o tráfego antes de encaminhá-lo para seu destino. Isso permite recursos de segurança avançados, como IDPS e filtragem de URL, para analisar tráfego criptografado e identificar atividades maliciosas que de outro modo permaneceriam ocultas.
 
-This check verifies that Azure Firewall Premium has TLS inspection enabled. Without TLS inspection, the firewall cannot inspect encrypted payloads, significantly limiting visibility into threats that leverage TLS to evade detection.
+Essa verificação verifica se o Azure Firewall Premium tem a inspeção de TLS ativada. Sem a inspeção de TLS, o firewall não consegue inspecionar payloads criptografados, limitando significativamente a visibilidade em ameaças que usam TLS para contornar a detecção.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Azure Firewall Premium features implementation guide](https://learn.microsoft.com/en-us/azure/firewall/premium-features)
-- [Deploy and configure Enterprise CA certificates for Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/premium-deploy-certificates-enterprise-ca)
-- [Azure Firewall Premium certificates](https://learn.microsoft.com/en-us/azure/firewall/premium-certificates)
+- [Guia de implementação de recursos do Azure Firewall Premium](https://learn.microsoft.com/en-us/azure/firewall/premium-features)
+- [Implantar e configurar certificados de CA corporativa para o Azure Firewall](https://learn.microsoft.com/en-us/azure/firewall/premium-deploy-certificates-enterprise-ca)
+- [Certificados do Azure Firewall Premium](https://learn.microsoft.com/en-us/azure/firewall/premium-certificates)
 
 <!--- Results --->
 %TestResult%

@@ -6,15 +6,15 @@
 function Test-Assessment-21954{
     [ZtTest(
     	Category = 'Dispositivos',
-    	ImplementationCost = 'Low',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21954,
     	Title = 'Restringir usuários não administradores de recuperar as chaves do BitLocker para seus dispositivos próprios',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

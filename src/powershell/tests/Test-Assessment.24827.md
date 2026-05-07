@@ -1,14 +1,14 @@
-Se as políticas de Acesso Condicional do Microsoft Entra não forem combinadas com controlos de proteção de aplicações, os utilizadores podem ligar-se a recursos corporativos através de aplicações não geridas ou inseguras. Isto expõe dados sensíveis a riscos como fuga de dados, acesso não autorizado e não conformidade regulamentar. Sem salvaguardas como a proteção de dados ao nível da aplicação, restrições de acesso e prevenção de perda de dados (DLP), os agentes de ameaças podem explorar aplicações desprotegidas para contornar os controlos de segurança e comprometer os dados organizacionais.
+Se as políticas do Microsoft Entra Conditional Access não forem combinadas com controles de proteção de aplicativo, os usuários podem se conectar a recursos corporativos por meio de aplicativos não gerenciados ou inseguros. Isso expõe dados sensíveis a riscos como vazamento de dados, acesso não autorizado e não conformidade regulatória. Sem salvaguardas como proteção de dados em nível de aplicativo, restrições de acesso e prevenção contra perda de dados, agentes de ameaça podem explorar aplicativos desprotegidos para contornar controles de segurança e comprometer dados organizacionais.
 
-A imposição de políticas de proteção de aplicações do Intune no âmbito do Acesso Condicional garante que apenas aplicações fidedignas possam aceder aos dados corporativos. Isto apoia o Zero Trust ao impor decisões de acesso baseadas na confiança da aplicação, contenção de dados e restrições de utilização.
+A aplicação de políticas de proteção de aplicativos do Intune dentro do Conditional Access garante que apenas aplicativos confiáveis possam acessar dados corporativos. Isso apoia o Zero Trust ao aplicar decisões de acesso com base na confiança do aplicativo, contenção de dados e restrições de uso.
 
 **Ação de remediação**
 
-Configure políticas de Acesso Condicional baseadas em aplicações no Microsoft Entra e no Intune para exigir a proteção de aplicações para o acesso aos recursos corporativos:  
-- [Configurar políticas de Acesso Condicional baseadas em aplicações com o Intune](https://learn.microsoft.com/intune/intune-service/protect/app-based-conditional-access-intune-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Configure políticas de Conditional Access baseadas em aplicativo no Microsoft Entra e Intune para exigir proteção de aplicativo para o acesso a recursos corporativos:  
+- [Configurar políticas de Conditional Access baseadas em aplicativo com o Intune](https://learn.microsoft.com/intune/intune-service/protect/app-based-conditional-access-intune-create?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 
-Para mais informações, consulte:  
-- [O que é o Acesso Condicional?](https://learn.microsoft.com/entra/identity/conditional-access/overview?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Saiba mais sobre as políticas de Acesso Condicional baseadas em aplicações com o Intune](https://learn.microsoft.com/intune/intune-service/protect/app-based-conditional-access-intune?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Para mais informações, veja:  
+- [O que é Conditional Access?](https://learn.microsoft.com/entra/identity/conditional-access/overview?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Saiba mais sobre políticas de Conditional Access baseadas em aplicativo com o Intune](https://learn.microsoft.com/intune/intune-service/protect/app-based-conditional-access-intune?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%

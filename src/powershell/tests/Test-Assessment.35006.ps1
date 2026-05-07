@@ -1,9 +1,9 @@
-﻿<#
+<#
 .SYNOPSIS
-    PDF labeling is enabled in SharePoint Online
+    A rotulagem de PDF está habilitada no SharePoint Online
 
 .DESCRIPTION
-    PDF files stored in SharePoint Online and OneDrive for Business require separate enablement of sensitivity label support beyond the base Office file integration. When EnableSensitivityLabelforPDF is disabled, organizations create a protection gap where PDF documents remain unclassified and unprotected despite sensitivity label policies being active for Office files.
+    Os arquivos PDF armazenados no SharePoint Online e no OneDrive for Business exigem habilitação separada de suporte a rótulos de sensibilidade além da integração de arquivo do Office base. Quando EnableSensitivityLabelforPDF está desabilitado, as organizações criam uma lacuna de proteção onde os documentos PDF permanecem não classificados e desprotegidos apesar de políticas de rótulo de sensibilidade estarem ativas para arquivos do Office.
 
 .NOTES
     Test ID: 35006
@@ -14,36 +14,36 @@
 function Test-Assessment-35006 {
     [ZtTest(
     	Category = 'SharePoint Online',
-    	ImplementationCost = 'Low',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('MIP_P1'),
     	Service = ('SharePointOnline'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 35006,
-    	Title = 'PDF labeling is enabled in SharePoint',
-    	UserImpact = 'Low'
+        Title = 'A rotulagem de PDF está habilitada no SharePoint',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking PDF Labeling Support in SharePoint Online'
-    Write-ZtProgress -Activity $activity -Status 'Getting SharePoint Tenant Settings'
+    $activity = 'Verificando suporte de rotulagem de PDF no SharePoint Online'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configurações de locatário do SharePoint'
 
     $spoTenant = $null
     $errorMsg = $null
 
     try {
-        # Query: Retrieve SharePoint Online tenant PDF labeling support status
+            # Consulta: Retrieve SharePoint Online tenant PDF labeling support status
         $spoTenant = Get-SPOTenant -ErrorAction Stop
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying SharePoint Tenant Settings: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar as configurações de locatário do SharePoint: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -58,30 +58,30 @@ function Test-Assessment-35006 {
 
     #region Report Generation
     if ($errorMsg) {
-        $testResultMarkdown = "### Investigate`n`n"
-        $testResultMarkdown += "Unable to query SharePoint Tenant Settings due to error: $errorMsg"
+        $testResultMarkdown = "### Investigar`n`n"
+        $testResultMarkdown += "Não foi possível consultar as configurações de locatário do SharePoint devido a erro: $errorMsg"
     }
     else {
         if ($passed) {
-            $testResultMarkdown = "✅ PDF labeling support is enabled in SharePoint Online and OneDrive, allowing users to classify and protect PDF files.`n`n"
+            $testResultMarkdown = "✅ O suporte de rotulagem de PDF está habilitado no SharePoint Online e OneDrive, permitindo que os usuários classifiquem e protejam arquivos PDF.`n`n"
         }
         else {
-            $testResultMarkdown = "❌ PDF labeling support is NOT enabled. PDF files cannot be labeled or protected in SharePoint and OneDrive.`n`n"
+            $testResultMarkdown = "❌ O suporte de rotulagem de PDF NÃO está habilitado. Os arquivos PDF não podem ser rotulados ou protegidos no SharePoint e OneDrive.`n`n"
         }
 
-        $testResultMarkdown += "### SharePoint Online Configuration Summary`n`n"
-        $testResultMarkdown += "**Tenant Settings:**`n"
+        $testResultMarkdown += "### Resumo de configuração do SharePoint Online`n`n"
+        $testResultMarkdown += "**Configurações de locatário:**`n"
 
         $enableSensitivityLabelForPDF = if ($null -ne $spoTenant -and $spoTenant.EnableSensitivityLabelforPDF -eq $true) { "True" } else { "False" }
         $testResultMarkdown += "* EnableSensitivityLabelforPDF: $enableSensitivityLabelForPDF`n"
 
-        $testResultMarkdown += "`n[Manage information protection in SharePoint Admin Center](https://admin.microsoft.com/sharepoint?page=classicSettings&modern=true)`n"
+        $testResultMarkdown += "`n[Gerenciar proteção de informações no Centro de Administração do SharePoint](https://admin.microsoft.com/sharepoint?page=classicSettings&modern=true)`n"
     }
     #endregion Report Generation
 
     $params = @{
         TestId             = '35006'
-        Title              = 'PDF Labeling Support in SharePoint Online'
+        Title              = 'Suporte de rotulagem de PDF no SharePoint Online'
         Status             = $passed
         Result             = $testResultMarkdown
     }

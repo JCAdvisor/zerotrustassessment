@@ -1,37 +1,44 @@
+<#
+.SYNOPSIS
+    A Proteção contra DDoS está ativada para todos os Endereços IP Públicos em VNETs
+.DESCRIPTION
+    Valida que a Proteção contra DDoS do Azure está ativada em todos os endereços IP públicos.
+#>
+
 function Test-Assessment-25533 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('DDoS_Network_Protection', 'DDoS_IP_Protection'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce', 'External'),
         TestId = 25533,
-        Title = 'DDoS Protection is enabled for all Public IP Addresses in VNETs',
-        UserImpact = 'Low'
+        Title = 'A Proteção contra DDoS está ativada para todos os Endereços IP Públicos em VNETs',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking DDoS Protection is enabled for all Public IP Addresses in VNETs'
+    $activity = 'Verificando se a Proteção contra DDoS está ativada para todos os Endereços IP Públicos em VNETs'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o Gráfico de Recursos do Azure'
 
-    # Query all Public IP addresses with their DDoS protection settings
+        # Consulta all Public IP addresses with their DDoS protection settings
     $argQuery = @"
 Resources
 | where type =~ 'microsoft.network/publicipaddresses' | join kind=leftouter (ResourceContainers | where type =~ 'microsoft.resources/subscriptions' | project subscriptionName=name, subscriptionId ) on subscriptionId | project PublicIpName = name, PublicIpId = id, SubscriptionName = subscriptionName, SubscriptionId = subscriptionId, Location = location, ProtectionMode = tostring(properties.ddosSettings.protectionMode), ipConfigId = tolower(properties.ipConfiguration.id)
@@ -50,7 +57,7 @@ Resources
 
     # Skip if no public IPs found
     if ($publicIps.Count -eq 0) {
-        Write-PSFMessage 'No Public IP addresses found.' -Tag Test -Level Verbose
+        Write-PSFMessage 'Nenhum endereço IP público encontrado.' -Tag Test -Level Verbose
         Add-ZtTestResultDetail -SkippedBecause NotApplicable
         return
     }
@@ -59,7 +66,7 @@ Resources
     # Each query populates the same hashtable keyed by resource ID (lowercase).
     # $resourceQueryFailed tracks whether any prerequisite query failed so we can
     # avoid marking affected IPs as non-compliant due to transient ARG/RBAC issues.
-    Write-ZtProgress -Activity $activity -Status 'Querying resource-to-VNET associations'
+    Write-ZtProgress -Activity $activity -Status 'Consultando associações de recurso para VNET'
 
     $resourceVnetCache = @{}
     $resourceQueryFailed = $false
@@ -192,8 +199,8 @@ Resources
         $resourceQueryFailed = $true
     }
 
-    # Query VNET DDoS protection settings
-    Write-ZtProgress -Activity $activity -Status 'Querying VNET DDoS settings'
+        # Consulta VNET DDoS protection settings
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de DDoS da VNET'
 
     $vnetDdosCache = @{}
     $vnetQueryFailed = $false
@@ -329,12 +336,12 @@ Resources
     $passed = ($failedCount -eq 0 -and $unknownCount -eq 0)
 
     if ($passed) {
-        $testResultMarkdown = "✅ DDoS Protection is enabled for all Public IP addresses, either through DDoS IP Protection enabled directly on the public IP or through DDoS Network Protection enabled on the associated VNET.`n`n%TestResult%"
+        $testResultMarkdown = "✅ A Proteção contra DDoS está ativada para todos os Endereços IP Públicos, seja através da Proteção de IP DDoS ativada diretamente no IP público ou através da Proteção de Rede DDoS ativada na VNET associada.`n`n%TestResult%"
     }
     else {
-        $failMessage = "❌ DDoS Protection is not enabled for one or more Public IP addresses. This includes public IPs with DDoS protection explicitly disabled, and public IPs that inherit from a VNET that does not have a DDoS Protection Plan enabled."
+        $failMessage = "❌ A Proteção contra DDoS não está ativada para um ou mais Endereços IP Públicos. Isso inclui IPs públicos com proteção DDoS explicitamente desativada e IPs públicos que herdam de uma VNET que não possui um Plano de Proteção DDoS ativado."
         if ($unknownCount -gt 0) {
-            $failMessage += " $unknownCount public IP(s) could not be fully evaluated due to query failures and require manual verification."
+            $failMessage += " $unknownCount IP(s) público(s) não puderam ser totalmente avaliados devido a falhas de consulta e requerem verificação manual."
         }
         $testResultMarkdown = "$failMessage`n`n%TestResult%"
     }
@@ -345,13 +352,13 @@ Resources
 
 ## [{0}]({1})
 
-| Public IP name | DDoS protection mode | Resource type | Associated VNET | VNET DDoS protection | Status |
+| Nome do IP público | Modo de proteção DDoS | Tipo de recurso | VNET associada | Proteção DDoS da VNET | Status |
 | :--- | :--- | :--- | :--- | :--- | :---: |
 {2}
 
 '@
 
-    $reportTitle = 'Public IP addresses DDoS protection status'
+    $reportTitle = 'Status de proteção DDoS dos Endereços IP Públicos'
     $portalLink = 'https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Network%2FpublicIPAddresses'
 
     # Prepare table rows
@@ -362,9 +369,9 @@ Resources
 
         # Format protection mode
         $protectionDisplay = switch ($item.ProtectionMode) {
-            'Enabled' { '✅ Enabled' }
+            'Enabled' { '✅ Ativado' }
             'VirtualNetworkInherited' { 'VirtualNetworkInherited' }
-            'Disabled' { '❌ Disabled' }
+            'Disabled' { '❌ Desativado' }
             default { $item.ProtectionMode }
         }
 
@@ -376,15 +383,15 @@ Resources
 
         # Format VNET DDoS status
         $vnetDdosDisplay = switch ($item.VnetDdosProtection) {
-            'Enabled'  { '✅ Enabled' }
-            'Disabled' { '❌ Disabled' }
-            'Unknown'  { '⚠️ Unknown' }
+            'Enabled'  { '✅ Ativado' }
+            'Disabled' { '❌ Desativado' }
+            'Unknown'  { '⚠️ Desconhecido' }
             'N/A'      { 'N/A' }
             default    { $item.VnetDdosProtection }
         }
 
         # Format overall status
-        $statusDisplay = if ($null -eq $item.IsCompliant) { '⚠️ Unknown' } elseif ($item.IsCompliant) { '✅ Pass' } else { '❌ Fail' }
+        $statusDisplay = if ($null -eq $item.IsCompliant) { '⚠️ Desconhecido' } elseif ($item.IsCompliant) { '✅ Aprovado' } else { '❌ Reprovado' }
 
         $tableRows += "| $pipMd | $protectionDisplay | $resourceTypeDisplay | $vnetDisplay | $vnetDdosDisplay | $statusDisplay |`n"
     }
@@ -395,7 +402,7 @@ Resources
 
     $params = @{
         TestId = '25533'
-        Title  = 'DDoS Protection is enabled for all Public IP Addresses in VNETs'
+        Title  = 'A Proteção contra DDoS está ativada para todos os Endereços IP Públicos em VNETs'
         Status = $passed
         Result = $testResultMarkdown
     }

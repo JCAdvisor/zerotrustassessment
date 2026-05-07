@@ -15,27 +15,27 @@
 function Test-Assessment-26884 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure_Front_Door_Premium'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 26884,
-        Title = 'Bot protection ruleset is enabled and assigned in Azure Front Door WAF',
-        UserImpact = 'Low'
+        Title = 'O conjunto de regras de proteção contra bots está habilitado e atribuído no WAF do Azure Front Door',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating Azure Front Door WAF bot protection configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando a configuração de proteção contra bots do WAF do Azure Front Door'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com o Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -45,7 +45,7 @@ function Test-Assessment-26884 {
     }
 
     # Check the supported environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
         Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
@@ -68,7 +68,7 @@ function Test-Assessment-26884 {
     }
 
     # Q1 & Q2: Query Azure Front Door Premium profiles using Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Front Door profiles via Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando perfis do Azure Front Door via Resource Graph'
 
     $argQuery = @"
 resources
@@ -120,7 +120,7 @@ resources
     }
 
     # Q3: Query all WAF policies in all subscriptions
-    Write-ZtProgress -Activity $activity -Status 'Querying WAF policies'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de WAF'
 
     $wafPoliciesArgQuery = @"
 resources
@@ -153,7 +153,7 @@ resources
     }
 
     # Evaluate each Premium Front Door profile
-    Write-ZtProgress -Activity $activity -Status 'Evaluating bot protection configuration'
+    Write-ZtProgress -Activity $activity -Status 'Avaliando configuração de proteção contra bots'
 
     $evaluationResults = @()
 
@@ -294,10 +294,10 @@ resources
     $passed = ($failedItems.Count -eq 0) -and ($passedItems.Count -gt 0)
 
     if ($passed) {
-        $testResultMarkdown = "✅ Bot protection ruleset is enabled and assigned to Azure Front Door WAF, providing protection against malicious bot traffic.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O conjunto de regras de proteção contra bots está habilitado e atribuído ao WAF do Azure Front Door, fornecendo proteção contra tráfego de bots maliciosos.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Bot protection ruleset is not enabled or not assigned to Azure Front Door WAF, leaving web applications vulnerable to automated attacks and malicious bots.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O conjunto de regras de proteção contra bots não está habilitado ou não está atribuído ao WAF do Azure Front Door, deixando as aplicações web vulneráveis a ataques automatizados e bots maliciosos.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -309,13 +309,13 @@ resources
     $portalSubscriptionBaseLink = 'https://portal.azure.com/#resource/subscriptions'
     $portalResourceBaseLink = 'https://portal.azure.com/#resource'
 
-    $mdInfo = "`n## [Azure Front Door WAF bot protection status]($portalFrontDoorBrowseLink)`n`n"
+    $mdInfo = "`n## [Status de proteção contra bots do WAF do Azure Front Door]($portalFrontDoorBrowseLink)`n`n"
 
     # Premium profiles table
     if ($evaluationResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-| Subscription | Profile name | SKU | WAF policy | Bot protection enabled | Rule set version | Rule set action | Domains protected | Status |
+| Assinatura | Nome do perfil | SKU | Política de WAF | Proteção contra bots habilitada | Versão do conjunto de regras | Ação do conjunto de regras | Domínios protegidos | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 {0}
 
@@ -324,7 +324,7 @@ resources
         foreach ($result in $evaluationResults) {
             $subscriptionLink = "[$(Get-SafeMarkdown $result.SubscriptionName)]($portalSubscriptionBaseLink/$($result.SubscriptionId)/overview)"
             $profileLink = "[$(Get-SafeMarkdown $result.ProfileName)]($portalResourceBaseLink$($result.ProfileId)/securityPolicies)"
-            $statusText = if ($result.Status -eq 'Pass') { '✅ Pass' } else { '❌ Fail' }
+            $statusText = if ($result.Status -eq 'Pass') { '✅ Aprovado' } else { '❌ Reprovado' }
 
             $tableRows += "| $subscriptionLink | $profileLink | $($result.SkuName) | $(Get-SafeMarkdown $result.WAFPolicyName) | $($result.BotManagerEnabled) | $($result.RuleSetVersion) | $($result.RuleSetAction) | $($result.DomainsProtected) | $statusText |`n"
         }
@@ -334,11 +334,11 @@ resources
 
     # Standard SKU profiles table (if any)
     if ($skippedResults.Count -gt 0) {
-        $mdInfo += "`n### Standard SKU profiles (Skipped - bot protection not available)`n`n"
+        $mdInfo += "`n### Perfis com SKU Standard (Ignorados — proteção contra bots não disponível)`n`n"
 
         $skippedTableRows = ""
         $skippedFormatTemplate = @'
-| Subscription | Profile name | SKU | Status |
+| Assinatura | Nome do perfil | SKU | Status |
 | :--- | :--- | :--- | :--- |
 {0}
 
@@ -348,27 +348,27 @@ resources
             $subscriptionLink = "[$(Get-SafeMarkdown $result.SubscriptionName)]($portalSubscriptionBaseLink/$($result.SubscriptionId)/overview)"
             $profileLink = "[$(Get-SafeMarkdown $result.ProfileName)]($portalResourceBaseLink$($result.ProfileId)/overview)"
 
-            $skippedTableRows += "| $subscriptionLink | $profileLink | $($result.SkuName) | Skipped - Standard SKU |`n"
+            $skippedTableRows += "| $subscriptionLink | $profileLink | $($result.SkuName) | Ignorado — SKU Standard |`n"
         }
 
         $mdInfo += $skippedFormatTemplate -f $skippedTableRows
     }
 
     # Summary
-    $mdInfo += "**Summary:**`n`n"
-    $mdInfo += "- Total Azure Front Door Premium profiles evaluated: $($evaluationResults.Count)`n"
-    $mdInfo += "- Profiles with bot protection enabled: $($passedItems.Count)`n"
-    $mdInfo += "- Profiles without bot protection: $($failedItems.Count)`n"
-    $mdInfo += "- Standard SKU profiles (skipped): $($skippedResults.Count)`n"
+    $mdInfo += "**Resumo:**`n`n"
+    $mdInfo += "- Total de perfis Premium do Azure Front Door avaliados: $($evaluationResults.Count)`n"
+    $mdInfo += "- Perfis com proteção contra bots habilitada: $($passedItems.Count)`n"
+    $mdInfo += "- Perfis sem proteção contra bots: $($failedItems.Count)`n"
+    $mdInfo += "- Perfis com SKU Standard (ignorados): $($skippedResults.Count)`n"
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
 
     #endregion Report Generation
 
     $params = @{
         TestId = '26884'
-        Title  = 'Bot protection ruleset is enabled and assigned in Azure Front Door WAF'
+        Title  = 'O conjunto de regras de proteção contra bots está habilitado e atribuído no WAF do Azure Front Door'
         Status = $passed
         Result = $testResultMarkdown
     }

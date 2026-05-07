@@ -5,16 +5,16 @@
 
 function Test-Assessment-21879 {
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'Medium',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P2'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21879,
     	Title = 'Todas as políticas de atribuição de pacotes de acesso que se aplicam a usuários externos exigem aprovação',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

@@ -5,15 +5,15 @@
 
 function Test-Assessment-21897{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'High',
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Alto',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21897,
     	Title = 'Toda atribuição de aplicativo e associação de grupo é governada',
-    	UserImpact = 'High'
+    	UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()

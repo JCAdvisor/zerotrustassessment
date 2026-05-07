@@ -1,8 +1,7 @@
-Without private DNS configuration, remote users can't resolve internal domain names through Microsoft Entra Private Access and must rely on public DNS servers. Threat actors can exploit this gap through DNS spoofing attacks that redirect users to malicious sites, enabling credential harvesting and data exfiltration. Organizations also lose visibility into DNS queries and can't enforce consistent security policies.
+Sem configuração de DNS privado, usuários remotos não conseguem resolver nomes de domínio internos por meio do Microsoft Entra Private Access e precisam confiar em servidores DNS públicos. Agentes de ameaça podem explorar essa falha por meio de ataques de spoofing DNS que redirecionam usuários para sites maliciosos, permitindo a captura de credenciais e exfiltração de dados. As organizações também perdem visibilidade sobre consultas DNS e não conseguem aplicar políticas de segurança consistentes.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure private DNS for internal name resolution](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-quick-access?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-private-dns-suffixes)
+- [Configure DNS privado para resolução de nomes internos](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-quick-access?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#add-private-dns-suffixes)
 <!--- Results --->
 %TestResult%
-

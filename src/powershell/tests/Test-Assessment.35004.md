@@ -1,8 +1,7 @@
-Labels must be published by using label policies before users can apply them to items, such as files, emails, and meetings. Label policies define which users receive which labels, set default labeling behavior, and other labeling requirements. Without published policies, sensitivity labels remain unavailable to users.
+Os rotulos devem ser publicados por meio de politicas de rotulo antes que os usuarios possam aplica-los a itens, como arquivos, emails e reunioes. As politicas de rotulo definem quais usuarios recebem quais rotulos, estabelecem o comportamento padrao de rotulagem e outros requisitos de rotulagem. Sem politicas publicadas, os rotulos de sensibilidade permanecem indisponiveis para os usuarios.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Create and configure sensitivity labels and their policies](https://learn.microsoft.com/purview/create-sensitivity-labels?tabs=classic-label-scheme&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
+- [Criar e configurar rotulos de sensibilidade e suas politicas](https://learn.microsoft.com/purview/create-sensitivity-labels?tabs=classic-label-scheme&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
 <!--- Results --->
 %TestResult%
-

@@ -1,14 +1,14 @@
-Se os perfis de Wi-Fi não forem configurados e atribuídos corretamente, os utilizadores podem ligar-se de forma insegura ou não conseguir ligar-se a redes fidedignas, expondo os dados corporativos a interceção ou acesso não autorizado. Sem uma gestão centralizada, os dispositivos dependem da configuração manual, aumentando o risco de configuração incorreta, autenticação fraca e ligação a redes não fidedignas.
+Se os perfis de Wi-Fi não estiverem devidamente configurados e atribuídos, os usuários podem se conectar de forma insegura ou não conseguir se conectar a redes confiáveis, expondo dados corporativos à interceptação ou acesso não autorizado. Sem gerenciamento centralizado, os dispositivos dependem de configuração manual, aumentando o risco de má configuração, autenticação fraca e conexão a redes maliciosas.
 
-A gestão centralizada de perfis de Wi-Fi para dispositivos iOS no Intune garante uma conetividade segura e consistente às redes empresariais. Isto impõe normas de autenticação e encriptação, simplifica a integração e apoia o Zero Trust ao reduzir a exposição a redes não fidedignas.
+Gerenciar centralmente os perfis de Wi-Fi para dispositivos iOS no Intune garante conectividade segura e consistente com redes empresariais. Isso aplica padrões de autenticação e criptografia, simplifica a integração e apoia o Zero Trust ao reduzir a exposição a redes não confiáveis.
 
 **Ação de remediação**
 
-Utilize o Intune para configurar e atribuir perfis de Wi-Fi seguros para dispositivos iOS/iPadOS para impor normas de autenticação e encriptação:
+Use o Intune para configurar e atribuir perfis de Wi-Fi seguros para dispositivos iOS/iPadOS a fim de aplicar padrões de autenticação e criptografia:
 
-- [Implementar perfis de Wi-Fi em dispositivos no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
+- [Implantar perfis de Wi-Fi em dispositivos no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
 
-Para mais informações, consulte:  
-- [Reveja as definições de Wi-Fi disponíveis para dispositivos iOS e iPadOS no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-ios?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+Para mais informações, veja:  
+- [Revisar as configurações de Wi-Fi disponíveis para dispositivos iOS e iPadOS no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-ios?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%

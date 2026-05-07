@@ -1,8 +1,7 @@
-The baseline profile applies the same filtering rules to all users and sessions. Conditional Access integration enables identity-aware filtering that adapts based on user risk, device compliance, location, or group membership. Apply stricter filtering to risky sessions while allowing standard access for verified users on compliant devices, preventing compromised accounts from bypassing security controls.
+O perfil base aplica as mesmas regras de filtragem a todos os usuários e sessões. A integração com o Conditional Access permite filtragem consciente de identidade que se adapta ao risco do usuário, conformidade do dispositivo, localização ou associação a grupos. Aplique filtragem mais rígida a sessões de risco enquanto permite acesso padrão para usuários verificados em dispositivos compatíveis, impedindo que contas comprometidas contornem os controles de segurança.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Link security profiles to Conditional Access policies](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-web-content-filtering?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-and-link-conditional-access-policy)
+- [Vincule perfis de segurança a políticas do Conditional Access](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-web-content-filtering?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-and-link-conditional-access-policy)
 <!--- Results --->
 %TestResult%
-

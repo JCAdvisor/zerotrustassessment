@@ -1,11 +1,10 @@
-Double Key Encryption (DKE) provides an extra layer of protection for highly sensitive data by requiring two keys to decrypt content: one managed by Microsoft and one by the customer. This "hold your own key" approach ensures Microsoft can't decrypt content even with legal compulsion, meeting stringent regulatory requirements for data sovereignty.
+Criptografia de Chave Dupla (DKE) fornece uma camada extra de proteção para dados altamente sensíveis exigindo duas chaves para descriptografar conteúdo: uma gerenciada pela Microsoft e outra pelo cliente. Essa abordagem de "mantenha sua própria chave" garante que a Microsoft não possa descriptografar o conteúdo mesmo com compulsão legal, atendendo a requisitos regulatórios rigorosos de soberania de dados.
 
-However, DKE introduces significant operational complexity including dedicated key service infrastructure, reduced feature compatibility, and increased support burden. Organizations should maintain 1-3 labels reserved for truly mission-critical or heavily regulated data, with documented business justification for each DKE label. Use standard encryption for general business content. Excessive DKE labels (4 or more) create management overhead, user confusion, and reduce collaboration. DKE should never be broadly deployed, as key service unavailability prevents access to business-critical documents.
+No entanto, o DKE introduz complexidade operacional significativa, incluindo infraestrutura de serviço de chave dedicada, compatibilidade reduzida de recursos e aumento do ônus de suporte. As organizações devem manter 1-3 rótulos reservados para dados verdadeiramente críticos da missão ou altamente regulados, com justificativa comercial documentada para cada rótulo DKE. Use criptografia padrão para conteúdo comercial geral. Rótulos DKE excessivos (4 ou mais) criam sobrecarga de gerenciamento, confusão do usuário e reduzem colaboração. DKE nunca deve ser amplamente implantado, pois a indisponibilidade do serviço de chave impede o acesso aos documentos críticos do negócio.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Double Key Encryption](https://learn.microsoft.com/purview/double-key-encryption?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Set up Double Key Encryption](https://learn.microsoft.com/purview/double-key-encryption-setup?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Criptografia de Chave Dupla](https://learn.microsoft.com/purview/double-key-encryption?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar Criptografia de Chave Dupla](https://learn.microsoft.com/purview/double-key-encryption-setup?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

@@ -7,9 +7,9 @@ function Test-Assessment-21817 {
     	Category = 'Gerenciamento de aplicativos',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('P2'),
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Protect engineering systems',
+    	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce'),
     	TestId = 21817,
     	Title = 'A ativação da função de Administrador Global aciona um fluxo de trabalho de aprovação',
@@ -35,7 +35,7 @@ function Test-Assessment-21817 {
         Title              = "A ativação da função de Administrador Global aciona um fluxo de trabalho de aprovação"
         UserImpact         = 'Low'
         Risk               = 'High'
-        ImplementationCost = 'Medium'
+        ImplementationCost = 'Médio'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

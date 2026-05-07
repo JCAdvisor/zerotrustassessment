@@ -5,16 +5,16 @@
 
 function Test-Assessment-21883 {
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Workload'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Accelerate response and remediation',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Acelerar resposta e remediação',
     	TenantType = ('Workforce','External'),
     	TestId = 21883,
     	Title = 'Identidades de Carga de Trabalho configuradas com políticas baseadas em risco',
-    	UserImpact = 'High'
+    	UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
@@ -54,7 +54,7 @@ function Test-Assessment-21883 {
         Title              = "Identidades de Carga de Trabalho configuradas com políticas baseadas em risco"
         UserImpact         = 'Low'
         Risk               = 'High'
-        ImplementationCost = 'Low'
+        ImplementationCost = 'Baixo'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         GraphObjectType    = 'ConditionalAccess'

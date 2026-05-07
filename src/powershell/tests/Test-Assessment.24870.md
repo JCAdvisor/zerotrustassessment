@@ -1,15 +1,15 @@
-Se os perfis de Wi-Fi não forem configurados e atribuídos corretamente, os dispositivos macOS podem não conseguir ligar-se a redes seguras ou ligar-se de forma insegura, expondo os dados corporativos a interceção ou acesso não autorizado. Sem uma gestão centralizada, os dispositivos dependem da configuração manual, aumentando o risco de configuração incorreta, autenticação fraca e ligação a redes não fidedignas. Estas lacunas podem levar à interceção de dados, acesso não autorizado à rede e violações de conformidade.
+Se os perfis de Wi-Fi não estiverem devidamente configurados e atribuídos, dispositivos macOS podem falhar ao se conectar a redes seguras ou se conectar de forma insegura, expondo dados corporativos à interceptação ou acesso não autorizado. Sem gerenciamento centralizado, os dispositivos dependem de configuração manual, aumentando o risco de má configuração, autenticação fraca e conexão a redes maliciosas. Essas lacunas podem levar à interceptação de dados, acesso de rede não autorizado e violações de conformidade.
 
-A gestão centralizada de perfis de Wi-Fi para dispositivos macOS no Intune garante uma conetividade segura e consistente às redes empresariais. Isto impõe normas de autenticação e encriptação, simplifica a integração e apoia o Zero Trust ao reduzir a exposição a redes não fidedignas.
+Gerenciar centralmente perfis de Wi-Fi para dispositivos macOS no Intune garante conectividade segura e consistente com redes empresariais. Isso aplica padrões de autenticação e criptografia, simplifica a integração e apoia o Zero Trust ao reduzir a exposição a redes não confiáveis.
 
 **Ação de remediação**
 
-Utilize o Intune para configurar e atribuir perfis de Wi-Fi seguros para dispositivos macOS para impor normas de autenticação e encriptação:
+Use o Intune para configurar e atribuir perfis de Wi-Fi seguros para dispositivos macOS, a fim de aplicar padrões de autenticação e criptografia:
 
-- [Configurar definições de Wi-Fi para dispositivos macOS no Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
+- [Configurar as configurações de Wi-Fi para dispositivos macOS no Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-configure?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-the-profile)
 
-Para mais informações, consulte:
+Para mais informações, veja:
 
-- [Reveja as definições de Wi-Fi disponíveis para dispositivos macOS no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-macos?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Revisar as configurações de Wi-Fi disponíveis para dispositivos macOS no Microsoft Intune](https://learn.microsoft.com/intune/intune-service/configuration/wi-fi-settings-macos?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%

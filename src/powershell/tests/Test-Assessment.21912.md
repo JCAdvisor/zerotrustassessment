@@ -1,6 +1,6 @@
 ...
 
-**Remediation action**
+**Ação de remediação**
 
 <!--- Results --->
 %TestResult%

@@ -1,16 +1,15 @@
-Without extended retention for Global Secure Access audit and traffic logs, threat actors can operate beyond the default 30-day retention window, knowing that their activities are automatically purged before detection occurs. Security investigations often require historical analysis spanning weeks or months to identify compromise vectors, lateral movement patterns, and data exfiltration channels.
+Sem retenção estendida para auditoria do Global Secure Access e logs de tráfego, atores de ameaça podem operar além da janela de retenção padrão de 30 dias, sabendo que suas atividades são automaticamente apagadas antes da detecção. As investigações de segurança geralmente exigem análise histórica que abrange semanas ou meses para identificar vetores de comprometimento, padrões de movimento lateral e canais de exfiltração de dados.
 
-Without adequate log retention:
+Sem retenção adequada de logs:
 
-- Security teams can't establish baseline behavior patterns, perform retrospective threat hunting, or correlate network access events across extended timeframes.
-- Organizations subject to regulatory frameworks like [GDPR](https://learn.microsoft.com/compliance/regulatory/gdpr?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci), HIPAA, PCI DSS, and SOX face compliance violations when they're unable to produce audit trails for mandated retention periods.
-- Root cause analysis during incident response is limited, potentially allowing threat actors to maintain persistence while organizations focus on visible symptoms.
+- As equipes de segurança não podem estabelecer padrões de comportamento de linha de base, executar caça de ameaças retrospectiva ou correlacionar eventos de acesso à rede em períodos estendidos.
+- As organizações sujeitas a estruturas regulatórias como [GDPR](https://learn.microsoft.com/compliance/regulatory/gdpr?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci), HIPAA, PCI DSS e SOX enfrentam violações de conformidade quando não conseguem produzir trilhas de auditoria para períodos de retenção obrigatórios.
+- A análise da causa raíz durante a resposta a incidentes é limitada, potencialmente permitindo que atores de ameaça mantenham persistência enquanto as organizações se concentram em sintomas visíveis.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure diagnostic settings with a Log Analytics workspace](https://learn.microsoft.com/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) for an extended retention of 90-730 days, with query capabilities.
-- [Configure Log Analytics workspace retention](https://learn.microsoft.com/azure/azure-monitor/logs/data-retention-archive?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to meet organizational security and compliance requirements (minimum 90 days recommended).
-- [Enable table-level retention](https://learn.microsoft.com/azure/azure-monitor/logs/data-retention-archive?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-table-level-retention) for specific Global Secure Access tables to extend beyond workspace defaults.
+- [Configure as configurações de diagnóstico com um espaço de trabalho do Log Analytics](https://learn.microsoft.com/entra/identity/monitoring-health/howto-integrate-activity-logs-with-azure-monitor-logs?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para uma retenção estendida de 90-730 dias, com recursos de consulta.
+- [Configure a retenção do espaço de trabalho do Log Analytics](https://learn.microsoft.com/azure/azure-monitor/logs/data-retention-archive?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para atender aos requisitos de segurança e conformidade organizacionais (mínimo de 90 dias recomendado).
+- [Ative a retenção em nível de tabela](https://learn.microsoft.com/azure/azure-monitor/logs/data-retention-archive?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-table-level-retention) para tabelas especiais do Global Secure Access para estender além dos padrões do espaço de trabalho.
 <!--- Results --->
 %TestResult%
-

@@ -1,14 +1,13 @@
-Azure Firewall threat intelligence-based filtering alerts on and denies traffic to and from known malicious IP addresses, fully qualified domain names (FQDNs), and URLs sourced from the Microsoft Threat Intelligence feed. When you don't enable threat intelligence in `Alert and deny` mode, Azure Firewall doesn't actively block traffic to known malicious destinations.
+A filtragem baseada em inteligência de ameaça do Azure Firewall alerta e nega o tráfego de e para endereços IP maliciosos conhecidos, nomes de domínio totalmente qualificados (FQDNs) e URLs provenientes do feed de Inteligência de Ameaça da Microsoft. Quando você não ativa a inteligência de ameaça no modo `Alerta e negar`, o Azure Firewall não bloqueia ativamente o tráfego para destinos maliciosos conhecidos.
 
-If you don't enable threat intelligence in `Alert and deny` mode:
+Se você não ativar a inteligência de ameaça no modo `Alerta e negar`:
 
-- Threat actors can communicate with known malicious infrastructure, enabling data exfiltration and command-and-control communication without active blocking.
-- Organizations that use `Alert only` mode can see threat activity in logs but can't prevent connections to known bad destinations.
-- All firewall policy tiers remain exposed to threats that the Microsoft Threat Intelligence feed already identified.
+- Atores de ameaça podem se comunicar com infraestrutura maliciosa conhecida, permitindo exfiltração de dados e comunicação de comando e controle sem bloqueio ativo.
+- As organizações que usam o modo `Apenas alerta` podem ver atividade de ameaça em logs, mas não conseguem impedir conexões com destinos maliciosos conhecidos.
+- Todos os níveis de política de firewall permanecem expostos a ameaças que o feed de Inteligência de Ameaça da Microsoft já identificou.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure threat intelligence settings in Azure Firewall Manager](https://learn.microsoft.com/azure/firewall-manager/threat-intelligence-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to set the threat intelligence mode to `Alert and deny` in the firewall policy.
+- [Configure as configurações de inteligência de ameaça no Gerenciador de Firewall do Azure](https://learn.microsoft.com/azure/firewall-manager/threat-intelligence-settings?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para definir o modo de inteligência de ameaça como `Alerta e negar` na política de firewall.
 <!--- Results --->
 %TestResult%
-

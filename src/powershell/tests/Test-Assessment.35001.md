@@ -1,19 +1,19 @@
-Microsoft Rights Management Service (RMS) is the protection technology that enforces encryption for sensitivity labels and information protection policies. When users access encrypted content, their applications must authenticate to the RMS service (App ID: `00000012-0000-0000-c000-000000000000`) to decrypt the content. If Conditional Access policies incorrectly block or restrict this authentication - for example, by requiring multi-factor authentication (MFA), device compliance, or specific network locations - users will be unable to open encrypted emails, documents, or files protected by sensitivity labels.
-This is most notable when trying to collaborate on MIP protected content from an external tenant to the source tenant.
-The RMS service should be explicitly excluded from Conditional Access policies that enforce authentication controls, as the application itself is handling the decryption and the user has already authenticated through their primary client application. Blocking RMS authentication prevents the decryption process and breaks information protection workflows across Microsoft 365 services including Outlook, Word, Excel, PowerPoint, Teams, and SharePoint.
+O Microsoft Rights Management Service (RMS) e a tecnologia de protecao que aplica criptografia para rotulos de sensibilidade e politicas de protecao de informacoes. Quando usuarios acessam conteudo criptografado, seus aplicativos precisam se autenticar no servico RMS (App ID: `00000012-0000-0000-c000-000000000000`) para descriptografar o conteudo. Se as politicas de Acesso Condicional bloquearem ou restringirem essa autenticacao de forma incorreta, por exemplo exigindo autenticacao multifator (MFA), conformidade do dispositivo ou localizacoes de rede especificas, os usuarios nao conseguirao abrir emails, documentos ou arquivos criptografados protegidos por rotulos de sensibilidade.
+Isso fica mais evidente ao colaborar em conteudo protegido por MIP entre um locatario externo e o locatario de origem.
+O servico RMS deve ser explicitamente excluido de politicas de Acesso Condicional que aplicam controles de autenticacao, pois o proprio aplicativo realiza a descriptografia e o usuario ja foi autenticado no aplicativo cliente principal. Bloquear a autenticacao do RMS impede o processo de descriptografia e interrompe fluxos de protecao da informacao nos servicos do Microsoft 365, incluindo Outlook, Word, Excel, PowerPoint, Teams e SharePoint.
 
-**Remediation action**
+**Ação de remediação**
 
-To exclude RMS from Conditional Access policies:
-1. Navigate to [Microsoft Entra admin center > Entra ID > Conditional Access > Policies](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Policies)
-2. Select the policy that is blocking RMS
-3. Under Target resources > All resources (formerly 'All cloud apps')
-4. Under Exclude, select 'Select resources' and add "Microsoft Rights Management Services" (App ID: `00000012-0000-0000-c000-000000000000`)
-5. Save the policy
+Para excluir o RMS das politicas de Acesso Condicional:
+1. Acesse [Centro de administracao do Microsoft Entra > Entra ID > Acesso Condicional > Politicas](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Policies)
+2. Selecione a politica que esta bloqueando o RMS
+3. Em Recursos de destino > Todos os recursos (anteriormente "Todos os aplicativos de nuvem")
+4. Em Excluir, selecione "Selecionar recursos" e adicione "Microsoft Rights Management Services" (App ID: `00000012-0000-0000-c000-000000000000`)
+5. Salve a politica
 
-- [Microsoft Entra configuration for Azure Information Protection](https://learn.microsoft.com/purview/encryption-azure-ad-configuration)
-- [Conditional Access policies and encrypted documents](https://learn.microsoft.com/purview/encryption-azure-ad-configuration#conditional-access-policies-and-encrypted-documents)
-- [Conditional Access: Cloud apps, actions, and authentication context](https://learn.microsoft.com/entra/identity/conditional-access/concept-conditional-access-cloud-apps)
+- [Configuracao do Microsoft Entra para Azure Information Protection](https://learn.microsoft.com/purview/encryption-azure-ad-configuration)
+- [Politicas de Acesso Condicional e documentos criptografados](https://learn.microsoft.com/purview/encryption-azure-ad-configuration#conditional-access-policies-and-encrypted-documents)
+- [Acesso Condicional: aplicativos de nuvem, acoes e contexto de autenticacao](https://learn.microsoft.com/entra/identity/conditional-access/concept-conditional-access-cloud-apps)
 
 <!--- Results --->
 %TestResult%

@@ -1,8 +1,7 @@
-OCR (optical character recognition) extends sensitive information type and trainable classifier detection to images across Exchange, SharePoint, OneDrive, Teams, and endpoint devices. Without OCR, DLP policies, and auto-labeling policies can't scan image-based content, scanned documents, screenshots, and invoices, leaving sensitive data in images unprotected. OCR requires Azure pay-as-you-go billing for Microsoft Syntex, and is configured at the tenant level.
+OCR (reconhecimento ótico de caracteres) estende a detecção de tipo de informação sensível e classificador treinável para imagens no Exchange, SharePoint, OneDrive, Teams e dispositivos de endpoint. Sem OCR, as políticas DLP e as políticas de aplicação automática de rótulos não podem digitalizar o conteúdo baseado em imagem, documentos digitalizados, screenshots e faturas, deixando dados sensíveis em imagens desprotegidos. OCR requer faturamento de pagamento conforme uso do Azure para o Microsoft Syntex e é configurado no nível do locatário.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Learn about and configure optical character recognition in Microsoft Purview](https://learn.microsoft.com/purview/ocr-learn-about?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Saiba mais sobre e configure o reconhecimento ótico de caracteres no Microsoft Purview](https://learn.microsoft.com/purview/ocr-learn-about?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

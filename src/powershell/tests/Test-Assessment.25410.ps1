@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Validates that web content filtering policies are configured and enforced in Global Secure Access.
+    Valida se as políticas de filtragem de conteúdo da web estão configuradas e aplicadas no Global Secure Access.
 
 .DESCRIPTION
-    This test checks if web content filtering policies exist and are properly linked to security profiles
-    that are either assigned to Conditional Access policies or configured in the Baseline Profile which
-    applies to all internet traffic. Web content filtering provides protection against malicious websites,
-    phishing sites, and inappropriate content categories at the network edge.
+    Este teste verifica se as políticas de filtragem de conteúdo da web existem e estão adequadamente vinculadas a perfis de segurança
+    que são atribuídos a políticas do Conditional Access ou configurados no Perfil de Linha de Base, que
+    se aplica a todo o tráfego de internet. A filtragem de conteúdo da web fornece proteção contra sites maliciosos,
+    sites de phishing e categorias de conteúdo inadequado na borda da rede.
 
 .NOTES
     Test ID: 25410
@@ -17,17 +17,17 @@
 
 function Test-Assessment-25410 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25410,
-    	Title = 'Web content filtering policies are linked to security profiles',
-    	UserImpact = 'Low'
+    	Title = 'As políticas de filtragem de conteúdo web estão vinculadas a perfis de segurança',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -36,12 +36,12 @@ function Test-Assessment-25410 {
     [int]$BASELINE_PROFILE_PRIORITY = 65000
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Global Secure Access web content filtering'
-    Write-ZtProgress -Activity $activity -Status 'Getting filtering policies'
+    $activity = 'Verificando filtragem de conteúdo da web do Global Secure Access'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de filtragem'
 
-    # Query Q1: List all web content filtering policies
+        # Consulta Q1: List all web content filtering policies
     $filteringPolicies = $null
     $errorMsg = $null
     try {
@@ -52,12 +52,12 @@ function Test-Assessment-25410 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to get filtering policies: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao obter políticas de filtragem: $_" -Tag Test -Level Warning
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Getting security profiles'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo perfis de segurança'
 
-    # Query Q2: List all security profiles with linked policies and CA policies
+        # Consulta Q2: List all security profiles with linked policies and CA policies
     $securityProfiles = $null
     try {
         $securityProfiles = Invoke-ZtGraphRequest `
@@ -69,7 +69,7 @@ function Test-Assessment-25410 {
         if (-not $errorMsg) {
             $errorMsg = $_
         }
-        Write-PSFMessage "Failed to get security profiles: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao obter perfis de segurança: $_" -Tag Test -Level Warning
     }
 
     # Extract values
@@ -90,7 +90,7 @@ function Test-Assessment-25410 {
         # Investigate: Cannot query API
         $passed = $false
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine web content filtering status due to API connection failure or insufficient permissions.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status da filtragem de conteúdo web devido a falha na conexão com a API ou permissões insuficientes.`n`n%TestResult%"
     }
     # Check if both policies and profiles exist
     elseif ($policies.Count -gt 0 -and $profiles.Count -gt 0) {
@@ -120,13 +120,13 @@ function Test-Assessment-25410 {
         # Determine pass/fail
         if ($baselineHasWCF -or $nonBaselineProfilesWithWCFandCA.Count -gt 0) {
             $passed = $true
-            $testResultMarkdown = "✅ Web content filtering policies are configured and enforced - either through security profiles assigned to Conditional Access policies or through the Baseline Profile which applies to all internet traffic.`n`n%TestResult%"
+            $testResultMarkdown = "✅ As políticas de filtragem de conteúdo web estão configuradas e aplicadas — seja por meio de perfis de segurança atribuídos a políticas de Acesso Condicional ou pelo Perfil de Linha de Base que se aplica a todo o tráfego de internet.`n`n%TestResult%"
         }
     }
 
     # Default failure message (if not API error and not passed)
     if (-not $errorMsg -and -not $passed) {
-        $testResultMarkdown = "❌ Web content filtering is not properly configured - either no policies exist, policies are not linked to security profiles, or security profiles with filtering policies are not enforced (no CA policy assignment and not using Baseline Profile).`n`n%TestResult%"
+        $testResultMarkdown = "❌ A filtragem de conteúdo web não está configurada corretamente — não existem políticas, as políticas não estão vinculadas a perfis de segurança, ou perfis de segurança com políticas de filtragem não estão aplicados (sem atribuição de política de CA e sem uso do Perfil de Linha de Base).`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -135,14 +135,14 @@ function Test-Assessment-25410 {
 
     # Table 1: Web Content Filtering Policies
     if ($policies.Count -gt 0) {
-        $table1Title = 'Web Content Filtering Policies'
+        $table1Title = 'Políticas de filtragem de conteúdo web'
         $table1Link = 'https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/WebFilteringPolicy.ReactView'
 
         $table1Template = @'
 
 ## [{0}]({1})
 
-| Policy Name | Action | Rules Count | Last Modified |
+| Nome da política | Ação | Qtd. de regras | Última modificação |
 | :---------- | :----- | ----------: | :------------ |
 {2}
 '@
@@ -171,14 +171,14 @@ function Test-Assessment-25410 {
 
     # Table 2: Security Profiles with Linked Policies
     if ($profiles.Count -gt 0) {
-        $table2Title = 'Security Profiles with Linked Policies'
+        $table2Title = 'Perfis de segurança com políticas vinculadas'
         $table2Link = 'https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/FilteringPolicyProfiles.ReactView'
 
         $table2Template = @'
 
 ## [{0}]({1})
 
-| Profile Name | State | Priority | Filtering Policies Linked | CA Policies Assigned | Is Baseline |
+| Nome do perfil | Estado | Prioridade | Políticas de filtragem vinculadas | Políticas de CA atribuídas | É linha de base |
 | :----------- | :---- | -------: | :----------------------- | -------------------: | :---------- |
 {2}
 '@
@@ -189,7 +189,7 @@ function Test-Assessment-25410 {
             $profileId = $securityProfile.id
             $state = $securityProfile.state
             $priority = $securityProfile.priority
-            $isBaseline = if ($priority -eq $BASELINE_PROFILE_PRIORITY) { 'Yes' } else { 'No' }
+            $isBaseline = if ($priority -eq $BASELINE_PROFILE_PRIORITY) { 'Sim' } else { 'Não' }
 
             # Create profile blade link
             $safeProfileName = Get-SafeMarkdown $profileName
@@ -205,10 +205,10 @@ function Test-Assessment-25410 {
             $linkedPolicyNames = if ($filteringPolicyLinks.Count -gt 0) {
                 ($filteringPolicyLinks | ForEach-Object { Get-SafeMarkdown $_.policy.name }) -join ', '
             } else {
-                'None'
+                'Nenhuma'
             }
 
-            $caCount = if ($isBaseline -eq 'Yes') {
+            $caCount = if ($isBaseline -eq 'Sim') {
                 'N/A'
             } else {
                 $securityProfile.conditionalAccessPolicies.Count
@@ -235,14 +235,14 @@ function Test-Assessment-25410 {
     }
 
     if ($caPolicies.Count -gt 0) {
-        $table3Title = 'Conditional Access Policies Assigned to Security Profiles'
+        $table3Title = 'Políticas de Acesso Condicional atribuídas a perfis de segurança'
         $table3Link = 'https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Policies'
 
         $table3Template = @'
 
 ## [{0}]({1})
 
-| CA Policy Name | Security Profile |
+| Nome da política de CA | Perfil de segurança |
 | :------------- | :--------------- |
 {2}
 '@
@@ -262,7 +262,7 @@ function Test-Assessment-25410 {
 
     $params = @{
         TestId = '25410'
-        Title  = 'Internet traffic is protected by web content filtering policies in Global Secure Access'
+        Title  = 'O tráfego de internet é protegido por políticas de filtragem de conteúdo web no Acesso Seguro Global'
         Status = $passed
         Result = $testResultMarkdown
     }

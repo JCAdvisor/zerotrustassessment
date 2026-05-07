@@ -1,30 +1,30 @@
 <#
 .SYNOPSIS
-    Conditional Access policies don't exclude Rights Management workloads
+    As políticas de Acesso Condicional não excluem cargas de trabalho do Gerenciamento de Direitos
 #>
 
 function Test-Assessment-35001 {
     [ZtTest(
         Category = 'Entra',
-        ImplementationCost = 'Low',
+        ImplementationCost = 'Baixo',
         Service = ('Graph'),
         MinimumLicense = ('Microsoft 365 E5'),
-        Pillar = 'Data',
-        RiskLevel = 'High',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
         SfiPillar = '',
         TenantType = ('Workforce','External'),
         TestId = 35001,
-        Title = 'Conditional Access policies don''t exclude Rights Management workloads',
-        UserImpact = 'Low'
+        Title = 'As políticas de Acesso Condicional não excluem cargas de trabalho do Gerenciamento de Direitos',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Conditional Access RMS Exclusions'
-    Write-ZtProgress -Activity $activity -Status 'Getting Conditional Access policies'
+    $activity = 'Verificando exclusões de RMS de Acesso Condicional'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de Acesso Condicional'
 
     $rmsAppId = '00000012-0000-0000-c000-000000000000'
     $blockingPolicies = @()
@@ -32,12 +32,12 @@ function Test-Assessment-35001 {
     $errorMsg = $null
 
     try {
-        # Query: Get all enabled Conditional Access policies
+            # Query: Get all enabled Conditional Access policies
         $policies = Get-ZtConditionalAccessPolicy | Where-Object { $_.state -eq 'enabled' }
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying Conditional Access policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar políticas de Acesso Condicional: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -64,15 +64,15 @@ function Test-Assessment-35001 {
 
     #region Report Generation
     if ($errorMsg) {
-        $testResultMarkdown = "❌ Unable to determine RMS exclusion status due to error: $errorMsg"
+        $testResultMarkdown = "❌ Não foi possível determinar o status de exclusão de RMS devido a erro: $errorMsg"
     }
     elseif ($passed) {
-        $testResultMarkdown = "✅ Microsoft Rights Management Service (RMS) is excluded from Conditional Access policies that enforce authentication controls."
+        $testResultMarkdown = "✅ O Microsoft Rights Management Service (RMS) está excluído das políticas de Acesso Condicional que aplicam controles de autenticação."
     }
     else {
-        $testResultMarkdown = "❌ Microsoft Rights Management Service (RMS) is blocked or restricted by one or more Conditional Access policies.`n`n"
-        $testResultMarkdown += "**Policies Affecting RMS:**`n`n"
-        $testResultMarkdown += "| Policy Name | State | RMS Targeted | RMS Excluded | Grant Controls | Session Controls |`n"
+        $testResultMarkdown = "❌ O Microsoft Rights Management Service (RMS) está bloqueado ou restrito por uma ou mais políticas de Acesso Condicional.`n`n"
+        $testResultMarkdown += "**Políticas que afetam o RMS:**`n`n"
+        $testResultMarkdown += "| Nome da Política | Estado | RMS Direcionado | RMS Excluído | Controles de Concessão | Controles de Sessão |`n"
         $testResultMarkdown += "| :--- | :--- | :--- | :--- | :--- | :--- |`n"
 
         foreach ($policy in $blockingPolicies) {
@@ -138,7 +138,7 @@ function Test-Assessment-35001 {
 
     $testResultDetail = @{
         TestId             = '35001'
-        Title              = 'Conditional Access RMS Exclusions'
+        Title              = 'Exclusões de RMS de Acesso Condicional'
         Status             = $passed
         Result             = $testResultMarkdown
     }

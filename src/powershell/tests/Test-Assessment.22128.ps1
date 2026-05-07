@@ -97,7 +97,7 @@ function Test-Assessment-22128 {
         Title              = "Usuários convidados não possuem funções de diretório altamente privilegiadas atribuídas"
         UserImpact         = 'Low'
         Risk               = 'High'
-        ImplementationCost = 'Low'
+        ImplementationCost = 'Baixo'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

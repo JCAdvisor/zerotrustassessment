@@ -1,17 +1,17 @@
-When Azure DDoS Protection is enabled for public IP addresses, diagnostic logging provides critical visibility into attack patterns, mitigation actions, and traffic flow data. Without diagnostic logs enabled, security teams lack the observability needed to understand attack characteristics, validate mitigation effectiveness, and perform post-incident analysis. Azure DDoS Protection generates three categories of diagnostic logs: DDoSProtectionNotifications (alerts when attacks are detected and when mitigation starts/stops), DDoSMitigationFlowLogs (detailed flow-level information during active attack mitigation), and DDoSMitigationReports (comprehensive attack summaries with traffic statistics and mitigation actions). These logs are essential for security operations to detect ongoing attacks, investigate incidents, meet compliance requirements, and tune protection policies. The absence of logging prevents correlation of network events with other security telemetry, eliminating the ability to construct attack timelines during incident investigations. Furthermore, compliance frameworks such as PCI-DSS, HIPAA, and SOC 2 require organizations to maintain audit logs of network security events, and the lack of DDoS diagnostic logging creates audit failures.
+Quando a proteção Azure DDoS está habilitada para endereços IP públicos, o log de diagnóstico fornece visibilidade crítica sobre padrões de ataque, ações de mitigação e fluxo de tráfego. Sem esses logs, as equipes de segurança perdem observabilidade para entender ataques, validar a mitigação e conduzir análise pós-incidente. A proteção DDoS gera notificações, logs de fluxo de mitigação e relatórios de mitigação, todos essenciais para detecção, investigação, conformidade e ajuste das políticas de proteção.
 
-**Remediation action**
+**Ação de remediação**
 
-Configure diagnostic settings for DDoS-protected public IP addresses
-- [Configure Azure DDoS Protection diagnostic logging](https://learn.microsoft.com/en-us/azure/ddos-protection/diagnostic-logging)
+Configure as definições de diagnóstico para IPs públicos protegidos por DDoS
+- [Configurar log de diagnóstico do Azure DDoS Protection](https://learn.microsoft.com/en-us/azure/ddos-protection/diagnostic-logging)
 
-View and configure DDoS diagnostic logs in the Azure portal
-- [View and configure DDoS diagnostic logging](https://learn.microsoft.com/en-us/azure/ddos-protection/diagnostic-logging#configure-ddos-diagnostic-logs)
+Visualize e configure logs de diagnóstico de DDoS no portal do Azure
+- [Visualizar e configurar logs de diagnóstico de DDoS](https://learn.microsoft.com/en-us/azure/ddos-protection/diagnostic-logging#configure-ddos-diagnostic-logs)
 
-Create a Log Analytics workspace for storing DDoS Protection logs
-- [Create a Log Analytics workspace](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace)
+Crie um workspace do Log Analytics para armazenar logs da proteção DDoS
+- [Criar um workspace do Log Analytics](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace)
 
-Monitor and analyze DDoS attack telemetry
+Monitore e analise a telemetria de ataques DDoS
 - [Azure DDoS Protection monitoring and logging](https://learn.microsoft.com/en-us/azure/ddos-protection/ddos-protection-overview#monitoring-and-logging)
 
 View and analyze DDoS logs for incident investigation

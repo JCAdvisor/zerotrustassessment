@@ -1,11 +1,10 @@
-Setting a default label ensures a base level of protection settings for all new and edited items that support sensitivity labels, and for new containers such as Teams. Users can manually override the label if necessary, and other labeling methods such as auto-labeling can replace the default label with a label that has a higher sensitivity level. Setting a default sensitivity label extends your labeling reach and reduces decision fatigue for users, ensuring content has at least a minimum level of protection.
+Definir um rótulo padrão garante um nível de base de configurações de proteção para todos os itens novos e editados que suportam rótulos de sensibilidade, e para novos contêneres, como Teams. Os usuários podem substitui manualmente o rótulo se necessário, e outros métodos de rotulagem, como rotulagem automática, podem substituir o rótulo padrão por um rótulo com um nível de sensibilidade mais alto. Definir um rótulo de sensibilidade padrão estende seu alcance de rotulagem e reduz a fadiga de decisão para os usuários, garantindo que o conteúdo tenha pelo menos um nível mínimo de proteção.
 
-Unlabeled content might bypass data loss prevention (DLP) policies, and other protection solutions that rely on label detection. If appropriate, set a different default sensitivity label for unlabeled documents and Loop components and pages, emails and meeting invites, new containers, and also a default label for Power BI content.
+O conteúdo sem rótulo pode contornar políticas de prevenção de perda de dados (DLP) e outras soluções de proteção que dependem de detecção de rótulo. Se apropriado, defina um rótulo de sensibilidade padrão diferente para documentos sem rótulo e componentes e páginas Loop, emails e convites de reunião, novos contêneres e também um rótulo padrão para conteúdo do Power BI.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Publish sensitivity labels by creating a label policy](https://learn.microsoft.com/purview/create-sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
-- [Default label policy for Fabric and Power BI](https://learn.microsoft.com/fabric/governance/sensitivity-label-default-label-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Publicar rótulos de sensibilidade criando uma política de rótulo](https://learn.microsoft.com/purview/create-sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy)
+- [Política de rótulo padrão para Fabric e Power BI](https://learn.microsoft.com/fabric/governance/sensitivity-label-default-label-policy?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

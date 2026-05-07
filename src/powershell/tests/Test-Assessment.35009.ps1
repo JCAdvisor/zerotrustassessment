@@ -1,30 +1,30 @@
 ﻿<#
 .SYNOPSIS
-    Co-authoring is enabled for encrypted documents
+    A coautoria está habilitada para documentos criptografados
 #>
 
 function Test-Assessment-35009 {
     [ZtTest(
-    	Category = 'Sensitivity Labels',
-    	ImplementationCost = 'Low',
+        Category = 'Rótulos de sensibilidade',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E5'),
     	Service = ('SecurityCompliance'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Low',
-    	SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Baixo',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 35009,
-    	Title = 'Co-authoring is enabled for files encrypted with sensitivity labels',
-    	UserImpact = 'High'
+        Title = 'A coautoria está habilitada para arquivos criptografados com rótulos de sensibilidade',
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking co-authoring is enabled for encrypted documents"
-    Write-ZtProgress -Activity $activity -Status "Getting policy configuration"
+    $activity = "Verificando se a coautoria está habilitada para documentos criptografados"
+    Write-ZtProgress -Activity $activity -Status "Obtendo configuração de política"
 
     $cmdletFailed = $false
 
@@ -33,7 +33,7 @@ function Test-Assessment-35009 {
         $policyConfig = Get-PolicyConfig -ErrorAction Stop
     }
     catch {
-        Write-PSFMessage "Failed to retrieve policy configuration: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar configuração de política: $_" -Tag Test -Level Warning
         $cmdletFailed = $true
     }
 
@@ -50,15 +50,15 @@ function Test-Assessment-35009 {
         # Cmdlet failed - mark as Investigate
         $passed = $false
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Policy configuration exists but EnableLabelCoauth setting cannot be determined.`n`n"
+        $testResultMarkdown = "⚠️ A configuração de política existe, mas a configuração EnableLabelCoauth não pode ser determinada.`n`n"
     }
     elseif ($enableLabelCoauth -eq $true) {
         $passed = $true
-        $testResultMarkdown = "✅ Co-authoring is enabled for encrypted documents with sensitivity labels.`n`n%TestResult%"
+        $testResultMarkdown = "✅ A coautoria está habilitada para documentos criptografados com rótulos de sensibilidade.`n`n%TestResult%"
     }
     else{
         $passed = $false
-        $testResultMarkdown = "❌ Co-authoring is disabled for encrypted documents.`n`n%TestResult%"
+        $testResultMarkdown = "❌ A coautoria está desabilitada para documentos criptografados.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -67,10 +67,10 @@ function Test-Assessment-35009 {
 
     if (-not $cmdletFailed) {
         $reportDetails = ""
-        $reportDetails += "`n`n## Configuration Details`n`n"
-        $reportDetails += "| Setting | Status |`n"
+        $reportDetails += "`n`n## Detalhes de configuração`n`n"
+        $reportDetails += "| Configuração | Status |`n"
         $reportDetails += "| :------ | :----- |`n"
-        $statusDisplay = if ($enableLabelCoauth -eq $true) { '✅ Enabled' } elseif ($enableLabelCoauth -eq $false) { '❌ Disabled' } else { '-' }
+        $statusDisplay = if ($enableLabelCoauth -eq $true) { '✅ Habilitado' } elseif ($enableLabelCoauth -eq $false) { '❌ Desabilitado' } else { '-' }
         $reportDetails += "| EnableLabelCoauth | $statusDisplay |`n"
 
         $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $reportDetails
@@ -80,7 +80,7 @@ function Test-Assessment-35009 {
 
     $params = @{
         TestId = '35009'
-        Title  = 'Co-Authoring Enabled for Encrypted Documents'
+        Title  = 'Coautoria habilitada para documentos criptografados'
         Status = $passed
         Result = $testResultMarkdown
     }

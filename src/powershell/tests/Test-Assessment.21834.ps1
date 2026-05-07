@@ -6,9 +6,9 @@ function Test-Assessment-21834 {
     [ZtTest(
     	Category = 'Controle de acesso',
     	ImplementationCost = 'Baixo',
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Baixo',
-    	SfiPillar = 'Protect identities and secrets',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 21834,
     	Title = 'Conta de sincronização do diretório restrita a um local nomeado específico',

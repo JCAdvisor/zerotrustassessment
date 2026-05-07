@@ -6,16 +6,16 @@
 
 function Test-Assessment-21896 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21896,
     	Title = 'Entidades de serviço não possuem certificados ou credenciais associadas a elas',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -124,7 +124,7 @@ function Test-Assessment-21896 {
         Title              = "Entidades de serviço não possuem certificados ou credenciais associadas a elas"
         UserImpact         = 'Low'
         Risk               = 'Medium'
-        ImplementationCost = 'Medium'
+        ImplementationCost = 'Médio'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

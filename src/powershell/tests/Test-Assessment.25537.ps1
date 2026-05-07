@@ -1,41 +1,39 @@
 
 <#
  .SYNOPSIS
-     Validates Threat intelligence is Enabled in Deny Mode on Azure Firewall.
+     Valida se a inteligência de ameaça está Ativada no Modo Negar no Azure Firewall.
  .DESCRIPTION
-     This test validates that Azure Firewall Policies have Threat Intelligence enabled in Deny mode.
-     Checks all firewall policies in the subscription and reports their threat intelligence status.
- .NOTES
-     Test ID: 25537
+     Este teste valida que as Políticas de Firewall do Azure tão a Inteligência de Ameaça ativada no modo Negar.
+     Verifica todas as políticas de firewall na assinatura e relata seu status de inteligência de ameaça.
      Category: Azure Network Security
      Required API: Azure Firewall Policies
  #>
 
 function Test-Assessment-25537 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure_Firewall_Standard', 'Azure_Firewall_Premium'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 25537,
-        Title = 'Threat intelligence is Enabled in Deny Mode on Azure Firewall',
-        UserImpact = 'Low'
+        Title = 'A inteligência de ameaça está Ativada no Modo Negar no Azure Firewall',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
     #region Data Collection
-    $activity = 'Azure Firewall Threat Intelligence'
-    Write-ZtProgress  -Activity $activity -Status 'Enumerating Firewall Policies'
+    $activity = 'Inteligência de Ameaça do Azure Firewall'
+    Write-ZtProgress  -Activity $activity -Status 'Enumerando Políticas de Firewall'
 
     $context = Get-AzContext
     if (($context).Environment.name -ne 'AzureCloud') {
-        Write-PSFMessage "This test is only applicable to the Global environment." -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Este teste é aplicável apenas para o ambiente Global." -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -48,7 +46,7 @@ function Test-Assessment-25537 {
     }
 
     if (-not $accessToken) {
-        Write-PSFMessage "Azure authentication token not found." -Tag Test -Level Warning
+        Write-PSFMessage "Token de autenticação do Azure não encontrado." -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause 'NotConnectedAzure'
         return
     }
@@ -63,10 +61,10 @@ Resources
 
     $results = @()
     try {
-        Write-ZtProgress -Activity $activity -Status "Querying Azure Resource Graph"
+        Write-ZtProgress -Activity $activity -Status "Consultando o Gráfico de Recursos do Azure"
         $results = @(Invoke-ZtAzureResourceGraphRequest -Query $argQuery)
 
-        Write-PSFMessage "ARG Query returned $($results.Count) records" -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Consulta ARG retornou $($results.Count) registros" -Tag Test -Level VeryVerbose
 
         # Normalize null/empty ThreatIntelMode to "Unknown"
         foreach ($row in $results) {
@@ -74,13 +72,13 @@ Resources
         }
     }
     catch {
-        Write-PSFMessage "Azure Resource Graph query failed: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Consulta do Gráfico de Recursos do Azure falhou: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
 
     if ($results.Count -eq 0) {
-        Write-PSFMessage "No firewall policies found." -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Nenhuma política de firewall encontrada." -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -92,25 +90,25 @@ Resources
     $allAlert = ($results | Where-Object { $_.ThreatIntelMode -ne 'Alert' }).Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "Threat Intel is enabled in **Alert and Deny** mode.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Inteligência de Ameaça ativada no modo **Alerta e Negar**.`n`n%TestResult%"
     }
     elseif ($allAlert) {
-        $testResultMarkdown = "Threat Intel is enabled in **Alert** mode.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Inteligência de Ameaça ativada no modo **Alerta**.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "Threat Intel is not enabled in **Alert and Deny** mode for all Firewall policies.`n`n%TestResult%"
+        $testResultMarkdown = "A inteligência de ameaça não está ativada no modo **Alerta e Negar** para todas as políticas de firewall.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
     #region Report Generation
-    $reportTitle = "Firewall policies"
+    $reportTitle = "Políticas de firewall"
     $tableRows = ""
 
     $formatTemplate = @'
 
 ## {0}
 
-| Policy name | Subscription name | Threat Intel mode | Result |
+| Nome da política | Nome da assinatura | Modo de inteligência de ameaça | Resultado |
 | :---------- | :---------------- | :---------------- | :----- |
 {1}
 
@@ -140,7 +138,7 @@ Resources
 
     $params = @{
         TestId = '25537'
-        Title  = 'Threat intelligence is Enabled in Deny Mode on Azure Firewall'
+        Title  = 'A inteligência de ameaça está Ativada no Modo Negar no Azure Firewall'
         Status = $passed
         Result = $testResultMarkdown
     }

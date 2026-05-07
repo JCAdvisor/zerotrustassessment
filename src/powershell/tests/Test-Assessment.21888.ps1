@@ -5,16 +5,16 @@
 
 function Test-Assessment-21888{
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Low',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect engineering systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce','External'),
     	TestId = 21888,
     	Title = 'Registros de aplicativos não devem ter URIs de redirecionamento de domínios pendentes ou abandonados',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(

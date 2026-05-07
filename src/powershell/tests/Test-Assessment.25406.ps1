@@ -5,35 +5,35 @@
 
 function Test-Assessment-25406 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Low',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Entra_Premium_Global_Secure_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 25406,
-    	Title = 'Internet access forwarding profile is enabled',
-    	UserImpact = 'Medium'
+    	Title = 'O perfil de encaminhamento de acesso à Internet está habilitado',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Internet Access forwarding profile'
-    Write-ZtProgress -Activity $activity -Status 'Getting Internet Access forwarding profile'
+    $activity = 'Verificando o perfil de encaminhamento de acesso à Internet'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo o perfil de encaminhamento de acesso à Internet'
 
-    # Query Q1: Get Internet Access forwarding profile
+        # Consulta Q1: Get Internet Access forwarding profile
     $forwardingProfile = Invoke-ZtGraphRequest -RelativeUri "networkAccess/forwardingProfiles" -Filter "trafficForwardingType eq 'internet'" -Select "name,state,servicePrincipal" -ApiVersion beta
 
     # Initialize test variables
     $passed = $false
     $profileName = 'Internet traffic forwarding profile'
     $profileState = 'Disabled'
-    $assignmentsSummary = '❌ None'
+    $assignmentsSummary = '❌ Nenhum'
     $hasAssignments = $false
     $appid = $null
     $id = $null
@@ -58,9 +58,9 @@ function Test-Assessment-25406 {
                 # Pass condition: appRoleAssignmentRequired is False OR appRoleAssignedTo has values
                 if ($servicePrincipal.appRoleAssignmentRequired -eq $false) {
                     # Assignment not required: available to everyone - no appendix table needed
-                    $assignmentsSummary = '✅ All Users'
+                    $assignmentsSummary = '✅ Todos os usuários'
                     $hasAssignments = $true
-                    $totalNoOfAssignments = 'All Users'
+                    $totalNoOfAssignments = 'Todos os usuários'
                 }elseif ($servicePrincipal.appRoleAssignedTo.Count -gt 0) {
                     # Check if truncated
                     $assignmentsTruncated = $servicePrincipal.appRoleAssignedTo.Count -gt $assignmentLimit
@@ -84,7 +84,7 @@ function Test-Assessment-25406 {
                     $hasAssignments = $true
                 }else {
                     # appRoleAssignmentRequired = true but no assignments
-                    $assignmentsSummary = '❌ None'
+                    $assignmentsSummary = '❌ Nenhum'
                     $hasAssignments = $false
                 }
             }
@@ -99,10 +99,10 @@ function Test-Assessment-25406 {
     # Pass if profile is enabled AND has assignments
     if ($profileState -eq 'Enabled' -and $hasAssignments) {
         $passed = $true
-        $testResultMarkdown = "Internet access forwarding profile is enabled with user assignments.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O perfil de encaminhamento de acesso à Internet está habilitado com atribuições de usuário.`n`n%TestResult%"
     }else {
         $passed = $false
-        $testResultMarkdown = "Internet access forwarding profile is disabled or lacks user assignments.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O perfil de encaminhamento de acesso à Internet está desabilitado ou não possui atribuições de usuário.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -110,7 +110,7 @@ function Test-Assessment-25406 {
     $mdInfo = ''
 
     # Add visual indicators to display
-    $stateDisplay = if ($profileState -eq 'Enabled') { '✅ Enabled' } else { '❌ Disabled' }
+    $stateDisplay = if ($profileState -eq 'Enabled') { '✅ Ativado' } else { '❌ Desativado' }
 
     if ($appid -and $id) {
         $groupLink = 'https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ManagedAppMenuBlade/~/Users/objectId/{0}/appId/{1}/preferredSingleSignOnMode~/null/servicePrincipalType/Application/fromNav/' -f $id, $appid
@@ -124,17 +124,17 @@ function Test-Assessment-25406 {
 
     $mdInfo += @"
 
-## Internet access profile
+## Perfil de acesso à Internet
 
-| Profile name | Profile state | Assignments | Assignment count |
+| Nome do perfil | Estado do perfil | Atribuições | Contagem de atribuições |
 | :----------- | :------------ | :---------- | :---------- |
 | $profileNameLink | $stateDisplay | $assignmentsSummaryLink | $totalNoOfAssignments |
 "@
 
     # Add detailed assignments table only if explicit assignments exist
     if ($allAssignments.Count -gt 0) {
-        $mdInfo += "`n`n## User/Group assignments"
-        $mdInfo += "`n`n| Principal display name  | Principal type | Principal id |"
+        $mdInfo += "`n`n## Atribuições de usuário/grupo"
+        $mdInfo += "`n`n| Nome exibido do principal | Tipo de principal | Id do principal |"
         $mdInfo += "`n| :------------- | :----------- | :----------- |"
 
         foreach ($assignment in $allAssignments) {
@@ -152,17 +152,17 @@ function Test-Assessment-25406 {
         }
 
         if ($assignmentsTruncated) {
-            $mdInfo += "`n`n_**Note**: This table is truncated and showing the first $assignmentLimit assignments out of $totalNoOfAssignments total._"
+            $mdInfo += "`n`n_**Observação**: Esta tabela está truncada e mostra as primeiras $assignmentLimit atribuições de um total de $totalNoOfAssignments._"
         }
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25406'
-        Title  = 'Internet access forwarding profile is enabled'
+        Title  = 'O perfil de encaminhamento de acesso à Internet está habilitado'
         Status = $passed
         Result = $testResultMarkdown
     }

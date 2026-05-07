@@ -1,19 +1,18 @@
-Global Secure Access deployment logs track the status and progress of configuration changes across the global network. These changes include forwarding profile redistributions, remote network updates, filtering profile changes, and changes to Conditional Access settings. If deployment logs show failed deployments, threat actors can exploit inconsistent security configurations where some edge locations have outdated or misconfigured policies.
+Os logs de implantação do Global Secure Access rastreiam o status e o progresso das mudanças de configuração em toda a rede global. Essas mudanças incluem redistribuições de perfil de encaminhamento, atualizações de rede remota, mudanças de perfil de filtragem e mudanças nas configurações do Conditional Access. Se os logs de implantação mostram implantações falhadas, atores de ameaça podem explorar configurações de segurança inconsistentes em que alguns locais de borda tên políticas desatualizadas ou mal configuradas.
 
-If you don't monitor deployment logs:
+Se você não monitorar os logs de implantação:
 
-- Failed deployments can leave security gaps such as outdated forwarding profiles that don't route traffic through security inspection, or filtering profiles that don't block malicious destinations.
-- Administrators might remain unaware of outdated configurations, believing that changes are applied uniformly.
-- Deployment failures that create exploitable gaps can go undetected.
+- As implantações falhadas podem deixar lacunas de segurança, como perfis de encaminhamento desatualizados que não roteia m o tráfego através de inspeção de segurança, ou perfis de filtragem que não bloqueiam destinos maliciosos.
+- Os administradores podem não estar cientes de configurações desatualizadas, acreditando que as mudanças são aplicadas uniformemente.
+- As falhas de implantação que criam lacunas exploitáveis podem passar despercebidas.
 
-**Remediation action**
+**Ação de remediação**
 
-- Follow the steps in [How to use the Global Secure Access deployment logs](https://learn.microsoft.com/entra/global-secure-access/how-to-view-deployment-logs?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to:
-    - Access and review deployment logs in the Microsoft Entra admin center to identify failed deployments.
-    - For failed deployments, examine the error message in the `status.message` field and retry the configuration change that triggered the failure.
-    - Monitor deployment notifications that appear in the admin center when making configuration changes to catch failures in real-time.
-- If deployments consistently fail for remote networks, [review the underlying remote network configuration](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-remote-networks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) for errors.
-- For forwarding profile deployment failures, [verify traffic forwarding configuration](https://learn.microsoft.com/entra/global-secure-access/concept-traffic-forwarding?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- Siga as etapas em [Como usar os logs de implantação do Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/how-to-view-deployment-logs?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para:
+    - Acessar e revisar logs de implantação no centro de administração do Microsoft Entra para identificar implantações falhadas.
+    - Para implantações falhadas, examine a mensagem de erro no campo `status.message` e repita a mudança de configuração que acionou a falha.
+    - Monitore notificações de implantação que aparecem no centro de administração ao fazer mudanças de configuração para capturar falhas em tempo real.
+- Se as implantações continuarem falhando para redes remotas, [revise a configuração de rede remota subjacente](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-remote-networks?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para erros.
+- Para falhas de implantação do perfil de encaminhamento, [verifique a configuração de encaminhamento de tráfego](https://learn.microsoft.com/entra/global-secure-access/concept-traffic-forwarding?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

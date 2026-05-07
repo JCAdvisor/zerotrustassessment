@@ -6,9 +6,9 @@ function Test-Assessment-21821{
     [ZtTest(
     	Category = 'Controle de acesso',
     	ImplementationCost = 'Médio',
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Protect identities and secrets',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 21821,
     	Title = 'O acesso de convidados está restrito',

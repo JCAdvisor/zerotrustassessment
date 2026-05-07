@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Checks that Global Secure Access logs are integrated with a Log Analytics workspace for security monitoring.
+    Verifica se os logs do Global Secure Access estão integrados com um espaço de trabalho do Log Analytics para monitoramento de segurança.
 
 .DESCRIPTION
-    Verifies that diagnostic settings are configured to send Global Secure Access log categories
+    Verifica se as configurações de diagnóstico estão configuradas para enviar categorias de log do Global Secure Access
     (NetworkAccessTrafficLogs, EnrichedOffice365AuditLogs, RemoteNetworkHealthLogs, NetworkAccessAlerts,
-    NetworkAccessConnectionEvents, NetworkAccessGenerativeAIInsights) to a Log Analytics workspace
-    for Microsoft Sentinel integration and threat detection.
+    NetworkAccessConnectionEvents, NetworkAccessGenerativeAIInsights) para um espaço de trabalho do Log Analytics
+    para integração do Microsoft Sentinel e detecção de ameaças.
 
 .NOTES
     Test ID: 25419
@@ -16,27 +16,27 @@
 
 function Test-Assessment-25419 {
     [ZtTest(
-        Category = 'Global Secure Access',
-        ImplementationCost = 'Low',
+        Category = 'Acesso Seguro Global',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('AAD_PREMIUM', 'Entra_Premium_Internet_Access', 'Entra_Premium_Private_Access'),
         CompatibleLicense = ('Entra_Premium_Private_Access','Entra_Premium_Internet_Access'),
-        Pillar = 'Network',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Monitor and detect cyberthreats',
+        Pillar = 'Rede',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Monitorar e detectar ciberameaças',
         TenantType = ('Workforce'),
         TestId = 25419,
-        Title = 'Network access activity is visible to security operations for threat detection and response',
-        UserImpact = 'Low'
+        Title = 'A atividade de acesso à rede está visível para operações de segurança para detecção e resposta a ameaças',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Global Secure Access diagnostic settings for security monitoring'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando configurações de diagnóstico do Global Secure Access para monitoramento de segurança'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -46,7 +46,7 @@ function Test-Assessment-25419 {
     }
 
     # Check the supported environment, 'AzureCloud' in (Get-AzContext).Environment.Name maps to 'Global' in (Get-MgContext).Environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
         Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
@@ -54,8 +54,8 @@ function Test-Assessment-25419 {
         return
     }
 
-    # Query diagnostic settings for Microsoft Entra
-    Write-ZtProgress -Activity $activity -Status 'Querying Microsoft Entra diagnostic settings'
+        # Consulta diagnostic settings for Microsoft Entra
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de diagnóstico do Microsoft Entra'
 
     $resourceManagementUrl = $azContext.Environment.ResourceManagerUrl
     $diagnosticSettingsUri = $resourceManagementUrl + 'providers/microsoft.aadiam/diagnosticsettings?api-version=2017-04-01-preview'
@@ -64,13 +64,13 @@ function Test-Assessment-25419 {
         $result = Invoke-AzRestMethod -Method GET -Uri $diagnosticSettingsUri -ErrorAction Stop
 
         if ($result.StatusCode -eq 403) {
-            Write-PSFMessage 'The signed in user does not have access to check diagnostic settings.' -Level Verbose
+            Write-PSFMessage 'O usuário conectado não tem acesso para verificar as configurações de diagnóstico.' -Level Verbose
             Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
             return
         }
 
         if ($result.StatusCode -ge 400) {
-            throw "Diagnostic settings request failed with status code $($result.StatusCode)"
+            throw "Falha na solicitação de configurações de diagnóstico com código de status $($result.StatusCode)"
         }
     }
     catch {
@@ -96,7 +96,7 @@ function Test-Assessment-25419 {
     $testResultMarkdown = ''
 
     if ($null -eq $diagnosticSettings -or $diagnosticSettings.Count -eq 0) {
-        $testResultMarkdown = "❌ No diagnostic settings are configured for Microsoft Entra. Global Secure Access logs are not being exported to any destination.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma configuração de diagnóstico está configurada para o Microsoft Entra. Os logs do Global Secure Access não estão sendo exportados para nenhum destino.`n`n%TestResult%"
     }
     else {
         # Find settings that have all required categories enabled and sent to a workspace
@@ -114,10 +114,10 @@ function Test-Assessment-25419 {
         $passed = $settingsWithAllCategories.Count -gt 0
 
         if ($passed) {
-            $testResultMarkdown = "✅ All required Global Secure Access log categories are integrated with a Log Analytics workspace for security monitoring and threat detection.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Todas as categorias de log do Global Secure Access necessárias são integradas a um espaço de trabalho do Log Analytics para monitoramento de segurança e detecção de ameaças.`n`n%TestResult%"
         }
         else {
-            $testResultMarkdown = "❌ Global Secure Access logs are not properly integrated with a Log Analytics workspace for security operations visibility.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Os logs do Global Secure Access não estão adequadamente integrados a um espaço de trabalho do Log Analytics para visibilidade das operações de segurança.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -126,11 +126,11 @@ function Test-Assessment-25419 {
     $mdInfo = ''
 
     if ($diagnosticSettings.Count -gt 0) {
-        $mdInfo += "`n## [Diagnostic settings configuration](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/DiagnosticSettings)`n`n"
+    $mdInfo += "`n## [Configurações de diagnóstico](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/DiagnosticSettings)`n`n"
 
         # Build pivoted table: Log Categories as rows, Diagnostic Settings as columns
         # Header row with diagnostic setting names
-        $headerRow = '| Log category |'
+        $headerRow = '| Categoria de log |'
         $separatorRow = '| :--- |'
         foreach ($setting in $diagnosticSettings) {
             $headerRow += " $(Get-SafeMarkdown $setting.name) |"
@@ -145,7 +145,7 @@ function Test-Assessment-25419 {
             foreach ($setting in $diagnosticSettings) {
                 $enabledLogs = $setting.properties.logs | Where-Object { $_.enabled -eq $true } | Select-Object -ExpandProperty category
                 $isEnabled = $category -in $enabledLogs
-                $statusValue = if ($isEnabled) { '✅ Enabled' } else { '❌ Disabled' }
+                $statusValue = if ($isEnabled) { '✅ Habilitado' } else { '❌ Desabilitado' }
                 $row += " $statusValue |"
             }
             $mdInfo += "$row`n"
@@ -162,17 +162,17 @@ function Test-Assessment-25419 {
                 $workspaceValue = "✅ [$(Get-SafeMarkdown $workspaceName)]($workspaceLink)"
             }
             else {
-                $workspaceValue = '❌ Not configured'
+                $workspaceValue = '❌ Não configurado'
             }
             $workspaceRow += " $workspaceValue |"
         }
         $mdInfo += "$workspaceRow`n"
 
         # Summary section
-        $mdInfo += "`n**Summary:**`n`n"
+        $mdInfo += "`n**Resumo:**`n`n"
 
-        $mdInfo += "- Total diagnostic settings: $($diagnosticSettings.Count)`n"
-        $mdInfo += "- Diagnostic settings passing criteria (all six categories + workspace): $($settingsWithAllCategories.Count)`n"
+        $mdInfo += "- Total de configurações de diagnóstico: $($diagnosticSettings.Count)`n"
+        $mdInfo += "- Configurações de diagnóstico que atendem aos critérios (todas as seis categorias + workspace): $($settingsWithAllCategories.Count)`n"
     }
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
@@ -180,7 +180,7 @@ function Test-Assessment-25419 {
 
     $params = @{
         TestId = '25419'
-        Title  = 'Network access activity is visible to security operations for threat detection and response'
+        Title  = 'Atividade de acesso à rede visível para operações de segurança'
         Status = $passed
         Result = $testResultMarkdown
     }

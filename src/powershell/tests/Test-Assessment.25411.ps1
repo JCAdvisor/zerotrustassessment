@@ -1,23 +1,23 @@
 <#
 .SYNOPSIS
-    TLS inspection is enabled and correctly configured for outbound traffic in Global Secure Access.
+    A inspeção de TLS está ativada e configurada corretamente para tráfego de saída no Global Secure Access.
 .DESCRIPTION
-    Verifies that a TLS Inspection policy is properly configured. It will fail if no TLS Inspection policy exists, if the policy is not linked to a Security Profile, or if no Conditional Access policy assigning that Security Profile can be identified.
+    Verifica se uma política de Inspeção de TLS está adequadamente configurada. Falhará se nenhuma política de Inspeção de TLS existir, se a política não estiver vinculada a um Perfil de Segurança ou se nenhuma política do Conditional Access atribuindo esse Perfil de Segurança puder ser identificada.
 #>
 
 function Test-Assessment-25411 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'High',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 25411,
-    	Title = 'TLS inspection is enabled and correctly configured for outbound traffic',
-    	UserImpact = 'Medium'
+    	Title = 'A inspeção TLS está habilitada e corretamente configurada para tráfego de saída',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
@@ -26,23 +26,23 @@ function Test-Assessment-25411 {
     [int]$BASELINE_PROFILE_PRIORITY = 65000
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'TLS inspection is enabled and correctly configured for outbound traffic in Global Secure Access.'
-    Write-ZtProgress -Activity $activity -Status 'Querying TLS inspection policies'
+    $activity = 'A inspeção de TLS está ativada e configurada corretamente para tráfego de saída no Global Secure Access.'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de inspeção de TLS'
 
     # Step 1: Get TLS Inspection policies
     $tlsInspectionPolicies = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/tlsInspectionPolicies' -ApiVersion beta
 
     # Step 2: List all policies in the Baseline Profile and in each Security Profile
-    Write-ZtProgress -Activity $activity -Status 'Querying filtering profiles and policies'
+    Write-ZtProgress -Activity $activity -Status 'Consultando perfis de filtragem e políticas'
     $filteringProfiles = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/filteringProfiles' -QueryParameters @{
         '$select' = 'id,name,description,state,version,priority'
         '$expand' = 'policies($select=id,state;$expand=policy($select=id,name,version)),conditionalAccessPolicies($select=id,displayName)'
     } -ApiVersion beta
 
-    # Query all Conditional Access policies with details
-    Write-ZtProgress -Activity $activity -Status 'Querying Conditional Access policies'
+        # Consulta all Conditional Access policies with details
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas do Conditional Access'
     $allCAPolicies = Get-ZtConditionalAccessPolicy
 
     #endregion Data Collection
@@ -112,19 +112,19 @@ function Test-Assessment-25411 {
     $mdInfo = ''
 
     if ($null -eq $tlsInspectionPolicies -or $tlsInspectionPolicies.Count -eq 0) {
-        $testResultMarkdown = "❌ TLS Inspection Policy has not been properly configured. `n`n%TestResult%"
+        $testResultMarkdown = "❌ A política de Inspeção TLS não foi configurada corretamente.`n`n%TestResult%"
         $passed = $false
     }
     elseif ($enabledBaseLineProfiles.Count -gt 0) {
-        $testResultMarkdown = "✅ TLS Inspection Policy is enabled and properly configured to inspect encrypted outbound traffic.`n`n%TestResult%"
+        $testResultMarkdown = "✅ A política de Inspeção TLS está habilitada e corretamente configurada para inspecionar o tráfego de saída criptografado.`n`n%TestResult%"
         $passed = $true
     }
     elseif ($enabledSecurityProfiles.Count -gt 0) {
-        $testResultMarkdown = "✅ TLS Inspection Policy is enabled and properly configured to inspect encrypted outbound traffic.`n`n%TestResult%"
+        $testResultMarkdown = "✅ A política de Inspeção TLS está habilitada e corretamente configurada para inspecionar o tráfego de saída criptografado.`n`n%TestResult%"
         $passed = $true
     }
     else {
-        $testResultMarkdown = "❌ TLS Inspection Policy has not been properly configured.`n`n%TestResult%"
+        $testResultMarkdown = "❌ A política de Inspeção TLS não foi configurada corretamente.`n`n%TestResult%"
         $passed = $false
     }
 
@@ -134,8 +134,8 @@ function Test-Assessment-25411 {
 
     if ($enabledBaseLineProfiles.Count -gt 0) {
 
-        $mdInfo += "`n## TLS Inspection Policies Linked to Baseline Profiles`n`n"
-        $mdInfo += "| Linked Profile Name | Linked Profile Priority | Linked Policy Name | Policy Link State | Profile State |`n"
+        $mdInfo += "`n## Políticas de Inspeção TLS Vinculadas a Perfis de Linha de Base`n`n"
+        $mdInfo += "| Nome do perfil vinculado | Prioridade do perfil | Nome da política vinculada | Estado da política | Estado do perfil |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- |`n"
         foreach ($policy in $enabledBaseLineProfiles) {
             $baseLineProfilePortalLink = "https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/EditProfileMenuBlade.MenuView/~/basics/profileId/$(($policy.ProfileId))"
@@ -150,8 +150,8 @@ function Test-Assessment-25411 {
     }
 
     if ($enabledSecurityProfiles.Count -gt 0) {
-        $mdInfo += "`n## Security Profiles Linked to Conditional Access Policies`n`n"
-        $mdInfo += "| Linked Profile Name | Linked Profile Priority | CA Policy Names | CA Policy State | Profile State | TLS Inspection Policy Name | Default Action |`n"
+        $mdInfo += "`n## Perfis de Segurança Vinculados a Políticas de Acesso Condicional`n`n"
+        $mdInfo += "| Nome do perfil vinculado | Prioridade do perfil | Nomes de políticas de CA | Estado da política de CA | Estado do perfil | Nome da política de Inspeção TLS | Ação padrão |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`n"
         foreach ($enabledProfile in $enabledSecurityProfiles) {
             $securityProfilePortalLink = "https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/EditProfileMenuBlade.MenuView/~/basics/profileId/$(($enabledProfile.ProfileId))"

@@ -14,28 +14,28 @@
 
 function Test-Assessment-25403 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Suite','Entra_Premium_Private_Access'),
     	CompatibleLicense = ('Entra_Premium_Private_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 25403,
-    	Title = 'Private Access sensors are enforcing strong authentication policies on domain controllers',
-    	UserImpact = 'Medium'
+    	Title = 'Os sensores de Private Access estão impondo políticas de autenticação forte nos controladores de domínio',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Private Access Sensors on domain controllers'
-    Write-ZtProgress -Activity $activity -Status 'Getting Private Access Sensors'
+    $activity = 'Verificando os sensores do Private Access em controladores de domínio'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo sensores do Private Access'
 
-    # Query all Private Access Sensors
+        # Consulta all Private Access Sensors
     $sensors = Invoke-ZtGraphRequest -RelativeUri 'onPremisesPublishingProfiles/privateAccess/sensors' -ApiVersion beta
     #endregion Data Collection
 
@@ -47,7 +47,7 @@ function Test-Assessment-25403 {
     if ($null -eq $sensors -or $sensors.Count -eq 0) {
         # No sensors found - fail
         $passed = $false
-        $testResultMarkdown = "❌ Microsoft Entra Private Access Sensors for domain controllers is not deployed.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Os sensores do Microsoft Entra Private Access para controladores de domínio não estão implantados.`n`n%TestResult%"
     }
     else {
         # Identify sensors that are active and enforcing (not in audit mode)
@@ -58,17 +58,17 @@ function Test-Assessment-25403 {
         if ($enforcingSensors.Count -gt 0 -and $nonEnforcingSensors.Count -eq 0) {
             # All sensors are active and enforcing - pass
             $passed = $true
-            $testResultMarkdown = "✅ Microsoft Entra Private Access for domain controllers is deployed and enforcing strong authentication policies.`n`n%TestResult%"
+            $testResultMarkdown = "✅ O Microsoft Entra Private Access para controladores de domínio está implantado e impondo políticas de autenticação forte.`n`n%TestResult%"
         }
         elseif ($enforcingSensors.Count -eq 0) {
             # No sensors are enforcing - fail
             $passed = $false
-            $testResultMarkdown = "❌ Microsoft Entra Private Access Sensors are deployed but strong authentication policies are not configured.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Os sensores do Microsoft Entra Private Access estão implantados, mas as políticas de autenticação forte não estão configuradas.`n`n%TestResult%"
         }
         else {
             # Some sensors enforcing, some not - partial deployment warning (fail)
             $passed = $false
-            $testResultMarkdown = "⚠️ Microsoft Entra Private Access Sensors are partially configured. Some domain controllers are not enforcing strong authentication policies.`n`n%TestResult%"
+            $testResultMarkdown = "⚠️ Os sensores do Microsoft Entra Private Access estão parcialmente configurados. Alguns controladores de domínio não estão impondo políticas de autenticação forte.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -78,19 +78,19 @@ function Test-Assessment-25403 {
     $mdInfo = ''
 
     if ($sensors -and $sensors.Count -gt 0) {
-        $reportTitle = "Private Access Sensors"
+        $reportTitle = "Sensores do Private Access"
 
         $mdInfo += "`n## $reportTitle`n`n"
-        $mdInfo += "[Open Private Access in Entra Portal](https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/PrivateAccessOverview.ReactView)`n`n"
+        $mdInfo += "[Abrir Private Access no portal Entra](https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/PrivateAccessOverview.ReactView)`n`n"
 
         # Summary statistics
-        $mdInfo += "- **Total sensors**: $($sensors.Count)`n"
-        $mdInfo += "- **Active and enforcing**: $($enforcingSensors.Count)`n"
-        $mdInfo += "- **Not enforcing**: $($nonEnforcingSensors.Count)`n`n"
+        $mdInfo += "- **Total de sensores**: $($sensors.Count)`n"
+        $mdInfo += "- **Ativos e impondo**: $($enforcingSensors.Count)`n"
+        $mdInfo += "- **Não impondo**: $($nonEnforcingSensors.Count)`n`n"
 
         # Show warning for sensors not enforcing
         if ($nonEnforcingSensors.Count -gt 0) {
-            $mdInfo += "**⚠️ Sensors not enforcing policies:** $($nonEnforcingSensors.Count)`n`n"
+            $mdInfo += "**⚠️ Sensores não impondo políticas:** $($nonEnforcingSensors.Count)`n`n"
         }
 
         # Build table rows - show problematic sensors first
@@ -99,8 +99,8 @@ function Test-Assessment-25403 {
         $allSensors += $enforcingSensors | ForEach-Object { $_ | Add-Member -NotePropertyName 'Priority' -NotePropertyValue 2 -PassThru -Force }
 
         $tableRows = $allSensors | Sort-Object -Property Priority, machineName | ForEach-Object {
-            $statusIcon = if ($_.status -eq 'active') { '✅' } else { '❌' }
-            $auditModeIcon = if ($_.isAuditMode) { '⚠️ Yes' } else { '✅ No' }
+            $statusIcon = if ($_.status -eq 'active') { '✅ Ativo' } else { '❌ Inativo' }
+            $auditModeIcon = if ($_.isAuditMode) { '⚠️ Sim' } else { '✅ Não' }
             $machineName = Get-SafeMarkdown $_.machineName
             $version = Get-SafeMarkdown $_.version
             $externalIp = Get-SafeMarkdown $_.externalIp
@@ -116,13 +116,13 @@ function Test-Assessment-25403 {
 '@ -f ($tableRows -join "`n")
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25403'
-        Title  = 'DC Agent is deployed and enforcing strong authentication policies'
+        Title  = 'O agente de DC está implantado e impondo políticas de autenticação forte'
         Status = $passed
         Result = $testResultMarkdown
     }

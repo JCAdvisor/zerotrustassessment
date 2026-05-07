@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Users must provide justification to downgrade sensitivity labels
+    Os usuários devem fornecer justificativa para reduzir rótulos de sensibilidade
 
 .DESCRIPTION
-    Sensitivity label policies should require users to provide justification when removing or downgrading labels. When downgrade justification is not required, users can silently reduce the classification level of sensitive content without creating an audit trail, creating compliance and audit risks.
+    As políticas de rótulo de sensibilidade devem exigir que os usuários fornecer justificativa ao remover ou rebaixar rótulos. Quando a justificativa de rebaixamento não é necessária, os usuários podem silenciosamente reduzir o nível de classificação do conteúdo sensível sem criar uma trilha de auditoria, criando riscos de conformidade e auditoria.
 
 .NOTES
     Test ID: 35018
@@ -13,26 +13,26 @@
 
 function Test-Assessment-35018 {
     [ZtTest(
-        Category = 'Information Protection',
-        ImplementationCost = 'Low',
+        Category = 'Proteção de Informações',
+        ImplementationCost = 'Baixo',
         Service = ('SecurityCompliance'),
         MinimumLicense = ('Microsoft 365 E3'),
-        Pillar = 'Data',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce'),
         TestId = 35018,
-        Title = 'Users must provide justification to downgrade sensitivity labels',
-        UserImpact = 'Medium'
+        Title = 'Os usuários devem fornecer justificativa para rebaixar rótulos de sensibilidade',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking downgrade justification required for sensitivity labels'
-    Write-ZtProgress -Activity $activity -Status 'Checking downgrade justification'
+    $activity = 'Verificando se justificativa de rebaixamento é necessária para rótulos de sensibilidade'
+    Write-ZtProgress -Activity $activity -Status 'Verificando justificativa de rebaixamento'
 
     $enabledPolicies = @()
     $errorMsg = $null
@@ -42,7 +42,7 @@ function Test-Assessment-35018 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying label policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar políticas de rótulo: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -55,7 +55,7 @@ function Test-Assessment-35018 {
 
     if ($errorMsg) {
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine downgrade justification status due to error: $errorMsg`n`n"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status de justificativa de rebaixamento devido a erro: $errorMsg`n`n"
     }
     else {
         foreach ($policy in $enabledPolicies) {
@@ -112,7 +112,7 @@ function Test-Assessment-35018 {
                 PolicyGuid                    = $policy.Guid
                 Enabled                       = $policy.Enabled
                 RequireDowngradeJustification = $requireDowngradeJustification
-                Scope                         =  if ($isGlobal) { 'Global' } else { 'Scoped' }
+                Scope                         =  if ($isGlobal) { 'Global' } else { 'Com escopo' }
                 LabelsCount                   = $policy.Labels.Count
                 Workloads                     = ($workloads -join ', ')
             }
@@ -126,20 +126,20 @@ function Test-Assessment-35018 {
 
         if ($policiesWithDowngradeJustification.Count -gt 0) {
             $passed = $true
-            $testResultMarkdown = "✅ Downgrade justification is enforced in at least one enabled sensitivity label policy.`n`n%TestResult%"
+            $testResultMarkdown = "✅ A justificativa de rebaixamento é aplicada em pelo menos uma política de rótulo de sensibilidade habilitada.`n`n%TestResult%"
         }
         else {
             $passed = $false
-            $testResultMarkdown = "❌ No enabled sensitivity label policies require downgrade justification.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Nenhuma política de rótulo de sensibilidade habilitada exige justificativa de rebaixamento.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
 
     #region Report Generation
-    $mdInfo = "`n`n### Downgrade Justification Configuration`n"
+    $mdInfo = "`n`n### Configuração de Justificativa de Rebaixamento`n"
 
     if ($policyResults.Count -gt 0) {
-        $mdInfo += "| Policy name | Downgrade justification | Scope | Labels | Workloads |`n"
+        $mdInfo += "| Nome da política | Justificativa de rebaixamento | Escopo | Rótulos | Cargas de trabalho |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- |`n"
 
         foreach ($policy in $policyResults) {
@@ -155,18 +155,18 @@ function Test-Assessment-35018 {
         }
         else { 0 }
 
-        $mdInfo += "`n### Summary`n"
-        $mdInfo += "| Metric | Count |`n"
+        $mdInfo += "`n### Resumo`n"
+        $mdInfo += "| Métrica | Contagem |`n"
         $mdInfo += "| :--- | :--- |`n"
-        $mdInfo += "| Total enabled label policies | $($policyResults.Count) |`n"
-        $mdInfo += "| Policies requiring downgrade justification | $($policiesWithDowngradeJustification.Count) |`n"
-        $mdInfo += "| Policies NOT requiring downgrade justification | $($policyResults.Count - $policiesWithDowngradeJustification.Count) |`n"
-        $mdInfo += "| Percentage with downgrade justification | $percentage% |"
+        $mdInfo += "| Total de políticas de rótulo habilitadas | $($policyResults.Count) |`n"
+        $mdInfo += "| Políticas que exigem justificativa de rebaixamento | $($policiesWithDowngradeJustification.Count) |`n"
+        $mdInfo += "| Políticas que NÃO exigem justificativa de rebaixamento | $($policyResults.Count - $policiesWithDowngradeJustification.Count) |`n"
+        $mdInfo += "| Percentual com justificativa de rebaixamento | $percentage% |"
     }
 
     if ($xmlParseErrors.Count -gt 0) {
-        $mdInfo += "`n`n### ⚠️ XML Parsing Errors`n"
-        $mdInfo += "| Policy name | Error |`n"
+        $mdInfo += "`n`n### ⚠️ Erros de análise de XML`n"
+        $mdInfo += "| Nome da política | Erro |`n"
         $mdInfo += "| :--- | :--- |`n"
         foreach ($err in $xmlParseErrors) {
             $mdInfo += "| $(Get-SafeMarkdown $err.PolicyName) | $(Get-SafeMarkdown $err.Error) |`n"
@@ -178,7 +178,7 @@ function Test-Assessment-35018 {
 
     $params = @{
         TestId = '35018'
-        Title  = 'Downgrade Justification Required for Sensitivity Labels'
+        Title  = 'Justificativa de rebaixamento necessária para rótulos de sensibilidade'
         Status = $passed
         Result = $testResultMarkdown
     }

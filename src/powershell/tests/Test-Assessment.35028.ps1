@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Email retention policies configured
+    Políticas de retenção de email estão configuradas
 
 .DESCRIPTION
     Email retention policies automatically manage message lifecycle by deleting, archiving,
@@ -35,10 +35,10 @@ function Test-Assessment-35028 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking email retention policy configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando configuração de política de retenção de email'
 
-    Write-ZtProgress -Activity $activity -Status 'Getting retention compliance policies and rules'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas e regras de conformidade de retenção'
 
     $errorMsg = $null
     $retentionPolicies = $null
@@ -60,7 +60,7 @@ function Test-Assessment-35028 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying retention data: $errorMsg" -Level Error
+        Write-PSFMessage "Erro ao consultar dados de retenção: $errorMsg" -Level Error
     }
     #endregion Data Collection
 
@@ -70,7 +70,7 @@ function Test-Assessment-35028 {
 
     if ($errorMsg) {
         Write-PSFMessage "Query failure or connection issue: $errorMsg" -Level Warning
-        $testResultMarkdown = "⚠️ Unable to determine retention policy configuration due to permissions issues or query failure.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar a configuração de política de retenção devido a problemas de permissões ou falha na consulta.`n`n%TestResult%"
         $customStatus = 'Investigate'
     }
     else {
@@ -86,10 +86,10 @@ function Test-Assessment-35028 {
         $passed = $enabledExchangePolicies.Count -gt 0
 
         if ($passed) {
-            $testResultMarkdown = "✅ Email retention policies are configured and enabled for Exchange Online, automatically managing message lifecycle and enforcing compliance-required retention schedules.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Políticas de retenção de email estão configuradas e habilitadas para o Exchange Online, gerenciando automaticamente o ciclo de vida da mensagem e aplicando cronogramas de retenção exigidos por conformidade.`n`n%TestResult%"
         }
         else {
-            $testResultMarkdown = "❌ No email retention policies are configured for Exchange Online, creating a compliance and legal risk where emails are retained indefinitely and eDiscovery scope is uncontrolled.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Nenhuma política de retenção de email está configurada para o Exchange Online, criando um risco de conformidade e legal onde os emails são retidos indefinidamente e o escopo de descoberta eletrônica não é controlado.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic

@@ -6,9 +6,9 @@ function Test-Assessment-21833 {
     [ZtTest(
     	Category = 'Acesso privilegiado',
     	ImplementationCost = 'Alto',
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Baixo',
-    	SfiPillar = 'Protect identities and secrets',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce'),
     	TestId = 21833,
     	Title = 'As credenciais da conta de sincronização do diretório foram rotacionadas recentemente',

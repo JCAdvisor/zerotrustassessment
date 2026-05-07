@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Validates that JavaScript Challenge is enabled in Application Gateway WAF custom rules.
+    Valida que o Desafio de JavaScript está habilitado nas regras personalizadas do WAF do Application Gateway.
 
 .DESCRIPTION
-    This test checks if all Azure Application Gateway WAF policies attached to Application Gateways
+    Este teste verifica se todas as políticas de WAF do Azure Application Gateway anexadas aos Application Gateways
     have at least one custom rule configured with the JSChallenge action and state set to Enabled.
     JavaScript challenge verifies that clients can execute JavaScript, blocking automated bots and
     headless browsers that cannot complete the challenge.
@@ -16,38 +16,38 @@
 
 function Test-Assessment-27017 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure WAF'),
-        Pillar = 'Network',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 27017,
-        Title = 'JavaScript Challenge is Enabled in Application Gateway WAF',
-        UserImpact = 'Low'
+        Title = 'O desafio JavaScript está habilitado no WAF do Application Gateway',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Application Gateway WAF policies configuration'
+    $activity = 'Verificando configuração de políticas do WAF do Application Gateway'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o Azure Resource Graph'
 
-    # Query all Application Gateway WAF policies attached to Application Gateways using Azure Resource Graph
+        # Consulta all Application Gateway WAF policies attached to Application Gateways using Azure Resource Graph
     $argQuery = @"
 resources
 | where type =~ 'microsoft.network/applicationgatewaywebapplicationfirewallpolicies'
@@ -74,7 +74,7 @@ resources
         Write-PSFMessage "ARG Query returned $($policies.Count) records" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Azure Resource Graph query failed: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Falha na consulta do Azure Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -85,8 +85,8 @@ resources
 
     # Skip test if no policies found
     if ($policies.Count -eq 0) {
-        Write-PSFMessage 'No Application Gateway WAF policies found attached to Application Gateways.' -Tag Test -Level Verbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Application Gateway WAF policies found attached to Application Gateways.'
+        Write-PSFMessage 'Nenhuma política de WAF do Application Gateway encontrada anexada aos Application Gateways.' -Tag Test -Level Verbose
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhuma política de WAF do Application Gateway encontrada anexada aos Application Gateways.'
         return
     }
 
@@ -100,17 +100,17 @@ resources
     $passed = $failingPolicies.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "✅ All Application Gateway WAF policies attached to Application Gateways are enabled, running in Prevention mode, and have at least one JavaScript challenge rule configured and enabled.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas de WAF do Application Gateway anexadas aos Application Gateways estão habilitadas, executando no modo Prevenção e têm pelo menos uma regra de desafio de JavaScript configurada e habilitada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ One or more Application Gateway WAF policies attached to Application Gateways are disabled, running in Detection mode, have no JavaScript challenge rules configured, or have JavaScript challenge rules configured but all set to Disabled state, leaving applications without browser verification against automated bots.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas de WAF do Application Gateway anexadas aos Application Gateways estão desabilitadas, executando no modo Detecção, não têm regras de desafio de JavaScript configuradas ou têm regras de desafio de JavaScript configuradas mas todas definidas como Desabilitado, deixando aplicativos sem verificação de navegador contra bots automatizados.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
     #region Report Generation
     $mdInfo = ''
 
-    $reportTitle = 'Application Gateway WAF policies'
+    $reportTitle = 'Políticas de WAF do Application Gateway'
     $portalLink = 'https://portal.azure.com/#browse/Microsoft.Network%2FapplicationGatewayWebApplicationFirewallPolicies'
 
     $tableRows = ''
@@ -144,7 +144,7 @@ resources
 
 ## [{0}]({1})
 
-| Policy name | Subscription name | Policy state | Mode | JS Challenge rules count | Rule state | JavaScript Challenge expiration (mins) | Status |
+| Nome da política | Nome da assinatura | Estado da política | Modo | Contagem de regras de desafio JS | Estado da regra | Expiração do Desafio de JavaScript (min) | Status |
 | :---------- | :---------------- | :----------- | :--- | :----------------------- | :--------- | :------------------------------------- | :----- |
 {2}
 
@@ -156,7 +156,7 @@ resources
 
     $params = @{
         TestId = '27017'
-        Title  = 'JavaScript Challenge is Enabled in Application Gateway WAF'
+        Title  = 'Desafio de JavaScript está habilitado no WAF do Application Gateway'
         Status = $passed
         Result = $testResultMarkdown
     }

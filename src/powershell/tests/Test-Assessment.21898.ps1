@@ -5,30 +5,30 @@
 
 function Test-Assessment-21898{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'High',
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Alto',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21898,
-    	Title = 'All supported access lifecycle resources are managed with entitlement management packages',
-    	UserImpact = 'Medium'
+    	Title = 'Todos os recursos de ciclo de vida de acesso suportados são gerenciados com pacotes de gerenciamento de direitos',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking All supported access lifecycle resources are managed with entitlement management packages"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando todos os recursos de ciclo de vida de acesso suportados gerenciados com pacotes de gerenciamento de direitos"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para lançamento futuro."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21898' -Title "All supported access lifecycle resources are managed with entitlement management packages" `
+    Add-ZtTestResultDetail -TestId '21898' -Title "Todos os recursos de ciclo de vida de acesso suportados são gerenciados com pacotes de gerenciamento de direitos" `
         -UserImpact Medium -Risk Medium -ImplementationCost High `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

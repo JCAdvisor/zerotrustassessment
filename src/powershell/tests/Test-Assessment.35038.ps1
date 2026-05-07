@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Insider Risk Management policies are enabled for risky AI usage
+    As políticas de Insider Risk Management estão habilitadas para uso arriscado de IA
 
 .DESCRIPTION
-    Insider Risk Management (IRM) policies with Adaptive Protection enable organizations to detect and prevent risky behavior involving sensitive data, including unauthorized sharing with external parties, mass downloads, unusual data access patterns, and data exfiltration attempts. Without IRM policies configured and enabled with Adaptive Protection integration (`OptInDrpForDlp`), organizations cannot identify insider threats or malicious actors who abuse legitimate access to exfiltrate data. IRM policies that integrate with Data Loss Prevention (DLP) create a comprehensive detection system that combines behavioral indicators (unusual access patterns) with policy-based content detection (sensitive data types), enabling rapid response to insider threats before data is compromised. Organizations must enable at least one IRM policy with Adaptive Protection enabled to detect and mitigate insider risk, including risky AI usage scenarios where users attempt to expose sensitive data to large language models or unauthorized cloud AI services. Without IRM policies, organizations cannot meet insider threat management requirements or demonstrate proactive threat detection capabilities to regulators.
+    As políticas de Insider Risk Management (IRM) com Proteção Adaptativa permitem que as organizações detectem e previnam comportamentos de risco envolvendo dados sensíveis, incluindo compartilhamento não autorizado com partes externas, downloads em massa, padrões incomuns de acesso a dados e tentativas de exfiltração de dados. Sem políticas de IRM configuradas e habilitadas com integração de Proteção Adaptativa (`OptInDrpForDlp`), as organizações não conseguem identificar ameaças internas ou agentes mal-intencionados que abusam do acesso legítimo para exfiltrar dados. As políticas de IRM que se integram com Data Loss Prevention (DLP) criam um sistema abrangente de detecção que combina indicadores comportamentais (padrões incomuns de acesso) com detecção de conteúdo baseada em política (tipos de dados sensíveis), permitindo resposta rápida a ameaças internas antes que os dados sejam comprometidos. As organizações devem habilitar pelo menos uma política de IRM com Proteção Adaptativa ativada para detectar e mitigar risco interno, incluindo cenários de uso arriscado de IA em que os usuários tentam expor dados sensíveis a grandes modelos de linguagem ou serviços de IA em nuvem não autorizados. Sem políticas de IRM, as organizações não conseguem atender aos requisitos de gerenciamento de ameaças internas nem demonstrar aos reguladores recursos proativos de detecção de ameaças.
 
 .NOTES
     Test ID: 35038
@@ -14,17 +14,17 @@
 
 function Test-Assessment-35038 {
     [ZtTest(
-        Category = 'Data Security Posture Management',
+        Category = 'Gerenciamento de postura de segurança de dados',
         ImplementationCost = 'Medium',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce'),
         TestId = 35038,
-        Title = 'Insider Risk Management policies are enabled for risky AI usage',
-        UserImpact = 'Medium'
+        Title = 'Políticas de Insider Risk Management habilitadas para uso arriscado de IA',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
@@ -32,8 +32,8 @@ function Test-Assessment-35038 {
     #region Data Collection
     Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
 
-    $activity = 'Getting all Insider Risk Management policies'
-    Write-ZtProgress -Activity $activity -Status 'Getting Insider Risk Management Policies'
+    $activity = 'Obtendo todas as políticas de Insider Risk Management'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de Insider Risk Management'
 
     $irmPolicies = $null
     $adaptiveProtectionEnabledPolicies = $null
@@ -44,7 +44,7 @@ function Test-Assessment-35038 {
         $adaptiveProtectionEnabledPolicies = $irmPolicies | Where-Object { $_.Enabled -eq $true -and $_.OptInDrpForDlp -eq $true } | Select-Object -Property Name, Enabled, OptInDrpForDlp
     }
     catch {
-        Write-PSFMessage "Error querying Insider Risk Management Policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar as políticas de Insider Risk Management: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -58,38 +58,38 @@ function Test-Assessment-35038 {
 
     #region Report Generation
     if ($passed) {
-        $testResultMarkdown = "✅ Insider Risk Management Policies are ENABLED with Adaptive Protection integrated, enabling detection of risky behavior and insider threats including unauthorized data exposure to AI services.`n"
+        $testResultMarkdown = "✅ As políticas de Insider Risk Management estão HABILITADAS com Proteção Adaptativa integrada, permitindo a detecção de comportamentos de risco e ameaças internas, incluindo exposição não autorizada de dados a serviços de IA.`n"
     }
     else{
-        $testResultMarkdown = "❌ No Insider Risk Management Policies are enabled with Adaptive Protection, creating a critical gap in insider threat detection and risky AI usage prevention.`n"
+        $testResultMarkdown = "❌ Nenhuma política de Insider Risk Management está habilitada com Proteção Adaptativa, criando uma lacuna crítica na detecção de ameaças internas e na prevenção de uso arriscado de IA.`n"
     }
 
-    $testResultMarkdown += "## Summary`n`n"
-    $testResultMarkdown += "- **Total IRM Policies:** $($irmPolicies.Count)`n"
-    $testResultMarkdown += "- **Enabled Policies with Adaptive Protection:** $($adaptiveProtectionEnabledPolicies.Count)`n"
+    $testResultMarkdown += "## Resumo`n`n"
+    $testResultMarkdown += "- **Total de políticas IRM:** $($irmPolicies.Count)`n"
+    $testResultMarkdown += "- **Políticas habilitadas com Proteção Adaptativa:** $($adaptiveProtectionEnabledPolicies.Count)`n"
 
     if($irmPolicies.Count -gt 0){
-        $testResultMarkdown += "## [IRM Policies](https://purview.microsoft.com/insiderriskmgmt/policiespage)`n`n"
-        $testResultMarkdown += "| Policy Name | Enabled | Adaptive Protection (OptInDrpForDlp) | Created Date |`n"
+        $testResultMarkdown += "## [Políticas de IRM](https://purview.microsoft.com/insiderriskmgmt/policiespage)`n`n"
+        $testResultMarkdown += "| Nome da política | Habilitada | Proteção Adaptativa (OptInDrpForDlp) | Data de criação |`n"
         $testResultMarkdown += "|:---|:---|:---|:---|`n"
 
         foreach ($policy in $irmPolicies) {
             $policyName = $policy.Name
-            $enabled = if ($policy.Enabled) { "✅ Enabled" } else { "❌ Disabled" }
-            $adaptiveProtection = if ($policy.OptInDrpForDlp) { "✅ Enabled" } else { "❌ Disabled" }
+            $enabled = if ($policy.Enabled) { "✅ Habilitada" } else { "❌ Desabilitada" }
+            $adaptiveProtection = if ($policy.OptInDrpForDlp) { "✅ Habilitada" } else { "❌ Desabilitada" }
             $createdDate = if ($policy.WhenCreatedUTC) { $policy.WhenCreatedUTC.ToString("yyyy-MM-dd") } else { "N/A" }
 
             $testResultMarkdown += "| $policyName | $enabled | $adaptiveProtection | $createdDate |`n"
         }
     }
     else{
-        $testResultMarkdown += "`n[Microsoft Purview Insider Risk Management > Policies](https://purview.microsoft.com/insiderriskmgmt/policiespage)`n"
+        $testResultMarkdown += "`n[Microsoft Purview Insider Risk Management > Políticas](https://purview.microsoft.com/insiderriskmgmt/policiespage)`n"
     }
     #endregion Report Generation
 
     $params = @{
         TestId = '35038'
-        Title  = 'Insider Risk Management Policies Enabled for Risky AI Usage'
+        Title  = 'Políticas de Insider Risk Management habilitadas para uso arriscado de IA'
         Status = $passed
         Result = $testResultMarkdown
     }

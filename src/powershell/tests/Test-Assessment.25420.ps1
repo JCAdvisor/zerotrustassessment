@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Validates that network access logs are retained for security analysis
-    and compliance requirements.
+    Valida que os logs de acesso de rede são retidos para análise de segurança
+    e requisitos de conformidade.
 
 .DESCRIPTION
-    This test evaluates diagnostic settings for Microsoft Entra to ensure
-    Global Secure Access log categories are enabled with appropriate
-    retention periods (minimum 90 days) in Log Analytics workspaces.
+    Este teste avalia as configurações de diagnóstico do Microsoft Entra para garantir que
+    as categorias de log do Global Secure Access estão ativadas com períodos de retenção apropriados
+    (mínimo de 90 dias) nos espaços de trabalho do Log Analytics.
 
 .NOTES
     Test ID: 25420
@@ -17,17 +17,17 @@
 function Test-Assessment-25420 {
 
     [ZtTest(
-        Category = 'Global Secure Access',
-        ImplementationCost = 'Low',
+        Category = 'Acesso Seguro Global',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('AAD_PREMIUM', 'Entra_Premium_Internet_Access', 'Entra_Premium_Private_Access'),
         CompatibleLicense = ('Entra_Premium_Private_Access','Entra_Premium_Internet_Access'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Monitor and detect cyberthreats',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Monitorar e detectar ciberameaças',
         TenantType = ('Workforce'),
         TestId = 25420,
-        Title = 'Network access logs are retained for security analysis and compliance requirements',
-        UserImpact = 'Low'
+        Title = 'Os logs de acesso à rede são retidos para análise de segurança e conformidade',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -48,11 +48,11 @@ function Test-Assessment-25420 {
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating network access log retention configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando configuração de retenção de log de acesso de rede'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -62,7 +62,7 @@ function Test-Assessment-25420 {
     }
 
     # Check the supported environment, 'AzureCloud' in (Get-AzContext).Environment.Name maps to 'Global' in (Get-MgContext).Environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
         Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
@@ -70,8 +70,8 @@ function Test-Assessment-25420 {
         return
     }
 
-    # Query diagnostic settings for Microsoft Entra
-    Write-ZtProgress -Activity $activity -Status 'Querying diagnostic settings'
+        # Consulta diagnostic settings for Microsoft Entra
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de diagnóstico'
 
     $resourceManagementUrl = $azContext.Environment.ResourceManagerUrl
     $diagnosticSettingsUri = $resourceManagementUrl + 'providers/microsoft.aadiam/diagnosticsettings?api-version=2017-04-01-preview'
@@ -81,13 +81,13 @@ function Test-Assessment-25420 {
         $result = Invoke-AzRestMethod -Method GET -Uri $diagnosticSettingsUri -ErrorAction Stop
 
         if ($result.StatusCode -eq 403) {
-            Write-PSFMessage 'The signed in user does not have access to check diagnostic settings.' -Level Verbose
+            Write-PSFMessage 'O usuário conectado não tem acesso para verificar as configurações de diagnóstico.' -Level Verbose
             Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
             return
         }
 
         if ($result.StatusCode -ge 400) {
-            throw "Diagnostic settings request failed with status code $($result.StatusCode)"
+            throw "Falha na solicitação de configurações de diagnóstico com código de status $($result.StatusCode)"
         }
 
         $diagnosticSettings = ($result.Content | ConvertFrom-Json).value
@@ -97,12 +97,12 @@ function Test-Assessment-25420 {
         throw
     }
 
-    # Query Q2: Retrieve Log Analytics workspace retention settings for each configured workspace
+        # Consulta Q2: Retrieve Log Analytics workspace retention settings for each configured workspace
     $workspaceDetails = @{}
 
     if ($null -ne $diagnosticSettings -and $diagnosticSettings.Count -gt 0) {
 
-        Write-ZtProgress -Activity $activity -Status 'Checking workspace retention settings'
+        Write-ZtProgress -Activity $activity -Status 'Verificando configurações de retenção de espaço de trabalho'
 
         $workspaceIds = $diagnosticSettings |
             Where-Object { $_.properties.workspaceId } |
@@ -146,7 +146,7 @@ function Test-Assessment-25420 {
     if ($null -eq $diagnosticSettings -or $diagnosticSettings.Count -eq 0) {
 
         $passed = $false
-        $testResultMarkdown = "❌ No diagnostic settings are configured for Microsoft Entra. Global Secure Access logs are retained for only 30 days (default in-portal retention) which is insufficient for security investigations.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma configuração de diagnóstico está definida para o Microsoft Entra. Os logs do Acesso Seguro Global são retidos por apenas 30 dias (retenção padrão no portal), o que é insuficiente para investigações de segurança.`n`n%TestResult%"
 
     }
     else {
@@ -383,14 +383,14 @@ function Test-Assessment-25420 {
     $mdInfo += "| Minimum retention found | $(if ($minRetention) { "$minRetention days" } else { 'N/A' }) |`n"
     $mdInfo += "| Meets 90-day minimum | $(if ($hasAdequateRetention) { 'Yes' } else { 'No' }) |`n"
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
 
     #endregion Report Generation
 
     $params = @{
         TestId = '25420'
-        Title  = 'Network access logs are retained for security analysis and compliance requirements'
+        Title  = 'Logs de acesso à rede retidos para análise de segurança e conformidade'
         Status = $passed
         Result = $testResultMarkdown
     }

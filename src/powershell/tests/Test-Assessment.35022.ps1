@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    On-demand scans are configured for sensitive information discovery
+    As varreduras sob demanda estão configuradas para descoberta de informações sensíveis
 
 .DESCRIPTION
-    Checks if on-demand scans are configured for sensitive information discovery in
-    SharePoint, OneDrive, and Exchange. Implements dynamic SIT GUID -> friendly name
-    resolution and generates a markdown result suitable for inclusion in test reports.
+    Verifica se as varreduras sob demanda estão configuradas para descoberta de informações sensíveis no
+    SharePoint, OneDrive e Exchange. Implementa resolução dinâmica de SIT GUID -> nome amigável
+    e gera um resultado de markdown adequado para inclusão em relatórios de teste.
 
     Reference: https://learn.microsoft.com/en-us/purview/on-demand-classification
 
@@ -35,10 +35,10 @@ function Test-Assessment-35022 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking On-Demand Scans Configured for Sensitive Information Discovery'
-    Write-ZtProgress -Activity $activity -Status 'Getting SIT Catalog'
+    $activity = 'Verificando varreduras sob demanda configuradas para descoberta de informações sensíveis'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo catálogo SIT'
 
     $sitGuidMap = @{}
     $scansList = $null
@@ -60,7 +60,7 @@ function Test-Assessment-35022 {
         }
     }
     catch {
-        Write-PSFMessage "Warning: Failed to build SIT catalog from tenant: $($_.Exception.Message)" -Level Warning
+        Write-PSFMessage "Aviso: Falha ao construir catálogo SIT de locatário: $($_.Exception.Message)" -Level Warning
     }
 
     # Fallback common SIT mapping
@@ -77,14 +77,14 @@ function Test-Assessment-35022 {
         'b3a2fd72-cc1b-40fc-b0dc-6c5ca0e00f6f' = 'International Medical Record Number (MRN)'
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Getting On-Demand Scans'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo varreduras sob demanda'
 
     try {
         $scansList = Get-SensitiveInformationScan -ErrorAction Stop
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying on-demand scans: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar varreduras sob demanda: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -254,22 +254,22 @@ function Test-Assessment-35022 {
     $testResultMarkdown = ""
 
     if ($errorMsg) {
-        $testResultMarkdown = "Unable to determine on-demand scan configuration due to permissions issues or query failure.`n`n"
+        $testResultMarkdown = "Não foi possível determinar a configuração de varredura sob demanda devido a problemas de permissões ou falha na consulta.`n`n"
         $customStatus = 'Investigate'
     }
     else {
         if ($passed) {
-            $testResultMarkdown = "✅ At least one on-demand scan is configured in the organization, enabling discovery and classification of historical sensitive information.`n`n"
+            $testResultMarkdown = "✅ Pelo menos uma varredura sob demanda está configurada na organização, habilitando descoberta e classificação de informações sensíveis históricas.`n`n"
         }
         else {
-            $testResultMarkdown = "❌ No on-demand scans are configured in the organization; historical sensitive data cannot be discovered.`n`n"
+            $testResultMarkdown = "❌ Nenhuma varredura sob demanda está configurada na organização; dados sensíveis históricos não podem ser descobertos.`n`n"
         }
 
-        $testResultMarkdown += "### On-Demand scan configuration summary`n`n"
+        $testResultMarkdown += "### Resumo de configuração de varredura sob demanda`n`n"
 
         if ($scanCount -gt 0 -and $tableData) {
-            $testResultMarkdown += "**Scan details:**`n`n"
-            $testResultMarkdown += "| Name | Sensitive information scan status | Workload | Sensitive information types detected  | When created UTC | Last scan start time|`n"
+            $testResultMarkdown += "**Detalhes da varredura:**`n`n"
+            $testResultMarkdown += "| Nome | Status de varredura de informação sensível | Carga de trabalho | Tipos de informação sensível detectados  | Quando criado UTC | Hora Última de início da varredura |`n"
             $testResultMarkdown += "|------|--------|----------|--------------|---------------|-----------------|`n"
 
             foreach ($row in $tableData) {
@@ -293,21 +293,21 @@ function Test-Assessment-35022 {
                 $testResultMarkdown += "| $nameEsc | $statusEsc | $workEsc | $sitEsc | $created | $last |`n"
             }
 
-            $testResultMarkdown += "`n**Summary:**`n`n"
-            $testResultMarkdown += "* **Total on-demand scans configured:** $scanCount`n"
-            $testResultMarkdown += "* **Scans by status:**`n"
+            $testResultMarkdown += "`n**Resumo:**`n`n"
+            $testResultMarkdown += "* **Total de varreduras sob demanda configuradas:** $scanCount`n"
+            $testResultMarkdown += "* **Varreduras por status:**`n"
             foreach ($status in ($statusCounts.Keys | Sort-Object)) {
                 $testResultMarkdown += "  * $status`: $($statusCounts[$status])`n"
             }
-            $testResultMarkdown += "* **Locations scanned:**`n"
-            $testResultMarkdown += "  * SharePoint: $(if ($hasSharePoint -gt 0) { 'Yes' } else { 'No' })`n"
-            $testResultMarkdown += "  * OneDrive: $(if ($hasOneDrive -gt 0) { 'Yes' } else { 'No' })`n"
-            $testResultMarkdown += "  * Exchange: $(if ($hasExchange -gt 0) { 'Yes' } else { 'No' })`n"
-            $testResultMarkdown += "* **Most recent scan completion:** $(if ($mostRecentScan) { $mostRecentScan } else { 'No completed scans' })`n"
+            $testResultMarkdown += "* **Locais verificados:**`n"
+            $testResultMarkdown += "  * SharePoint: $(if ($hasSharePoint -gt 0) { 'Sim' } else { 'Não' })`n"
+            $testResultMarkdown += "  * OneDrive: $(if ($hasOneDrive -gt 0) { 'Sim' } else { 'Não' })`n"
+            $testResultMarkdown += "  * Exchange: $(if ($hasExchange -gt 0) { 'Sim' } else { 'Não' })`n"
+            $testResultMarkdown += "* **Conclusão de varredura mais recente:** $(if ($mostRecentScan) { $mostRecentScan } else { 'Sem varreduras concluídas' })`n"
         }
         else {
-            $testResultMarkdown += "* **Total on-demand scans configured:** 0`n"
-            $testResultMarkdown += "* **Status:** No scans are configured`n"
+            $testResultMarkdown += "* **Total de varreduras sob demanda configuradas:** 0`n"
+            $testResultMarkdown += "* **Status:** Nenhuma varredura está configurada`n"
         }
 
         $testResultMarkdown += "`n[Microsoft Purview Portal > Information Protection > Classifiers > On-demand classification](https://purview.microsoft.com/informationprotection/dataclassification/colddatascans)`n"

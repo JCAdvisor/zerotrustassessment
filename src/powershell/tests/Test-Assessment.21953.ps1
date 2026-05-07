@@ -6,15 +6,15 @@
 function Test-Assessment-21953{
     [ZtTest(
     	Category = 'Dispositivos',
-    	ImplementationCost = 'Medium',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
     	Pillar = 'Identidade',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21953,
     	Title = 'A Solução de Senha de Administrador Local (LAPS) está implantada',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

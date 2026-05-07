@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Information Rights Management is enabled in SharePoint Online
+    O Gerenciamento de Direitos de Informação está habilitado no SharePoint Online
 
 .DESCRIPTION
-    Information Rights Management (IRM) integration in SharePoint Online libraries is a legacy feature that has been replaced by Enhanced SharePoint Permissions (ESP). Any library using this legacy capabilitiy should be flagged to move to newer capabilities.
+    A integração do Gerenciamento de Direitos de Informação (IRM) em bibliotecas do SharePoint Online é um recurso legado que foi substituído por Permissões Aprimoradas do SharePoint (ESP). Qualquer biblioteca que usa essa funcionalidade legada deve ser sinalizada para mover para recursos mais recentes.
 
 .NOTES
     Test ID: 35007
@@ -14,36 +14,36 @@
 function Test-Assessment-35007 {
     [ZtTest(
         Category = 'SharePoint Online',
-        ImplementationCost = 'Low',
+        ImplementationCost = 'Baixo',
         Service = ('SharePointOnline'),
         MinimumLicense = ('Microsoft 365 E3'),
-        Pillar = 'Data',
-        RiskLevel = 'Low',
+        Pillar = 'Dados',
+        RiskLevel = 'Baixo',
         SfiPillar = '',
         TenantType = ('Workforce'),
         TestId = 35007,
-        Title = 'Information Rights Management is enabled in SharePoint Online',
-        UserImpact = 'Low'
+        Title = 'O Gerenciamento de Direitos de Informação está habilitado no SharePoint Online',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Information Rights Management (IRM) Status in SharePoint Online'
-    Write-ZtProgress -Activity $activity -Status 'Getting SharePoint Tenant Settings'
+    $activity = 'Verificando status do Gerenciamento de Direitos de Informação (IRM) no SharePoint Online'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configurações de locatário do SharePoint'
 
     $spoTenant = $null
     $errorMsg = $null
 
     try {
-        # Query: Retrieve SharePoint Online tenant IRM enablement status
+            # Consulta: Retrieve SharePoint Online tenant IRM enablement status
         $spoTenant = Get-SPOTenant -ErrorAction Stop
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying SharePoint Tenant Settings: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar as configurações de locatário do SharePoint: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -58,30 +58,30 @@ function Test-Assessment-35007 {
 
     #region Report Generation
     if ($errorMsg) {
-        $testResultMarkdown = "### Investigate`n`n"
-        $testResultMarkdown += "Unable to query SharePoint Tenant Settings due to error: $errorMsg"
+        $testResultMarkdown = "### Investigar`n`n"
+        $testResultMarkdown += "Não foi possível consultar as configurações de locatário do SharePoint devido a erro: $errorMsg"
     }
     else {
         if ($passed) {
-            $testResultMarkdown = "✅ Legacy IRM feature is disabled. Organizations should use modern sensitivity labels for document protection.`n`n"
+            $testResultMarkdown = "✅ O recurso de IRM legado está desabilitado. As organizações devem usar rótulos de sensibilidade modernos para proteção de documentos.`n`n"
         }
         else {
-            $testResultMarkdown = "❌ Legacy IRM feature is still enabled. Libraries may be using outdated protection mechanisms.`n`n"
+            $testResultMarkdown = "❌ O recurso de IRM legado ainda está habilitado. As bibliotecas podem estar usando mecanismos de proteção desatualizados.`n`n"
         }
 
-        $testResultMarkdown += "### SharePoint Online Configuration Summary`n`n"
-        $testResultMarkdown += "**Tenant Settings:**`n"
+        $testResultMarkdown += "### Resumo de configuração do SharePoint Online`n`n"
+        $testResultMarkdown += "**Configurações de locatário:**`n"
 
         $irmEnabled = if ($null -ne $spoTenant -and $spoTenant.IrmEnabled -eq $true) { "True" } else { "False" }
         $testResultMarkdown += "* IrmEnabled: $irmEnabled`n"
 
-        $testResultMarkdown += "`n[Manage Information Rights Management (IRM) in SharePoint Admin Center](https://admin.microsoft.com/sharepoint?page=classicSettings&modern=true)`n"
+        $testResultMarkdown += "`n[Gerenciar o Gerenciamento de Direitos de Informação (IRM) no Centro de Administração do SharePoint](https://admin.microsoft.com/sharepoint?page=classicSettings&modern=true)`n"
     }
     #endregion Report Generation
 
     $params = @{
         TestId             = '35007'
-        Title              = 'Information Rights Management (IRM) Enabled in SharePoint Online'
+        Title              = 'Gerenciamento de Direitos de Informação (IRM) habilitado no SharePoint Online'
         Status             = $passed
         Result             = $testResultMarkdown
     }

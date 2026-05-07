@@ -1,8 +1,7 @@
-Creating filtering policies without linking them to a security profile or the baseline profile leaves them unenforced. Policies must be associated with either the baseline profile (applies to all internet traffic) or a security profile (applies through Conditional Access) to take effect. Unlinked policies provide no protection and create false confidence in your security posture.
+Criar políticas de filtragem sem vinculá-las a um perfil de segurança ou ao perfil base deixa-as não implementadas. As políticas devem estar associadas ao perfil base (aplica-se a todo o tráfego da internet) ou a um perfil de segurança (aplica-se através do Conditional Access) para entrar em vigor. Políticas desvinculadas não fornecem proteção e criam falsa confiança em sua postura de segurança.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Create security profiles and link filtering policies](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-web-content-filtering?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-security-profile)
+- [Crie perfis de segurança e vincule políticas de filtragem](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-web-content-filtering?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci#create-a-security-profile)
 <!--- Results --->
 %TestResult%
-

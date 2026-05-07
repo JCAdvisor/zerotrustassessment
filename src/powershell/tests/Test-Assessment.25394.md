@@ -1,15 +1,14 @@
-When you configure Quick Access in Microsoft Entra Private Access without Conditional Access policies, threat actors who compromise user credentials gain unrestricted access to private resources. The Quick Access application serves as a container for private resources including FQDNs and IP addresses.
+Quando você configura o Quick Access no Microsoft Entra Private Access sem políticas de Conditional Access, agentes de ameaça que comprometem credenciais de usuário obtêm acesso irrestrito a recursos privados. O aplicativo Quick Access serve como um contêiner para recursos privados, incluindo FQDNs e endereços IP.
 
-Without policy enforcement:
+Sem aplicação de políticas:
 
-- Compromised accounts provide a direct pathway to internal systems.
-- Threat actors operating from unmanaged devices or anomalous locations can access private resources indistinguishably from authorized users.
-- Lateral movement across the internal network and data exfiltration from private applications become possible.
-- Multifactor authentication requirements and device health checks can't be enforced.
+- Contas comprometidas fornecem um caminho direto para sistemas internos.
+- Agentes de ameaça operando a partir de dispositivos não gerenciados ou locais anômalos podem acessar recursos privados de forma indistinguível dos usuários autorizados.
+- Movimento lateral pela rede interna e exfiltração de dados de aplicativos privados se tornam possíveis.
+- Requisitos de autenticação multifator e verificações de integridade do dispositivo não podem ser aplicados.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Apply Conditional Access Policies to Microsoft Entra Private Access Apps](https://learn.microsoft.com/entra/global-secure-access/how-to-target-resource-private-access-apps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Aplique políticas de Conditional Access aos aplicativos Microsoft Entra Private Access](https://learn.microsoft.com/entra/global-secure-access/how-to-target-resource-private-access-apps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

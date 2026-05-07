@@ -5,15 +5,15 @@
 
 function Test-Assessment-21895{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'High',
-    	Pillar = 'Identity',
-    	RiskLevel = 'Low',
-    	SfiPillar = 'Protect identities and secrets',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Alto',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Baixo',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21895,
     	Title = 'As credenciais de certificado de aplicativo são gerenciadas usando HSM',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

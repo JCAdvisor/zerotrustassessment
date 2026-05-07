@@ -5,30 +5,30 @@
 
 function Test-Assessment-21899{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Low',
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Baixo',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21899,
-    	Title = 'All privileged role assignments have a recipient that can receive notifications',
-    	UserImpact = 'Low'
+    	Title = 'Todas as atribuições de função privilegiada têm um destinatário que pode receber notificações',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = "Checking All privileged role assignments have a recipient that can receive notifications"
-    Write-ZtProgress -Activity $activity -Status "Getting policy"
+    $activity = "Verificando se todas as atribuições de função privilegiada têm um destinatário que pode receber notificações"
+    Write-ZtProgress -Activity $activity -Status "Obtendo política"
 
     $result = $false
-    $testResultMarkdown = "Planned for future release."
+    $testResultMarkdown = "Planejado para lançamento futuro."
     $passed = $result
 
 
-    Add-ZtTestResultDetail -TestId '21899' -Title "All privileged role assignments have a recipient that can receive notifications" `
+    Add-ZtTestResultDetail -TestId '21899' -Title "Todas as atribuições de função privilegiada têm um destinatário que pode receber notificações" `
         -UserImpact Low -Risk Medium -ImplementationCost Low `
         -AppliesTo Identity -Tag Identity `
         -Status $passed -Result $testResultMarkdown -SkippedBecause UnderConstruction

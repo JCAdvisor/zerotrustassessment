@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    Checks that all Private Access applications have assigned users or groups
+    Verifica se todos os aplicativos do Private Access têm usuários ou grupos atribuídos
 .DESCRIPTION
-    Verifies that each Private Access application has at least one user or group assigned to it through appRoleAssignedTo.
+    Verifica se cada aplicativo do Private Access tem pelo menos um usuário ou grupo atribuído a ele por meio do appRoleAssignedTo.
 
 .NOTES
     Test ID: 25481
@@ -12,27 +12,27 @@
 
 function Test-Assessment-25481 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Low',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Entra_Private_Access'),
     	CompatibleLicense = ('Entra_Premium_Private_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25481,
-    	Title = 'All Private Access apps have user or group assignments',
-    	UserImpact = 'Medium'
+    	Title = 'Todos os aplicativos de Private Access têm atribuições de usuários ou grupos',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Private Access applications user and group assignments'
-    Write-ZtProgress -Activity $activity -Status 'Querying all Private Access applications'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando atribuições de usuário e grupo dos aplicativos do Private Access'
+    Write-ZtProgress -Activity $activity -Status 'Consultando todos os aplicativos do Private Access'
 
-    # Query Q1: Single optimized query for all Private Access applications with assignments
+        # Consulta Q1: Single optimized query for all Private Access applications with assignments
     $privateAccessApps = Invoke-ZtGraphRequest -RelativeUri "servicePrincipals?`$filter=tags/any(c:c eq 'IsAccessibleViaZTNAClient')&`$expand=appRoleAssignedTo&`$select=id,appId,displayName,accountEnabled,appRoleAssignmentRequired" -ApiVersion beta
     #endregion Data Collection
 
@@ -44,7 +44,7 @@ function Test-Assessment-25481 {
 
     # Check if any Private Access applications exist
     if (-not $privateAccessApps -or $privateAccessApps.Count -eq 0) {
-        $testResultMarkdown = '⚠️ No Private Access application is configured in the tenant, please review the documentation on how to enable Private Access applications.'
+        $testResultMarkdown = '⚠️ Nenhum aplicativo do Private Access está configurado no tenant, revise a documentação sobre como ativar os aplicativos do Private Access.'
         $customStatus = 'Investigate'
     }
     else {
@@ -53,11 +53,11 @@ function Test-Assessment-25481 {
 
         if ($appsWithoutAssignments.Count -eq 0) {
             $passed = $true
-            $testResultMarkdown = "✅ All Private Access applications have assigned users or groups. `n`n%TestResult%"
+            $testResultMarkdown = "✅ Todos os aplicativos do Private Access têm usuários ou grupos atribuídos. `n`n%TestResult%"
         }
         else {
             $passed = $false
-            $testResultMarkdown = "❌ Found Private Access applications without assigned users or groups. `n`n%TestResult%"
+            $testResultMarkdown = "❌ Encontrados aplicativos do Private Access sem usuários ou grupos atribuídos. `n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -72,8 +72,8 @@ function Test-Assessment-25481 {
         $sortedApps = $privateAccessApps | Sort-Object displayName
 
         # Build comprehensive table with all information
-        $mdInfo += "## [Private Access applications]($portalLink)`n`n"
-        $mdInfo += "| Application name | Number of assignments | Assigned principal | Principal type |`n"
+        $mdInfo += "## [Aplicativos do Private Access]($portalLink)`n`n"
+        $mdInfo += "| Nome do aplicativo | Número de atribuições | Principal atribuído | Tipo de principal |`n"
         $mdInfo += "|------------------|---------------|--------------------|----------------|`n"
 
         foreach ($app in $sortedApps) {
@@ -109,13 +109,13 @@ function Test-Assessment-25481 {
         }
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25481'
-        Title  = 'All Private Access applications have assigned users or groups'
+        Title  = 'Todos os aplicativos de Private Access têm usuários ou grupos atribuídos'
         Status = $passed
         Result = $testResultMarkdown
     }

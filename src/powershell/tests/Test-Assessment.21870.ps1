@@ -7,7 +7,7 @@ function Test-Assessment-21870{
     	Category = 'Gerenciamento de credenciais',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),

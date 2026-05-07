@@ -5,28 +5,28 @@
 
 function Test-Assessment-21941{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
         MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21941,
-    	Title = 'Token protection policies are configured',
-    	UserImpact = 'Low'
+    	Title = 'Políticas de proteção de token estão configuradas',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     if ( -not (Get-ZtLicense EntraIDP1) ) {
         Add-ZtTestResultDetail -SkippedBecause NotLicensedEntraIDP1
         return
     }
 
-    $activity = "Checking Token protection policies are configured"
-    Write-ZtProgress -Activity $activity -Status "Getting Conditional Access policies"
+    $activity = "Verificando se as políticas de proteção de token estão configuradas"
+    Write-ZtProgress -Activity $activity -Status "Obtendo políticas de Conditional Access"
 
     # Get all Conditional Access policies with Windows platform filtering
     $filter = "conditions/platforms/includePlatforms/any(p:p eq 'windows')"
@@ -68,26 +68,26 @@ function Test-Assessment-21941{
             $failureReasons += "No users specified in includeUsers"
         }
 
-        $includeUsersDisplay = if ($policy.conditions.users.includeUsers -contains "All") { "All" } elseif ($hasIncludeUsers) { "Selected" } else { "None" }
+        $includeUsersDisplay = if ($policy.conditions.users.includeUsers -contains "All") { "Todos" } elseif ($hasIncludeUsers) { "Selecionados" } else { "Nenhum" }
 
         # Validate 3: Applications include required app IDs or "All"
         $hasRequiredApps = $false
-        $includeAppsDisplay = "None"
+        $includeAppsDisplay = "Nenhum"
         if ($policy.conditions.applications.includeApplications -and
             $policy.conditions.applications.includeApplications.Count -gt 0 -and
             $policy.conditions.applications.includeApplications -notcontains "None") {
             if ($policy.conditions.applications.includeApplications -contains "All") {
                 $hasRequiredApps = $true
-                $includeAppsDisplay = "All"
+                $includeAppsDisplay = "Todos"
             }
             else {
                 $hasOfficeApp = $policy.conditions.applications.includeApplications -contains $requiredAppIds[0]
                 $hasGraphApp = $policy.conditions.applications.includeApplications -contains $requiredAppIds[1]
                 if ($hasOfficeApp -and $hasGraphApp) {
                     $hasRequiredApps = $true
-                    $includeAppsDisplay = "Selected"
+                    $includeAppsDisplay = "Selecionados"
                 } else {
-                    $includeAppsDisplay = "Other apps"
+                    $includeAppsDisplay = "Outros aplicativos"
                 }
             }
         }
@@ -129,26 +129,26 @@ function Test-Assessment-21941{
     $portalTemplate = "https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/PolicyBlade/policyId/{0}"
 
     if ($passed) {
-        $testResultMarkdown = "Token protection policies are configured.`n`n"
+        $testResultMarkdown = "As políticas de proteção de token estão configuradas.`n`n"
     }
     else {
-        $testResultMarkdown = "Token protection policies are not configured.`n`n"
+        $testResultMarkdown = "As políticas de proteção de token não estão configuradas.`n`n"
     }
 
     # Build detailed markdown information
     $mdInfo = ""
 
     if ($allCAPolicies.Count -eq 0) {
-        $mdInfo += "No Conditional Access policies found targeting Windows platforms.`n`n"
+        $mdInfo += "Nenhuma política de Conditional Access encontrada para plataformas Windows.`n`n"
     }
     elseif ($policiesWithTokenProtection.Count -eq 0) {
-        $mdInfo += "No Conditional Access policies found with secure sign-in session controls.`n`n"
+        $mdInfo += "Nenhuma política de Conditional Access encontrada com controles de sessão de sign-in seguro.`n`n"
     }
     else {
-        $mdInfo += "### Token protection policy summary`n`n"
-        $mdInfo += "The table below lists all the token protection Conditional Access policies found in the tenant.`n`n"
+        $mdInfo += "### Resumo das políticas de proteção de token`n`n"
+        $mdInfo += "A tabela abaixo lista todas as políticas de Conditional Access de proteção de token encontradas no tenant.`n`n"
 
-        $mdInfo += "| Name | Policy state | Users | Applications | Token protection | Status |`n"
+        $mdInfo += "| Nome | Estado da política | Usuários | Aplicativos | Proteção de token | Status |`n"
         $mdInfo += "| :--- | :---: | :---: | :---: | :---: | :---: |`n"
 
         # Sort policies: passing first, then by display name

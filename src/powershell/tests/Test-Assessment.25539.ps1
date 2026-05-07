@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Validates Intrusion Detection is Enabled in Deny Mode on Azure Firewall.
+    Valida se a Detecção de Intrusão está Ativada no Modo Negar no Azure Firewall.
 .DESCRIPTION
-    This test validates that Azure Firewall Policies have Intrusion Detection enabled in Deny mode.
-    Checks all firewall policies in the subscription and reports their intrusion detection status.
+    Este teste valida que as Políticas de Firewall do Azure têm a Detecção de Intrusão ativada no modo Negar.
+    Verifica todas as políticas de firewall na assinatura e relata seu status de detecção de intrusão.
 .NOTES
     Test ID: 25539
     Category: Azure Network Security
@@ -12,27 +12,27 @@
 
 function Test-Assessment-25539 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure_Firewall_Premium'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce','External'),
         TestId = 25539,
-        Title = 'IDPS Inspection is Enabled in Deny Mode on Azure Firewall',
-        UserImpact = 'Low'
+        Title = 'A Inspeção de IDPS está Ativada no Modo Negar no Azure Firewall',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
     #region Data Collection
-    $activity = 'Azure Firewall Intrusion Detection'
+    $activity = 'Detecção de Intrusão do Azure Firewall'
     Write-ZtProgress `
         -Activity $activity `
-        -Status 'Checking Azure connection'
+        -Status 'Verificando conexão do Azure'
 
     # Check if connected to Azure
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
@@ -43,16 +43,16 @@ function Test-Assessment-25539 {
     }
 
     # Check the supported environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
     if ($azContext.Environment.Name -ne 'AzureCloud') {
-        Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
+        Write-PSFMessage 'Este teste é aplicável apenas para o ambiente AzureCloud.' -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotApplicable
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Enumerating Firewall Policies'
+    Write-ZtProgress -Activity $activity -Status 'Enumerando Políticas de Firewall'
 
-    # Query subscriptions using REST API
+        # Consulta subscriptions using REST API
     $resourceManagerUrl = $azContext.Environment.ResourceManagerUrl.TrimEnd('/')
     $subscriptionsUri = "$resourceManagerUrl/subscriptions?api-version=2025-03-01"
 
@@ -60,13 +60,13 @@ function Test-Assessment-25539 {
         $subscriptionsResponse = Invoke-AzRestMethod -Method GET -Uri $subscriptionsUri -ErrorAction Stop
 
         if ($subscriptionsResponse.StatusCode -eq 403) {
-            Write-PSFMessage 'The signed in user does not have access to check subscriptions.' -Tag Firewall -Level Warning
+            Write-PSFMessage 'O usuário conectado não tem acesso para verificar assinaturas.' -Tag Firewall -Level Warning
             Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
             return
         }
 
         if ($subscriptionsResponse.StatusCode -ge 400) {
-            Write-PSFMessage "Subscriptions request failed with status code $($subscriptionsResponse.StatusCode)" -Tag Firewall -Level Warning
+            Write-PSFMessage "Falha na solicitação de assinaturas com código de status $($subscriptionsResponse.StatusCode)" -Tag Firewall -Level Warning
             Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
             return
         }
@@ -89,14 +89,14 @@ function Test-Assessment-25539 {
             Set-AzContext -SubscriptionId $sub.subscriptionId -ErrorAction Stop | Out-Null
         }
         catch {
-            Write-PSFMessage "Unable to switch to subscription $($sub.displayName): $($_.Exception.Message)" -Tag Firewall -Level Warning
+            Write-PSFMessage "Não foi possível mudar para a assinatura $($sub.displayName): $($_.Exception.Message)" -Tag Firewall -Level Warning
             continue
         }
 
-        # Query Azure Firewall Policies
+            # Consulta Azure Firewall Policies
         try {
             $policiesUri = "$resourceManagerUrl/subscriptions/$($sub.subscriptionId)/providers/Microsoft.Network/firewallPolicies?api-version=2025-03-01"
-            Write-ZtProgress -Activity $activity -Status "Enumerating policies in subscription $($sub.displayName)"
+            Write-ZtProgress -Activity $activity -Status "Enumerando políticas na assinatura $($sub.displayName)"
 
             $policyResponse = Invoke-AzRestMethod -Method GET -Uri $policiesUri -ErrorAction Stop
 
@@ -211,25 +211,25 @@ function Test-Assessment-25539 {
     $passed = $failedPolicies.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "Intrusion Detection System (IDPS) inspection is set to Deny for Azure Firewall policies.`n`n%TestResult%"
+        $testResultMarkdown = "A inspeção do Sistema de Detecção e Prevenção de Intrusões (IDPS) está definida como Negar para as políticas do Azure Firewall.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "Intrusion Detection System (IDPS) inspection is not set to Deny for Azure Firewall policies.`n`n%TestResult%"
+        $testResultMarkdown = "A inspeção do Sistema de Detecção e Prevenção de Intrusões (IDPS) não está definida como Negar para as políticas do Azure Firewall.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
     #region Report Generation
-    $reportTitle = "Firewall policies"
+    $reportTitle = "Políticas de firewall"
     $tableRows = ""
     $mdInfo = ""
 
     if ($results.Count -gt 0) {
-        # Create a here-string with format placeholders {0}, {1}, etc.
+                # Criar uma here-string com placeholders de formatação {0}, {1}, etc.
         $formatTemplate = @'
 
 ## {0}
 
-| Policy name | Subscription name | Result |
+| Nome da política | Nome da assinatura | Resultado |
 | :--- | :--- | :--- |
 {1}
 
@@ -245,11 +245,11 @@ function Test-Assessment-25539 {
             $tableRows += "| $policyMd | $subMd | $resultText |`n"
         }
 
-        # Format the template by replacing placeholders with values
+                 # Formatar o template substituindo os placeholders pelos valores
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows
     }
 
-    # Replace the placeholder with the detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
     #endregion Report Generation
 

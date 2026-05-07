@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Validates that all Application Gateway WAF policies are configured in Prevention mode.
+    Valida que todas as políticas WAF do Application Gateway estão configuradas em modo Prevenção.
 
 .DESCRIPTION
-    This test checks if all Azure Application Gateway Web Application Firewall (WAF) policies
-    in the tenant are running in Prevention mode to actively block malicious traffic.
-    WAF policies in Detection mode only log threats without blocking them, leaving applications
-    vulnerable to exploitation.
+    Este teste verifica se todas as políticas de Firewall de Aplicativo Web (WAF) do Azure Application Gateway
+    no inquilino estão sendo executadas em modo Prevenção para bloquear ativamente o tráfego malicioso.
+    As políticas WAF em modo Detecção apenas registram ameaças sem bloqueá-las, deixando os aplicativos
+    vulneráveis a exploração.
 
 .NOTES
     Test ID: 25541
@@ -16,38 +16,38 @@
 
 function Test-Assessment-25541 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure WAF', 'Azure Application Gateway Standard SKU'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 25541,
-        Title = 'Application Gateway WAF is Enabled in Prevention mode',
-        UserImpact = 'Low'
+        Title = 'O WAF do Application Gateway está Habilitado em Modo Prevenção',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Application Gateway WAF policies configuration'
+    $activity = 'Verificando configuração de políticas WAF do Application Gateway'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o Azure Resource Graph'
 
-    # Query all Application Gateway WAF policies using Azure Resource Graph
+        # Consulta all Application Gateway WAF policies using Azure Resource Graph
     $argQuery = @"
     resources
     | where type =~ 'microsoft.network/ApplicationGatewayWebApplicationFirewallPolicies'
@@ -58,10 +58,10 @@ function Test-Assessment-25541 {
     $policies = @()
     try {
         $policies = @(Invoke-ZtAzureResourceGraphRequest -Query $argQuery)
-        Write-PSFMessage "ARG Query returned $($policies.Count) records" -Tag Test -Level VeryVerbose
+        Write-PSFMessage "Consulta ARG retornou $($policies.Count) registros" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Azure Resource Graph query failed: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Falha na consulta do Azure Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -72,7 +72,7 @@ function Test-Assessment-25541 {
 
     # Skip test if no policies found
     if ($policies.Count -eq 0) {
-        Write-PSFMessage 'No Application Gateway WAF policies found.' -Tag Test -Level Verbose
+        Write-PSFMessage 'Nenhuma política WAF do Application Gateway encontrada.' -Tag Test -Level Verbose
         Add-ZtTestResultDetail -SkippedBecause NotApplicable
         return
     }
@@ -81,10 +81,10 @@ function Test-Assessment-25541 {
     $passed = ($policies | Where-Object { $_.EnabledState -ne 'Enabled' -or $_.Mode -ne 'Prevention' }).Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "✅ All Application Gateway WAF policies are enabled in **Prevention** mode.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas WAF do Application Gateway estão habilitadas em modo **Prevenção**.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ One or more Application Gateway WAF policies are either in **Disabled** state or in **Detection** mode.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas WAF do Application Gateway estão em estado **Desabilitado** ou em modo **Detecção**.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -92,7 +92,7 @@ function Test-Assessment-25541 {
     $mdInfo = ''
 
     # Table title
-    $reportTitle = 'Application Gateway WAF policies'
+    $reportTitle = 'Políticas WAF do Application Gateway'
     $portalLink = 'https://portal.azure.com/#view/Microsoft_Azure_HybridNetworking/FirewallManagerMenuBlade/~/wafMenuItem'
 
     # Prepare table rows
@@ -105,8 +105,8 @@ function Test-Assessment-25541 {
 
         # Calculate status indicators
         $policyStatus = if ($item.EnabledState -eq 'Enabled' -and $item.Mode -eq 'Prevention') { '✅' } else { '❌' }
-        $modeDisplay = if ($item.Mode -eq 'Prevention') { '✅ Prevention' } else { '❌ Detection' }
-        $enabledStateDisplay = if ($item.EnabledState -eq 'Enabled') { '✅ Enabled' } else { '❌ Disabled' }
+        $modeDisplay = if ($item.Mode -eq 'Prevention') { '✅ Prevenção' } else { '❌ Detecção' }
+        $enabledStateDisplay = if ($item.EnabledState -eq 'Enabled') { '✅ Habilitado' } else { '❌ Desabilitado' }
 
         $tableRows += "| $policyMd | $subMd | $enabledStateDisplay | $modeDisplay | $policyStatus |`n"
     }
@@ -116,7 +116,7 @@ function Test-Assessment-25541 {
 
 ## [{0}]({1})
 
-| Policy name | Subscription name | Policy state | Mode | Status |
+| Nome da Política | Nome da Assinatura | Estado da Política | Modo | Status |
 | :---------- | :---------------- | :----------: | :--: | :----: |
 {2}
 
@@ -129,7 +129,7 @@ function Test-Assessment-25541 {
 
     $params = @{
         TestId = '25541'
-        Title  = 'Application Gateway WAF is Enabled in Prevention mode'
+        Title  = 'O WAF do Application Gateway está Habilitado em Modo Prevenção'
         Status = $passed
         Result = $testResultMarkdown
     }

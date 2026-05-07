@@ -1,10 +1,9 @@
-Without encryption, sensitivity labels denote an item's sensitivity level without preventing unauthorized access, unless supplemented by another protection mechanism. Sensitivity labels that are configured to apply encryption from the Azure Rights Management service enforce access control and usage rights. This protection persists regardless of where the content is stored or shared. For example, users can still share a document labeled as "Confidential", but if that label applies encryption, unauthorized people won't be able to open it.
+Sem criptografia, rótulos de sensibilidade denotam o nível de sensibilidade de um item sem impedir acesso não autorizado, a menos que complementado por outro mecanismo de proteção. Rótulos de sensibilidade configurados para aplicar criptografia do serviço de Gerenciamento de Direitos do Azure aplicam controle de acesso e direitos de uso. Essa proteção persiste independentemente de onde o conteúdo é armazenado ou compartilhado. Por exemplo, os usuários ainda podem compartilhar um documento rotulado como "Confidencial", mas se esse rótulo aplicar criptografia, pessoas não autorizadas não poderão abri-lo.
 
-Organizations using labels without encryption gain visibility of the sensitivity level but the labels themselves lack technical enforcement. Labels that apply encryption ensure only authorized users can decrypt content and use it with any restrictions that are specified for that user. For example, read-only, or prevent copying. This protection helps prevent data exfiltration even if files are leaked or improperly shared. At least one sensitivity label should be configured to apply encryption for high-value data that requires protection beyond identifying the sensitivity level.
+As organizações que usam rótulos sem criptografia ganham visibilidade do nível de sensibilidade, mas os rótulos em si carecem de aplicação técnica. Rótulos que aplicam criptografia garantem que apenas usuários autorizados possam descriptografar o conteúdo e usá-lo com quaisquer restrições especificadas para esse usuário. Por exemplo, somente leitura ou impedir cópia. Essa proteção ajuda a impedir exfiltração de dados mesmo se os arquivos forem vazados ou compartilhados de forma inadequada. Pelo menos um rótulo de sensibilidade deve ser configurado para aplicar criptografia a dados de alto valor que exigem proteção além de identificar o nível de sensibilidade.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Restrict access to content by using encryption in sensitivity labels](https://learn.microsoft.com/purview/encryption-sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Restringir o acesso ao conteúdo usando criptografia em rótulos de sensibilidade](https://learn.microsoft.com/purview/encryption-sensitivity-labels?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

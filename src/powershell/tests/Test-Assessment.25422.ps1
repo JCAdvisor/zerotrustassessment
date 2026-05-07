@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
-    GSA Deployment logs are populated and reviewed
+    Os logs de implantação do GSA são preenchidos e revisados
 
 .DESCRIPTION
-    Verifies that Global Secure Access deployment logs are being populated and that recent deployments
-    have succeeded. Failed deployments indicate configuration issues that require investigation.
+    Verifica se os logs de implantação do Global Secure Access estão sendo preenchidos e se implantações recentes
+    foram bem-sucedidas. Implantações falhadas indicam problemas de configuração que requerem investigação.
 
 .NOTES
     Test ID: 25422
@@ -15,27 +15,27 @@
 
 function Test-Assessment-25422 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Low',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Entra_Premium_Internet_Access','Entra_Premium_Private_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access','Entra_Premium_Private_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Monitor and detect cyberthreats',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 25422,
-    	Title = 'Global Secure Access deployment logs are populated and reviewed',
-    	UserImpact = 'Low'
+    	Title = 'Os logs de implantação do Acesso Seguro Global estão preenchidos e revisados',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking GSA Deployment logs are populated and reviewed'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando se logs de implantação do GSA são preenchidos e revisados'
 
     # Q1: Check if GSA is enabled (prerequisite check)
-    Write-ZtProgress -Activity $activity -Status 'Checking if Global Secure Access is enabled'
+    Write-ZtProgress -Activity $activity -Status 'Verificando se o Global Secure Access está ativado'
     $forwardingProfiles = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/forwardingProfiles' -ApiVersion beta
 
     # Check if GSA is configured
@@ -53,7 +53,7 @@ function Test-Assessment-25422 {
     }
 
     # Q2: Retrieve GSA deployment logs
-    Write-ZtProgress -Activity $activity -Status 'Retrieving deployment logs'
+    Write-ZtProgress -Activity $activity -Status 'Recuperando logs de implantação'
     $deployments = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/deployments' -ApiVersion beta
 
     # Filter deployments from the last 30 days
@@ -88,11 +88,11 @@ function Test-Assessment-25422 {
     # If failedCount > 0 → Fail
     if ($failedCount -eq 0) {
         $passed = $true
-        $testResultMarkdown = "GSA deployment logs are populated and recent deployments have succeeded.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Os logs de implantação do GSA são preenchidos e implantações recentes foram bem-sucedidas.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown = "GSA deployment logs contain failed deployments that require investigation.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Os logs de implantação do GSA contém implantações falhadas que requerem investigação.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -104,9 +104,9 @@ function Test-Assessment-25422 {
 
     $mdInfo += @"
 
-## [Deployment Logs]($deploymentLogsLink)
+## [Logs de Implantação]($deploymentLogsLink)
 
-**Deployment Summary (Last 30 Days):**
+**Resumo de Implantação (Últimos 30 Dias):**
 
 | Metric | Value |
 | :--- | :--- |
@@ -215,7 +215,7 @@ function Test-Assessment-25422 {
         $mdInfo += $formatTemplate -f $truncationMessage, $tableRows
     }
     else {
-        $mdInfo += "`n**Recent Deployments:**`n`nNo deployments found in the last 30 days.`n"
+        $mdInfo += "`n**Implantações recentes:**`n`nNenhuma implantação encontrada nos últimos 30 dias.`n"
     }
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
@@ -223,7 +223,7 @@ function Test-Assessment-25422 {
 
     $params = @{
         TestId = '25422'
-        Title  = 'GSA Deployment logs are populated and reviewed'
+        Title  = 'Logs de implantação do GSA estão preenchidos e revisados'
         Status = $passed
         Result = $testResultMarkdown
     }

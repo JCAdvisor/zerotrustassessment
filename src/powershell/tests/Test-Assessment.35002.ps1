@@ -1,9 +1,9 @@
 ﻿<#
 .SYNOPSIS
-    Checks if Microsoft Rights Management Services (RMS) is allowed in Cross-Tenant Access Policies (XTAP).
+    Verifica se o Microsoft Rights Management Services (RMS) é permitido em Políticas de Acesso Entre Locaários (XTAP).
 
 .DESCRIPTION
-    This test verifies that the Microsoft Rights Management Services (RMS) application (App ID: 00000012-0000-0000-c000-000000000000)
+    Este teste verifica que o aplicativo Microsoft Rights Management Services (RMS) (App ID: 00000012-0000-0000-c000-000000000000)
     is allowed in both Inbound and Outbound Cross-Tenant Access Policies.
     It checks the Default policy and any Partner-specific policies.
 
@@ -19,17 +19,17 @@
 
 function Test-Assessment-35002 {
     [ZtTest(
-    	Category = 'Identity',
-    	ImplementationCost = 'Low',
+        Category = 'Identidade',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E5'),
     	Service = ('Graph'),
-    	Pillar = 'Data',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 35002,
-    	Title = 'Cross-tenant access settings configured to allow encrypted content sharing',
-    	UserImpact = 'Low'
+        Title = 'As configurações de acesso entre locatários estão configuradas para permitir o compartilhamento de conteúdo criptografado',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -74,10 +74,10 @@ function Test-Assessment-35002 {
     #endregion Helper Functions
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Cross-Tenant Access Policy (XTAP) RMS Settings'
-    Write-ZtProgress -Activity $activity -Status 'Getting Default Policy'
+    $activity = 'Verificando configurações de RMS de Política de Acesso Entre Locaários (XTAP)'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo Política Padrão'
 
     $defaultPolicy = $null
     $partners = @()
@@ -88,12 +88,12 @@ function Test-Assessment-35002 {
         $defaultPolicy = Invoke-ZtGraphRequest -RelativeUri 'policies/crossTenantAccessPolicy/default' -ApiVersion v1.0 -ErrorAction Stop
 
         # 2. Get Partner Policies
-        Write-ZtProgress -Activity $activity -Status 'Getting Partner Policies'
+        Write-ZtProgress -Activity $activity -Status 'Obtendo Políticas do Parceiro'
         $partners = Invoke-ZtGraphRequest -RelativeUri 'policies/crossTenantAccessPolicy/partners' -ApiVersion v1.0 -ErrorAction Stop
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying Cross-Tenant Access Policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar Políticas de Acesso Entre Locaários: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -173,19 +173,19 @@ function Test-Assessment-35002 {
 
     if ($errorMsg) {
         $testResultMarkdown = "### Investigate`n`n"
-        $testResultMarkdown += "Cross-tenant access policy settings cannot be determined or RMS is not explicitly configured.`n`n"
-        $testResultMarkdown += "Please check the console output for error details."
+        $testResultMarkdown += "As configurações de política de acesso entre locaários não podem ser determinadas ou o RMS não está explicitamente configurado.`n`n"
+        $testResultMarkdown += "Verifique a saída do console para detalhes de erro."
     }
     else {
         if ($passed) {
-            $testResultMarkdown = "✅ RMS application is allowed (or not restricted) in cross-tenant access policy settings for both inbound and outbound access.`n`n"
+            $testResultMarkdown = "✅ O aplicativo RMS é permitido (ou não restrito) nas configurações de política de acesso entre locaários para acesso de entrada e saída.`n`n"
         }
         else {
-            $testResultMarkdown = "❌ RMS application is explicitly blocked in cross-tenant access policy inbound or outbound settings.`n`n"
+            $testResultMarkdown = "❌ O aplicativo RMS está explicitamente bloqueado nas configurações de política de acesso entre locaários de entrada ou saída.`n`n"
         }
 
-        $testResultMarkdown += "### Cross-Tenant Access Policy (XTAP) RMS Settings`n`n"
-        $testResultMarkdown += "| Policy | Direction | Status | Details |`n"
+        $testResultMarkdown += "### Configuração de Política de Acesso Entre Locaários (XTAP)`n`n"
+        $testResultMarkdown += "| Política | Direção | Status | Detalhes |`n"
         $testResultMarkdown += "|:---|:---|:---|:---|`n"
 
         foreach ($result in $xtapResults) {
@@ -195,15 +195,15 @@ function Test-Assessment-35002 {
         $testResultMarkdown += "`n`n"
 
         if (-not $passed) {
-            $testResultMarkdown += "⚠️ **Risk:** Blocking RMS prevents users from opening encrypted content (emails, documents) shared between tenants.`n"
-            $testResultMarkdown += "Please review the blocked policies and add 'Microsoft Rights Management Services' (App ID: $rmsAppId) to the allowed applications list.`n"
+            $testResultMarkdown += "⚠️ **Risco:** Bloquear RMS impede que os usuários abram conteúdo criptografado (e-mails, documentos) compartilhado entre locaários.`n"
+            $testResultMarkdown += "Verifique as políticas bloqueadas e adicione 'Microsoft Rights Management Services' (App ID: $rmsAppId) à lista de aplicações permitidas.`n"
         }
     }
     #endregion Report Generation
 
     $testResultDetail = @{
         TestId             = '35002'
-        Title              = 'Cross-Tenant Access Policy (XTAP) RMS Inbound/Outbound Settings'
+        Title              = 'Configuração de Política de Acesso Entre Locaários (XTAP) RMS de Entrada/Saída'
         Status             = $passed
         Result             = $testResultMarkdown
     }

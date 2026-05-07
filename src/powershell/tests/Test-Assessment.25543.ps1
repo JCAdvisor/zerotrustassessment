@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Validates that Azure Front Door WAF is enabled in Prevention Mode.
+    Valida que o WAF do Azure Front Door está habilitado em modo Prevenção.
 
 .DESCRIPTION
-    This test validates that Azure Front Door Web Application Firewall policies are configured
-    in Prevention mode to actively block malicious requests. Checks all Front Door WAF policies
-    across all subscriptions and reports their prevention/detection mode status.
+    Este teste valida que as políticas de Firewall de Aplicativo Web do Azure Front Door estão configuradas
+    em modo Prevenção para bloquear ativamente solicitações maliciosas. Verifica todas as políticas WAF do Front Door
+    em todas as assinaturas e relata o status do modo prevenção/detecção.
 
 .NOTES
     Test ID: 25543
@@ -15,36 +15,36 @@
 
 function Test-Assessment-25543 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure WAF on Azure Front Door Premium SKU', 'Azure Standard SKU'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 25543,
-        Title = 'Azure Front Door WAF is Enabled in Prevention Mode',
-        UserImpact = 'Low'
+        Title = 'O WAF do Azure Front Door está Habilitado em Modo Prevenção',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Azure Front Door WAF policies configuration'
+    $activity = 'Verificando configuração de políticas WAF do Azure Front Door'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Enumerating subscriptions'
+    Write-ZtProgress -Activity $activity -Status 'Enumerando assinaturas'
 
     # Initialize variables
     $subscriptions = @()
@@ -56,37 +56,37 @@ function Test-Assessment-25543 {
         $subscriptions = Get-AzSubscription -ErrorAction Stop
     }
     catch {
-        Write-PSFMessage "Unable to retrieve Azure subscriptions: $_" -Level Warning
+        Write-PSFMessage "Não foi possível recuperar as assinaturas do Azure: $_" -Level Warning
     }
 
     if ($subscriptions.Count -eq 0) {
-        Write-PSFMessage "No Azure subscriptions found." -Level Warning
+        Write-PSFMessage "Nenhuma assinatura do Azure encontrada." -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
         return
     }
 
     # Collect WAF policies from all subscriptions
     foreach ($sub in $subscriptions) {
-        Write-ZtProgress -Activity $activity -Status "Checking subscription: $($sub.Name)"
+        Write-ZtProgress -Activity $activity -Status "Verificando assinatura: $($sub.Name)"
 
         $path = "/subscriptions/$($sub.Id)/providers/Microsoft.Network/FrontDoorWebApplicationFirewallPolicies?api-version=$apiVersion"
         $response = Invoke-AzRestMethod -Path $path -ErrorAction SilentlyContinue
 
         # Skip if request failed completely
         if (-not $response -or $null -eq $response.StatusCode) {
-            Write-PSFMessage "Failed to query subscription '$($sub.Name)'. Skipping." -Level Warning
+            Write-PSFMessage "Falha ao consultar assinatura '$($sub.Name)'. Ignorando." -Level Warning
             continue
         }
 
         # Handle access denied for this subscription - skip and continue to next
         if ($response.StatusCode -eq 403) {
-            Write-PSFMessage "Access denied to subscription '$($sub.Name)': HTTP $($response.StatusCode). Skipping." -Level Verbose
+            Write-PSFMessage "Acesso negado à assinatura '$($sub.Name)': HTTP $($response.StatusCode). Ignorando." -Level Verbose
             continue
         }
 
         # Handle other HTTP errors - skip this subscription
         if ($response.StatusCode -ge 400) {
-            Write-PSFMessage "Error querying subscription '$($sub.Name)': HTTP $($response.StatusCode). Skipping." -Level Warning
+            Write-PSFMessage "Erro ao consultar assinatura '$($sub.Name)': HTTP $($response.StatusCode). Ignorando." -Level Warning
             continue
         }
 
@@ -125,11 +125,11 @@ function Test-Assessment-25543 {
     if ($policies.Count -eq 0) {
         if ($anySuccessfulAccess -eq 0) {
             # All subscriptions were inaccessible
-            Write-PSFMessage "No accessible Azure subscriptions found." -Level Warning
+            Write-PSFMessage "Nenhuma assinatura do Azure acessível encontrada." -Level Warning
             Add-ZtTestResultDetail -SkippedBecause NoAzureAccess
         } else {
             # Subscriptions accessible but no WAF policies deployed
-            Write-PSFMessage "No Azure Front Door WAF policies found across subscriptions." -Tag Test -Level Verbose
+            Write-PSFMessage "Nenhuma política WAF do Azure Front Door encontrada em assinaturas." -Tag Test -Level Verbose
             Add-ZtTestResultDetail -SkippedBecause NotApplicable
         }
         return
@@ -146,11 +146,11 @@ function Test-Assessment-25543 {
 
     if ($allCompliant) {
         $passed = $true
-        $testResultMarkdown = "✅ All Azure Front Door WAF policies are enabled in **Prevention** mode.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas WAF do Azure Front Door estão habilitadas em modo **Prevenção**.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown = "❌ One or more Azure Front Door WAF policies are either in **Disabled** state or in **Detection** mode.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas WAF do Azure Front Door estão em estado **Desabilitado** ou em modo **Detecção**.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -158,7 +158,7 @@ function Test-Assessment-25543 {
     $mdInfo = ''
 
     # Table title
-    $reportTitle = 'Azure Front Door WAF policies'
+    $reportTitle = 'Políticas WAF do Azure Front Door'
     $portalLink = "https://portal.azure.com/#view/Microsoft_Azure_HybridNetworking/FirewallManagerMenuBlade/~/wafMenuItem"
 
     # Prepare table rows
@@ -171,8 +171,8 @@ function Test-Assessment-25543 {
 
         # Calculate status indicators
         $policyStatus = if ($item.EnabledState -eq 'Enabled' -and $item.Mode -eq 'Prevention') { '✅' } else { '❌' }
-        $modeDisplay = if ($item.Mode -eq 'Prevention') { '✅ Prevention' } else { '❌ Detection' }
-        $enabledStateDisplay = if ($item.EnabledState -eq 'Enabled') { '✅ Enabled' } else { '❌ Disabled' }
+        $modeDisplay = if ($item.Mode -eq 'Prevention') { '✅ Prevenção' } else { '❌ Detecção' }
+        $enabledStateDisplay = if ($item.EnabledState -eq 'Enabled') { '✅ Habilitado' } else { '❌ Desabilitado' }
 
         $tableRows += "| $policyMd | $subMd | $enabledStateDisplay | $modeDisplay | $policyStatus |`n"
     }
@@ -182,7 +182,7 @@ function Test-Assessment-25543 {
 
 ## [{0}]({1})
 
-| Policy name | Subscription name | Policy state | Mode | Status |
+| Nome da Política | Nome da Assinatura | Estado da Política | Modo | Status |
 | :---------- | :---------------- | :----------: | :--: | :----: |
 {2}
 
@@ -195,7 +195,7 @@ function Test-Assessment-25543 {
 
     $params = @{
         TestId = '25543'
-        Title  = 'Azure Front Door WAF is Enabled in Prevention Mode'
+        Title  = 'O WAF do Azure Front Door está Habilitado em Modo Prevenção'
         Status = $passed
         Result = $testResultMarkdown
     }

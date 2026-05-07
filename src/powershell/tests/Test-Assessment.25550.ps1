@@ -1,35 +1,35 @@
 <#
 .SYNOPSIS
-    Inspection of Outbound TLS Traffic is Enabled on Azure Firewall
+    Inspeção do Tráfego TLS de Saída está Ativada no Azure Firewall
 .DESCRIPTION
-    Verifies that Azure Firewall Premium has TLS inspection enabled by checking for global certificate authority configuration
-    and at least one application rule with terminateTLS enabled.
+    Verifica se o Azure Firewall Premium tem inspeção de TLS ativada verificando a configuração de autoridade de certificação global
+    e pelo menos uma regra de aplicação com terminateTLS ativada.
 #>
 
 function Test-Assessment-25550 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure_Firewall_Premium'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce', 'External'),
         TestId = 25550,
-        Title = 'Inspection of Outbound TLS Traffic is Enabled on Azure Firewall',
-        UserImpact = 'Low'
+        Title = 'A inspeção de tráfego TLS de saída está habilitada no Azure Firewall',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
-    Write-PSFMessage '🟦 Start Azure Firewall TLS Inspection evaluation' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar avaliação de inspeção de tráfego TLS de saída do Azure Firewall' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Azure Firewall TLS Inspection configuration'
+    $activity = 'Verificando configuração de inspeção TLS do Azure Firewall'
 
     #region Data Collection
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -39,16 +39,16 @@ function Test-Assessment-25550 {
     }
 
     # Check the supported environment, 'AzureCloud' maps to 'Global'
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
-        Write-PSFMessage 'This test is only applicable to the Global (AzureCloud) environment.' -Tag Test -Level VeryVerbose
+        Write-PSFMessage 'Este teste é aplicável apenas para o ambiente Global (AzureCloud).' -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
 
     # Q1-Q3: Query all firewall policies via Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Firewall policies via Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de Firewall do Azure via Gráfico de Recursos'
 
     $policyQuery = @"
 resources
@@ -71,17 +71,17 @@ resources
     $allPolicies = @()
     try {
         $allPolicies = @(Invoke-ZtAzureResourceGraphRequest -Query $policyQuery)
-        Write-PSFMessage "ARG returned $($allPolicies.Count) firewall policy(ies)" -Tag Test -Level VeryVerbose
+        Write-PSFMessage "ARG retornou $($allPolicies.Count) política(s) de política de firewall" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Azure Resource Graph query failed: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Consulta do Gráfico de Recursos do Azure falhou: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
 
     # No firewall policies at all → Skipped
     if ($allPolicies.Count -eq 0) {
-        Write-PSFMessage 'No Azure Firewall policies found in any subscription.' -Tag Test -Level VeryVerbose
+        Write-PSFMessage 'Nenhuma política de Firewall do Azure encontrada em nenhuma assinatura.' -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotApplicable
         return
     }
@@ -92,7 +92,7 @@ resources
     # Q4-Q5: Find policies with at least one application rule that has terminateTLS enabled
     $tlsPolicyIds = @()
     if ($premiumPolicies.Count -gt 0) {
-        Write-ZtProgress -Activity $activity -Status 'Checking application rules for TLS inspection'
+        Write-ZtProgress -Activity $activity -Status 'Verificando regras de aplicação para inspeção TLS'
 
         $tlsRuleQuery = @"
 resources

@@ -5,16 +5,16 @@
 
 function Test-Assessment-21885 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'High',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Alto',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect engineering systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger sistemas de engenharia',
     	TenantType = ('Workforce','External'),
     	TestId = 21885,
     	Title = 'Registros de aplicativos usam URIs de redirecionamento seguras',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param($Database)

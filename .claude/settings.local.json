@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs grep -l \"Ação de remediação\\\\|Ação de correção\")"
+    ]
+  }
+}

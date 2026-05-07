@@ -16,16 +16,16 @@
 function Test-Assessment-26889 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure_FrontDoor_Standard', 'Azure_FrontDoor_Premium'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Monitor and detect cyberthreats',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Monitorar e detectar ciberameaças',
         TenantType = ('Workforce'),
         TestId = 26889,
-        Title = 'Diagnostic logging is enabled in Azure Front Door WAF',
-        UserImpact = 'Low'
+        Title = 'O registro de diagnóstico está habilitado no WAF do Azure Front Door',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -42,11 +42,11 @@ function Test-Assessment-26889 {
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating Azure Front Door WAF diagnostic logging configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando a configuração de logs de diagnóstico do WAF do Azure Front Door'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com o Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -56,7 +56,7 @@ function Test-Assessment-26889 {
     }
 
     # Check the supported environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
         Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
@@ -79,7 +79,7 @@ function Test-Assessment-26889 {
     }
 
     # Q1, Q2, Q3: Query Azure Front Door profiles with WAF associations using Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Front Door profiles via Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando perfis do Azure Front Door via Resource Graph'
 
     # ARG query to get Front Door Standard/Premium profiles with their associated WAF policies
     # Uses securityPolicyLinks from WAF policies to correlate with Front Door profiles
@@ -128,7 +128,7 @@ resources
     }
 
     # Q4: Get diagnostic settings for each Front Door resource
-    Write-ZtProgress -Activity $activity -Status 'Querying diagnostic settings'
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de diagnóstico'
 
     $evaluationResults = @()
 
@@ -251,23 +251,23 @@ resources
     $passed = ($failedItems.Count -eq 0) -and ($passedItems.Count -gt 0)
 
     if ($passed) {
-        $testResultMarkdown = "✅ Diagnostic logging is enabled for Azure Front Door WAF with active log collection configured.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O registro de diagnóstico está habilitado no WAF do Azure Front Door com coleta de logs ativa configurada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Diagnostic logging is not enabled for Azure Front Door WAF, preventing security monitoring and threat detection at the edge.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O registro de diagnóstico não está habilitado no WAF do Azure Front Door, impedindo o monitoramento de segurança e a detecção de ameaças na borda.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
 
     #region Report Generation
 
-    $mdInfo = "`n## [Azure Front Door WAF diagnostic logging status](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Cdn%2Fprofiles)`n`n"
+    $mdInfo = "`n## [Status do registro de diagnóstico do WAF do Azure Front Door](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/Microsoft.Cdn%2Fprofiles)`n`n"
 
     # Front Door Status table
     if ($evaluationResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-| Subscription | Profile name | SKU | WAF policy | Diagnostic settings count | Destination configured | Enabled log categories | Status |
+| Assinatura | Nome do perfil | SKU | Política de WAF | Contagem de configurações de diagnóstico | Destino configurado | Categorias de log habilitadas | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 {0}
 
@@ -278,13 +278,13 @@ resources
             $diagCount = $result.DiagnosticSettingCount
             $destConfigured = if ($result.DestinationType -eq 'None') { 'No' } else { 'Yes' }
             $enabledCategories = if ($result.DiagnosticSettingCount -eq 0) {
-                'No diagnostic settings'
+                'Sem configurações de diagnóstico'
             } elseif ($result.EnabledCategories) {
                 $result.EnabledCategories
             } else {
                 'None'
             }
-            $statusText = if ($result.Status -eq 'Pass') { '✅ Pass' } else { '❌ Fail' }
+            $statusText = if ($result.Status -eq 'Pass') { '✅ Aprovado' } else { '❌ Reprovado' }
 
             $tableRows += "| $subscriptionLink | $profileLink | $($result.Sku) | $(Get-SafeMarkdown $result.WafPolicy) | $diagCount | $destConfigured | $enabledCategories | $statusText |`n"
         }
@@ -292,19 +292,19 @@ resources
     }
 
     # Summary
-    $mdInfo += "**Summary:**`n`n"
-    $mdInfo += "- Total Azure Front Door profiles with WAF evaluated: $($evaluationResults.Count)`n"
-    $mdInfo += "- Profiles with diagnostic logging enabled: $($passedItems.Count)`n"
-    $mdInfo += "- Profiles without diagnostic logging: $($failedItems.Count)`n"
+    $mdInfo += "**Resumo:**`n`n"
+    $mdInfo += "- Total de perfis do Azure Front Door com WAF avaliados: $($evaluationResults.Count)`n"
+    $mdInfo += "- Perfis com registro de diagnóstico habilitado: $($passedItems.Count)`n"
+    $mdInfo += "- Perfis sem registro de diagnóstico: $($failedItems.Count)`n"
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
 
     #endregion Report Generation
 
     $params = @{
         TestId = '26889'
-        Title  = 'Diagnostic logging is enabled in Azure Front Door WAF'
+        Title  = 'O registro de diagnóstico está habilitado no WAF do Azure Front Door'
         Status = $passed
         Result = $testResultMarkdown
     }

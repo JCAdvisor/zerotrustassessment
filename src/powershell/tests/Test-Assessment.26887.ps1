@@ -16,27 +16,27 @@
 function Test-Assessment-26887 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure_Firewall_Standard', 'Azure_Firewall_Premium'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Monitor and detect cyberthreats',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Monitorar e detectar ciberameaças',
         TenantType = ('Workforce'),
         TestId = 26887,
-        Title = 'Diagnostic logging is enabled in Azure Firewall',
-        UserImpact = 'Low'
+        Title = 'O registro de diagnóstico está habilitado no Azure Firewall',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating Azure Firewall diagnostic logging configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando a configuração de logs de diagnóstico do Azure Firewall'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com o Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -46,7 +46,7 @@ function Test-Assessment-26887 {
     }
 
     # Check the supported environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
         Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
@@ -69,7 +69,7 @@ function Test-Assessment-26887 {
     }
 
     # Q1 & Q2: Query Azure Firewalls using Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Firewalls via Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando Azure Firewalls via Resource Graph'
 
     $argQuery = @"
 resources
@@ -109,7 +109,7 @@ resources
     }
 
     # Q3: Get diagnostic settings for each Azure Firewall
-    Write-ZtProgress -Activity $activity -Status 'Querying diagnostic settings'
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de diagnóstico'
 
     $evaluationResults = @()
 
@@ -205,10 +205,10 @@ resources
     $passed = ($failedItems.Count -eq 0) -and ($passedItems.Count -gt 0)
 
     if ($passed) {
-        $testResultMarkdown = "✅ Diagnostic logging is enabled for Azure Firewall with active log collection configured.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O registro de diagnóstico está habilitado no Azure Firewall com coleta de logs ativa configurada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Diagnostic logging is not enabled for Azure Firewall, preventing security monitoring and threat detection.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O registro de diagnóstico não está habilitado no Azure Firewall, impedindo o monitoramento de segurança e a detecção de ameaças.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -220,13 +220,13 @@ resources
     $portalSubscriptionBaseLink = 'https://portal.azure.com/#resource/subscriptions'
     $portalResourceBaseLink = 'https://portal.azure.com/#resource'
 
-    $mdInfo = "`n## [Azure Firewall diagnostic logging status]($portalFirewallBrowseLink)`n`n"
+    $mdInfo = "`n## [Status do registro de diagnóstico do Azure Firewall]($portalFirewallBrowseLink)`n`n"
 
     # Azure Firewall Status table
     if ($evaluationResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-| Subscription | Firewall name | Location | Diagnostic settings count | Destination configured | Enabled log categories | Status |
+| Assinatura | Nome do firewall | Localização | Contagem de configurações de diagnóstico | Destino configurado | Categorias de log habilitadas | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 {0}
 
@@ -247,13 +247,13 @@ resources
             $diagCount = $result.DiagnosticSettingCount
             $destConfigured = if ($result.DestinationType -eq 'None') { 'No' } else { 'Yes' }
             $enabledCategories = if ($result.DiagnosticSettingCount -eq 0) {
-                'No diagnostic settings'
+                'Sem configurações de diagnóstico'
             } elseif ($result.EnabledCategories) {
                 $result.EnabledCategories
             } else {
                 'None'
             }
-            $statusText = if ($result.Status -eq 'Pass') { '✅ Pass' } else { '❌ Fail' }
+            $statusText = if ($result.Status -eq 'Pass') { '✅ Aprovado' } else { '❌ Reprovado' }
 
             $tableRows += "| $subscriptionLink | $firewallLink | $($result.Location) | $diagCount | $destConfigured | $enabledCategories | $statusText |`n"
         }
@@ -261,26 +261,26 @@ resources
         # Add note if more items exist
         if ($hasMoreItems) {
             $remainingCount = $evaluationResults.Count - $maxItemsToDisplay
-            $tableRows += "`n... and $remainingCount more. [View all Azure Firewalls in the portal]($portalFirewallBrowseLink)`n"
+            $tableRows += "`n... e mais $remainingCount. [Ver todos os Azure Firewalls no portal]($portalFirewallBrowseLink)`n"
         }
 
         $mdInfo += $formatTemplate -f $tableRows
     }
 
     # Summary
-    $mdInfo += "**Summary:**`n`n"
-    $mdInfo += "- Total Azure Firewalls evaluated: $($evaluationResults.Count)`n"
-    $mdInfo += "- Firewalls with diagnostic logging enabled: $($passedItems.Count)`n"
-    $mdInfo += "- Firewalls without diagnostic logging: $($failedItems.Count)`n"
+    $mdInfo += "**Resumo:**`n`n"
+    $mdInfo += "- Total de Azure Firewalls avaliados: $($evaluationResults.Count)`n"
+    $mdInfo += "- Firewalls com registro de diagnóstico habilitado: $($passedItems.Count)`n"
+    $mdInfo += "- Firewalls sem registro de diagnóstico: $($failedItems.Count)`n"
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
 
     #endregion Report Generation
 
     $params = @{
         TestId = '26887'
-        Title  = 'Diagnostic logging is enabled in Azure Firewall'
+        Title  = 'O registro de diagnóstico está habilitado no Azure Firewall'
         Status = $passed
         Result = $testResultMarkdown
     }

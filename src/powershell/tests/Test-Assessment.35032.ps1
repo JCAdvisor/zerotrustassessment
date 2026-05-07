@@ -43,10 +43,10 @@ function Test-Assessment-35032 {
     $ModerateRiskGuid = '797C4446-5C73-484F-8E58-0CCA08D6DF6C'
     $MinorRiskGuid = '75A4318B-94A2-4323-BA42-2CA6DB29AAFE'
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Adaptive Protection in DLP Policies'
-    Write-ZtProgress -Activity $activity -Status 'Querying DLP compliance rules'
+    $activity = 'Verificando Proteção Adaptativa nas políticas DLP'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas DLP'
 
     $dlpRules = $null
     $adaptiveRules = $null

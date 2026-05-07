@@ -1,12 +1,12 @@
 ﻿<#
 .SYNOPSIS
-    Office 365 Message Encryption is configured with simplified client access
+    O Criptografia de Mensagens do Microsoft Purview está configurado com acesso de cliente simplificado
 
 .DESCRIPTION
-    This test checks if SimplifiedClientAccessEnabled is enabled for OME, which controls whether the
-    Protect button is available in Outlook on the web, allowing users to quickly apply encryption
-    protections to their messages. SimplifiedClientAccessEnabled requires AzureRMSLicensingEnabled
-    to be active, as Azure Rights Management is the underlying encryption foundation.
+    Este teste verifica se SimplifiedClientAccessEnabled está habilitado para OME, o que controla se o
+    botão Proteger está disponível no Outlook na web, permitindo que os usuários apliquem rapidamente proteções de criptografia
+    às suas mensagens. SimplifiedClientAccessEnabled requer que AzureRMSLicensingEnabled esteja ativo, pois o Gerenciamento de Direitos do Azure é a
+    base de criptografia subjacente.
 
 .NOTES
     Test ID: 35026
@@ -34,10 +34,10 @@ function Test-Assessment-35026 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking OME SimplifiedClientAccess Configuration'
-    Write-ZtProgress -Activity $activity -Status 'Getting IRM configuration'
+    $activity = 'Verificando configuração SimplifiedClientAccess de OME'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configuração de IRM'
 
     # Get IRM configuration for OME settings
     $irmConfig = $null
@@ -48,7 +48,7 @@ function Test-Assessment-35026 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to retrieve IRM configuration: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar configuração de IRM: $_" -Tag Test -Level Warning
     }
     #endregion Data Collection
 
@@ -95,38 +95,38 @@ function Test-Assessment-35026 {
     $testResultMarkdown = ''
 
     if ($customStatus -eq 'Investigate') {
-        $testResultMarkdown = "⚠️ Unable to determine SimplifiedClientAccessEnabled status due to permissions issues or OME not configured.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status de SimplifiedClientAccessEnabled devido a problemas de permissões ou OME não configurado.`n`n%TestResult%"
     }
     elseif ($passed) {
-        $testResultMarkdown = "✅ SimplifiedClientAccessEnabled is true (Protect button enabled) and AzureRMSLicensingEnabled is true (encryption foundation active).`n`n%TestResult%"
+        $testResultMarkdown = "✅ SimplifiedClientAccessEnabled é true (botão Proteger habilitado) e AzureRMSLicensingEnabled é true (base de criptografia ativa).`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ SimplifiedClientAccessEnabled is false or AzureRMSLicensingEnabled is false (encryption foundation or Protect button disabled).`n`n%TestResult%"
+        $testResultMarkdown = "❌ SimplifiedClientAccessEnabled é false ou AzureRMSLicensingEnabled é false (base de criptografia ou botão Proteger desabilitado).`n`n%TestResult%"
     }
 
     # Build detailed information if we have data
     $mdInfo = ''
 
     if ($irmConfig) {
-        $reportTitle = 'OME SimplifiedClientAccess Status'
+        $reportTitle = 'Status do SimplifiedClientAccess de OME'
 
         $protectButtonStatus = if (($irmConfig.SimplifiedClientAccessEnabled -eq $true) -and ($irmConfig.AzureRMSLicensingEnabled -eq $true)) {
-            '✅ Enabled'
+            '✅ Habilitado'
         } else {
-            '❌ Disabled'
+            '❌ Desabilitado'
         }
 
         $formatTemplate = @'
 
 ### {0}
 
-| Setting | Value |
+| Configuração | Valor |
 | :------ | :---- |
 {1}
 
-**Summary:**
+**Resumo:**
 
-* Protect Button Status: {2}
+* Status do botão Proteger: {2}
 
 '@
 

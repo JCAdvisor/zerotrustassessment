@@ -5,16 +5,16 @@ Testa se todos os usuários convidados possuem padrinhos (sponsors) atribuídos 
 
 function Test-Assessment-21877 {
     [ZtTest(
-    	Category = 'Application management',
-    	ImplementationCost = 'Medium',
+    	Category = 'Gerenciamento de aplicativos',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21877,
     	Title = 'Todos os convidados possuem um padrinho',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param(
@@ -46,7 +46,7 @@ WHERE userType = 'Guest'
             Title              = 'Todos os convidados possuem um padrinho'
             UserImpact         = 'Medium'
             Risk               = 'Medium'
-            ImplementationCost = 'Medium'
+            ImplementationCost = 'Médio'
             AppliesTo          = 'Identity'
             Tag                = 'Identity'
             Status             = $true
@@ -119,7 +119,7 @@ $($tableRowsBuilder.ToString())
         Title              = 'Todos os convidados possuem um padrinho'
         UserImpact         = 'Medium'
         Risk               = 'Medium'
-        ImplementationCost = 'Medium'
+        ImplementationCost = 'Médio'
         AppliesTo          = 'Identity'
         Tag                = 'Identity'
         Status             = $passed

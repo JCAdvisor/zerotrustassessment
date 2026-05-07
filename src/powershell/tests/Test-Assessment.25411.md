@@ -1,8 +1,7 @@
-TLS inspection decrypts and inspects HTTPS traffic, enabling visibility into encrypted sessions. Without it, many Microsoft Entra Internet Access features can't function, including URL filtering and advanced threat detection. Most internet traffic is encrypted, so TLS inspection is essential for applying security policies to most user activity.
+A inspeção TLS descriptografa e inspeciona o tráfego HTTPS, permitindo visibilidade nas sessões criptografadas. Sem ela, muitos recursos do Microsoft Entra Internet Access não podem funcionar, incluindo filtro de URL e detecção avançada de ameaças. A maioria do tráfego da internet é criptografada, portanto, a inspeção TLS é essencial para aplicar políticas de segurança à maioria da atividade do usuário.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure Transport Layer Security Inspection Policies](https://learn.microsoft.com/entra/global-secure-access/how-to-transport-layer-security?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configure políticas de inspeção de segurança da camada de transporte](https://learn.microsoft.com/entra/global-secure-access/how-to-transport-layer-security?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

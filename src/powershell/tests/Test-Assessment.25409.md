@@ -1,9 +1,8 @@
-Category-based filtering provides broader protection than URL-specific rules. Blocking entire website categories like malware, phishing, hacking, and criminal activity prevents access to thousands of malicious sites at once. Filtering policies that only target specific URLs or domains require constant maintenance and leave gaps as threat actors register new malicious domains daily.
+A filtragem baseada em categorias oferece proteção mais ampla do que regras específicas de URL. Bloquear categorias inteiras de sites, como malware, phishing, hacking e atividades criminosas, impede o acesso a milhares de sites maliciosos de uma só vez. Políticas de filtragem que visam apenas URLs ou domínios específicos exigem manutenção constante e deixam lacunas à medida que agentes de ameaça registram novos domínios maliciosos diariamente.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Review available web content filtering categories](https://learn.microsoft.com/entra/global-secure-access/reference-web-content-filtering-categories?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
-- [Configure category-based filtering rules](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-web-content-filtering?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Revise as categorias de filtragem de conteúdo web disponíveis](https://learn.microsoft.com/entra/global-secure-access/reference-web-content-filtering-categories?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configure regras de filtragem baseadas em categorias](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-web-content-filtering?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

@@ -1,9 +1,9 @@
-﻿<#
+<#
 .SYNOPSIS
-    Sensitivity label policies are published to users
+    As políticas de rótulo de sensibilidade são publicadas para os usuários
 
 .DESCRIPTION
-    Creating sensitivity labels is the first step in information protection deployment.
+    Criar rótulos de sensibilidade é o primeiro passo na implantação de proteção de informações.
     Labels must be published through label policies before users can apply them to content.
     Label policies define which users or groups receive which labels, determine default labeling behavior,
     and enforce mandatory labeling requirements.
@@ -16,37 +16,37 @@
 
 function Test-Assessment-35004 {
     [ZtTest(
-    	Category = 'Sensitivity Labels',
-    	ImplementationCost = 'Low',
+        Category = 'Rótulos de sensibilidade',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E3'),
     	Service = ('SecurityCompliance'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Low',
-    	SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Baixo',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce'),
     	TestId = 35004,
-    	Title = 'Sensitivity label policies are published to users',
-    	UserImpact = 'Medium'
+        Title = 'As políticas de rótulos de sensibilidade são publicadas para os usuários',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Published Label Policies'
-    Write-ZtProgress -Activity $activity -Status 'Getting Label Policies'
+    $activity = 'Verificando Políticas de Rótulo Publicadas'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo Políticas de Rótulo'
 
     $policies = @()
     $errorMsg = $null
 
     try {
-        # Query: Get all label policies
+            # Consulta: Get all label policies
         $policies = Get-LabelPolicy -WarningAction SilentlyContinue -ErrorAction Stop
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying Label Policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar Políticas de Rótulo: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -56,7 +56,7 @@ function Test-Assessment-35004 {
     $customStatus = $null
 
     if ($errorMsg) {
-        $testResultMarkdown = "### Investigate`n`nUnable to query label policies due to error: $errorMsg`n`n%TestResult%"
+        $testResultMarkdown = "### Investigate`n`nNão foi possível consultar políticas de rótulo devido a erro: $errorMsg`n`n%TestResult%"
         $customStatus = 'Investigate'
         $passed = $false
     }
@@ -91,25 +91,25 @@ function Test-Assessment-35004 {
         $totalUsersGroupsDisplay = if ($allUsersTargeted) { "All Users" } else { $uniqueTargets.Count }
 
         if ($passed) {
-            $testResultMarkdown = "✅ At least one enabled label policy is published to users.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Pelo menos uma política de rótulo habilitada é publicada para os usuários.`n`n%TestResult%"
         }
         else {
-            $testResultMarkdown = "❌ No enabled label policies exist or all policies are disabled.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Nenhuma política de rótulo habilitada existe ou todas as políticas estão desabilitadas.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
 
     #region Report Generation
     $mdInfo = ''
-    $mdInfo += "### Label Policy Summary`n`n"
-    $mdInfo += "* Total Policies Configured: $($policies.Count)`n"
-    $mdInfo += "* Enabled Policies: $($enabledPolicies.Count)`n"
-    $mdInfo += "* Disabled Policies: $($policies.Count - $enabledPolicies.Count)`n"
-    $mdInfo += "* Total Users/Groups with Label Access: $totalUsersGroupsDisplay`n"
+    $mdInfo += "### Resumo da Política de Rótulo`n`n"
+    $mdInfo += "* Total de Políticas Configuradas: $($policies.Count)`n"
+    $mdInfo += "* Políticas Habilitadas: $($enabledPolicies.Count)`n"
+    $mdInfo += "* Políticas Desabilitadas: $($policies.Count - $enabledPolicies.Count)`n"
+    $mdInfo += "* Total de Usuários/Grupos com Acesso a Rótulo: $totalUsersGroupsDisplay`n"
 
     if ($policies.Count -gt 0) {
-        $mdInfo += "`n**Policies:**`n"
-        $mdInfo += "| Policy name | Enabled | Labels included | Published to |`n"
+        $mdInfo += "`n**Políticas:**`n"
+        $mdInfo += "| Nome da política | Habilitado | Rótulos incluíos | Publicado para |`n"
         $mdInfo += "|:---|:---|:---|:---|`n"
 
         foreach ($policy in $policies) {
@@ -141,14 +141,14 @@ function Test-Assessment-35004 {
         }
     }
 
-    $mdInfo += "`n[Manage Label Policies in Microsoft Purview](https://purview.microsoft.com/informationprotection/labelpolicies)`n"
+    $mdInfo += "`n[Gerenciar Políticas de Rótulo no Microsoft Purview](https://purview.microsoft.com/informationprotection/labelpolicies)`n"
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $testResultDetail = @{
         TestId             = '35004'
-        Title              = 'Published Label Policies'
+        Title              = 'Políticas de Rótulo Publicadas'
         Status             = $passed
         Result             = $testResultMarkdown
     }

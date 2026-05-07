@@ -1,8 +1,7 @@
-Internal RMS licensing allows users and services in the organization to license protected content for internal distribution and sharing. It's enabled automatically when Azure RMS is activated. If disabled, users can't collaborate on encrypted emails and files internally, and legal holds, eDiscovery, and data recovery operations can't access encrypted content.
+O licenciamento interno de RMS permite que os usuários e serviços da organização licenciem o conteúdo protegido para distribuição e compartilhamento interno. É habilitado automaticamente quando o Azure RMS é ativado. Se desabilitado, os usuários não podem colaborar em emails e arquivos criptografados internamente, e as operações de bloqueio legal, descoberta eletrônica e recuperação de dados não podem acessar o conteúdo criptografado.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Set up Message Encryption](https://learn.microsoft.com/purview/set-up-new-message-encryption-capabilities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar Criptografia de Mensagem](https://learn.microsoft.com/purview/set-up-new-message-encryption-capabilities?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

@@ -1,15 +1,24 @@
-When the Internet Access forwarding profile isn't enabled, users can access internet resources without routing traffic through the Secure Web Gateway. This gap allows threat actors to bypass security controls that block threats, malicious content, and unsafe destinations.
+Quando o perfil de encaminhamento de acesso à Internet não está habilitado, os usuários podem acessar recursos da internet sem rotear o tráfego pelo Secure Web Gateway. Essa lacuna permite que agentes de ameaça contornem controles de segurança que bloqueiam ameaças, conteúdo malicioso e destinos inseguros.
 
-Without this protection:
+Sem essa proteção:
 
-- Organizations lose visibility into traffic patterns. They can't detect data exfiltration, connections to malicious domains, or unauthorized external access.
-- Threat actors can deliver malware, establish command and control connections, or exfiltrate data through unmonitored channels.
-- Threat actors can use compromised credentials or social engineering to gain initial access, download tools, establish persistence, or communicate with external infrastructure.
-- Threat actors can use compromised accounts to blend with typical user behavior and access external resources without triggering security alerts based on user context, device compliance, or location.
+- As organizações perdem visibilidade sobre os padrões de tráfego. Não conseguem detectar exfiltração de dados, conexões a domínios maliciosos ou acesso externo não autorizado.
+- Agentes de ameaça podem entregar malware, estabelecer conexões de comando e controle ou exfiltrar dados por canais não monitorados.
+- Agentes de ameaça podem usar credenciais comprometidas ou engenharia social para obter acesso inicial, baixar ferramentas, estabelecer persistência ou se comunicar com infraestrutura externa.
+- Agentes de ameaça podem usar contas comprometidas para se misturar ao comportamento típico do usuário e acessar recursos externos sem acionar alertas de segurança baseados em contexto de usuário, conformidade de dispositivo ou localização.
 
-**Remediation action**
-- Enable the Internet Access forwarding profile to route traffic through the Secure Web Gateway. For more information, see [How to manage the Internet Access traffic forwarding profile](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-internet-access-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Assign users and groups to the Internet Access profile to limit traffic forwarding to specific users. For more information, see [Global Secure Access traffic forwarding profiles](https://learn.microsoft.com/entra/global-secure-access/concept-traffic-forwarding?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+**Ação de remediação**
+- Habilite o perfil de encaminhamento de acesso à Internet para rotear o tráfego pelo Secure Web Gateway. Para mais informações, consulte [Como gerenciar o perfil de encaminhamento de tráfego de acesso à Internet](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-internet-access-profile?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- Atribua usuários e grupos ao perfil de acesso à Internet para limitar o encaminhamento de tráfego a usuários específicos. Para mais informações, consulte [Perfis de encaminhamento de tráfego do Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/concept-traffic-forwarding?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
+
+
+
+
+
+
+
+
+
 

@@ -5,15 +5,15 @@
 
 function Test-Assessment-21894{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
-    	Pillar = 'Identity',
-    	RiskLevel = 'Low',
-    	SfiPillar = 'Protect identities and secrets',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Baixo',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21894,
     	Title = 'Todos os certificados de Registros de Aplicativos e Entidades de Serviço do Microsoft Entra devem ser emitidos por uma autoridade de certificação aprovada',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

@@ -16,16 +16,16 @@
 function Test-Assessment-26886 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('DDoS_Network_Protection', 'DDoS_IP_Protection'),
-        Pillar = 'Network',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 26886,
-        Title = 'Diagnostic logging is enabled for DDoS-protected public IPs',
-        UserImpact = 'Low'
+        Title = 'O registro de diagnóstico está habilitado para IPs públicos protegidos por DDoS',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -136,11 +136,11 @@ function Test-Assessment-26886 {
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating DDoS Protection diagnostic logging configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando a configuração de logs de diagnóstico da Proteção contra DDoS'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com o Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -150,7 +150,7 @@ function Test-Assessment-26886 {
     }
 
     # Check the supported environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
         Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
@@ -173,7 +173,7 @@ function Test-Assessment-26886 {
     }
 
     # Q1: Query all public IP addresses using Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Public IP Addresses via Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando endereços IP públicos via Resource Graph'
 
     $argQuery = @"
 resources
@@ -213,7 +213,7 @@ resources
     }
 
     # Filter and evaluate DDoS-protected public IPs
-    Write-ZtProgress -Activity $activity -Status 'Evaluating DDoS protection status'
+    Write-ZtProgress -Activity $activity -Status 'Avaliando status da proteção contra DDoS'
 
     $ddosProtectedIps = @()
     $requiredLogCategories = @('DDoSProtectionNotifications', 'DDoSMitigationFlowLogs', 'DDoSMitigationReports')
@@ -308,7 +308,7 @@ resources
     }
 
     # Q4: Get diagnostic settings for each DDoS-protected public IP
-    Write-ZtProgress -Activity $activity -Status 'Querying diagnostic settings'
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de diagnóstico'
 
     $evaluationResults = @()
 
@@ -316,7 +316,7 @@ resources
         $pipId = $pip.PublicIpId
         $pipName = $pip.PublicIpName
 
-        # Query diagnostic settings
+            # Consulta diagnostic settings
         $diagPath = $pipId + '/providers/Microsoft.Insights/diagnosticSettings?api-version=2021-05-01-preview'
 
         $diagSettings = @()
@@ -433,10 +433,10 @@ resources
     $passed = ($failedItems.Count -eq 0) -and ($passedItems.Count -gt 0)
 
     if ($passed) {
-        $testResultMarkdown = "✅ Diagnostic logging is enabled for all DDoS-protected public IP addresses.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O registro de diagnóstico está habilitado para todos os endereços IP públicos protegidos por DDoS.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Diagnostic logging is not enabled for one or more DDoS-protected public IP addresses.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O registro de diagnóstico não está habilitado para um ou mais endereços IP públicos protegidos por DDoS.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -448,13 +448,13 @@ resources
     $portalSubscriptionBaseLink = 'https://portal.azure.com/#resource/subscriptions'
     $portalResourceBaseLink = 'https://portal.azure.com/#resource'
 
-    $mdInfo = "`n## [DDoS-protected Public IP diagnostic logging status]($portalPublicIpBrowseLink)`n`n"
+    $mdInfo = "`n## [Status do registro de diagnóstico de IPs públicos protegidos por DDoS]($portalPublicIpBrowseLink)`n`n"
 
     # Public IP Status table
     if ($evaluationResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-| Public IP name | Resource ID | Protection type | Associated VNET | Diag. configured | Notifications | Flow logs | Reports | Destination | Status |
+| Nome do IP público | ID do recurso | Tipo de proteção | VNET associada | Diag. configurado | Notificações | Logs de fluxo | Relatórios | Destino | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 {0}
 
@@ -479,7 +479,7 @@ resources
             $flowLogsStatus = if ($result.DDoSMitigationFlowLogs) { '✅' } else { '❌' }
             $reportsStatus = if ($result.DDoSMitigationReports) { '✅' } else { '❌' }
             $destConfigured = if ($result.DestinationType -eq 'None') { 'None' } else { $result.DestinationType }
-            $statusText = if ($result.Status -eq 'Pass') { '✅ Pass' } else { '❌ Fail' }
+            $statusText = if ($result.Status -eq 'Pass') { '✅ Aprovado' } else { '❌ Reprovado' }
 
             $tableRows += "| $pipLink | $resourceId | $protectionType | $associatedVnet | $diagConfigured | $notificationsStatus | $flowLogsStatus | $reportsStatus | $destConfigured | $statusText |`n"
         }
@@ -487,26 +487,26 @@ resources
         # Add note if more items exist
         if ($hasMoreItems) {
             $remainingCount = $evaluationResults.Count - $maxItemsToDisplay
-            $tableRows += "`n... and $remainingCount more. [View all Public IP Addresses in the portal]($portalPublicIpBrowseLink)`n"
+            $tableRows += "`n... e mais $remainingCount. [Ver todos os endereços IP públicos no portal]($portalPublicIpBrowseLink)`n"
         }
 
         $mdInfo += $formatTemplate -f $tableRows
     }
 
     # Summary
-    $mdInfo += "**Summary:**`n`n"
-    $mdInfo += "- Total DDoS-protected Public IPs evaluated: $($evaluationResults.Count)`n"
-    $mdInfo += "- Public IPs with complete diagnostic logging: $($passedItems.Count)`n"
-    $mdInfo += "- Public IPs missing diagnostic logging: $($failedItems.Count)`n"
+    $mdInfo += "**Resumo:**`n`n"
+    $mdInfo += "- Total de IPs públicos protegidos por DDoS avaliados: $($evaluationResults.Count)`n"
+    $mdInfo += "- IPs públicos com registro de diagnóstico completo: $($passedItems.Count)`n"
+    $mdInfo += "- IPs públicos sem registro de diagnóstico: $($failedItems.Count)`n"
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
 
     #endregion Report Generation
 
     $params = @{
         TestId = '26886'
-        Title  = 'Diagnostic logging is enabled for DDoS-protected public IPs'
+        Title  = 'O registro de diagnóstico está habilitado para IPs públicos protegidos por DDoS'
         Status = $passed
         Result = $testResultMarkdown
     }

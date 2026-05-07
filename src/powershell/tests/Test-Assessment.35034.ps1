@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Exact Data Match is configured for sensitive information detection
+    Coincidência Exata de Dados está configurada para detecção de informação sensível
 
 .DESCRIPTION
     This test checks if EDM schemas are configured by querying:
@@ -33,14 +33,14 @@ function Test-Assessment-35034 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Exact Data Match (EDM) configuration'
-    Write-ZtProgress -Activity $activity -Status 'Querying EDM schemas'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando configuração de Coincidência Exata de Dados (EDM)'
+    Write-ZtProgress -Activity $activity -Status 'Consultando esquemas de EDM'
 
     $errorMsg = $null
     $edmSchemas = $null
 
-    # Query: Get all EDM schemas with detailed properties
+        # Consulta: Get all EDM schemas with detailed properties
     try {
         $edmSchemas = Get-DlpEdmSchema -ErrorAction Stop | Select-Object -Property Name, Description, Version, CreatedDate, ModifiedDate
     }
@@ -57,17 +57,17 @@ function Test-Assessment-35034 {
 
     # Check if query failed
     if ($null -ne $errorMsg) {
-        $testResultMarkdown = "⚠️ Unable to determine EDM schema configuration due to permissions issues or service connection failure.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar a configuração de esquema de EDM devido a problemas de permissões ou falha na conexão de serviço.`n`n%TestResult%"
         $passed = $false
         $customStatus = 'Investigate'
     }
     # Check schema count
     elseif ($null -eq $edmSchemas -or @($edmSchemas).Count -eq 0) {
-        $testResultMarkdown = "❌ No EDM schemas are configured; relying solely on built-in SIT patterns for sensitive data detection.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhum esquema de EDM está configurado; dependendo apenas de padrões SIT internos para detecção de dados sensíveis.`n`n%TestResult%"
         $passed = $false
     }
     else {
-        $testResultMarkdown = "✅ Exact Data Match (EDM) schemas are configured, enabling detection of organization-specific sensitive data patterns.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Esquemas de Coincidência Exata de Dados (EDM) estão configurados, habilitando detecção de padrões de dados sensíveis específicos da organização.`n`n%TestResult%"
         $passed = $true
     }
     #endregion Assessment Logic
@@ -113,7 +113,7 @@ function Test-Assessment-35034 {
         $mdInfo = $formatTemplate -f $reportTitle, $portalLink, $tableRows
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 

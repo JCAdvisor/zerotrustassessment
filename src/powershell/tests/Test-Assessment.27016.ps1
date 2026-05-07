@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Validates that Rate Limiting rules are enabled in Application Gateway WAF custom rules.
+    Valida que as regras de Limitação de Taxa estão habilitadas nas regras personalizadas do WAF do Application Gateway.
 
 .DESCRIPTION
-    This test checks if all Azure Application Gateway WAF policies attached to Application Gateways
+    Este teste verifica se todas as políticas de WAF do Azure Application Gateway anexadas aos Application Gateways
     have at least one custom rule configured with the RateLimitRule rule type and state set to Enabled.
     Rate limiting protects applications from brute force attacks, credential stuffing, API abuse,
     and volumetric denial of service attacks by throttling clients that exceed defined request thresholds.
@@ -16,38 +16,38 @@
 
 function Test-Assessment-27016 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Medium',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Médio',
         MinimumLicense = ('Azure WAF'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 27016,
-        Title = 'Rate Limiting is Enabled in Application Gateway WAF',
-        UserImpact = 'Low'
+        Title = 'A limitação de taxa está habilitada no WAF do Application Gateway',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Application Gateway WAF rate limiting configuration'
+    $activity = 'Verificando configuração de limitação de taxa do WAF do Application Gateway'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o Azure Resource Graph'
 
-    # Query all Application Gateway WAF policies attached to Application Gateways using Azure Resource Graph
+        # Consulta all Application Gateway WAF policies attached to Application Gateways using Azure Resource Graph
     $argQuery = @"
 resources
 | where type =~ 'microsoft.network/applicationgatewaywebapplicationfirewallpolicies'
@@ -73,7 +73,7 @@ resources
         Write-PSFMessage "ARG Query returned $($policies.Count) records" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Azure Resource Graph query failed: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Falha na consulta do Azure Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -84,8 +84,8 @@ resources
 
     # Skip test if no policies found
     if ($policies.Count -eq 0) {
-        Write-PSFMessage 'No Application Gateway WAF policies found attached to Application Gateways.' -Tag Test -Level Verbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Application Gateway WAF policies found attached to Application Gateways.'
+        Write-PSFMessage 'Nenhuma política de WAF do Application Gateway encontrada anexada aos Application Gateways.' -Tag Test -Level Verbose
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhuma política de WAF do Application Gateway encontrada anexada aos Application Gateways.'
         return
     }
 
@@ -99,17 +99,17 @@ resources
     $passed = $failingPolicies.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "✅ All Application Gateway WAF policies attached to Application Gateways are enabled, running in Prevention mode, and have at least one rate limiting rule configured and enabled.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas de WAF do Application Gateway anexadas aos Application Gateways estão habilitadas, executando no modo Prevenção e têm pelo menos uma regra de limitação de taxa configurada e habilitada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ One or more Application Gateway WAF policies attached to Application Gateways are disabled, running in Detection mode, have no rate limiting rules configured, or have rate limiting rules configured but all set to Disabled state, leaving applications vulnerable to brute force and volumetric attacks.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas de WAF do Application Gateway anexadas aos Application Gateways estão desabilitadas, executando no modo Detecção, não têm regras de limitação de taxa configuradas ou têm regras de limitação de taxa configuradas mas todas definidas como Desabilitado, deixando aplicativos vulneráveis a ataques de força bruta e volumétricos.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
     #region Report Generation
     $mdInfo = ''
 
-    $reportTitle = 'Application Gateway WAF policies'
+    $reportTitle = 'Políticas de WAF do Application Gateway'
     $portalLink = 'https://portal.azure.com/#browse/Microsoft.Network%2FapplicationGatewayWebApplicationFirewallPolicies'
 
     $tableRows = ''
@@ -142,7 +142,7 @@ resources
 
 ## [{0}]({1})
 
-| Policy name | Subscription name | Policy state | Mode | Rate limit rules count | Rule state | Status |
+| Nome da política | Nome da assinatura | Estado da política | Modo | Contagem de regras de limitação de taxa | Estado da regra | Status |
 | :---------- | :---------------- | :----------- | :--- | :--------------------- | :--------- | :----- |
 {2}
 
@@ -154,7 +154,7 @@ resources
 
     $params = @{
         TestId = '27016'
-        Title  = 'Rate Limiting is Enabled in Application Gateway WAF'
+        Title  = 'Limitação de Taxa está habilitada no WAF do Application Gateway'
         Status = $passed
         Result = $testResultMarkdown
     }

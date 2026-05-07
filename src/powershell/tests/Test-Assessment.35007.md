@@ -1,18 +1,18 @@
-Information Rights Management (IRM) integration in SharePoint Online libraries is a legacy feature that has been replaced by Enhanced SharePoint Permissions (ESP). Any library using this legacy capability should be flagged to move to newer capabilities.
+Integração do Gerenciamento de Direitos de Informação (IRM) nas bibliotecas do SharePoint Online é um recurso herdado que foi substituído pelas Permissões Avançadas do SharePoint (ESP). Qualquer biblioteca usando este recurso herdado deve ser sinalizada para migrar para capacidades mais novas.
 
-**Remediation action**
+**Ação de remediação**
 
-To disable legacy IRM in SharePoint Online:
-1. Identify libraries currently using IRM protection (audit existing sites)
-2. Plan migration to modern sensitivity labels with encryption
-3. Connect to SharePoint Online: `Connect-SPOService -Url https://<tenant>-admin.sharepoint.com`
-4. Disable legacy IRM: `Set-SPOTenant -IrmEnabled $false`
-5. Enable modern sensitivity labels: `Set-SPOTenant -EnableAIPIntegration $true`
-6. Configure and publish sensitivity labels with encryption to replace IRM policies
+Para desabilitar o IRM herdado no SharePoint Online:
+1. Identificar as bibliotecas que estão usando proteção IRM (auditar sites existentes)
+2. Planejar migração para rótulos de sensibilidade moderno com criptografia
+3. Conectar ao SharePoint Online: `Connect-SPOService -Url https://<tenant>-admin.sharepoint.com`
+4. Desabilitar IRM herdado: `Set-SPOTenant -IrmEnabled $false`
+5. Habilitar rótulos de sensibilidade modernos: `Set-SPOTenant -EnableAIPIntegration $true`
+6. Configurar e publicar rótulos de sensibilidade com criptografia para substituir políticas de IRM
 
-- [Enable sensitivity labels for SharePoint and OneDrive](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files)
-- [SharePoint IRM and sensitivity labels (migration guidance)](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#sharepoint-information-rights-management-irm-and-sensitivity-labels)
-- [Create and configure sensitivity labels with encryption](https://learn.microsoft.com/microsoft-365/compliance/encryption-sensitivity-labels)
+- [Habilitar rótulos de sensibilidade para o SharePoint e OneDrive](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files)
+- [SharePoint IRM e rótulos de sensibilidade (orientação de migração)](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#sharepoint-information-rights-management-irm-and-sensitivity-labels)
+- [Criar e configurar rótulos de sensibilidade com criptografia](https://learn.microsoft.com/microsoft-365/compliance/encryption-sensitivity-labels)
 
 <!--- Results --->
 %TestResult%

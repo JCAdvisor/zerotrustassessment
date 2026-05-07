@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
-    Validates that CAPTCHA challenge is enabled in Azure Front Door WAF.
+    Valida que o desafio CAPTCHA está habilitado no WAF do Azure Front Door.
 
 .DESCRIPTION
-    This test evaluates Azure Front Door WAF policies to ensure at least one custom rule
+    Este teste avalia políticas de WAF do Azure Front Door para garantir que pelo menos uma regra personalizada
     with CAPTCHA challenge action is configured and enabled. CAPTCHA challenge provides
     interactive human verification against sophisticated automated bots at the global edge.
 
@@ -16,46 +16,46 @@
 function Test-Assessment-27020 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure WAF'),
-        Pillar = 'Network',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 27020,
-        Title = 'CAPTCHA challenge is enabled in Azure Front Door WAF',
-        UserImpact = 'Medium'
+        Title = 'O desafio CAPTCHA está habilitado no WAF do Azure Front Door',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating Azure Front Door WAF CAPTCHA challenge configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando configuração de desafio CAPTCHA do WAF do Azure Front Door'
 
     # Check Azure connection
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Tag Test -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
     # Check supported environment (Global cloud only)
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
-        Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
+        Write-PSFMessage 'Este teste é aplicável apenas ao ambiente AzureCloud.' -Tag Test -Level VeryVerbose
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
 
-    # Query all Front Door WAF policies attached to an Azure Front Door via Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Front Door WAF policies'
+        # Consulta all Front Door WAF policies attached to an Azure Front Door via Azure Resource Graph
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de WAF do Azure Front Door'
 
     $argQuery = @"
 resources
@@ -83,7 +83,7 @@ resources
         Write-PSFMessage "ARG Query returned $($policies.Count) records" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Failed to query Azure Front Door WAF policies via Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao consultar políticas de WAF do Azure Front Door via Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -93,8 +93,8 @@ resources
     #region Assessment Logic
 
     if ($policies.Count -eq 0) {
-        Write-PSFMessage 'No Azure Front Door WAF policies attached to Azure Front Door found.' -Tag Test -Level Verbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Azure Front Door WAF policies attached to Azure Front Door found.'
+        Write-PSFMessage 'Nenhuma política de WAF do Azure Front Door anexada ao Azure Front Door encontrada.' -Tag Test -Level Verbose
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhuma política de WAF do Azure Front Door anexada ao Azure Front Door encontrada.'
         return
     }
 
@@ -108,10 +108,10 @@ resources
     $passed = $failingPolicies.Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "✅ All Azure Front Door WAF policies attached to Azure Front Door are enabled, running in Prevention mode, and have at least one CAPTCHA Challenge rule configured and enabled.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas de WAF do Azure Front Door anexadas ao Azure Front Door estão habilitadas, executando no modo Prevenção e têm pelo menos uma regra de Desafio CAPTCHA configurada e habilitada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ One or more Azure Front Door WAF policies attached to Azure Front Door are either disabled, not in Prevention mode, or do not have CAPTCHA challenge rules configured and enabled, leaving applications without interactive human verification against sophisticated automated bots at the global edge.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas de WAF do Azure Front Door anexadas ao Azure Front Door estão desabilitadas, não estão no modo Prevenção ou não têm regras de desafio CAPTCHA configuradas e habilitadas, deixando aplicativos sem verificação interativa de humanos contra bots automatizados sofisticados na borda global.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -122,11 +122,11 @@ resources
     $portalResourceBaseLink = 'https://portal.azure.com/#resource'
     $portalSubscriptionBaseLink = 'https://portal.azure.com/#resource/subscriptions'
 
-    $mdInfo = "`n## [Azure Front Door WAF policies]($portalWafBrowseLink)`n`n"
+    $mdInfo = "`n## [Políticas de WAF do Azure Front Door]($portalWafBrowseLink)`n`n"
 
     $tableRows = ''
     $formatTemplate = @'
-| Policy name | Subscription name | Enabled state | WAF mode | CAPTCHA challenge rules count | Rule state | CAPTCHA expiration (mins) | Status |
+| Nome da política | Nome da assinatura | Estado habilitado | Modo WAF | Contagem de regras de desafio CAPTCHA | Estado da regra | Expiração de CAPTCHA (min) | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 {0}
 
@@ -174,7 +174,7 @@ resources
 
     $params = @{
         TestId = '27020'
-        Title  = 'CAPTCHA challenge is enabled in Azure Front Door WAF'
+        Title  = 'Desafio CAPTCHA está habilitado no WAF do Azure Front Door'
         Status = $passed
         Result = $testResultMarkdown
     }

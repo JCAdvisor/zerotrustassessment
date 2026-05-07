@@ -1,20 +1,19 @@
-If organizations don't use Prompt Shield protection, threat actors can exploit prompt injection vulnerabilities to compromise AI-powered workflows. Malicious users can craft adversarial inputs that manipulate large language models into ignoring system instructions, disclosing confidential data, or executing unintended actions like generating phishing content.
+Se as organizações não usarem proteção Prompt Shield, atores de ameaça podem explorar vulnerabilidades de injeção de prompt para comprometer fluxos de trabalho alimentados por IA. Usuários maliciosos podem criar entradas adversárias que manipulam grandes modelos de linguagem para ignorar instruções do sistema, divulgar dados confidenciais ou executar ações não intencionais, como gerar conteúdo de phishing.
 
-Without network-level prompt filtering:
+Sem filtragem de prompt em nível de rede:
 
-- Direct prompt injection attacks can bypass application-layer safety mechanisms through sophisticated jailbreak techniques.
-- Indirect prompt injection occurs when threat actors embed malicious instructions in external content that the AI processes.
-- Each AI application must independently implement protection, creating inconsistent security postures and inadequate safeguards against new or custom AI deployments.
+- Ataques diretos de injeção de prompt podem contornar mecanismos de segurança em nível de aplicativo através de técnicas sofisticadas de jailbreak.
+- A injeção indireta de prompt ocorre quando atores de ameaça incorporam instruções maliciosas em conteúdo externo que a IA processa.
+- Cada aplicativo de IA deve implementar proteção de forma independente, criando posturas de segurança inconsistentes e proteções inadequadas contra implantações de IA novas ou personalizadas.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Enable the Internet Access traffic forwarding profile to route internet traffic through Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-internet-access-profile?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- [Configure TLS inspection settings and deploy the CA certificate to allow inspection of encrypted AI application traffic](https://learn.microsoft.com/entra/global-secure-access/how-to-transport-layer-security-settings?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Follow the steps in [Protect enterprise generative AI applications with Prompt Shield](https://learn.microsoft.com/entra/global-secure-access/how-to-ai-prompt-shield?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to:
-    - Create prompt policies to scan and block malicious prompts targeting generative AI applications.
-    - Link prompt policies to security profiles to organize them for Conditional Access targeting.
-    - Create Conditional Access policies to apply security profiles with prompt policies to users accessing internet resources.
-- [Install the Global Secure Access client on user devices to enable traffic acquisition](https://learn.microsoft.com/entra/global-secure-access/how-to-install-windows-client?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Ativar o perfil de encaminhamento de tráfego do Internet Access para rotear o tráfego da internet através do Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/how-to-manage-internet-access-profile?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Configure as configurações de inspeção TLS e implante o certificado CA para permitir a inspeção do tráfego de aplicativos de IA criptografados](https://learn.microsoft.com/entra/global-secure-access/how-to-transport-layer-security-settings?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- Siga as etapas em [Proteger aplicações de IA generativa corporativa com Prompt Shield](https://learn.microsoft.com/entra/global-secure-access/how-to-ai-prompt-shield?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para:
+    - Criar políticas de prompt para verificar e bloquear prompts maliciosos direcionados a aplicações de IA generativa.
+    - Vincular políticas de prompt a perfis de segurança para organizá-las para direcionamento do Conditional Access.
+    - Criar políticas de Conditional Access para aplicar perfis de segurança com políticas de prompt aos usuários que acessam recursos da internet.
+- [Instale o cliente Global Secure Access em dispositivos de usuário para ativar a aquisição de tráfego](https://learn.microsoft.com/entra/global-secure-access/how-to-install-windows-client?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

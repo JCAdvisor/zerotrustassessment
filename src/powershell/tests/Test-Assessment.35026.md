@@ -1,10 +1,9 @@
-The SimplifiedClientAccessEnabled setting controls whether the Protect button appears in Outlook on the web. This button lets users quickly add encryption to their emails. If the setting is not turned on, users cannot use the Protect button and must find other ways to encrypt their messages.
+A configuração SimplifiedClientAccessEnabled controla se o botão Proteger aparece no Outlook na web. Este botão permite que os usuários adicionem rapidamente criptografia aos seus emails. Se a configuração não está ativada, os usuários não podem usar o botão Proteger e devem encontrar outras maneiras de criptografar suas mensagens.
 
-To enable this setting, AzureRMSLicensingEnabled must also be active. Azure Rights Management encryption service provides the encryption technology needed for the Protect button to work.
+Para habilitar essa configuração, AzureRMSLicensingEnabled também deve estar ativa. O serviço de criptografia de Gerenciamento de Direitos do Azure fornece a tecnologia de criptografia necessária para o botão Proteger funcionar.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Manage the display of the Encrypt button in Outlook on the web](https://learn.microsoft.com/purview/manage-office-365-message-encryption?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#manage-the-display-of-the-encrypt-button-in-outlook-on-the-web)
+- [Gerenciar a exibição do botão Criptografar no Outlook na web](https://learn.microsoft.com/purview/manage-office-365-message-encryption?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#manage-the-display-of-the-encrypt-button-in-outlook-on-the-web)
 <!--- Results --->
 %TestResult%
-

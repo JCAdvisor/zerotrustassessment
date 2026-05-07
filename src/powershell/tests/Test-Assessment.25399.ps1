@@ -12,27 +12,27 @@
 
 function Test-Assessment-25399 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Private_Access'),
     	CompatibleLicense = ('Entra_Premium_Private_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25399,
-    	Title = 'Private DNS is configured for internal name resolution',
-    	UserImpact = 'Low'
+     Title = 'O DNS privado está configurado para resolução de nomes internos',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Private DNS configuration for Quick Access (Entra Private Access)'
-    Write-ZtProgress -Activity $activity -Status 'Querying Quick Access application'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando a configuração do DNS privado para Quick Access (Entra Private Access)'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o aplicativo Quick Access'
 
-    # Query 1: Find Quick Access application
+        # Consulta 1: Find Quick Access application
     $quickAccessApp = Invoke-ZtGraphRequest -RelativeUri "applications" -Filter "tags/any(c:c eq 'NetworkAccessQuickAccessApplication')" -ApiVersion beta
     #endregion Data Collection
 
@@ -48,7 +48,7 @@ function Test-Assessment-25399 {
 
     # Check if Quick Access application exists
     if (-not $quickAccessApp -or $quickAccessApp.Count -eq 0) {
-        $testResultMarkdown = "❌ No Quick Access application found with 'NetworkAccessQuickAccessApplication' tag."
+        $testResultMarkdown = "❌ Nenhum aplicativo Quick Access encontrado com a etiqueta 'NetworkAccessQuickAccessApplication'."
         $passed = $false
     }
     else {
@@ -57,8 +57,8 @@ function Test-Assessment-25399 {
         $appId = $app.id
         $appDisplayName = $app.displayName
 
-        Write-ZtProgress -Activity $activity -Status "Getting onPremisesPublishing for application $($appDisplayName)"
-        # Query 2: Get onPremisesPublishing settings
+        Write-ZtProgress -Activity $activity -Status "Obtendo onPremisesPublishing para o aplicativo $($appDisplayName)"
+            # Consulta 2: Get onPremisesPublishing settings
         $onPrem = Invoke-ZtGraphRequest -RelativeUri "applications/$($appId)/onPremisesPublishing" -ApiVersion beta
 
         # Check if DNS Resolution is enabled
@@ -66,11 +66,11 @@ function Test-Assessment-25399 {
             $appDnsResolutionEnabled = $true
         }
         elseif ($null -eq $onPrem) {
-            Write-PSFMessage "Failed to retrieve onPremisesPublishing settings for application $appId" -Level Warning
+            Write-PSFMessage "Falha ao recuperar as configurações de onPremisesPublishing para o aplicativo $appId" -Level Warning
         }
 
-        # Query 3: Get segmentsConfiguration and extract dns suffixes
-        Write-ZtProgress -Activity $activity -Status "Getting segments configuration for DNS suffixes in $appDisplayName"
+            # Consulta 3: Get segmentsConfiguration and extract dns suffixes
+        Write-ZtProgress -Activity $activity -Status "Obtendo a configuração de segmentos para sufixos DNS em $appDisplayName"
         $segments = Invoke-ZtGraphRequest -RelativeUri "applications/$($appId)/onPremisesPublishing/segmentsConfiguration/microsoft.graph.ipSegmentConfiguration/applicationSegments" -ApiVersion beta
 
         # Check if at least one segment has recommended settings (destinationType equals dnsSuffix and destinationHost has a value)
@@ -92,11 +92,11 @@ function Test-Assessment-25399 {
         # Determine pass/fail per spec: ALL assessments must pass
         if ($appDnsResolutionEnabled -and $appHasValidSegments) {
             $passed = $true
-            $testResultMarkdown = "✅ Private DNS is configured for internal name resolution in Entra Private Access.`n`n%TestResult%"
+            $testResultMarkdown = "✅ O DNS privado está configurado para resolução de nomes internos no Entra Private Access.`n`n%TestResult%"
         }
         else {
             $passed = $false
-            $testResultMarkdown = "❌ Private DNS is not configured or DNS suffixes are missing.`n`n%TestResult%"
+            $testResultMarkdown = "❌ O DNS privado não está configurado ou os sufixos DNS estão ausentes.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -107,23 +107,23 @@ function Test-Assessment-25399 {
 
     if ($null -ne $appDisplayName) {
         # Determine status for each component
-        $dnsResolutionStatus = if ($appDnsResolutionEnabled) { "🟢 True" } else { "🔴 False" }
+        $dnsResolutionStatus = if ($appDnsResolutionEnabled) { "🟢 Verdadeiro" } else { "🔴 Falso" }
         $dnsSuffixValue = if ($appHasValidSegments) { $([string]::Join(', ', $appDnsSuffixes)) } else { "None" }
-        $appStatus = if ($appDnsResolutionEnabled -and $appHasValidSegments) { "✅ Pass" } else { "❌ Fail" }
+        $appStatus = if ($appDnsResolutionEnabled -and $appHasValidSegments) { "✅ Passou" } else { "❌ Falhou" }
 
         # Build results table
-        $mdInfo += "| Quick Access application | DNS resolution enabled | DNS suffixes | Status |`n"
+        $mdInfo += "| Aplicativo Quick Access | DNS habilitado | Sufixos DNS | Status |`n"
         $mdInfo += "|--------------------------|------------------------|--------------|--------|`n"
         $mdInfo += "| $appDisplayName | $dnsResolutionStatus | $dnsSuffixValue | $appStatus |`n"
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25399'
-        Title  = 'Private DNS is configured for internal name resolution'
+        Title  = 'O DNS privado está configurado para resolução de nomes internos'
         Status = $passed
         Result = $testResultMarkdown
     }

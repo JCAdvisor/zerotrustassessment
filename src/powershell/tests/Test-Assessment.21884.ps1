@@ -5,16 +5,16 @@
 
 function Test-Assessment-21884 {
     [ZtTest(
-    	Category = 'External collaboration',
-    	ImplementationCost = 'Medium',
+    	Category = 'Colaboração externa',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger locatários e sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21884,
     	Title = 'Políticas de Acesso Condicional para identidades de carga de trabalho baseadas em redes conhecidas estão configuradas',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param(

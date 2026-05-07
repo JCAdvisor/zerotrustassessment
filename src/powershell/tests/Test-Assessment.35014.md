@@ -1,10 +1,9 @@
-When users attach sensitive documents to emails, the email should inherit the highest sensitivity label from attachments to maintain consistent protection. Without this setting enabled, users might send unlabeled emails that contain sensitive attachments, creating a mismatch between the email's sensitivity and its actual content.
+Quando os usuários anexam documentos sensíveis a emails, o email deve herdar o rótulo de sensibilidade mais alto dos anexos para manter uma proteção consistente. Sem essa configuração habilitada, os usuários podem enviar emails sem rótulo que contém anexos sensíveis, criando uma incompatibilidade entre a sensibilidade do email e seu conteúdo real.
 
-Email label inheritance automatically applies the attachment's highest priority label to the email message, ensuring protection levels match and prevent accidental data exposure.
+A herança de rótulo de email aplica automaticamente o rótulo de prioridade mais alta do anexo à mensagem de email, garantindo que os níveis de proteção corresponderm e impedem a exposição de dados acidental.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Publish sensitivity labels](https://learn.microsoft.com/purview/create-sensitivity-labels?tabs=modern-label-scheme&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy) to [Configure label inheritance from email attachments](https://learn.microsoft.com/purview/sensitivity-labels-office-apps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-label-inheritance-from-email-attachments).
+- [Publicar rótulos de sensibilidade](https://learn.microsoft.com/purview/create-sensitivity-labels?tabs=modern-label-scheme&wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#publish-sensitivity-labels-by-creating-a-label-policy) para [Configurar herança de rótulo de anexos de email](https://learn.microsoft.com/purview/sensitivity-labels-office-apps?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-label-inheritance-from-email-attachments).
 <!--- Results --->
 %TestResult%
-

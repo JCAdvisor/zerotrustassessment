@@ -1,31 +1,31 @@
 <#
 .SYNOPSIS
-    Mandatory labeling is enabled in sensitivity label policies
+    A rotulagem obrigatória está habilitada nas políticas de rótulo de sensibilidade
 #>
 
 function Test-Assessment-35016 {
     [ZtTest(
-        Category = 'Information Protection',
-        ImplementationCost = 'Medium',
+        Category = 'Proteção de Informações',
+        ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         MinimumLicense = ('Microsoft 365 E3'),
-        Pillar = 'Data',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce','External'),
         TestId = 35016,
-        Title = 'Mandatory labeling is enabled in sensitivity label policies',
-        UserImpact = 'High'
+        Title = 'A rotulagem obrigatória está habilitada nas políticas de rótulo de sensibilidade',
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking mandatory labeling configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando configuração de rotulagem obrigatória'
 
     # Q1: Retrieve all enabled sensitivity label policies to assess mandatory labeling configuration
-    Write-ZtProgress -Activity $activity -Status 'Getting sensitivity label policies'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de rótulo de sensibilidade'
     $errorMsg = $null
     $enabledPolicies = @()
 
@@ -34,7 +34,7 @@ function Test-Assessment-35016 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying label policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar políticas de rótulo: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -46,7 +46,7 @@ function Test-Assessment-35016 {
     $customStatus = $null
 
     if ($errorMsg) {
-        $testResultMarkdown = "⚠️ Unable to determine auto-labeling enforcement mode status due to permissions issues or query failure.`n`n"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status do modo de aplicação automática de rotulagem devido a problemas de permissões ou falha na consulta.`n`n"
         $customStatus = 'Investigate'
     }
     else {
@@ -78,7 +78,7 @@ function Test-Assessment-35016 {
                     SiteGroupMandatory = $false
                     PowerBIMandatory = $false
                     EmailOverride = $false
-                    Scope = if ($isGlobal) { 'Global' } else { 'User/Group-scoped' }
+                    Scope = if ($isGlobal) { 'Global' } else { 'Usuário/Grupo' }
                     LabelsCount = $policy.Labels.Count
                 }
 
@@ -160,7 +160,7 @@ function Test-Assessment-35016 {
         }
         catch {
             Write-PSFMessage "Error parsing label policy settings: $_" -Level Error
-            $testResultMarkdown = "⚠️ Unable to determine mandatory labeling status due to policy complexity or unclear Settings structure.`n`n"
+            $testResultMarkdown = "⚠️ Não foi possível determinar o status de rotulagem obrigatória devido à complexidade da política ou estrutura de configurações inesperada.`n`n"
             $customStatus = 'Investigate'
         }
 
@@ -168,16 +168,16 @@ function Test-Assessment-35016 {
         if ($null -eq $customStatus) {
             if ($mandatoryPolicies.Count -gt 0) {
                 $passed = $true
-                $testResultMarkdown = "✅ Mandatory labeling is configured and enforced through at least one active sensitivity label policy across one or more workloads (Outlook, Teams/OneDrive, SharePoint/Microsoft 365 Groups, or Power BI).`n`n%TestResult%"
+                $testResultMarkdown = "✅ A rotulagem obrigatória está configurada e aplicada por meio de pelo menos uma política de rótulo de sensibilidade ativa em uma ou mais cargas de trabalho (Outlook, Teams/OneDrive, SharePoint/Grupos Microsoft 365 ou Power BI).`n`n%TestResult%"
             }
             else {
                 $passed = $false
 
                 if ($enabledPolicies.Count -eq 0) {
-                    $testResultMarkdown = "❌ No enabled sensitivity label policies were found in your tenant.`n`n%TestResult%"
+                    $testResultMarkdown = "❌ Nenhuma política de rótulo de sensibilidade habilitada foi encontrada no locatário.`n`n%TestResult%"
                 }
                 else {
-                    $testResultMarkdown = "❌ No sensitivity label policies require users to apply labels across any workload (emails, files, sites, groups, or Power BI content).`n`n%TestResult%"
+                    $testResultMarkdown = "❌ Nenhuma política de rótulo de sensibilidade exige que os usuários apliquem rótulos em qualquer carga de trabalho (emails, arquivos, sites, grupos ou conteúdo do Power BI).`n`n%TestResult%"
                 }
             }
         }
@@ -191,8 +191,8 @@ function Test-Assessment-35016 {
     # Show table whenever we have policy settings
     if ($allPolicySettings.Count -gt 0) {
         # Build policy table
-        $mdInfo += "`n`n### [Enabled label policies](https://purview.microsoft.com/informationprotection/labelpolicies)`n"
-        $mdInfo += "| Policy name | Email | Files/Collab | Sites/Groups | Power BI | Email override | Scope | Labels |`n"
+        $mdInfo += "`n`n### [Políticas de rótulo habilitadas](https://purview.microsoft.com/informationprotection/labelpolicies)`n"
+        $mdInfo += "| Nome da política | Email | Arquivos/Colaboração | Sites/Grupos | Power BI | Substituição de email | Escopo | Rótulos |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |`n"
 
         foreach ($policy in $allPolicySettings) {
@@ -201,7 +201,7 @@ function Test-Assessment-35016 {
             $teamworkIcon = if ($policy.TeamworkMandatory) { '✅' } else { '❌' }
             $siteGroupIcon = if ($policy.SiteGroupMandatory) { '✅' } else { '❌' }
             $powerBIIcon = if ($policy.PowerBIMandatory) { '✅' } else { '❌' }
-            $overrideIcon = if ($policy.EmailOverride) { 'Yes' } else { 'No' }
+            $overrideIcon = if ($policy.EmailOverride) { 'Sim' } else { 'Não' }
             $mdInfo += "| $policyName | $emailIcon | $teamworkIcon | $siteGroupIcon | $powerBIIcon | $overrideIcon | $($policy.Scope) | $($policy.LabelsCount) |`n"
         }
 
@@ -211,29 +211,29 @@ function Test-Assessment-35016 {
         $siteGroupCount = ($mandatoryPolicies | Where-Object { $_.SiteGroupMandatory }).Count
         $powerBICount = ($mandatoryPolicies | Where-Object { $_.PowerBIMandatory }).Count
 
-        $mdInfo += "`n`n### Summary`n"
-        $mdInfo += "| Metric | Count |`n"
+        $mdInfo += "`n`n### Resumo`n"
+        $mdInfo += "| Métrica | Contagem |`n"
         $mdInfo += "| :--- | :--- |`n"
-        $mdInfo += "| Total enabled label policies | $($allPolicySettings.Count) |`n"
-        $mdInfo += "| Total enabled label policies with mandatory labeling | $($mandatoryPolicies.Count) |`n"
-        $mdInfo += "| Email mandatory labeling | $emailCount |`n"
-        $mdInfo += "| File/collaboration mandatory labeling | $teamworkCount |`n"
-        $mdInfo += "| Site/group mandatory labeling | $siteGroupCount |`n"
-        $mdInfo += "| Power BI mandatory labeling | $powerBICount |"
+        $mdInfo += "| Total de políticas de rótulo habilitadas | $($allPolicySettings.Count) |`n"
+        $mdInfo += "| Total de políticas de rótulo habilitadas com rotulagem obrigatória | $($mandatoryPolicies.Count) |`n"
+        $mdInfo += "| Rotulagem obrigatória de email | $emailCount |`n"
+        $mdInfo += "| Rotulagem obrigatória de arquivo/colaboração | $teamworkCount |`n"
+        $mdInfo += "| Rotulagem obrigatória de site/grupo | $siteGroupCount |`n"
+        $mdInfo += "| Rotulagem obrigatória do Power BI | $powerBICount |"
     }
 
     # Report XML parsing errors if any occurred
     if ($xmlParseErrors.Count -gt 0) {
-        $mdInfo += "`n`n### ⚠️ XML parsing errors`n"
-        $mdInfo += "The following policies could not be parsed and were excluded from analysis:`n`n"
-        $mdInfo += "| Policy name | Error |`n"
+        $mdInfo += "`n`n### ⚠️ Erros de análise de XML`n"
+        $mdInfo += "As políticas a seguir não puderam ser analisadas e foram excluídas da análise:`n`n"
+        $mdInfo += "| Nome da política | Erro |`n"
         $mdInfo += "| :--- | :--- |`n"
-        foreach ($error in $xmlParseErrors) {
-            $errorMsg = Get-SafeMarkdown -Text $error.Error
-            $policyName = Get-SafeMarkdown -Text $error.PolicyName
+        foreach ($xmlParseError in $xmlParseErrors) {
+            $errorMsg = Get-SafeMarkdown -Text $xmlParseError.Error
+            $policyName = Get-SafeMarkdown -Text $xmlParseError.PolicyName
             $mdInfo += "| $policyName | $errorMsg |`n"
         }
-        $mdInfo += "`n**Note**: These policies were treated as having no mandatory labeling configured.`n"
+        $mdInfo += "`n**Nota**: Essas políticas foram tratadas como não tendo rotulagem obrigatória configurada.`n"
     }
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
@@ -241,7 +241,7 @@ function Test-Assessment-35016 {
 
     $params = @{
         TestId = '35016'
-        Title  = 'Mandatory labeling enabled for sensitivity labels'
+        Title  = 'Rotulagem obrigatória habilitada para rótulos de sensibilidade'
         Status = $passed
         Result = $testResultMarkdown
     }

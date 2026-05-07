@@ -5,16 +5,16 @@
 
 function Test-Assessment-21889{
     [ZtTest(
-    	Category = 'Access control',
-    	ImplementationCost = 'Medium',
+    	Category = 'Controle de acesso',
+    	ImplementationCost = 'Médio',
         MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect identities and secrets',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21889,
     	Title = 'Reduzir a superfície de exposição de senhas visível ao usuário',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

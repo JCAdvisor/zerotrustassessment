@@ -52,7 +52,7 @@ function Test-Assessment-35030 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying DLP policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar políticas DLP: $_" -Level Error
     }
     #endregion Data Collection
 

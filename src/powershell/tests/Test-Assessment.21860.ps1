@@ -8,7 +8,7 @@ function Test-Assessment-21860 {
     	Category = 'Monitoramento',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
     	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),

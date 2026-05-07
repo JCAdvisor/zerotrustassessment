@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Validates that Communication Compliance rules are configured to monitor enterprise AI app interactions.
+    Valida que as regras de Comunicação em Conformidade estão configuradas para monitorar interações de aplicativos de IA corporativa.
 
 .DESCRIPTION
-    This test verifies that Collection Policies are configured for data ingestion, Communication Compliance
-    rules targeting enterprise AI apps (ConnectedAIApp and/or UnifiedGenAIWorkloads) are properly configured,
-    and at least one enabled policy with ReviewMailbox exists for alert processing.
+    Este teste verifica se as Políticas de Coleta estão configuradas para ingestão de dados, se as regras de Comunicação em Conformidade
+    direcionadas a aplicativos de IA corporativa (ConnectedAIApp e/ou UnifiedGenAIWorkloads) estão corretamente configuradas,
+    e se existe pelo menos uma política habilitada com ReviewMailbox para processamento de alertas.
 
 .NOTES
     Test ID: 35040
@@ -17,17 +17,17 @@
 
 function Test-Assessment-35040 {
     [ZtTest(
-        Category = 'Data Security Posture Management',
+        Category = 'Gerenciamento de postura de segurança de dados',
         ImplementationCost = 'Medium',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce'),
         TestId = 35040,
-        Title = 'Communication compliance monitoring is configured for enterprise AI tools',
-        UserImpact = 'Medium'
+        Title = 'Monitoramento de conformidade de comunicação configurado para ferramentas de IA corporativa',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
@@ -35,10 +35,10 @@ function Test-Assessment-35040 {
     #region Data Collection
     Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Communication Compliance for Enterprise AI Apps'
+    $activity = 'Verificando Comunicação em Conformidade para aplicativos de IA corporativa'
 
     # Q1: Verify Collection Policies are configured for enterprise AI app data ingestion
-    Write-ZtProgress -Activity $activity -Status 'Checking Collection Policies'
+    Write-ZtProgress -Activity $activity -Status 'Verificando Políticas de Coleta'
 
     $collectionPolicies = @()
     $errorMsg = $null
@@ -62,7 +62,7 @@ function Test-Assessment-35040 {
                         }
                     }
                     catch {
-                        Write-PSFMessage "Error parsing ScenarioConfig JSON: $_" -Level Warning
+                        Write-PSFMessage "Erro ao analisar o JSON de ScenarioConfig: $_" -Level Warning
                     }
                 }
 
@@ -82,11 +82,11 @@ function Test-Assessment-35040 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to retrieve Collection Policies: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar Políticas de Coleta: $_" -Tag Test -Level Warning
     }
 
     # Q2: Get all Communication Compliance rules and identify those targeting enterprise AI apps
-    Write-ZtProgress -Activity $activity -Status 'Analyzing Communication Compliance rules'
+    Write-ZtProgress -Activity $activity -Status 'Analisando regras de Comunicação em Conformidade'
 
     $enterpriseAIRules = @()
 
@@ -119,20 +119,20 @@ function Test-Assessment-35040 {
                                     try {
                                         $jsonText = $rawValue.Trim()
 
-                                        # We only need object/array JSON payloads
+                                        # Precisamos apenas de payloads JSON de objeto/array
                                         if ($jsonText -notmatch '^[\{\[]') {
                                             continue
                                         }
 
                                         $jsonData = $jsonText | ConvertFrom-Json -ErrorAction Stop
 
-                                        # Check for ConnectedAIApp in Workloads
+                                        # Verificar ConnectedAIApp em Workloads
                                         if ($jsonData.Workloads -and $jsonData.Workloads -contains 'ConnectedAIApp') {
                                             $hasEnterpriseAIConfig = $true
                                             $detectedWorkloads = $jsonData.Workloads
                                         }
 
-                                        # Check for "ChatGPT.Enterprise", "EntraApp", "AzureAI" keywords in UnifiedGenAIWorkloads
+                                        # Verificar as palavras-chave "ChatGPT.Enterprise", "EntraApp" e "AzureAI" em UnifiedGenAIWorkloads
                                         $targetWorkloads = @('ChatGPT.Enterprise', 'EntraApp', 'AzureAI')
                                         if ($jsonData.UnifiedGenAIWorkloads -and ($jsonData.UnifiedGenAIWorkloads | Where-Object { $targetWorkloads -contains $_ })) {
                                             $hasEnterpriseAIConfig = $true
@@ -144,14 +144,14 @@ function Test-Assessment-35040 {
                                         }
                                     }
                                     catch {
-                                        # Skip if JSON parsing fails
+                                        # Ignorar se a análise de JSON falhar
                                     }
                                 }
                             }
                         }
 
                         if ($hasEnterpriseAIConfig) {
-                            # Extract rule names from RuleXml structure
+                            # Extrair nomes de regra da estrutura RuleXml
                             $ruleNames = @()
                             $ruleElements = $ruleXml.root.GetElementsByTagName('rule')
                             foreach ($ruleElement in $ruleElements) {
@@ -175,18 +175,18 @@ function Test-Assessment-35040 {
                         }
                     }
                     catch {
-                        Write-PSFMessage "Error parsing RuleXml for rule '$($rule.Name)': $_" -Level Warning
+                        Write-PSFMessage "Erro ao analisar RuleXml para a regra '$($rule.Name)': $_" -Level Warning
                     }
                 }
             }
         }
         catch {
-            Write-PSFMessage "Failed to retrieve supervisory review rules: $_" -Tag Test -Level Warning
+            Write-PSFMessage "Falha ao recuperar regras de revisão de supervisão: $_" -Tag Test -Level Warning
         }
     }
 
     # Q3: Get enabled Communication Compliance policies with ReviewMailbox configured
-    Write-ZtProgress -Activity $activity -Status 'Checking enabled policies'
+    Write-ZtProgress -Activity $activity -Status 'Verificando políticas habilitadas'
 
     $enabledPoliciesWithReviewMailbox = @()
 
@@ -202,16 +202,16 @@ function Test-Assessment-35040 {
     $passed = $false
     $customStatus = $null
 
-    # Evaluation logic:
-    # - Investigate if there was an error during data collection
-    # - Fail if no Collection Policies are configured or policies are disabled
-    # - Fail if no Communication Compliance rules target enterprise AI apps
-    # - Fail if no enabled policies with ReviewMailbox exist
-    # - Pass if Collection Policies are configured, rules target enterprise AI apps, and at least one enabled policy with ReviewMailbox exists
+    # Lógica de avaliação:
+    # - Investigar se houve erro durante a coleta de dados
+    # - Reprovar se nenhuma Política de Coleta estiver configurada ou se as políticas estiverem desabilitadas
+    # - Reprovar se nenhuma regra de Comunicação em Conformidade direcionar aplicativos de IA corporativa
+    # - Reprovar se não houver políticas habilitadas com ReviewMailbox
+    # - Aprovar se as Políticas de Coleta estiverem configuradas, as regras direcionarem aplicativos de IA corporativa e existir pelo menos uma política habilitada com ReviewMailbox
 
     if ($errorMsg) {
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine enterprise AI monitoring status due to error:`n`n$errorMsg`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status de monitoramento de IA corporativa devido ao erro:`n`n$errorMsg`n`n%TestResult%"
     }
     else {
         $hasActiveCollectionPolicies = ($collectionPolicies | Where-Object { $_.Enabled -eq $true -and $_.Activities.Count -ge 1 }).Count -ge 1
@@ -220,19 +220,19 @@ function Test-Assessment-35040 {
 
         if (-not $hasActiveCollectionPolicies) {
             $passed = $false
-            $testResultMarkdown = "❌ No enabled collection policies found for data ingestion.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Nenhuma política de coleta habilitada foi encontrada para ingestão de dados.`n`n%TestResult%"
         }
         elseif (-not $hasEnterpriseAIRules) {
             $passed = $false
-            $testResultMarkdown = "❌ No Communication Compliance rules targeting enterprise AI apps were found.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Nenhuma regra de Comunicação em Conformidade direcionada a aplicativos de IA corporativa foi encontrada.`n`n%TestResult%"
         }
         elseif (-not $hasEnabledPoliciesWithReviewMailbox) {
             $passed = $false
-            $testResultMarkdown = "❌ No Communication Compliance policies are enabled with ReviewMailbox configured, creating a gap where enterprise AI data exposure and policy violations cannot be detected and investigated.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Nenhuma política de Comunicação em Conformidade está habilitada com ReviewMailbox configurado, criando uma lacuna em que a exposição de dados de IA corporativa e as violações de política não podem ser detectadas e investigadas.`n`n%TestResult%"
         }
         else {
             $passed = $true
-            $testResultMarkdown = "✅ Collection Policies are configured for data ingestion, Communication Compliance rules are configured to target enterprise AI apps (ConnectedAIApp and/or UnifiedGenAIWorkloads identified in RuleXml), AND at least one Communication Compliance policy is ENABLED with a ReviewMailbox configured, enabling the organization to detect and investigate unauthorized data sharing and policy violations through enterprise AI interactions.`n`n%TestResult%"
+            $testResultMarkdown = "✅ As Políticas de Coleta estão configuradas para ingestão de dados, as regras de Comunicação em Conformidade estão configuradas para direcionar aplicativos de IA corporativa (ConnectedAIApp e/ou UnifiedGenAIWorkloads identificados em RuleXml) e PELO MENOS uma política de Comunicação em Conformidade está HABILITADA com ReviewMailbox configurado, permitindo que a organização detecte e investigue compartilhamento não autorizado de dados e violações de política por meio de interações com IA corporativa.`n`n%TestResult%"
         }
     }
 
@@ -251,10 +251,10 @@ function Test-Assessment-35040 {
         $collectionTableRows = ''
         if ($collectionPolicies.Count -gt 0) {
             foreach ($policy in $collectionPolicies | Sort-Object PolicyName) {
-                $enabledStatus = if ($policy.Enabled) { '✅ True' } else { '❌ False' }
-                $modeStatus = if ($policy.Mode -eq 'Enable') { '✅ Enable' } else { '❌ Disable' }
-                $activitiesDisplay = if ($policy.Activities.Count -gt 0) { ($policy.Activities -join ', ') } else { 'None' }
-                $enforcementDisplay = if ($policy.EnforcementPlanes.Count -gt 0) { ($policy.EnforcementPlanes -join ', ') } else { 'None' }
+                $enabledStatus = if ($policy.Enabled) { '✅ Verdadeiro' } else { '❌ Falso' }
+                $modeStatus = if ($policy.Mode -eq 'Enable') { '✅ Habilitar' } else { '❌ Desabilitar' }
+                $activitiesDisplay = if ($policy.Activities.Count -gt 0) { ($policy.Activities -join ', ') } else { 'Nenhum' }
+                $enforcementDisplay = if ($policy.EnforcementPlanes.Count -gt 0) { ($policy.EnforcementPlanes -join ', ') } else { 'Nenhum' }
                 $modifiedDisplay = Get-FormattedDate -DateString $policy.ModifiedTime
 
                 $collectionTableRows += "| $($policy.PolicyName) | $enabledStatus | $modeStatus | $($policy.Workload) | $activitiesDisplay | $enforcementDisplay | $($policy.CreatedBy) | $modifiedDisplay | $($policy.PolicyCategory) |`n"
@@ -265,8 +265,8 @@ function Test-Assessment-35040 {
         $rulesTableRows = ''
         if ($enterpriseAIRules.Count -gt 0) {
             foreach ($rule in $enterpriseAIRules | Sort-Object RuleName) {
-                $workloadsDisplay = if ($rule.Workloads.Count -gt 0) { $rule.Workloads -join ', ' } else { 'None' }
-                $unifiedGenAIDisplay = if ($rule.UnifiedGenAIWorkloads.Count -gt 0) { $rule.UnifiedGenAIWorkloads -join ', ' } else { 'None' }
+                $workloadsDisplay = if ($rule.Workloads.Count -gt 0) { $rule.Workloads -join ', ' } else { 'Nenhum' }
+                $unifiedGenAIDisplay = if ($rule.UnifiedGenAIWorkloads.Count -gt 0) { $rule.UnifiedGenAIWorkloads -join ', ' } else { 'Nenhum' }
 
                 $rulesTableRows += "| $($rule.RuleName) | $($rule.PolicyName) | $workloadsDisplay | $unifiedGenAIDisplay |`n"
             }
@@ -276,8 +276,8 @@ function Test-Assessment-35040 {
         $policiesTableRows = ''
         if ($enabledPoliciesWithReviewMailbox.Count -gt 0) {
             foreach ($policy in $enabledPoliciesWithReviewMailbox | Sort-Object Name) {
-                $enabledStatus = if ($policy.Enabled -eq $true) { '✅ True' } else { '❌ False' }
-                $reviewMailbox = if ($policy.ReviewMailbox) { "✅ $($policy.ReviewMailbox)" } else { '❌ Not configured' }
+                $enabledStatus = if ($policy.Enabled -eq $true) { '✅ Verdadeiro' } else { '❌ Falso' }
+                $reviewMailbox = if ($policy.ReviewMailbox) { "✅ $($policy.ReviewMailbox)" } else { '❌ Não configurado' }
 
                 $policiesTableRows += "| $($policy.Name) | $enabledStatus | $reviewMailbox |`n"
             }
@@ -288,9 +288,9 @@ function Test-Assessment-35040 {
         if ($collectionPolicies.Count -gt 0) {
             $collectionSection = @"
 
-### [Data ingestion layer (Collection policies)]($collectionPoliciesLink)
+### [Camada de ingestão de dados (Políticas de Coleta)]($collectionPoliciesLink)
 
-| Policy name | Enabled | Mode | Workload | Activities | Enforcement planes | Created by | Last modified | Policy category |
+| Nome da política | Habilitada | Modo | Carga de trabalho | Atividades | Planos de imposição | Criado por | Última modificação | Categoria da política |
 | :---------- | :------ | :--- | :------- | :--------- | :----------------- | :--------- | :------------ | :-------------- |
 $collectionTableRows
 "@
@@ -303,18 +303,18 @@ $collectionTableRows
             if ($enterpriseAIRules.Count -gt 0) {
                 $rulesSection = @"
 
-### [Communication Compliance rules targeting Enterprise AI Apps]($compliancePoliciesLink)
+### [Regras de Comunicação em Conformidade direcionadas a aplicativos de IA corporativa]($compliancePoliciesLink)
 
-| Rule name | Associated policy | Workloads | UnifiedGenAIWorkloads |
+| Nome da regra | Política associada | Cargas de trabalho | UnifiedGenAIWorkloads |
 | :-------- | :---------------- | :-------- | :-------------------- |
 $rulesTableRows
 "@
         } else {
             $rulesSection = @"
 
-### [Communication Compliance rules targeting Enterprise AI Apps]($compliancePoliciesLink)
+### [Regras de Comunicação em Conformidade direcionadas a aplicativos de IA corporativa]($compliancePoliciesLink)
 
-No Enterprise AI rules found.
+Nenhuma regra de IA corporativa encontrada.
 "@
         }
     }
@@ -324,18 +324,18 @@ No Enterprise AI rules found.
         if ($enabledPoliciesWithReviewMailbox.Count -gt 0) {
             $policiesSection = @"
 
-### [Enabled policies with review mailbox]($compliancePoliciesLink)
+### [Políticas habilitadas com caixa de correio de revisão]($compliancePoliciesLink)
 
-| Policy name | Enabled | Review mailbox |
+| Nome da política | Habilitada | Caixa de correio de revisão |
 | :---------- | :------ | :------------- |
 $policiesTableRows
 "@
     } else {
             $policiesSection = @"
 
-### [Enabled policies with review mailbox]($compliancePoliciesLink)
+### [Políticas habilitadas com caixa de correio de revisão]($compliancePoliciesLink)
 
-No enabled policies with review mailbox configured were found.
+Nenhuma política habilitada com caixa de correio de revisão configurada foi encontrada.
 "@
         }
 
@@ -343,9 +343,10 @@ No enabled policies with review mailbox configured were found.
 {0}{1}{2}
 
 **Summary:**
-- Collection Policies Configured: {3}
-- Enterprise AI Rules Detected (with ConnectedAIApp or UnifiedGenAIWorkloads): {4}
-- Policies Enabled with ReviewMailbox: {5}
+**Resumo:**
+- Políticas de Coleta configuradas: {3}
+- Regras de IA corporativa detectadas (com ConnectedAIApp ou UnifiedGenAIWorkloads): {4}
+- Políticas habilitadas com ReviewMailbox: {5}
 '@
 
         $mdInfo = $formatTemplate -f $collectionSection, $rulesSection, $policiesSection, $collectionPolicies.Count, $enterpriseAIRules.Count, $enabledPoliciesWithReviewMailbox.Count

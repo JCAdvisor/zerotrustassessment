@@ -16,27 +16,27 @@
 function Test-Assessment-26888 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure_Application_Gateway_WAF'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Monitor and detect cyberthreats',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Monitorar e detectar ciberameaças',
         TenantType = ('Workforce'),
         TestId = 26888,
-        Title = 'Diagnostic logging is enabled in Application Gateway WAF',
-        UserImpact = 'Low'
+        Title = 'O registro de diagnóstico está habilitado no WAF do Application Gateway',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating Application Gateway WAF diagnostic logging configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando a configuração de logs de diagnóstico do WAF do Application Gateway'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão com o Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
@@ -46,7 +46,7 @@ function Test-Assessment-26888 {
     }
 
     # Check the supported environment
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure environment'
+    Write-ZtProgress -Activity $activity -Status 'Verificando ambiente do Azure'
 
     if ($azContext.Environment.Name -ne 'AzureCloud') {
         Write-PSFMessage 'This test is only applicable to the AzureCloud environment.' -Tag Test -Level VeryVerbose
@@ -69,7 +69,7 @@ function Test-Assessment-26888 {
     }
 
     # Q1 & Q2: Query Application Gateways with WAF SKU using Azure Resource Graph
-    Write-ZtProgress -Activity $activity -Status 'Querying Application Gateways via Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando Application Gateways via Resource Graph'
 
     $argQuery = @"
 resources
@@ -109,7 +109,7 @@ resources
     }
 
     # Q3: Get diagnostic settings for each Application Gateway WAF
-    Write-ZtProgress -Activity $activity -Status 'Querying diagnostic settings'
+    Write-ZtProgress -Activity $activity -Status 'Consultando configurações de diagnóstico'
 
     $evaluationResults = @()
 
@@ -205,10 +205,10 @@ resources
     $passed = ($failedItems.Count -eq 0) -and ($passedItems.Count -gt 0)
 
     if ($passed) {
-        $testResultMarkdown = "✅ Diagnostic logging is enabled for Application Gateway WAF with active log collection configured.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O registro de diagnóstico está habilitado no WAF do Application Gateway com coleta de logs ativa configurada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Diagnostic logging is not enabled for Application Gateway WAF, preventing security monitoring and threat detection.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O registro de diagnóstico não está habilitado no WAF do Application Gateway, impedindo o monitoramento de segurança e a detecção de ameaças.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -220,13 +220,13 @@ resources
     $portalSubscriptionBaseLink = 'https://portal.azure.com/#resource/subscriptions'
     $portalResourceBaseLink = 'https://portal.azure.com/#resource'
 
-    $mdInfo = "`n## [Application Gateway WAF diagnostic logging status]($portalAppGatewayBrowseLink)`n`n"
+    $mdInfo = "`n## [Status do registro de diagnóstico do WAF do Application Gateway]($portalAppGatewayBrowseLink)`n`n"
 
     # Application Gateway WAF Status table
     if ($evaluationResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-| Subscription | Gateway name | Location | SKU tier | Diagnostic settings count | Destination configured | Enabled log categories | Status |
+| Assinatura | Nome do gateway | Localização | Nível de SKU | Contagem de configurações de diagnóstico | Destino configurado | Categorias de log habilitadas | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 {0}
 
@@ -247,13 +247,13 @@ resources
             $diagCount = $result.DiagnosticSettingCount
             $destConfigured = if ($result.DestinationType -eq 'None') { 'No' } else { 'Yes' }
             $enabledCategories = if ($result.DiagnosticSettingCount -eq 0) {
-                'No diagnostic settings'
+                'Sem configurações de diagnóstico'
             } elseif ($result.EnabledCategories) {
                 $result.EnabledCategories
             } else {
                 'None'
             }
-            $statusText = if ($result.Status -eq 'Pass') { '✅ Pass' } else { '❌ Fail' }
+            $statusText = if ($result.Status -eq 'Pass') { '✅ Aprovado' } else { '❌ Reprovado' }
 
             $tableRows += "| $subscriptionLink | $gatewayLink | $($result.Location) | $($result.SkuTier) | $diagCount | $destConfigured | $enabledCategories | $statusText |`n"
         }
@@ -261,26 +261,26 @@ resources
         # Add note if more items exist
         if ($hasMoreItems) {
             $remainingCount = $evaluationResults.Count - $maxItemsToDisplay
-            $tableRows += "`n... and $remainingCount more. [View all Application Gateways in the portal]($portalAppGatewayBrowseLink)`n"
+            $tableRows += "`n... e mais $remainingCount. [Ver todos os Application Gateways no portal]($portalAppGatewayBrowseLink)`n"
         }
 
         $mdInfo += $formatTemplate -f $tableRows
     }
 
     # Summary
-    $mdInfo += "**Summary:**`n`n"
-    $mdInfo += "- Total Application Gateways with WAF evaluated: $($evaluationResults.Count)`n"
-    $mdInfo += "- Gateways with diagnostic logging enabled: $($passedItems.Count)`n"
-    $mdInfo += "- Gateways without diagnostic logging: $($failedItems.Count)`n"
+    $mdInfo += "**Resumo:**`n`n"
+    $mdInfo += "- Total de Application Gateways com WAF avaliados: $($evaluationResults.Count)`n"
+    $mdInfo += "- Gateways com registro de diagnóstico habilitado: $($passedItems.Count)`n"
+    $mdInfo += "- Gateways sem registro de diagnóstico: $($failedItems.Count)`n"
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
 
     #endregion Report Generation
 
     $params = @{
         TestId = '26888'
-        Title  = 'Diagnostic logging is enabled in Application Gateway WAF'
+        Title  = 'O registro de diagnóstico está habilitado no WAF do Application Gateway'
         Status = $passed
         Result = $testResultMarkdown
     }

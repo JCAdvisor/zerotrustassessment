@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
-    Validates that the Default Ruleset is assigned in Azure Front Door WAF.
+    Valida que o Ruleset Padrão está atribuído no WAF do Azure Front Door.
 
 .DESCRIPTION
-    This test evaluates Azure Front Door WAF policies attached to Azure Front Door
-    to ensure they have a Microsoft_DefaultRuleSet enabled for comprehensive web
+    Este teste avalia políticas de WAF do Azure Front Door anexadas ao Azure Front Door
+    para garantir que tenham um ruleset gerenciado de linha de base (Microsoft_DefaultRuleSet) habilitado para proteção
     application protection against OWASP Top 10 vulnerabilities.
 
 .NOTES
@@ -17,38 +17,38 @@
 function Test-Assessment-26883 {
 
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure WAF'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 26883,
-        Title = 'Default Ruleset is assigned in Azure Front Door WAF',
-        UserImpact = 'Low'
+        Title = 'O conjunto de regras padrão está atribuído no WAF do Azure Front Door',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Evaluating Azure Front Door WAF default ruleset configuration'
+    $activity = 'Avaliando configuração de ruleset padrão do WAF do Azure Front Door'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o Azure Resource Graph'
 
-    # Query Front Door WAF policies attached to Front Door (Classic or Standard/Premium)
+        # Consulta Front Door WAF policies attached to Front Door (Classic or Standard/Premium)
     # - frontendEndpointLinks: Classic Front Door attachments
     # - securityPolicyLinks: Standard/Premium Front Door attachments
     # Uses string-contains check to avoid mv-expand dropping policies with empty managedRuleSets
@@ -76,7 +76,7 @@ resources
         Write-PSFMessage "ARG Query returned $($policies.Count) records" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Azure Resource Graph query failed: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Falha na consulta do Azure Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -85,8 +85,8 @@ resources
     #region Assessment Logic
     # Skip test if no policies found
     if ($policies.Count -eq 0) {
-        Write-PSFMessage 'No Azure Front Door WAF policies attached to Azure Front Door found.' -Tag Test -Level Verbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Azure Front Door WAF policies attached to Azure Front Door found across subscriptions.'
+        Write-PSFMessage 'Nenhuma política de WAF do Azure Front Door anexada ao Azure Front Door encontrada.' -Tag Test -Level Verbose
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'Nenhuma política de WAF do Azure Front Door anexada ao Azure Front Door encontrada em todas as assinaturas.'
         return
     }
 
@@ -96,11 +96,11 @@ resources
 
     if ($failedItems.Count -eq 0) {
         $passed = $true
-        $testResultMarkdown = "✅ All Azure Front Door WAF policies attached to Azure Front Door have a default managed ruleset (Microsoft_DefaultRuleSet) enabled.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas de WAF do Azure Front Door anexadas ao Azure Front Door têm um ruleset gerenciado padrão (Microsoft_DefaultRuleSet) habilitado.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown = "❌ One or more Azure Front Door WAF policies attached to Azure Front Door do not have a default managed ruleset configured.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas de WAF do Azure Front Door anexadas ao Azure Front Door não têm um ruleset gerenciado padrão configurado.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -108,7 +108,7 @@ resources
     $mdInfo = ''
 
     # Table title
-    $reportTitle = 'Azure Front Door WAF Policies'
+    $reportTitle = 'Políticas de WAF do Azure Front Door'
     $portalLink = 'https://portal.azure.com/#browse/Microsoft.Network%2FfrontdoorWebApplicationFirewallPolicies'
 
     # Prepare table rows
@@ -134,7 +134,7 @@ resources
 
 ## [{0}]({1})
 
-| Policy name | Subscription name | Attached to AFD | Enabled state | WAF mode | Default ruleset type | Ruleset version | Status |
+| Nome da política | Nome da assinatura | Anexada ao AFD | Estado habilitado | Modo WAF | Tipo de ruleset padrão | Versão do ruleset | Status |
 | :---------- | :---------------- | :-------------: | :-----------: | :------: | :------------------- | :-------------- | :----: |
 {2}
 
@@ -143,17 +143,17 @@ resources
     $mdInfo = $formatTemplate -f $reportTitle, $portalLink, $tableRows
 
     # Summary
-    $mdInfo += "**Summary:**`n`n"
-    $mdInfo += "- Total Azure Front Door WAF policies evaluated: $($policies.Count)`n"
-    $mdInfo += "- Policies with default ruleset enabled: $($passedItems.Count)`n"
-    $mdInfo += "- Policies without default ruleset: $($failedItems.Count)`n"
+    $mdInfo += "`n**Resumo:**`n`n"
+    $mdInfo += "- Total de políticas de WAF do Azure Front Door avaliadas: $($policies.Count)`n"
+    $mdInfo += "- Políticas com ruleset padrão habilitado: $($passedItems.Count)`n"
+    $mdInfo += "- Políticas sem ruleset padrão: $($failedItems.Count)`n"
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '26883'
-        Title  = 'Default Ruleset is assigned in Azure Front Door WAF'
+        Title  = 'Ruleset Padrão está atribuído no WAF do Azure Front Door'
         Status = $passed
         Result = $testResultMarkdown
     }

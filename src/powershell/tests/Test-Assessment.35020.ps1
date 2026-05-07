@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Auto-labeling policies are in enforcement mode
+    As políticas de aplicação automática de rótulos estão no modo de aplicação
 #>
 
 function Test-Assessment-35020 {
@@ -21,11 +21,11 @@ function Test-Assessment-35020 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking auto-labeling enforcement mode configuration'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando configuração do modo de aplicação de políticas de aplicação automática de rótulos'
 
     # Q1: Get all auto-labeling policies
-    Write-ZtProgress -Activity $activity -Status 'Getting auto-labeling policies'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de aplicação automática de rótulos'
 
     $errorMsg = $null
     $allPolicies = @()
@@ -35,7 +35,7 @@ function Test-Assessment-35020 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying auto-labeling policies: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar políticas de aplicação automática de rótulos: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -47,11 +47,11 @@ function Test-Assessment-35020 {
     $customStatus = $null
 
     if ($errorMsg) {
-        $testResultMarkdown = "⚠️ Unable to determine auto-labeling enforcement mode status due to permissions issues or query failure.`n`n"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status do modo de aplicação de aplicação automática de rótulos devido a problemas de permissões ou falha na consulta.`n`n"
         $customStatus = 'Investigate'
     }
     else {
-        Write-PSFMessage "Found $($allPolicies.Count) auto-labeling policies" -Level Verbose
+        Write-PSFMessage "Encontradas $($allPolicies.Count) políticas de aplicação automática de rótulos" -Level Verbose
 
         # Categorize policies by status and mode
         foreach ($policy in $allPolicies) {
@@ -73,16 +73,16 @@ function Test-Assessment-35020 {
         # Determine pass/fail status
         if ($enforcementPolicies.Count -gt 0) {
             $passed = $true
-            $testResultMarkdown = "✅ At least one auto-labeling policy is enabled and actively labeling content in enforcement mode.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Pelo menos uma política de aplicação automática de rótulos está habilitada e rotulando ativamente o conteúdo no modo de aplicação.`n`n%TestResult%"
         }
         else {
             $passed = $false
 
             if ($allPolicies.Count -eq 0) {
-                $testResultMarkdown = "❌ No auto-labeling policies were found in your tenant.`n`n%TestResult%"
+                $testResultMarkdown = "❌ Nenhuma política de aplicação automática de rótulos foi encontrada em seu locatário.`n`n%TestResult%"
             }
             else {
-                $testResultMarkdown = "❌ No auto-labeling policies are in enforcement mode. All policies are either disabled or in simulation mode.`n`n%TestResult%"
+                $testResultMarkdown = "❌ Nenhuma política de aplicação automática de rótulos está no modo de aplicação. Todas as políticas estão desabilitadas ou no modo de simulação.`n`n%TestResult%"
             }
         }
     }
@@ -94,8 +94,8 @@ function Test-Assessment-35020 {
 
     # Show enforcement policies table if any exist
     if ($enforcementPolicies.Count -gt 0) {
-        $mdInfo += "`n`n### [Auto-labeling policies in enforcement mode](https://purview.microsoft.com/informationprotection/autolabeling)`n"
-        $mdInfo += "| Policy name | Enabled status | Mode | Workload(s) targeted | Policy description | Date activated | Last modified |`n"
+        $mdInfo += "`n`n### [Políticas de aplicação automática de rótulos no modo de aplicação](https://purview.microsoft.com/informationprotection/autolabeling)`n"
+        $mdInfo += "| Nome da política | Status habilitado | Modo | Cargas de trabalho direcionadas | Descrição da política | Data de ativação | Última modificação |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`n"
 
         foreach ($policy in $enforcementPolicies) {

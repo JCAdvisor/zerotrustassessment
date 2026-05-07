@@ -6,14 +6,14 @@
 function Test-Assessment-21983{
     [ZtTest(
     	Category = 'Controle de acesso',
-    	ImplementationCost = 'Low',
+    	ImplementationCost = 'Baixo',
     	Pillar = 'Identidade',
-    	RiskLevel = 'Medium',
+    	RiskLevel = 'Médio',
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),
     	TestId = 21983,
     	Title = 'Nenhuma recomendação do Entra de prioridade Média ativa encontrada',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

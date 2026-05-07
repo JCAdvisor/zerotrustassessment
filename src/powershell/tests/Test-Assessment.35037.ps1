@@ -1,48 +1,48 @@
 <#
 .SYNOPSIS
-    Purview audit logging is enabled
+    O registro de auditoria do Purview está habilitado
 #>
 
 function Test-Assessment-35037 {
     [ZtTest(
-        Category = 'Data Security Posture Management',
+        Category = 'Gerenciamento de postura de segurança de dados',
         ImplementationCost = 'Low',
         Service = ('ExchangeOnline'),
         MinimumLicense = ('Microsoft 365 E3'),
-        Pillar = 'Data',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce','External'),
         TestId = 35037,
-        Title = 'Purview audit logging is enabled',
-        UserImpact = 'Low'
+        Title = 'Registro de auditoria do Purview habilitado',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
     Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Purview audit logging configuration'
+    $activity = 'Verificando a configuração do registro de auditoria do Purview'
 
-    # Query Q1: Get unified audit logging configuration
-    Write-ZtProgress -Activity $activity -Status 'Getting audit log configuration'
+        # Consulta Q1: Get unified audit logging configuration
+    Write-ZtProgress -Activity $activity -Status 'Obtendo a configuração do log de auditoria'
 
     $errorMsg = $null
     $auditConfig = $null
 
     try {
         $auditConfig = Get-AdminAuditLogConfig -ErrorAction Stop
-        Write-PSFMessage "Retrieved audit log configuration" -Level Verbose
+        Write-PSFMessage "Configuração do log de auditoria recuperada" -Level Verbose
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying audit log configuration: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar a configuração do log de auditoria: $_" -Level Error
     }
     #endregion Data Collection
 
     #region Assessment Logic
     if ($errorMsg -or -not $auditConfig) {
-        Write-PSFMessage 'Not connected to Exchange Online.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Exchange Online.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedExchange
         return
     }
@@ -51,11 +51,11 @@ function Test-Assessment-35037 {
 
     if ($auditConfig.UnifiedAuditLogIngestionEnabled -eq $true) {
         $passed = $true
-        $testResultMarkdown = "✅ Purview Audit Logging is ENABLED and all activities across Microsoft 365 services are being captured and logged for investigation and compliance purposes.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O registro de auditoria do Purview está HABILITADO e todas as atividades nos serviços do Microsoft 365 estão sendo capturadas e registradas para fins de investigação e conformidade.`n`n%TestResult%"
     }
     else {
         $passed = $false
-        $testResultMarkdown = "❌ Purview Audit Logging is DISABLED, creating a critical visibility gap where unauthorized access, policy violations, and security incidents cannot be detected or investigated.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O registro de auditoria do Purview está DESABILITADO, criando uma lacuna crítica de visibilidade em que acessos não autorizados, violações de política e incidentes de segurança não podem ser detectados ou investigados.`n`n%TestResult%"
     }
 
     #endregion Assessment Logic
@@ -65,17 +65,17 @@ function Test-Assessment-35037 {
 
     # Show audit configuration only if we have data
     if ($null -ne $auditConfig) {
-        $mdInfo += "`n`n### [Audit logging status](https://purview.microsoft.com/audit)`n"
-        $mdInfo += "| Configuration property | Value |`n"
+        $mdInfo += "`n`n### [Status do registro de auditoria](https://purview.microsoft.com/audit)`n"
+        $mdInfo += "| Propriedade de configuração | Valor |`n"
         $mdInfo += "| :--- | :--- |`n"
 
         $auditStatus = $auditConfig.UnifiedAuditLogIngestionEnabled
-        $ageLimit = if ($auditConfig.AdminAuditLogAgeLimit) { $auditConfig.AdminAuditLogAgeLimit } else { 'Not configured' }
+        $ageLimit = if ($auditConfig.AdminAuditLogAgeLimit) { $auditConfig.AdminAuditLogAgeLimit } else { 'Não configurado' }
         $organizationId = if ($auditConfig.OrganizationId) { Get-SafeMarkdown -Text $auditConfig.OrganizationId } else { 'N/A' }
 
-        $mdInfo += "| Unified audit log ingestion enabled | $auditStatus |`n"
-        $mdInfo += "| Audit log age limit | $ageLimit |`n"
-        $mdInfo += "| Organization ID | $organizationId |"
+        $mdInfo += "| Ingestão unificada do log de auditoria habilitada | $auditStatus |`n"
+        $mdInfo += "| Limite de idade do log de auditoria | $ageLimit |`n"
+        $mdInfo += "| ID da organização | $organizationId |"
     }
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
@@ -83,7 +83,7 @@ function Test-Assessment-35037 {
 
     $params = @{
         TestId = '35037'
-        Title  = 'Purview audit logging enabled'
+        Title  = 'Registro de auditoria do Purview habilitado'
         Status = $passed
         Result = $testResultMarkdown
     }

@@ -5,16 +5,16 @@
 
 function Test-Assessment-21892 {
     [ZtTest(
-        Category = 'Access control',
-        ImplementationCost = 'High',
+        Category = 'Controle de acesso',
+        ImplementationCost = 'Alto',
         MinimumLicense = ('P1'),
-        Pillar = 'Identity',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect identities and secrets',
+        Pillar = 'Identidade',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger identidades e segredos',
         TenantType = ('Workforce', 'External'),
         TestId = 21892,
         Title = 'Toda a atividade de logon provém de dispositivos gerenciados',
-        UserImpact = 'High'
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()

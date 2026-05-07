@@ -1,12 +1,12 @@
 ﻿<#
 .SYNOPSIS
-    Named entity sensitive information types are used in auto-labeling and data loss prevention policies
+    Tipos de informações sensíveis de entidade nomeada são usados em políticas de auto-rotulagem e prevenção de perda de dados
 
 .DESCRIPTION
-    This test evaluates whether the organization has deployed Named Entity Sensitive
-    Information Types (SITs) in auto-labeling policies or DLP rules. Named Entity SITs
-    are pre-built, Microsoft-managed classifiers designed to detect common sensitive
-    entities like people's names, physical addresses, and medical terminology.
+    Este teste avalia se a organização implantou Tipos de Informações Sensíveis de Entidade Nomeada (SITs)
+    em políticas de auto-rotulagem ou regras de DLP. Named Entity SITs
+    são classificadores pré-construídos e gerenciados pela Microsoft, projetados para detectar entidades sensíveis comuns
+    como nomes de pessoas, endereços físicos e terminologia médica.
 
 .NOTES
     Test ID: 35035
@@ -145,8 +145,8 @@ function Test-Assessment-35035 {
     #region Data Collection
 
     Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating Named Entity SIT usage in policies'
-    Write-ZtProgress -Activity $activity -Status 'Building Named Entity SIT catalog lookup'
+    $activity = 'Avaliando o uso de Named Entity SIT em políticas'
+    Write-ZtProgress -Activity $activity -Status 'Construindo catálogo de pesquisa de Named Entity SIT'
 
     $namedEntitySitIds = @()
     $autoLabelRules = @()
@@ -158,32 +158,32 @@ function Test-Assessment-35035 {
     try {
         $namedEntitySits = Get-DlpSensitiveInformationType -ErrorAction Stop | Where-Object { $_.Classifier -eq 'EntityMatch' }
         $namedEntitySitIds = @($namedEntitySits.Id)
-        Write-PSFMessage "Built Named Entity SIT catalog with $($namedEntitySitIds.Count) SITs" -Level Verbose
+        Write-PSFMessage "Catálogo de Named Entity SIT construído com $($namedEntitySitIds.Count) SITs" -Level Verbose
     }
     catch {
-        Write-PSFMessage "Error building Named Entity SIT catalog: $_" -Level Warning
+        Write-PSFMessage "Erro ao construir o catálogo de Named Entity SIT: $_" -Level Warning
         $catalogError = $_
     }
 
     # Q1: Get all auto-sensitivity label rules
-    Write-ZtProgress -Activity $activity -Status 'Retrieving auto-labeling rules'
+    Write-ZtProgress -Activity $activity -Status 'Recuperando regras de auto-rotulagem'
     try {
         $autoLabelRules = Get-AutoSensitivityLabelRule -ErrorAction Stop
-        Write-PSFMessage "Retrieved $($autoLabelRules.Count) auto-labeling rules" -Level Verbose
+        Write-PSFMessage "Recuperadas $($autoLabelRules.Count) regras de auto-rotulagem" -Level Verbose
     }
     catch {
-        Write-PSFMessage "Error retrieving auto-labeling rules: $_" -Level Warning
+        Write-PSFMessage "Erro ao recuperar regras de auto-rotulagem: $_" -Level Warning
         $queryError = $_
     }
 
     # Q2: Get all DLP compliance rules
-    Write-ZtProgress -Activity $activity -Status 'Retrieving DLP compliance rules'
+    Write-ZtProgress -Activity $activity -Status 'Recuperando regras de conformidade de DLP'
     try {
         $dlpRules = Get-DlpComplianceRule -ErrorAction Stop
-        Write-PSFMessage "Retrieved $($dlpRules.Count) DLP rules" -Level Verbose
+        Write-PSFMessage "Recuperadas $($dlpRules.Count) regras de DLP" -Level Verbose
     }
     catch {
-        Write-PSFMessage "Error retrieving DLP rules: $_" -Level Warning
+        Write-PSFMessage "Erro ao recuperar regras de DLP: $_" -Level Warning
         if (-not $queryError) {
             $queryError = $_
         }
@@ -204,21 +204,21 @@ function Test-Assessment-35035 {
     # Check if catalog lookup failed
     if ($catalogError) {
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine Named Entity SIT usage. Failed to build SIT catalog lookup: $catalogError`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Impossível determinar o uso de Named Entity SIT. Falha ao construir a pesquisa do catálogo de SIT: $catalogError`n`n%TestResult%"
     }
     # Check if both queries failed
     elseif ($queryError -and $autoLabelRules.Count -eq 0 -and $dlpRules.Count -eq 0) {
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine Named Entity SIT usage due to query error: $queryError`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Impossível determinar o uso de Named Entity SIT devido a erro de consulta: $queryError`n`n%TestResult%"
     }
     # Check if catalog is empty (no Named Entity SITs found - unusual)
     elseif ($namedEntitySitIds.Count -eq 0) {
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine Named Entity SIT usage. No Named Entity SITs found in the SIT catalog (Classifier = 'EntityMatch'). This is unexpected - please verify tenant access.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Impossível determinar o uso de Named Entity SIT. Nenhum Named Entity SIT encontrado no catálogo de SIT (Classifier = 'EntityMatch'). Isso é inesperado - verifique o acesso ao locatário.`n`n%TestResult%"
     }
     else {
         # Process auto-labeling rules
-        Write-ZtProgress -Activity $activity -Status 'Analyzing auto-labeling rules for Named Entity SITs'
+        Write-ZtProgress -Activity $activity -Status 'Analisando regras de auto-rotulagem para Named Entity SITs'
         foreach ($rule in $autoLabelRules) {
             try {
                 $foundSits = Get-NamedEntitySitsFromRule -AdvancedRuleJson $rule.AdvancedRule -NamedEntitySitIds $namedEntitySitIds -RuleName $rule.Name -RuleType 'AutoLabeling'
@@ -246,7 +246,7 @@ function Test-Assessment-35035 {
         }
 
         # Process DLP rules
-        Write-ZtProgress -Activity $activity -Status 'Analyzing DLP rules for Named Entity SITs'
+        Write-ZtProgress -Activity $activity -Status 'Analisando regras de DLP para Named Entity SITs'
         foreach ($rule in $dlpRules) {
             try {
                 $foundSits = Get-NamedEntitySitsFromRule -AdvancedRuleJson $rule.AdvancedRule -NamedEntitySitIds $namedEntitySitIds -RuleName $rule.Name -RuleType 'DLP'
@@ -278,16 +278,16 @@ function Test-Assessment-35035 {
 
         if ($totalRulesWithNamedEntity -gt 0) {
             $passed = $true
-            $testResultMarkdown = "✅ At least one auto-labeling or DLP policy rule uses a Named Entity SIT (such as 'All Full Names', 'All Physical Addresses', 'All Medical Terms and Conditions', or similar pre-built classifiers).`n`n%TestResult%"
+            $testResultMarkdown = "✅ Pelo menos uma regra de política de auto-rotulagem ou DLP usa um Named Entity SIT (como 'Todos os Nomes Completos', 'Todos os Endereços Físicos', 'Todos os Termos e Condições Médicos' ou classificadores pré-construídos similares).`n`n%TestResult%"
         }
         else {
             $passed = $false
 
             if ($autoLabelRules.Count -eq 0 -and $dlpRules.Count -eq 0) {
-                $testResultMarkdown = "❌ No auto-labeling or DLP rules were found in your tenant.`n`n%TestResult%"
+                $testResultMarkdown = "❌ Nenhuma regra de auto-rotulagem ou DLP foi encontrada em seu locatário.`n`n%TestResult%"
             }
             else {
-                $testResultMarkdown = "❌ No auto-labeling or DLP policy rules contain any Named Entity SITs. All policies use only standard SITs (credit card numbers, social security numbers, etc.) or are not configured.`n`n%TestResult%"
+                $testResultMarkdown = "❌ Nenhuma regra de política de auto-rotulagem ou DLP contém Named Entity SITs. Todas as políticas usam apenas SITs padrão (números de cartão de crédito, números de seguro social, etc.) ou não estão configuradas.`n`n%TestResult%"
             }
         }
 
@@ -296,7 +296,7 @@ function Test-Assessment-35035 {
             $totalRules = $autoLabelRules.Count + $dlpRules.Count
             if ($parseErrors.Count -eq $totalRules -and $totalRules -gt 0) {
                 $customStatus = 'Investigate'
-                $testResultMarkdown = "⚠️ Unable to determine Named Entity SIT usage due to JSON parsing errors in all rules.`n`n%TestResult%"
+                $testResultMarkdown = "⚠️ Impossível determinar o uso de Named Entity SIT devido a erros de análise JSON em todas as regras.`n`n%TestResult%"
             }
         }
     }
@@ -313,8 +313,8 @@ function Test-Assessment-35035 {
     $allRulesWithNamedEntity += $dlpRulesWithNamedEntity
 
     if ($allRulesWithNamedEntity.Count -gt 0) {
-        $mdInfo += "`n`n### [Rules using named entity SITs](https://purview.microsoft.com/informationprotection/dataclassification/multicloudsensitiveinfotypes)`n"
-        $mdInfo += "| Rule name | Policy name | Named Entity SITs | Count | Workload | Type |`n"
+        $mdInfo += "`n`n### [Regras usando SITs de entidade nomeada](https://purview.microsoft.com/informationprotection/dataclassification/multicloudsensitiveinfotypes)`n"
+        $mdInfo += "| Nome da regra | Nome da política | SITs de entidade nomeada | Contagem | Carga de trabalho | Tipo |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- |`n"
 
         foreach ($rule in $allRulesWithNamedEntity) {
@@ -337,14 +337,14 @@ function Test-Assessment-35035 {
     }
 
     # Summary section
-    $mdInfo += "`n`n### Summary`n"
-    $mdInfo += "| Metric | Count |`n"
+    $mdInfo += "`n`n### Resumo`n"
+    $mdInfo += "| Métrica | Contagem |`n"
     $mdInfo += "| :--- | :--- |`n"
-    $mdInfo += "| Named entity SITs in catalog | $($namedEntitySitIds.Count) |`n"
-    $mdInfo += "| Total auto-labeling rules | $($autoLabelRules.Count) |`n"
-    $mdInfo += "| Total DLP rules | $($dlpRules.Count) |`n"
-    $mdInfo += "| Auto-labeling rules using named entity SITs | $($autoLabelRulesWithNamedEntity.Count) |`n"
-    $mdInfo += "| DLP rules using named entity SITs | $($dlpRulesWithNamedEntity.Count) |"
+    $mdInfo += "| SITs de entidade nomeada no catálogo | $($namedEntitySitIds.Count) |`n"
+    $mdInfo += "| Total de regras de auto-rotulagem | $($autoLabelRules.Count) |`n"
+    $mdInfo += "| Total de regras de DLP | $($dlpRules.Count) |`n"
+    $mdInfo += "| Regras de auto-rotulagem usando SITs de entidade nomeada | $($autoLabelRulesWithNamedEntity.Count) |`n"
+    $mdInfo += "| Regras de DLP usando SITs de entidade nomeada | $($dlpRulesWithNamedEntity.Count) |"
 
     # Report parsing errors if any occurred
     if ($parseErrors.Count -gt 0) {

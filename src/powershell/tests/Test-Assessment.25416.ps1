@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Branch office internet traffic is protected by Cloud Firewall policies through Global Secure Access
+    O tráfego de internet do escritório de filial é protegido por políticas de Cloud Firewall através do Global Secure Access
 
 .DESCRIPTION
-    Evaluates whether branch office internet traffic is protected by cloud firewall policies through Global Secure Access.
-    Without cloud firewall policies enforced on remote network traffic, branch office internet traffic flows through
-    Global Secure Access without egress filtering, exposing the organization to data exfiltration, command-and-control
-    communications, and malicious outbound connections from compromised branch assets.
+    Avalia se o tráfego de internet do escritório de filial é protegido por políticas de firewall em nuvem por meio do Global Secure Access.
+    Sem políticas de firewall em nuvem impostas no tráfego de rede remota, o tráfego de internet do escritório de filial flui através
+    do Global Secure Access sem filtragem de saída, expondo a organização a exfiltração de dados, comunicações de comando e controle
+    e conexões de saída maliciosas de ativos de filial comprometidos.
 
 .NOTES
     Test ID: 25416
@@ -17,17 +17,17 @@
 
 function Test-Assessment-25416 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25416,
-    	Title = 'Global Secure Access cloud firewall protects branch office internet traffic',
-    	UserImpact = 'Low'
+    	Title = 'O firewall de nuvem do Acesso Seguro Global protege o tráfego de internet das filiais',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -36,9 +36,9 @@ function Test-Assessment-25416 {
     [int]$BASELINE_PROFILE_PRIORITY = 65000
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Branch office internet traffic is protected by Cloud Firewall policies through Global Secure Access'
-    Write-ZtProgress -Activity $activity -Status 'Querying remote networks'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando se o tráfego de internet do escritório de filial é protegido por políticas de Cloud Firewall por meio do Global Secure Access'
+    Write-ZtProgress -Activity $activity -Status 'Consultando redes remotas'
 
     # Q1: Get all configured remote networks (branch sites)
     $remoteNetworks = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/connectivity/branches' -ApiVersion beta
@@ -54,7 +54,7 @@ function Test-Assessment-25416 {
 
     # Q2: Get filtering profiles with cloud firewall policy links
     $baselineProfileWithCloudFirewall = @()
-    Write-ZtProgress -Activity $activity -Status 'Querying baseline security profile'
+    Write-ZtProgress -Activity $activity -Status 'Consultando perfil de segurança de linha de base'
     $filteringProfiles = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/filteringProfiles' -QueryParameters @{
         '$select' = 'id,name,description,state,version,priority'
         '$expand' = 'policies($select=id,state;$expand=policy)'
@@ -176,10 +176,10 @@ function Test-Assessment-25416 {
     $mdInfo = ''
 
     if ($passed) {
-        $testResultMarkdown = "Cloud Firewall is enabled and configured for remote networks. Branch office internet traffic is protected by firewall policies through the baseline security profile.`n`n%TestResult%"
+        $testResultMarkdown = "✅ O Cloud Firewall está habilitado e configurado para redes remotas. O tráfego de internet das filiais é protegido por políticas de firewall por meio do perfil de segurança de linha de base.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "Cloud Firewall is not properly configured for remote networks. Remote network internet traffic is not protected by cloud firewall policies.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O Cloud Firewall não está configurado corretamente para redes remotas. O tráfego de internet da rede remota não está protegido por políticas de cloud firewall.`n`n%TestResult%"
     }
 
     # Build remote network table rows
@@ -197,16 +197,16 @@ function Test-Assessment-25416 {
         $encodedNetworkName = [System.Uri]::EscapeDataString($network.name)
         $networkPortalLink = "https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/EditBranchMenuBlade.MenuView/~/basics/branchId/$($network.id)/title/$encodedNetworkName/defaultMenuItemId/Basics"
         $policyLinked = if ($baselineProfileWithCloudFirewall.Count -gt 0) {
-            'Yes'
+            'Sim'
         }
         else {
-            'No'
+            'Não'
         }
         $policyState = if ($enabledPoliciesCount -gt 0) {
-            '✅ Enabled'
+            '✅ Habilitado'
         }
         elseif ($baselineProfileWithCloudFirewall.Count -gt 0) {
-            '❌ Disabled'
+            '❌ Desabilitado'
         }
         else {
             'N/A'
@@ -223,9 +223,9 @@ function Test-Assessment-25416 {
 
     $remoteNetworkTemplate = @"
 
-## Cloud Firewall Configuration for Remote Networks
+## Configuração do Cloud Firewall para Redes Remotas
 
-| Remote Network Name | Baseline Profile Policy Linked | Policy State | Rules Configured |
+| Nome da rede remota | Política do perfil de linha de base vinculada | Estado da política | Regras configuradas |
 | :--- | :--- | :--- | :--- |
 {0}
 "@
@@ -240,10 +240,10 @@ function Test-Assessment-25416 {
             $profilePriority = $policyEntry.ProfilePriority
             $policyName = Get-SafeMarkdown -Text $policyEntry.PolicyName
             $policyState = if ($policyEntry.PolicyLinkState -eq 'enabled') {
-                '✅ Enabled'
+                '✅ Habilitado'
             }
             else {
-                '❌ Disabled'
+                '❌ Desabilitado'
             }
             $enabledRulesCount = $policyEntry.EnabledRulesCount
 
@@ -252,26 +252,26 @@ function Test-Assessment-25416 {
 
         $baselineProfileTemplate = @"
 
-## Baseline Profile Details
+## Detalhes do Perfil de Linha de Base
 
-| Profile Name | Priority | Linked Policy Name | Policy State | Enabled Rules Count |
+| Nome do perfil | Prioridade | Nome da política vinculada | Estado da política | Qtd. de regras habilitadas |
 | :--- | :--- | :--- | :--- | :--- |
 {0}
 "@
         $mdInfo += $baselineProfileTemplate -f $baselineProfileTableRows
     }
     else {
-        $mdInfo += "`n## Baseline Profile Details`n`nNo baseline profile with cloud firewall policies configured.`n"
+        $mdInfo += "`n## Detalhes do Perfil de Linha de Base`n`nNenhum perfil de linha de base com políticas de cloud firewall configurado.`n"
     }
 
-    $mdInfo += "`n**Total Remote Networks:** $remoteNetworkCount`n"
+    $mdInfo += "`n**Total de redes remotas:** $remoteNetworkCount`n"
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25416'
-        Title  = 'Branch office internet traffic is protected by Cloud Firewall policies through Global Secure Access'
+        Title  = 'O tráfego de internet das filiais é protegido por políticas de Firewall de Nuvem pelo Acesso Seguro Global'
         Status = $passed
         Result = $testResultMarkdown
     }

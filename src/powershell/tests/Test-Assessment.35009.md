@@ -1,10 +1,9 @@
-When co-authoring isn't enabled for documents protected by sensitivity labels that apply encryption, only one person can edit the file at a time when they use Office desktop apps. As a result, this can slow down teams, which makes collaboration difficult and can delay project completion. This limitation is especially challenging for groups working on sensitive projects that require encryption for privacy but also need to work together efficiently.
+Quando a co-autoria não está habilitada para documentos protegidos por rótulos de sensibilidade que aplicam criptografia, apenas uma pessoa pode editar o arquivo por vez quando usa aplicativos de desktop do Office. Como resultado, isso pode desacelerar os times, o que torna a colaboração difícil e pode atrasar a conclusão do projeto. Essa limitação é especialmente desafiadora para grupos que trabalham em projetos sensíveis que exigem criptografia por privacidade, mas também precisam trabalhar juntos com eficiência.
 
-Turning on co-authoring for files encrypted with sensitivity labels lets several authorized users edit the file at the same time in Office desktop apps. Unless you can ensure that all users edit these files by using Office for the web, this change removes the slowdown of requiring checkout and allows teams to efficiently collaborate without sacrificing security. The co-authoring setting might also be a requirement for other labeling features.
+Ao ativar a co-autoria para arquivos criptografados com rótulos de sensibilidade, vários usuários autorizados podem editar o arquivo ao mesmo tempo em aplicativos de desktop do Office. A menos que você possa garantir que todos os usuários editam esses arquivos usando o Office na web, essa mudança remove o desaceleração de exigir checkout e permite que os times colaborem com eficiência sem sacrificar a segurança. A configuração de co-autoria também pode ser um requisito para outras funcionalidades de rotulagem.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Enable co-authoring for files encrypted with sensitivity labels](https://learn.microsoft.com/purview/sensitivity-labels-coauthoring?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Habilitar co-autoria para arquivos criptografados com rótulos de sensibilidade](https://learn.microsoft.com/purview/sensitivity-labels-coauthoring?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

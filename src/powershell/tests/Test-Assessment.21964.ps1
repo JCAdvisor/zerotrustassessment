@@ -6,14 +6,14 @@
 function Test-Assessment-21964{
     [ZtTest(
     	Category = 'Controle de acesso',
-    	ImplementationCost = 'Medium',
+    	ImplementationCost = 'Médio',
     	Pillar = 'Identidade',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21964,
     	Title = 'Habilitar ações protegidas para proteger a criação e alterações de políticas de Acesso Condicional',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

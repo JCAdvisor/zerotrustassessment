@@ -1,19 +1,18 @@
-When administrators use Microsoft Entra Private Access to reach domain controllers through Remote Desktop Protocol (RDP), they authenticate through Microsoft Entra ID before the Global Secure Access client tunnels their connection to the on-premises network. Domain controllers hold the cryptographic keys to the entire Active Directory forest. Compromising one domain controller offers a way to compromise every identity and resource in the organization.
+Quando os administradores usam o Microsoft Entra Private Access para alcançar controladores de domínio via Remote Desktop Protocol (RDP), eles autenticam-se através do Microsoft Entra ID antes que o cliente Global Secure Access túnelize a conexão para a rede local. Os controladores de domínio detêm as chaves criptográficas de toda a floresta Active Directory. Comprometer um controlador de domínio oferece uma maneira de comprometer todas as identidades e recursos na organização.
 
-Without phishing-resistant authentication:
+Sem autenticação resistente a phishing:
 
-- Threat actors can intercept credentials during phishing campaigns or adversary-in-the-middle attacks.
-- Stolen session tokens can be replayed to establish RDP connections to domain controllers.
-- Once connected, threat actors can execute DCSync attacks to harvest all password hashes in the domain.
-- Attackers can create golden tickets for indefinite domain persistence.
-- Group Policy Objects can be modified to deploy ransomware or backdoors across all domain-joined machines.
+- Agentes de ameaça podem interceptar credenciais durante campanhas de phishing ou ataques de adversário no meio.
+- Tokens de sessão roubados podem ser reproduzidos para estabelecer conexões RDP com controladores de domínio.
+- Uma vez conectados, agentes de ameaça podem executar ataques DCSync para coletar todos os hashes de senha do domínio.
+- Ataques podem criar golden tickets para persistência indefinida no domínio.
+- Objetos de Política de Grupo podem ser modificados para implantar ransomware ou backdoors em todas as máquinas ingressadas no domínio.
 
-By requiring phishing-resistant authentication, organizations ensure that even if users are successfully phished, threat actors can't replay credentials because these methods require cryptographic proof of possession.
+Ao exigir autenticação resistente a phishing, as organizações garantem que, mesmo que os usuários sejam vítimas de phishing, os agentes de ameaça não possam reproduzir credenciais porque esses métodos exigem comprovação criptográfica de posse.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Deploy phishing-resistant authentication methods to domain controller administrators](https://learn.microsoft.com/entra/identity/authentication/how-to-deploy-phishing-resistant-passwordless-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- [Require phishing-resistant authentication for administrators accessing domain controllers via RDP](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-domain-controllers?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Implemente métodos de autenticação resistente a phishing para administradores de controladores de domínio](https://learn.microsoft.com/entra/identity/authentication/how-to-deploy-phishing-resistant-passwordless-authentication?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- [Exija autenticação resistente a phishing para administradores que acessam controladores de domínio via RDP](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-domain-controllers?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%
-

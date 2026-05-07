@@ -1,14 +1,13 @@
-Azure Firewall Premium provides signature-based intrusion detection and prevention (IDPS) that identifies attacks by detecting specific patterns in network traffic, such as byte sequences and known malicious instruction sequences used by malware. IDPS applies to inbound, east-west (spoke-to-spoke), and outbound traffic across Layers 3-7. When IDPS isn't configured in `Alert and deny` mode, Azure Firewall only logs detected threats without blocking them.
+O Azure Firewall Premium fornece detecção e prevenção de intrusões (IDPS) baseada em assinatura que identifica ataques detectando padrões específicos no tráfego de rede, como sequências de bytes e sequências de instruções maliciosas conhecidas usadas por malware. O IDPS aplica-se ao tráfego de entrada, leste-oeste (falou-para-falou) e de saída nas Camadas 3-7. Quando o IDPS não está configurado no modo `Alerta e negar`, o Azure Firewall apenas registra ameaças detectadas sem bloqueá-las.
 
-Without IDPS enabled in `Alert and deny` mode:
+Sem IDPS ativado no modo `Alerta e negar`:
 
-- Threat actors can send traffic that matches known attack signatures without being blocked.
-- Organizations running IDPS in `Alert only` mode gain visibility into threats but can't prevent intrusion attempts from reaching their workloads.
-- Lateral movement and exfiltration traffic that matches known attack signatures passes through the firewall without active intervention.
+- Atores de ameaça podem enviar tráfego que corresponde a assinaturas de ataque conhecidas sem serem bloqueados.
+- As organizações que executam o IDPS no modo `Apenas alerta` ganham visibilidade nas ameaças, mas não conseguem impedir tentativas de intrusão de alcançar suas cargas de trabalho.
+- O tráfego de movimento lateral e exfiltração que corresponde a assinaturas de ataque conhecidas passa pelo firewall sem intervenção ativa.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Enable IDPS in Alert and Deny mode in Azure Firewall Premium](https://learn.microsoft.com/azure/firewall/premium-features?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) by configuring the intrusion detection mode to `Alert and deny` in the firewall policy.
+- [Ative o IDPS no modo Alerta e Negar no Azure Firewall Premium](https://learn.microsoft.com/azure/firewall/premium-features?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) configurando o modo de detecção de intrusão como `Alerta e negar` na política de firewall.
 <!--- Results --->
 %TestResult%
-

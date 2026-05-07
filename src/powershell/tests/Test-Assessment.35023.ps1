@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Validates that OCR configuration for sensitive information detection is enabled.
+    Valida que a configuração de OCR para detecção de informação sensível está habilitada.
 
 .DESCRIPTION
-    This test verifies whether Optical Character Recognition (OCR) is configured at the
-    tenant level and enabled for at least one supported workload location. OCR enables
-    Microsoft Purview policies to detect sensitive information contained within images.
+    Este teste verifica se o Reconhecimento Ótico de Caracteres (OCR) está configurado no nível do locatário
+    e habilitado para pelo menos um local de carga de trabalho suportado. O OCR permite que as políticas do Microsoft Purview detectem
+    informações sensíveis contidas em imagens.
 
 .NOTES
     Test ID: 35023
@@ -33,10 +33,10 @@ function Test-Assessment-35023 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking OCR configuration'
-    Write-ZtProgress -Activity $activity -Status 'Running Get-OcrConfiguration'
+    $activity = 'Verificando configuração de OCR'
+    Write-ZtProgress -Activity $activity -Status 'Executando Get-OcrConfiguration'
 
     $ocrConfig = $null
     $errorMsg = $null
@@ -47,7 +47,7 @@ function Test-Assessment-35023 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to retrieve OCR configuration: $_" -Tag Test -Level Error
+        Write-PSFMessage "Falha ao recuperar configuração de OCR: $_" -Tag Test -Level Error
     }
     # Q2/Q3: Extract detailed properties if configuration exists
     $enabled = $false
@@ -88,7 +88,7 @@ function Test-Assessment-35023 {
     if ($errorMsg) {
         $passed = $false
         $customStatus = 'Investigate'
-        $testResultMarkdown = "⚠️ Unable to determine OCR configuration status due to permissions issues or query failure. Error: $errorMsg`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status de configuração de OCR devido a problemas de permissões ou falha na consulta. Erro: $errorMsg`n`n%TestResult%"
     }
     else {
         $hasConfig = $null -ne $ocrConfig
@@ -121,37 +121,37 @@ function Test-Assessment-35023 {
     $mdInfo = ''
 
     if (-not $errorMsg) {
-        $reportTitle = 'OCR configuration status'
+        $reportTitle = 'Status de configuração de OCR'
         $portalLink = 'https://purview.microsoft.com/'
-        $portalPathSafe = Get-SafeMarkdown -Text 'Microsoft Purview portal > Settings > Optical character recognition (OCR)'
+        $portalPathSafe = Get-SafeMarkdown -Text 'Portal do Microsoft Purview > Configurações > Reconhecimento Ótico de Caracteres (OCR)'
 
-        $configurationObjectStatus = if ($null -ne $ocrConfig) { 'Yes' } else { 'No' }
+        $configurationObjectStatus = if ($null -ne $ocrConfig) { 'Sim' } else { 'Não' }
 
-        $tableRows = "| Configuration object exists | $configurationObjectStatus |`n"
-        $tableRows += "| OCR enabled (Tenant-level) | $enabled |`n"
-        $tableRows += "| Exchange location enabled | $exchange |`n"
-        $tableRows += "| SharePoint location enabled | $sharePoint |`n"
-        $tableRows += "| OneDrive location enabled | $oneDrive |`n"
-        $tableRows += "| Teams location enabled | $teams |`n"
-        $tableRows += "| Endpoint location enabled | $endpoint |`n"
-        $tableRows += "| OCR usage blocked | $(if ($null -eq $isBlocked) { 'N/A' } else { $isBlocked }) |`n"
-        $tableRows += "| Blockage reason | $(if ($blockReason) { $blockReason } else { 'None' }) |`n"
-        $tableRows += "| Azure billing status | $(if ($billingStatus) { $billingStatus } else { 'N/A' }) |`n"
+        $tableRows = "| Objeto de configuração existe | $configurationObjectStatus |`n"
+        $tableRows += "| OCR habilitado (nível de locatário) | $enabled |`n"
+        $tableRows += "| Local do Exchange habilitado | $exchange |`n"
+        $tableRows += "| Local do SharePoint habilitado | $sharePoint |`n"
+        $tableRows += "| Local do OneDrive habilitado | $oneDrive |`n"
+        $tableRows += "| Local do Teams habilitado | $teams |`n"
+        $tableRows += "| Local do endpoint habilitado | $endpoint |`n"
+        $tableRows += "| Uso de OCR bloqueado | $(if ($null -eq $isBlocked) { 'N/A' } else { $isBlocked }) |`n"
+        $tableRows += "| Motivo do bloqueio | $(if ($blockReason) { $blockReason } else { 'Nenhum' }) |`n"
+        $tableRows += "| Status de cobrança do Azure | $(if ($billingStatus) { $billingStatus } else { 'N/A' }) |`n"
 
-        $ocrConfiguredStatus = if ($ocrConfig) { 'Configured' } else { 'Not Configured' }
+        $ocrConfiguredStatus = if ($ocrConfig) { 'Configurado' } else { 'Não configurado' }
 
         $formatTemplate = @'
 
 ### {0}
 
-| Setting | Value |
+| Configuração | Valor |
 | :------ | :---- |
 {1}
 
-**Summary:**
+**Resumo:**
 
-- OCR configuration: {2}
-- Active locations: {3}
+- Configuração de OCR: {2}
+- Locais ativos: {3}
 
 [{4}]({5})
 

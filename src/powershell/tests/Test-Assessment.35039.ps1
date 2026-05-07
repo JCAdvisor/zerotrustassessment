@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Communication compliance monitoring is configured for Microsoft Copilot
+    O monitoramento de conformidade de comunicação está configurado para o Microsoft Copilot
 
 .DESCRIPTION
-    This test verifies that Communication Compliance rules targeting Copilot interactions are properly
-    configured and enabled. It checks that supervisory review policies with Copilot-targeting rules
-    are active and have configured review mailboxes for processing alerts.
+    Este teste verifica se as regras de Comunicação em Conformidade direcionadas a interações do Copilot estão corretamente
+    configuradas e habilitadas. Ele verifica se as políticas de revisão de supervisão com regras voltadas ao Copilot
+    estão ativas e possuem caixas de correio de revisão configuradas para processar alertas.
 
 .NOTES
     Test ID: 35039
@@ -17,17 +17,17 @@
 
 function Test-Assessment-35039 {
     [ZtTest(
-        Category = 'Data Security Posture Management',
+        Category = 'Gerenciamento de postura de segurança de dados',
         ImplementationCost = 'Medium',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce'),
         TestId = 35039,
-        Title = 'Communication compliance monitoring is configured for Microsoft Copilot',
-        UserImpact = 'Medium'
+        Title = 'Monitoramento de conformidade de comunicação configurado para o Microsoft Copilot',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
@@ -35,8 +35,8 @@ function Test-Assessment-35039 {
     #region Data Collection
     Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Communication Compliance Rules for Copilot Content'
-    Write-ZtProgress -Activity $activity -Status 'Getting supervisory review rules'
+    $activity = 'Verificando regras de Comunicação em Conformidade para conteúdo do Copilot'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo regras de revisão de supervisão'
 
     # Q1: Find Communication Compliance rules targeting Copilot content
     $copilotRules = @()
@@ -54,7 +54,7 @@ function Test-Assessment-35039 {
                     $ruleXml = [xml]$wrappedXml
                     $hasCopilotConfig = $false
 
-                    # Check for Copilot in Workloads array within JSON value elements
+                    # Verificar Copilot no array Workloads dentro dos elementos JSON
                     if ($ruleXml.root) {
                         $valueElements = $ruleXml.root.GetElementsByTagName('value')
                         foreach ($valueElement in $valueElements) {
@@ -63,7 +63,7 @@ function Test-Assessment-35039 {
                                 try {
                                     $jsonText = $rawValue.Trim()
 
-                                    # We only need object/array JSON payloads that can contain Workloads
+                                    # Precisamos apenas de payloads JSON de objeto/array que possam conter Workloads
                                     if ($jsonText -notmatch '^[\{\[]') {
                                         continue
                                     }
@@ -75,14 +75,14 @@ function Test-Assessment-35039 {
                                     }
                                 }
                                 catch {
-                                    # Skip if JSON parsing fails
+                                        # Ignorar se a análise de JSON falhar
                                 }
                             }
                         }
                     }
 
                     if ($hasCopilotConfig) {
-                        # Lookup policy name from $allReviewPolicy using Policy ID
+                        # Localizar o nome da política em $allReviewPolicy usando o ID da política
                         $policyId = $rule.Policy
                         $policyName = ($allReviewPolicy | Where-Object { $_.Guid -eq $policyId }).Name
 
@@ -94,7 +94,7 @@ function Test-Assessment-35039 {
                     }
                 }
                 catch {
-                    Write-PSFMessage "Error parsing RuleXml for rule '$($rule.Name)': $_" -Level Warning
+                    Write-PSFMessage "Erro ao analisar RuleXml para a regra '$($rule.Name)': $_" -Level Warning
                 }
             }
 
@@ -102,13 +102,13 @@ function Test-Assessment-35039 {
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Failed to retrieve supervisory review rules: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar regras de revisão de supervisão: $_" -Tag Test -Level Warning
     }
 
     # Q2: Resolve Copilot-targeting policies and verify enabled status
     $enabledCopilotPolicies = @()
     if ($copilotRules -and -not $errorMsg) {
-        #Write-ZtProgress -Activity $activity -Status 'Verifying policy enabled status'
+        #Write-ZtProgress -Activity $activity -Status 'Verificando o estado de habilitação da política'
 
         try {
             $copilotPolicyIdentities = @($copilotRules | Select-Object -ExpandProperty PolicyId -Unique)
@@ -118,14 +118,14 @@ function Test-Assessment-35039 {
             $enabledCopilotPolicies = @($policies | Where-Object { $_ -and $_.Enabled -eq $true })
         }
         catch {
-            Write-PSFMessage "Failed to retrieve supervisory review policies: $_" -Tag Test -Level Warning
+            Write-PSFMessage "Falha ao recuperar políticas de revisão de supervisão: $_" -Tag Test -Level Warning
         }
     }
 
     # Q3: Verify Copilot capture is active by checking audit logs (optional)
     $policyHits = $null
     if ($enabledCopilotPolicies) {
-        Write-ZtProgress -Activity $activity -Status 'Checking audit logs'
+        Write-ZtProgress -Activity $activity -Status 'Verificando logs de auditoria'
 
         try {
             $startDate = (Get-Date).AddDays(-30)
@@ -138,7 +138,7 @@ function Test-Assessment-35039 {
             }
         }
         catch {
-            Write-PSFMessage "Failed to check audit logs: $_" -Tag Test -Level Warning
+            Write-PSFMessage "Falha ao verificar logs de auditoria: $_" -Tag Test -Level Warning
         }
     }
     #endregion Data Collection
@@ -146,30 +146,30 @@ function Test-Assessment-35039 {
     #region Assessment Logic
     $passed = $false
 
-    # Evaluation Logic:
-    # 1. If Query 1 returns at least 1 rule with Copilot in RuleXml, proceed to Query 2
+    # Lógica de avaliação:
+    # 1. Se a Consulta 1 retornar pelo menos 1 regra com Copilot em RuleXml, prossiga para a Consulta 2
     if ($copilotRules.Count -gt 0) {
-        # 2. If Query 2 returns at least 1 enabled policy with ReviewMailbox configured, then Pass
+        # 2. Se a Consulta 2 retornar pelo menos 1 política habilitada com ReviewMailbox configurado, então aprova
         $hasValidPolicies = @($enabledCopilotPolicies | Where-Object { $_.ReviewMailbox }).Count -gt 0
         $passed = $hasValidPolicies
     }
-    # 3. If Query 1 returns no rules or Query 2 returns no enabled policies, then Fail
+    # 3. Se a Consulta 1 não retornar regras ou a Consulta 2 não retornar políticas habilitadas, então reprova
     else {
         $passed = $false
     }
-    # Query 3 (audit logs) is optional and used only for evidence display
+        # A Consulta 3 (logs de auditoria) é opcional e usada apenas para exibição de evidências
     #endregion Assessment Logic
 
     #region Report Generation
     $mdInfo = ''
 
     if ($passed) {
-        $statusIcon = '✅ Pass'
-        $statusMessage = 'Communication Compliance rules targeting Copilot content are properly configured and enabled.'
+        $statusIcon = '✅ Aprovado'
+        $statusMessage = 'As regras de Comunicação em Conformidade direcionadas ao conteúdo do Copilot estão corretamente configuradas e habilitadas.'
     }
     else {
-        $statusIcon = '❌ Fail'
-        $statusMessage = 'Communication Compliance rules targeting Copilot content are not properly configured or enabled.'
+        $statusIcon = '❌ Reprovado'
+        $statusMessage = 'As regras de Comunicação em Conformidade direcionadas ao conteúdo do Copilot não estão corretamente configuradas ou habilitadas.'
     }
 
     # Copilot-Targeting Rules section
@@ -181,68 +181,68 @@ function Test-Assessment-35039 {
 
         $rulesTemplate = @'
 
-### Copilot-Targeting Rules
+### Regras direcionadas ao Copilot
 
-| Rule Name | Associated Policy |
+| Nome da regra | Política associada |
 | :------ | :---- |
 {0}
 '@
         $mdInfo += $rulesTemplate -f $rulesTableRows
     }
     else {
-        $mdInfo += "`n### Copilot-Targeting Rules`n`nNo Copilot-targeting rules found.`n"
+        $mdInfo += "`n### Regras direcionadas ao Copilot`n`nNenhuma regra direcionada ao Copilot encontrada.`n"
     }
 
     # Enabled Policies section
     if ($enabledCopilotPolicies -and $enabledCopilotPolicies.Count -gt 0) {
         $policiesTableRows = ''
         foreach ($policy in $enabledCopilotPolicies | Sort-Object Name) {
-            $reviewMailbox = if ($policy.ReviewMailbox) { $policy.ReviewMailbox } else { 'Not configured' }
+            $reviewMailbox = if ($policy.ReviewMailbox) { $policy.ReviewMailbox } else { 'Não configurado' }
             $enabledStatus = if ($policy.Enabled -eq $true) { 'True' } else { 'False' }
             $policiesTableRows += "| $($policy.Name) | $enabledStatus | $reviewMailbox |`n"
         }
 
         $policiesTemplate = @'
 
-### Enabled Policies
+### Políticas habilitadas
 
-| Policy Name | Enabled | Review Mailbox |
+| Nome da política | Habilitada | Caixa de correio de revisão |
 | :------ | :---- | :---- |
 {0}
 '@
         $mdInfo += $policiesTemplate -f $policiesTableRows
     }
     else {
-        $mdInfo += "`n### Enabled Policies`n`nNo enabled policies with Copilot rules found.`n"
+        $mdInfo += "`n### Políticas habilitadas`n`nNenhuma política habilitada com regras do Copilot foi encontrada.`n"
     }
 
     # Activity Evidence section
     $evidenceText = if ($policyHits -and $policyHits.Count -gt 0) {
-        "Recent Copilot Matches (30 days): $($policyHits.Count)"
+        "Correspondências recentes do Copilot (30 dias): $($policyHits.Count)"
     }
     elseif ($enabledCopilotPolicies -and $enabledCopilotPolicies.Count -gt 0) {
-        "Recent Copilot Matches (30 days): 0"
+        "Correspondências recentes do Copilot (30 dias): 0"
     }
     else {
-        "Recent Copilot Matches (30 days): No policies configured for audit review."
+        "Correspondências recentes do Copilot (30 dias): Nenhuma política configurada para revisão de auditoria."
     }
 
-    $mdInfo += "`n### Activity Evidence`n`n$evidenceText`n"
+    $mdInfo += "`n### Evidência de atividade`n`n$evidenceText`n"
 
     # Summary
     $summaryTemplate = @'
 
-**Summary:**
+**Resumo:**
 
  Status: {0}
 
- Total Copilot Rules Found: {1}
+ Total de regras do Copilot encontradas: {1}
 
- Enabled Policies with Copilot Rules: {2}
+ Políticas habilitadas com regras do Copilot: {2}
 
-**Portal Access:**
+**Acesso ao portal:**
 
- [Microsoft Purview Communication Compliance > Policies](https://purview.microsoft.com/communicationcompliance/policies)
+ [Microsoft Purview Comunicação em Conformidade > Políticas](https://purview.microsoft.com/communicationcompliance/policies)
 
 '@
 

@@ -1,12 +1,13 @@
-﻿<#
+<#
 .SYNOPSIS
-    Azure Rights Management licensing is enabled
+    O licenciamento do Gerenciamento de Direitos do Azure está habilitado
 
 .DESCRIPTION
-    Azure Rights Management Service (Azure RMS) is the foundational encryption and access control technology underlying Microsoft Information Protection.
-    Without Azure RMS enabled, organizations cannot implement sensitivity labels with encryption, protect emails with Office 365 Message Encryption (OME),
-    enforce information rights management (IRM) policies, or deploy rights protection through mail flow rules.
-    Azure RMS must be explicitly activated at the tenant level before any downstream protection features can function.
+    O serviço de Gerenciamento de Direitos do Azure (Azure RMS) é a tecnologia fundamental de criptografia e controle de acesso
+    subjacente à Proteção de Informações da Microsoft. Sem o Azure RMS habilitado, as organizações não podem
+    implementar rótulos de sensibilidade com criptografia, proteger emails com criptografia de mensagem do Office 365 (OME),
+    aplicar políticas de gerenciamento de direitos de informação (IRM) ou implantar proteção de direitos por meio de regras de fluxo de email.
+    O Azure RMS deve ser explicitamente ativado no nível do locatário antes que recursos de proteção downstream possam funcionar.
 
 .NOTES
     Test ID: 35024
@@ -33,21 +34,21 @@ function Test-Assessment-35024 {
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Azure RMS Licensing Status'
-    Write-ZtProgress -Activity $activity -Status 'Getting IRM Configuration'
+    $activity = 'Verificando status de licenciamento do RMS do Azure'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo configuração de IRM'
 
     $irmConfig = $null
     $errorMsg = $null
 
     try {
-        # Query Q1: Get IRM configuration status
+            # Consulta Q1: Get IRM configuration status
         $irmConfig = Get-IRMConfiguration -ErrorAction Stop | Select-Object -Property AzureRMSLicensingEnabled, SimplifiedClientAccessEnabled, InternalLicensingEnabled, ExternalLicensingEnabled, WhenCreatedUTC
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying IRM Configuration: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar configuração de IRM: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -63,10 +64,10 @@ function Test-Assessment-35024 {
         $passed = $irmConfig.AzureRMSLicensingEnabled -eq $true
 
         if ($passed) {
-            $testResultMarkdown = "✅ Azure RMS is enabled at the tenant level, enabling all downstream encryption and rights management capabilities.`n`n%TestResult%"
+            $testResultMarkdown = "✅ O Azure RMS está habilitado no nível do locatário, habilitando todos os recursos de criptografia e gerenciamento de direitos downstream.`n`n%TestResult%"
         }
         else {
-            $testResultMarkdown = "❌ Azure RMS is not enabled or is disabled for the tenant.`n`n%TestResult%"
+            $testResultMarkdown = "❌ O Azure RMS não está habilitado ou está desabilitado para o locatário.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -75,31 +76,31 @@ function Test-Assessment-35024 {
     $mdInfo = ''
 
     if ($investigateFlag) {
-        $azureRMSEnabledStatus = '⚠️ Unknown'
-        $mdInfo = "**Summary:**`n`n Azure RMS Service: $azureRMSEnabledStatus`n"
+        $azureRMSEnabledStatus = '⚠️ Desconhecido'
+        $mdInfo = "**Resumo:**`n`n Serviço do Azure RMS: $azureRMSEnabledStatus`n"
     }
     else {
-        $reportTitle = 'Azure RMS Status'
+        $reportTitle = 'Status do Azure RMS'
         $whenCreatedDate = if ($null -eq $irmConfig.WhenCreatedUTC) { 'N/A' } else { $irmConfig.WhenCreatedUTC }
 
         if ($passed) {
-            $azureRMSEnabledStatus = '✅ Enabled'
+            $azureRMSEnabledStatus = '✅ Habilitado'
         }
         else {
-            $azureRMSEnabledStatus = '❌ Disabled'
+            $azureRMSEnabledStatus = '❌ Desabilitado'
         }
 
         $formatTemplate = @'
 
 ### {0}
 
-| Setting | Value |
+| Configuração | Valor |
 | :------ | :---- |
 {1}
 
-**Summary:**
+**Resumo:**
 
- Azure RMS Service: {2}
+ Serviço do Azure RMS: {2}
 
 '@
 
@@ -107,7 +108,7 @@ function Test-Assessment-35024 {
         $tableRows += "| SimplifiedClientAccessEnabled | $($irmConfig.SimplifiedClientAccessEnabled) |`n"
         $tableRows += "| InternalLicensingEnabled | $($irmConfig.InternalLicensingEnabled) |`n"
         $tableRows += "| ExternalLicensingEnabled | $($irmConfig.ExternalLicensingEnabled) |`n"
-        $tableRows += "| Configuration Created | $whenCreatedDate |`n"
+        $tableRows += "| Configuração criada | $whenCreatedDate |`n"
 
         $mdInfo = $formatTemplate -f $reportTitle, $tableRows, $azureRMSEnabledStatus
     }

@@ -1,11 +1,10 @@
-Global Secure Access maintains a system bypass list of destinations that are automatically excluded from Transport Layer Security (TLS) inspection. These bypass destinations represent known incompatibilities such as certificate pinning, mutual TLS requirements, or other technical constraints. Custom bypass rules that duplicate destinations in the system bypass list are redundant and serve no functional purpose.
+O Global Secure Access mantém uma lista de bypass do sistema com destinos automaticamente excluídos da inspeção de Transport Layer Security (TLS). Esses destinos representam incompatibilidades conhecidas, como certificate pinning, requisitos de TLS mútuo ou outras restrições técnicas. Regras personalizadas que duplicam destinos da lista de bypass do sistema são redundantes e sem benefício funcional.
 
-Redundant rules consume policy capacity, create administrative overhead, and can cause confusion about which rules are necessary. TLS inspection supports up to 1,000 rules and 8,000 destinations per tenant. Maintaining a clean policy configuration with only necessary custom bypass rules improves manageability, simplifies security audits, and ensures that policy capacity is available for legitimate business requirements.
+Regras redundantes consomem capacidade de política, geram sobrecarga administrativa e causam confusão sobre o que é realmente necessário. A inspeção TLS suporta até 1.000 regras e 8.000 destinos por locatário. Manter uma configuração limpa, com apenas regras de bypass necessárias, melhora a governança e facilita auditorias.
 
-**Remediation action**
+**Ação de remediação**
 
 - Review and remove redundant custom TLS inspection bypass rules in the Microsoft Entra admin center. Navigate to **Global Secure Access** > **Secure** > **TLS inspection policies**.
 - Review [the destinations included in the system bypass list](https://learn.microsoft.com/entra/global-secure-access/faq-transport-layer-security?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#what-destinations-are-included-in-the-system-bypass).
 <!--- Results --->
 %TestResult%
-

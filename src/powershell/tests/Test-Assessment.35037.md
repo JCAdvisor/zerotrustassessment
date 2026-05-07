@@ -1,10 +1,9 @@
-Purview audit logging logs who accessed sensitive data, when policy violations occurred, and what administrative actions were taken across Microsoft 365. When audit logs are available, security teams can investigate incidents, perform eDiscovery, detect insider threats, and demonstrate controls to auditors and regulators.
+O registro de auditoria do Purview registra quem acessou dados sensíveis, quando ocorreram violações de política e quais ações administrativas foram tomadas no Microsoft 365. Quando os logs de auditoria estão disponíveis, as equipes de segurança podem investigar incidentes, realizar eDiscovery, detectar ameaças internas e demonstrar controles para auditores e reguladores.
 
-Without audit logging enabled, threat actors can often operate undetected, and incident response becomes impossible due to lack of evidence. Organizations that fail to enable audit logging also risk noncompliance with regulatory requirements that mandate activity logging for sensitive operations.
+Sem o registro de auditoria habilitado, agentes mal-intencionados frequentemente podem operar sem serem detectados, e a resposta a incidentes se torna impossível devido à falta de evidências. Organizações que deixam de habilitar o registro de auditoria também correm risco de não conformidade com requisitos regulatórios que exigem registro de atividades para operações sensíveis.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Turn auditing on or off](https://learn.microsoft.com/purview/audit-log-enable-disable?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Ativar ou desativar a auditoria](https://learn.microsoft.com/purview/audit-log-enable-disable?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

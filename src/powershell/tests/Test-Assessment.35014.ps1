@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Email label policies inherit sensitivity from attachments
+    As políticas de rótulo de email herdam sensibilidade de anexos
 
 .DESCRIPTION
-    This test checks if sensitivity label policies have the attachmentaction setting enabled
-    to automatically inherit labels from file attachments to email messages, and verifies
-    that labels are properly scoped to both files and emails to participate in inheritance.
+    Este teste verifica se as políticas de rótulo de sensibilidade têm a configuração de ação de anexo habilitada
+    para herdar automaticamente rótulos de anexos de arquivo para mensagens de email e verifica
+    que os rótulos estão devidamente escopo tanto para arquivos quanto para emails para participar da herança.
 
 .NOTES
     Test ID: 35014
@@ -16,26 +16,26 @@
 
 function Test-Assessment-35014 {
     [ZtTest(
-        Category = 'Label Policy Configuration',
-        ImplementationCost = 'Low',
+        Category = 'Configuração de política de rótulos',
+        ImplementationCost = 'Baixo',
         Service = ('SecurityCompliance'),
         MinimumLicense = ('Microsoft 365 E3'),
-        Pillar = 'Data',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = ('Workforce'),
         TestId = 35014,
-        Title = 'Email label policies inherit sensitivity from attachments',
-        UserImpact = 'High'
+        Title = 'As políticas de rótulo de email herdam sensibilidade de anexos',
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking email label inheritance configuration'
-    Write-ZtProgress -Activity $activity -Status 'Getting enabled label policies'
+    $activity = 'Verificando configuração de herança de rótulo de email'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de rótulo habilitadas'
 
     $errorMsg = $null
     $enabledPolicies = @()
@@ -46,12 +46,12 @@ function Test-Assessment-35014 {
         $enabledPolicies = Get-LabelPolicy -WarningAction SilentlyContinue -ErrorAction Stop | Where-Object { $_.Enabled -eq $true }
 
         # Q2: Retrieve all labels to check for Files & Emails scope
-        Write-ZtProgress -Activity $activity -Status 'Getting sensitivity labels'
+        Write-ZtProgress -Activity $activity -Status 'Obtendo rótulos de sensibilidade'
         $allLabels = Get-Label -ErrorAction Stop
     }
     catch {
         $errorMsg = $_
-        Write-PSFMessage "Error querying label policies or labels: $_" -Level Error
+        Write-PSFMessage "Erro ao consultar políticas de rótulo ou rótulos: $_" -Level Error
     }
     #endregion Data Collection
 
@@ -63,7 +63,7 @@ function Test-Assessment-35014 {
     $customStatus = $null
 
     if ($errorMsg) {
-        $testResultMarkdown = "⚠️ Unable to query label policies or sensitivity labels, so the ``attachmentaction`` setting could not be evaluated. Check label policy settings in the Purview portal to confirm inheritance is explicitly enabled, and verify PowerShell access to label policies and labels. Captured error: $($errorMsg)`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível consultar políticas de rótulo ou rótulos de sensibilidade, portanto a configuração ``attachmentaction`` não pôde ser avaliada. Verifique as configurações de política de rótulo no portal do Purview para confirmar que a herança está explicitamente habilitada e verifique o acesso do PowerShell às políticas de rótulo e rótulos. Erro capturado: $($errorMsg)`n`n%TestResult%"
         $customStatus = 'Investigate'
     }
     else {
@@ -110,8 +110,8 @@ function Test-Assessment-35014 {
             }
         }
         catch {
-            Write-PSFMessage "Error parsing label policy settings: $_" -Level Error
-            $testResultMarkdown = "⚠️ Unable to determine email label inheritance status due to unexpected policy settings structure: $_`n`n%TestResult%"
+            Write-PSFMessage "Erro ao analisar configurações de política de rótulo: $_" -Level Error
+            $testResultMarkdown = "⚠️ Não foi possível determinar o status de herança de rótulo de email devido à estrutura inesperada das configurações de política: $_`n`n%TestResult%"
             $customStatus = 'Investigate'
         }
 
@@ -119,11 +119,11 @@ function Test-Assessment-35014 {
         if ($null -eq $customStatus){
             if ($policiesWithInheritance.Count -gt 0 -and $dualScopedLabels.Count -gt 0) {
                 $passed = $true
-                $testResultMarkdown = "✅ Email label inheritance from attachments is configured. At least one label policy has the ``attachmentaction`` setting enabled, and labels with Files & Emails scope are available to inherit from attachments to email messages.`n`n%TestResult%"
+                $testResultMarkdown = "✅ A herança de rótulo de email de anexos está configurada. Pelo menos uma política de rótulo tem a configuração ``attachmentaction`` habilitada e os rótulos com escopo de Arquivos e Emails estão disponíveis para herdar de anexos para mensagens de email.`n`n%TestResult%"
             }
             else {
                 $passed = $false
-                $testResultMarkdown = "❌ Email label inheritance is not configured. No label policies have the ``attachmentaction`` setting enabled, or no labels are scoped to both files and emails to participate in inheritance.`n`n%TestResult%"
+                $testResultMarkdown = "❌ A herança de rótulo de email não está configurada. Nenhuma política de rótulo tem a configuração ``attachmentaction`` habilitada ou nenhum rótulo está escopo tanto para arquivos quanto para emails para participar da herança.`n`n%TestResult%"
             }
         }
     }
@@ -162,16 +162,16 @@ function Test-Assessment-35014 {
         }
     }
 
-    $inheritanceSetting = if($passed) {'True'} elseif ($customStatus -eq 'Investigate') {'Unknown'} else {'False'}
+    $inheritanceSetting = if($passed) {'Sim'} elseif ($customStatus -eq 'Investigate') {'Desconhecido'} else {'Não'}
 
     # Build report using format template
     $formatTemplate = @'
 {0}{1}
-**Summary:**
+**Resumo:**
 
-- Policies with attachmentaction enabled: {2}
-- Labels with Files & Emails scope: {3}
-- Inheritance setting found: {4}
+- Políticas com attachmentaction habilitado: {2}
+- Rótulos com escopo de Arquivos e Emails: {3}
+- Configuração de herança encontrada: {4}
 {5}
 '@
 
@@ -180,9 +180,9 @@ function Test-Assessment-35014 {
     if ($policiesWithInheritance.Count -gt 0) {
         $policiesSection = @"
 
-### [Policies with attachmentaction setting]($labelPoliciesLink)
+### [Políticas com configuração attachmentaction]($labelPoliciesLink)
 
-| Policy name | Inherit label from attachments |
+| Nome da política | Herdar rótulo de anexos |
 | :---------- | :----------------------------- |
 $policyTableRows
 "@
@@ -193,9 +193,9 @@ $policyTableRows
     if ($dualScopedLabels.Count -gt 0) {
         $labelsSection = @"
 
-### [Dual-scoped labels (ready for inheritance)]($labelsLink)
+### [Rótulos com duplo escopo (prontos para herança)]($labelsLink)
 
-| Label name | Content type | Priority |
+| Nome do rótulo | Tipo de conteúdo | Prioridade |
 | :--------- | :----------- | :------- |
 $labelTableRows
 "@
@@ -206,15 +206,15 @@ $labelTableRows
     if ($xmlParseErrors.Count -gt 0) {
         $errorSection = @"
 
-### ⚠️ XML Parsing Errors
+### ⚠️ Erros de análise de XML
 
-The following policies could not be parsed and were excluded from analysis:
+As políticas a seguir não puderam ser analisadas e foram excluídas da análise:
 
-| Policy Name | Error |
+| Nome da política | Erro |
 | :---------- | :---- |
 $errorTableRows
 
-**Note**: These policies were treated as having no ``attachmentaction`` configured.
+**Nota**: Essas políticas foram tratadas como não tendo ``attachmentaction`` configurado.
 "@
     }
 
@@ -225,7 +225,7 @@ $errorTableRows
 
     $params = @{
         TestId = '35014'
-        Title  = 'Email label inheritance from attachments configured'
+        Title  = 'Herança de rótulo de email de anexos configurada'
         Status = $passed
         Result = $testResultMarkdown
     }

@@ -1,17 +1,16 @@
-Azure Firewall provides centralized inspection, logging, and enforcement for outbound network traffic. When you don't route outbound traffic from virtual network (VNet) integrated workloads through Azure Firewall, traffic can leave your environment without inspection or policy enforcement. VNet integrated workloads include virtual machines, AKS node pools, App Service with VNet integration, and Azure Functions in VNet.
+O Azure Firewall fornece inspeção centralizada, registro em log e imposição para tráfego de rede de saída. Quando você não roteia o tráfego de saída de cargas de trabalho integradas de rede virtual (VNet) através do Azure Firewall, o tráfego pode sair do seu ambiente sem inspeção ou imposição de política. As cargas de trabalho integradas de VNet incluem máquinas virtuais, pools de nós do AKS, App Service com integração de VNet e Azure Functions em VNet.
 
-Without routing outbound traffic through Azure Firewall:
+Sem rotear tráfego de saída através do Azure Firewall:
 
-- Threat actors can use uninspected outbound paths for data exfiltration and command-and-control communication.
-- Organizations lose consistent enforcement of egress security controls such as threat intelligence filtering, intrusion detection and prevention, and TLS inspection.
-- Security teams lack visibility into outbound traffic patterns, which makes it difficult to detect and investigate suspicious network activity.
+- Atores de ameaça podem usar caminhos de saída não inspecionados para exfiltração de dados e comunicação de comando e controle.
+- As organizações perdem imposição consistente de controles de segurança de saída, como filtragem de inteligência de ameaças, detecção e prevenção de intrusões e inspeção TLS.
+- As equipes de segurança carecem de visibilidade nos padrões de tráfego de saída, o que dificulta a detecção e investigação de atividades de rede suspeitas.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure Azure Firewall routing](https://learn.microsoft.com/azure/firewall/tutorial-firewall-deploy-portal?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-routing) to direct outbound traffic from workload subnets through the firewall's private IP address.
-- [Manage route tables and routes](https://learn.microsoft.com/azure/virtual-network/manage-route-table?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to create user-defined routes for the default route (0.0.0.0/0) pointing to the Azure Firewall private IP.
-- [Control App Service outbound traffic with Azure Firewall](https://learn.microsoft.com/azure/app-service/network-secure-outbound-traffic-azure-firewall?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) for App Service VNet integration scenarios.
-- [Configure Azure Firewall rules](https://learn.microsoft.com/azure/firewall/rule-processing?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to allow required outbound traffic while blocking malicious destinations.
+- [Configure o roteamento do Azure Firewall](https://learn.microsoft.com/azure/firewall/tutorial-firewall-deploy-portal?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci#configure-routing) para direcionar o tráfego de saída de sub-redes de carga de trabalho através do endereço IP privado do firewall.
+- [Gerenciar tabelas de rota e rotas](https://learn.microsoft.com/azure/virtual-network/manage-route-table?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para criar rotas definidas pelo usuário para a rota padrão (0.0.0.0/0) apontando para o IP privado do Azure Firewall.
+- [Controlar o tráfego de saída do App Service com o Azure Firewall](https://learn.microsoft.com/azure/app-service/network-secure-outbound-traffic-azure-firewall?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para cenários de integração de VNet do App Service.
+- [Configure as regras do Azure Firewall](https://learn.microsoft.com/azure/firewall/rule-processing?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para permitir o tráfego de saída necessário e bloquear destinos maliciosos.
 <!--- Results --->
 %TestResult%
-

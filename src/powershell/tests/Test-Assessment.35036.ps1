@@ -1,12 +1,12 @@
-﻿<#
+<#
 .SYNOPSIS
-    Trainable classifiers are used in data loss prevention and auto-labeling policies
+    Classificadores treináveis são usados em políticas de prevenção de perda de dados e identificação automática de rótulos
 
 .DESCRIPTION
-    This test checks if trainable classifiers are being used in policies by:
-    1. Retrieving all auto-sensitivity label rules and searching for trainable classifiers in AdvancedRule
-    2. Retrieving all DLP compliance rules and searching for trainable classifiers in AdvancedRule
-    3. Parsing AdvancedRule JSON to extract classifier details (identified by Classifiertype=MLModel)
+    Este teste verifica se os classificadores treináveis estão sendo usados em políticas por:
+    1. Recuperando todas as regras de etiqueta de sensibilidade automática e procurando por classificadores treináveis em AdvancedRule
+    2. Recuperando todas as regras de conformidade de DLP e procurando por classificadores treináveis em AdvancedRule
+    3. Analisando AdvancedRule JSON para extrair detalhes do classificador (identificado por Classifiertype=MLModel)
 
 .NOTES
     Test ID: 35036
@@ -17,34 +17,34 @@
 
 function Test-Assessment-35036 {
     [ZtTest(
-    	Category = 'Advanced Classification',
+        	Category = 'Classificação Avançada',
     	ImplementationCost = 'High',
     	CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
     	Service = ('SecurityCompliance'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and production systems',
+        	Pillar = 'Dados',
+        	RiskLevel = 'Médio',
+        	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 35036,
-    	Title = 'Trainable classifiers are used in data loss prevention and auto-labeling policies',
-    	UserImpact = 'Medium'
+        	Title = 'Classificadores treináveis são usados em políticas de prevenção de perda de dados e identificação automática de rótulos',
+        	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking trainable classifier usage in policies'
-    Write-ZtProgress -Activity $activity -Status 'Querying auto-labeling and DLP rules'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando uso de classificador treinável em políticas'
+    Write-ZtProgress -Activity $activity -Status 'Consultando regras de aplicação automática de rótulos e DLP'
 
     $autoLabelCmdletFailed = $false
     $dlpCmdletFailed = $false
     $autoLabelRulesWithClassifiers = @()
     $dlpRulesWithClassifiers = @()
 
-    # Query 1 & 2: Get auto-sensitivity label rules with trainable classifiers
+        # Consulta 1 & 2: Get auto-sensitivity label rules with trainable classifiers
     try {
-        Write-ZtProgress -Activity $activity -Status 'Checking auto-labeling rules'
+        Write-ZtProgress -Activity $activity -Status 'Verificando regras de etiqueta automática'
         $allAutoLabelRules = Get-AutoSensitivityLabelRule -ErrorAction Stop
 
         # Filter rules that contain trainable classifiers (MLModel in AdvancedRule)
@@ -87,7 +87,7 @@ function Test-Assessment-35036 {
                 }
             }
             catch {
-                Write-PSFMessage "Failed to parse AdvancedRule for auto-labeling rule '$($rule.Name)': $_" -Tag Test -Level Warning
+                Write-PSFMessage "Falha ao analisar AdvancedRule para regra de etiqueta automática '$($rule.Name)': $_" -Tag Test -Level Warning
 
                 # Fallback: this rule matched 'MLModel' via string search, so record it even if JSON parsing failed
                 $autoLabelRulesWithClassifiers += [PSCustomObject]@{
@@ -101,12 +101,12 @@ function Test-Assessment-35036 {
     }
     catch {
         $autoLabelCmdletFailed = $true
-        Write-PSFMessage "Failed to retrieve auto-sensitivity label rules: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar regras de etiqueta de sensibilidade automática: $_" -Tag Test -Level Warning
     }
 
-    # Query 3 & 4: Get DLP compliance rules with trainable classifiers
+        # Consulta 3 & 4: Get DLP compliance rules with trainable classifiers
     try {
-        Write-ZtProgress -Activity $activity -Status 'Checking DLP rules'
+        Write-ZtProgress -Activity $activity -Status 'Verificando regras de DLP'
         $allDlpRules = Get-DlpComplianceRule -ErrorAction Stop
 
         # Filter rules that contain trainable classifiers (MLModel in AdvancedRule)
@@ -149,7 +149,7 @@ function Test-Assessment-35036 {
                 }
             }
             catch {
-                Write-PSFMessage "Failed to parse AdvancedRule for DLP rule '$($rule.Name)': $_" -Tag Test -Level Warning
+                Write-PSFMessage "Falha ao analisar AdvancedRule para regra de DLP '$($rule.Name)': $_" -Tag Test -Level Warning
 
                 # Fallback: this rule matched 'MLModel' via string search, so record it even if JSON parsing failed
                 $dlpRulesWithClassifiers += [PSCustomObject]@{
@@ -163,7 +163,7 @@ function Test-Assessment-35036 {
     }
     catch {
         $dlpCmdletFailed = $true
-        Write-PSFMessage "Failed to retrieve DLP compliance rules: $_" -Tag Test -Level Warning
+        Write-PSFMessage "Falha ao recuperar regras de conformidade de DLP: $_" -Tag Test -Level Warning
     }
     #endregion Data Collection
 
@@ -176,24 +176,24 @@ function Test-Assessment-35036 {
 
     # Check if both cmdlets failed
     if ($autoLabelCmdletFailed -and $dlpCmdletFailed) {
-        $testResultMarkdown = "⚠️ Unable to determine trainable classifier usage due to permissions issues or service connection failure.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o uso de classificador treinável devido a problemas de permissão ou falha de conexão com o serviço.`n`n%TestResult%"
         $passed = $false
         $customStatus = 'Investigate'
     }
     # Check if one cmdlet failed but we have some results
     elseif ($autoLabelCmdletFailed -or $dlpCmdletFailed) {
-        $failedQuery = if ($autoLabelCmdletFailed) { 'auto-labeling rules' } else { 'DLP rules' }
-        $testResultMarkdown = "⚠️ Unable to retrieve $failedQuery due to query failure, connection issues, or insufficient permissions.`n`n%TestResult%"
+        $failedQuery = if ($autoLabelCmdletFailed) { 'regras de etiqueta automática' } else { 'regras de DLP' }
+        $testResultMarkdown = "⚠️ Não foi possível recuperar $failedQuery devido a falha na consulta, problemas de conexão ou permissões insuficientes.`n`n%TestResult%"
         $passed = if ($totalRulesWithClassifiers -gt 0) { $true } else { $false }
         $customStatus = 'Investigate'
     }
     # Check if any rules use trainable classifiers
     elseif ($totalRulesWithClassifiers -eq 0) {
-        $testResultMarkdown = "❌ No trainable classifiers are being used in auto-labeling or DLP policies; relying solely on pattern-based classification.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhum classificador treinável está sendo usado em políticas de etiqueta automática ou DLP; confiando apenas em classificação baseada em padrão.`n`n%TestResult%"
         $passed = $false
     }
     else {
-        $testResultMarkdown = "✅ Trainable classifiers are integrated into auto-labeling and/or DLP policies, enabling AI-powered content classification for complex business documents.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Os classificadores treináveis estão integrados nas políticas de etiqueta automática e/ou DLP, permitindo classificação de conteúdo com inteligência artificial para documentos comerciais complexos.`n`n%TestResult%"
         $passed = $true
     }
     #endregion Assessment Logic
@@ -208,13 +208,13 @@ function Test-Assessment-35036 {
 
 {2}
 
-**Summary:**
-* Total Auto-Labeling Rules Using Classifiers: {3}
-* Total DLP Rules Using Classifiers: {4}
+    **Resumo:**
+    * Total de Regras de Etiqueta Automática que Usam Classificadores: {3}
+    * Total de Regras de DLP que Usam Classificadores: {4}
 
 '@
 
-        $reportTitle = 'Trainable Classifier Usage in Policies'
+        $reportTitle = 'Uso de Classificadores Treináveis em Políticas'
         $portalLink = 'https://purview.microsoft.com/informationprotection/dataclassification/trainableclassifiers'
 
         # Build details section
@@ -222,8 +222,8 @@ function Test-Assessment-35036 {
 
         # Auto-Labeling Rules
         if ($autoLabelRulesWithClassifiers.Count -gt 0) {
-            $details += "**Trainable Classifiers in Auto-Labeling Rules:**`n`n"
-            $details += "| Rule name | Parent policy | Created date | Classifiers in rule |`n"
+            $details += "**Classificadores Treináveis em Regras de Etiqueta Automática:**`n`n"
+            $details += "| Nome da regra | Política principal | Data de criação | Classificadores na regra |`n"
             $details += "| :-------- | :------------ | :----------- | :------------------ |`n"
 
             foreach ($rule in $autoLabelRulesWithClassifiers) {
@@ -251,8 +251,8 @@ function Test-Assessment-35036 {
 
         # DLP Rules
         if ($dlpRulesWithClassifiers.Count -gt 0) {
-            $details += "**Trainable Classifiers in DLP Rules:**`n`n"
-            $details += "| Rule name | Parent policy | Created date | Classifiers in rule |`n"
+            $details += "**Classificadores Treináveis em Regras de DLP:**`n`n"
+            $details += "| Nome da regra | Política principal | Data de criação | Classificadores na regra |`n"
             $details += "| :-------- | :------------ | :----------- | :------------------ |`n"
 
             foreach ($rule in $dlpRulesWithClassifiers) {
@@ -283,13 +283,13 @@ function Test-Assessment-35036 {
             $dlpRulesWithClassifiers.Count
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '35036'
-        Title  = 'Trainable Classifiers Usage in Policies'
+        Title  = 'Uso de Classificadores Treináveis em Políticas'
         Status = $passed
         Result = $testResultMarkdown
     }

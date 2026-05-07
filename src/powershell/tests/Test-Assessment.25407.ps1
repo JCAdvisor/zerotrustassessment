@@ -5,23 +5,23 @@
 
 function Test-Assessment-25407 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25407,
-    	Title = 'Web content filtering integrates with Conditional Access',
-    	UserImpact = 'Low'
+    	Title = 'A filtragem de conteúdo web integra-se ao Conditional Access',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start GSA Conditional Access evaluation (security profiles via CA)' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Iniciar avaliação de Conditional Access do GSA (perfis de segurança via CA)' -Tag Test -Level VeryVerbose
 
     # Q1: Retrieve all Conditional Access policies
     $policies = Get-ZtConditionalAccessPolicy
@@ -61,13 +61,13 @@ function Test-Assessment-25407 {
     $testResultMarkdown = ''
     # Generate markdown table for policies with Global Secure Access filtering profiles
     if ($passed) {
-        $testResultMarkdown = "✅ Internet Access policy is being applied via Conditional Access.`n`n%TestResult%"
+        $testResultMarkdown = "✅ A política de acesso à Internet está sendo aplicada por meio do Conditional Access.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ Internet Access policy is not being applied via Conditional Access.`n`n%TestResult%"
+        $testResultMarkdown = "❌ A política de acesso à Internet não está sendo aplicada por meio do Conditional Access.`n`n%TestResult%"
         if ($gsaPolicyDetails) {
-            $mdInfo = "`n## Conditional Access Policies with Global Secure Access Security Profiles`n`n"
-            $mdInfo += "| CA Policy Name | CA Policy State | Security Profile ID | CA Linkage Enabled | Security Profile Name | Security Profile State |`n"
+            $mdInfo = "`n## Políticas de Conditional Access com perfis de segurança do Global Secure Access`n`n"
+            $mdInfo += "| Nome da política de CA | Estado da política de CA | ID do perfil de segurança | Vinculação de CA habilitada | Nome do perfil de segurança | Estado do perfil de segurança |`n"
             $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- |`n"
             foreach ($item in $caPolicyWithGsaProfilesDisabled) {
                 $policyPortalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/PolicyBlade/policyId/$($item.PolicyId)"
@@ -99,3 +99,9 @@ function Test-Assessment-25407 {
 
     Add-ZtTestResultDetail @params
 }
+
+
+
+
+
+

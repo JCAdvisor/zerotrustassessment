@@ -1,10 +1,9 @@
-When you configure SharePoint with a default label for document libraries, any new files uploaded to that library, or existing files edited in the library will have that label applied if they don't already have a sensitivity label, or they have a sensitivity label but with lower priority. This location-based labeling offers a baseline level of protection and a form of automatic labeling without content inspection. When files aren't labeled, important files can bypass protection and remain vulnerable.
+Quando você configura o SharePoint com um rótulo padrão para bibliotecas de documentos, qualquer novo arquivo carregado na biblioteca, ou arquivos existentes editados na biblioteca terão esse rótulo aplicado se ainda não tiverem um rótulo de sensibilidade, ou tiverem um rótulo de sensibilidade mas com prioridade mais baixa. Essa rotulagem baseada em local oferece um nível de proteção de linha de base e uma forma de rotulagem automática sem inspeção de conteúdo. Quando os arquivos não são rotulados, arquivos importantes podem contornar a proteção e permanecer vulneráveis.
 
-This configuration is most suitable for document libraries that contain files with the same level of sensitivity. It can be supplemented with auto-labeling policies that uses content inspection, and manual labeling with a higher priority sensitivity label if needed.
+Essa configuração é mais adequada para bibliotecas de documentos que contém arquivos com o mesmo nível de sensibilidade. Ela pode ser complementada com políticas de aplicação automática de rótulos que usam inspeção de conteúdo, e rotulagem manual com um rótulo de sensibilidade de prioridade mais alta, se necessário.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Configure a default sensitivity label for a SharePoint document library](https://learn.microsoft.com/purview/sensitivity-labels-sharepoint-default-label?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
+- [Configurar um rótulo de sensibilidade padrão para uma biblioteca de documentos do SharePoint](https://learn.microsoft.com/purview/sensitivity-labels-sharepoint-default-label?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci)
 <!--- Results --->
 %TestResult%
-

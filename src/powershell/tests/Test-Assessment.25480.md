@@ -1,13 +1,12 @@
-When Quick Access lacks user or group assignments, the service prevents connections to fully qualified domain names (FQDNs) and IP addresses that you configure in the application segments. This restriction disrupts access to internal resources like file shares, web applications, and databases. When users can't reach resources through the Global Secure Access client, they might seek alternative access methods that bypass security controls such as Conditional Access policies and multifactor authentication.
+Quando o Quick Access não tem atribuições de usuário ou grupo, o serviço impede conexões aos nomes de domínio totalmente qualificados (FQDNs) e endereços IP que você configura nos segmentos de aplicação. Essa restrição interrompe o acesso aos recursos internos, como compartilhamentos de arquivos, aplicações da web e bancos de dados. Quando os usuários não conseguem alcançar recursos através do cliente Global Secure Access, eles podem procurar métodos de acesso alternativos que contornam controles de segurança, como políticas do Conditional Access e autenticação multifator.
 
-If you don't assign users to Quick Access:
+Se você não atribuir usuários ao Quick Access:
 
-- Authorized users can't reach internal resources through Private Access, creating gaps in business continuity.
-- Administrators might implement temporary workarounds that weaken the organization's security posture.
+- Os usuários autorizados não conseguem alcançar recursos internos através do Private Access, criando lacunas na continuidade de negócios.
+- Os administradores podem implementar soluções temporárias que enfraquecem a postura de segurança da organização.
 
-**Remediation action**
+**Ação de remediação**
 
-- [Assign users and groups to Quick Access](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-quick-access?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to enable Private Access connectivity to configured application segments.
+- [Atribua usuários e grupos ao Quick Access](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-quick-access?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para ativar a conectividade do Private Access aos segmentos de aplicação configurados.
 <!--- Results --->
 %TestResult%
-

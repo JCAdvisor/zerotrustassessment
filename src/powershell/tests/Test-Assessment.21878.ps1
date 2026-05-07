@@ -5,16 +5,16 @@
 
 function Test-Assessment-21878 {
     [ZtTest(
-    	Category = 'Identity governance',
-    	ImplementationCost = 'Medium',
+    	Category = 'Governança de identidade',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('P2','Governance'),
-    	Pillar = 'Identity',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and isolate production systems',
+    	Pillar = 'Identidade',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21878,
     	Title = 'Todas as políticas de gerenciamento de direitos possuem uma data de expiração',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

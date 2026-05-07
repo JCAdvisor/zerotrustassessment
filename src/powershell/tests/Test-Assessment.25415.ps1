@@ -1,25 +1,25 @@
 <#
 .SYNOPSIS
-    Enterprise generative AI applications are protected from prompt injection attacks through AI Gateway.
+    Aplicações de IA generativa corporativa são protegidas contra ataques de injeção de prompt por meio do AI Gateway.
 .DESCRIPTION
-    Verifies that Prompt Shield (AI Gateway) is properly configured to protect against prompt injection attacks.
-    The test passes if prompt policies exist and are enforced either through the Baseline Profile or through
-    Security Profiles assigned to Conditional Access policies.
+    Verifica se o Prompt Shield (AI Gateway) está configurado corretamente para proteger contra ataques de injeção de prompt.
+    O teste passa se políticas de prompt existem e são impostas através do Perfil de Linha de Base ou através de
+    Perfis de Segurança atribuídos a políticas do Conditional Access.
 #>
 
 function Test-Assessment-25415 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'High',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Alto',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce'),
     	TestId = 25415,
-    	Title = 'AI Gateway protects enterprise generative AI applications from prompt injection attacks',
-    	UserImpact = 'Low'
+    	Title = 'O AI Gateway protege aplicativos de IA generativa empresariais contra ataques de injeção de prompt',
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
@@ -28,10 +28,10 @@ function Test-Assessment-25415 {
     [int]$BASELINE_PROFILE_PRIORITY = 65000
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start Prompt Shield evaluation' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Avaliação inicial do Prompt Shield' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Prompt Shield configuration for AI Gateway protection'
-    Write-ZtProgress -Activity $activity -Status 'Querying prompt policies'
+    $activity = 'Verificando configuração do Prompt Shield para proteção do AI Gateway'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de prompt'
 
     # Q1: Get prompt policies
     $promptPolicies = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/promptPolicies' -QueryParameters @{
@@ -39,13 +39,13 @@ function Test-Assessment-25415 {
     } -ApiVersion beta
 
     # Q2: Get filtering profiles with linked policies and Conditional Access policies
-    Write-ZtProgress -Activity $activity -Status 'Querying security profiles and linked policies'
+    Write-ZtProgress -Activity $activity -Status 'Consultando perfis de segurança e políticas vinculadas'
     $filteringProfiles = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/filteringProfiles' -QueryParameters @{
         '$expand' = 'policies($expand=policy),conditionalAccessPolicies'
     } -ApiVersion beta
 
     # Get all Conditional Access policies
-    Write-ZtProgress -Activity $activity -Status 'Querying Conditional Access policies'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas do Conditional Access'
     $allCAPolicies = Get-ZtConditionalAccessPolicy
 
     #endregion Data Collection
@@ -118,22 +118,22 @@ function Test-Assessment-25415 {
     # Evaluation logic per spec
     if ($null -eq $promptPolicies -or $promptPolicies.Count -eq 0) {
         # No prompt policies configured
-        $testResultMarkdown = "❌ Prompt Shield is not properly configured - no prompt policies exist.`n`n%TestResult%"
+        $testResultMarkdown = "❌ O Prompt Shield não está configurado adequadamente - nenhuma política de prompt existe.`n`n%TestResult%"
         $passed = $false
     }
     elseif ($enabledBaselineProfiles.Count -gt 0) {
         # Condition B: Baseline Profile has prompt policies (applies to all traffic)
-        $testResultMarkdown = "✅ Prompt Shield policies are configured and enforced through the Baseline Profile which applies to all internet traffic.`n`n%TestResult%"
+        $testResultMarkdown = "✅ As políticas do Prompt Shield estão configuradas e aplicadas por meio do Perfil de Linha de Base, que se aplica a todo o tráfego de internet.`n`n%TestResult%"
         $passed = $true
     }
     elseif ($enabledSecurityProfiles.Count -gt 0) {
         # Condition A: Security profiles with prompt policies AND CA policy assignment
-        $testResultMarkdown = "✅ Prompt Shield policies are configured and enforced through security profiles assigned to Conditional Access policies.`n`n%TestResult%"
+        $testResultMarkdown = "✅ As políticas do Prompt Shield estão configuradas e aplicadas por meio de perfis de segurança atribuídos a políticas do Conditional Access.`n`n%TestResult%"
         $passed = $true
     }
     else {
         # Prompt policies exist but are not enforced
-        $testResultMarkdown = "❌ Prompt Shield is not properly configured - policies are not linked to security profiles, or security profiles with prompt policies are not enforced (no CA policy assignment and not using Baseline Profile).`n`n%TestResult%"
+        $testResultMarkdown = "❌ O Prompt Shield não está configurado adequadamente - as políticas não estão vinculadas a perfis de segurança, ou os perfis de segurança com políticas de prompt não são impostos (nenhuma atribuição de política de CA e não usando Perfil de Linha de Base).`n`n%TestResult%"
         $passed = $false
     }
 
@@ -145,7 +145,7 @@ function Test-Assessment-25415 {
         # Build detailed report only when test passes
         $formatTemplate = @'
 
-## Prompt Policies (AI Gateway)
+## Políticas de Prompt (AI Gateway)
 
 | Policy Name | Action | Rules Count | Last Modified |
 | :---------- | :----- | :---------- | :------------ |
@@ -170,7 +170,7 @@ function Test-Assessment-25415 {
         # Table 2: Baseline Profiles with Prompt Policies
         $baselineProfilesSection = ''
         if ($enabledBaselineProfiles.Count -gt 0) {
-            $baselineProfilesSection += "`n## Prompt Policies Linked to Baseline Profile`n`n"
+            $baselineProfilesSection += "`n## Políticas de Prompt Vinculadas ao Perfil de Linha de Base`n`n"
             $baselineProfilesSection += "| Profile Name | Priority | State | Prompt Policy | Policy Link State | Rules Count |`n"
             $baselineProfilesSection += "| :----------- | :------- | :---- | :------------ | :---------------- | :---------- |`n"
             foreach ($profile in $enabledBaselineProfiles) {
@@ -185,7 +185,7 @@ function Test-Assessment-25415 {
         # Table 3: Security Profiles with Prompt Policies and CA Assignments
         $securityProfilesSection = ''
         if ($enabledSecurityProfiles.Count -gt 0) {
-            $securityProfilesSection += "`n## Security Profiles with Linked Policies`n`n"
+            $securityProfilesSection += "`n## Perfis de Segurança com Políticas Vinculadas`n`n"
             $securityProfilesSection += "| Profile Name | State | Priority | Prompt Policy | CA Policies Assigned | Is Baseline |`n"
             $securityProfilesSection += "| :----------- | :---- | :------- | :------------ | :------------------- | :---------- |`n"
             foreach ($profile in $enabledSecurityProfiles) {
@@ -199,7 +199,7 @@ function Test-Assessment-25415 {
             }
 
             # Table 4: Conditional Access Policies
-            $securityProfilesSection += "`n## Conditional Access Policies Assigned to Security Profiles`n`n"
+            $securityProfilesSection += "`n## Políticas do Conditional Access Atribuídas a Perfis de Segurança`n`n"
             $securityProfilesSection += "| CA Policy Name | Security Profile | CA Policy ID |`n"
             $securityProfilesSection += "| :------------- | :--------------- | :----------- |`n"
             foreach ($profile in $enabledSecurityProfiles) {

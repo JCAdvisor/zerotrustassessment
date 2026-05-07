@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Checks that Global Secure Access web content filtering is enabled and configured
+    Verifica se a filtragem de conteúdo da web do Global Secure Access está ativada e configurada
 .DESCRIPTION
-    Verifies that Web Content Filtering policies are configured and applied either through the Baseline Profile
-    or through Security Profiles linked to active Conditional Access policies. This ensures that organizations
-    control access to websites based on categories, domains, or URLs to reduce exposure to malicious or
-    inappropriate content.
+    Verifica se as políticas de Filtragem de Conteúdo da Web estão configuradas e aplicadas por meio do Perfil de Linha de Base
+    ou por meio de Perfis de Segurança vinculados a políticas ativas do Conditional Access. Isso garante que as organizações
+    controlem o acesso aos sites com base em categorias, domínios ou URLs para reduzir a exposição a conteúdo malicioso ou
+    inadequado.
 
 .NOTES
     Test ID: 25408
@@ -15,17 +15,17 @@
 
 function Test-Assessment-25408 {
     [ZtTest(
-    	Category = 'Global Secure Access',
-    	ImplementationCost = 'Medium',
+    	Category = 'Acesso Seguro Global',
+    	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
-    	Pillar = 'Network',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect networks',
+    	Pillar = 'Rede',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25408,
-    	Title = 'Web content filtering policies are configured',
-    	UserImpact = 'Medium'
+    	Title = 'As políticas de filtragem de conteúdo web estão configuradas',
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
@@ -34,15 +34,15 @@ function Test-Assessment-25408 {
     [int]$BASELINE_PROFILE_PRIORITY = 65000
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Global Secure Access web content filtering configuration'
-    Write-ZtProgress -Activity $activity -Status 'Querying Web Content Filtering policies'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando a configuração de filtragem de conteúdo web do Global Secure Access'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas de filtragem de conteúdo web'
 
     # Q1: Get all Web Content Filtering policies (excluding "All Websites")
     $allFilteringPolicies = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/filteringPolicies' -ApiVersion beta
     $wcfPolicies = $allFilteringPolicies | Where-Object { $_.name -ne 'All websites' }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying filtering profiles'
+    Write-ZtProgress -Activity $activity -Status 'Consultando perfis de filtragem'
 
     # Q2: Get all filtering profiles with their policies and priority
     $filteringProfilesQueryParams = @{
@@ -51,7 +51,7 @@ function Test-Assessment-25408 {
     }
     $filteringProfiles = Invoke-ZtGraphRequest -RelativeUri 'networkAccess/filteringProfiles' -QueryParameters $filteringProfilesQueryParams -ApiVersion beta
 
-    Write-ZtProgress -Activity $activity -Status 'Querying Conditional Access policies'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas do Conditional Access'
 
     # Q3: Get all enabled Conditional Access policies with session controls
     $allCAPolicies = Get-ZtConditionalAccessPolicy
@@ -66,7 +66,7 @@ function Test-Assessment-25408 {
 
     # Check if any Web Content Filtering policies exist (excluding "All Websites")
     if (-not $wcfPolicies -or $wcfPolicies.Count -eq 0) {
-        $testResultMarkdown = '❌ Web Content Filtering policy is not configured.'
+        $testResultMarkdown = '❌ A política de filtragem de conteúdo web não está configurada.'
         $passed = $false
     }
     else {
@@ -123,11 +123,11 @@ function Test-Assessment-25408 {
         # Determine pass/fail
         if ($appliedPolicies.Count -gt 0) {
             $passed = $true
-            $testResultMarkdown = "✅ Web Content Filtering policy is enabled. `n`n%TestResult%"
+            \$testResultMarkdown = "✅ A política de filtragem de conteúdo web está habilitada. `n`n%TestResult%"
         }
         else {
             $passed = $false
-            $testResultMarkdown = "❌ Web Content Filtering policy is not applied to users. `n`n%TestResult%"
+            \$testResultMarkdown = "❌ A política de filtragem de conteúdo web não está aplicada aos usuários. `n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -140,10 +140,10 @@ function Test-Assessment-25408 {
         # Check if there are any applied policies to determine table structure
         if ($appliedPolicies.Count -gt 0) {
             # Add table title for applied policies
-            $mdInfo += "### Applied web content filtering policies`n`n"
+            $mdInfo += "### Políticas de filtragem de conteúdo web aplicadas`n`n"
 
             # table for applied policies
-            $mdInfo += "| Linked profile name | Linked profile priority | Linked policy name | Policy state | Profile state | Policy action | CA policy name | CA policy state |`n"
+            $mdInfo += "| Nome do perfil vinculado | Prioridade do perfil vinculado | Nome da política vinculada | Estado da política | Estado do perfil | Ação da política | Nome da política de CA | Estado da política de CA |`n"
             $mdInfo += "|---------------------|-------------------------|--------------------|--------------|---------------|---------------|----------------|-----------------|`n"
 
             foreach ($wcfPolicy in $wcfPolicies | Sort-Object -Property name) {
@@ -181,7 +181,7 @@ function Test-Assessment-25408 {
                         }
                         else {
                             # Baseline profile or profile without CA policy
-                            $mdInfo += "| $profileNameWithLink | $profilePriority | $policyNameWithLink | $policyLinkState | $profileState | $policyAction | Not applicable | Not applicable |`n"
+                            $mdInfo += "| $profileNameWithLink | $profilePriority | $policyNameWithLink | $policyLinkState | $profileState | $policyAction | Não aplicável | Não aplicável |`n"
                         }
                     }
                 }
@@ -192,8 +192,8 @@ function Test-Assessment-25408 {
             $mdInfo += "### [Web content filtering policies](https://entra.microsoft.com/#view/Microsoft_Azure_Network_Access/WebFilteringPolicy.ReactView)`n`n"
 
             # table for unapplied policies
-            $mdInfo += "The following web content filtering policies are configured but not applied to users.`n`n"
-            $mdInfo += "| Policy name | Policy action |`n"
+            $mdInfo += "As seguintes políticas de filtragem de conteúdo web estão configuradas, mas não são aplicadas aos usuários.`n`n"
+            $mdInfo += "| Nome da política | Ação da política |`n"
             $mdInfo += "|-------------|---------------|`n"
 
             foreach ($wcfPolicy in $wcfPolicies | Sort-Object -Property name) {
@@ -204,13 +204,13 @@ function Test-Assessment-25408 {
         }
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25408'
-        Title  = 'Global Secure Access web content filtering is enabled and configured'
+        Title  = 'A filtragem de conteúdo web do Global Secure Access está habilitada e configurada'
         Status = $passed
         Result = $testResultMarkdown
     }

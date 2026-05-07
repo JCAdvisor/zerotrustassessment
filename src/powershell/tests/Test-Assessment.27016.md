@@ -1,16 +1,16 @@
-Azure Application Gateway Web Application Firewall (WAF) supports rate limiting through custom rules that restrict the number of requests clients can make within a specified time window. Rate limiting is a critical defense mechanism that protects applications from abuse by throttling clients that exceed defined request thresholds. 
+O Web Application Firewall (WAF) do Azure Application Gateway oferece limitação de taxa por meio de regras personalizadas que restringem o número de requisições por janela de tempo. Esse controle protege aplicações contra abuso ao limitar clientes que excedem limiares definidos.
 
-Without rate limiting configured, threat actors can execute brute force attacks that attempt thousands of password combinations per minute against authentication endpoints, credential stuffing attacks that test stolen credentials at scale, API abuse that extracts large volumes of data or consumes expensive backend resources, and application-layer denial of service attacks that flood endpoints with requests to exhaust server capacity. 
+Sem limitação de taxa, agentes mal-intencionados podem executar brute force, credential stuffing, abuso de APIs e negação de serviço na camada de aplicação para esgotar recursos.
 
-Rate limiting rules use the `RateLimitRule` rule type and allow administrators to define thresholds based on request count per minute, with the ability to group requests by client IP address (using `groupBy` with `ClientAddr` variable) to track and limit individual clients. When a client exceeds the configured threshold, the WAF can block subsequent requests, log the violation, or redirect to a custom page. Unlike managed rulesets that detect attack patterns, rate limiting provides a quantitative defense that limits the impact of any volumetric attack regardless of whether the individual requests appear malicious. By configuring rate limiting on Application Gateway WAF, organizations can ensure that no single client can monopolize application resources or execute high-volume automated attacks.
+As regras de limitação de taxa usam `RateLimitRule` e permitem definir limiares por requisições/minuto, com agrupamento por IP do cliente (`groupBy` com `ClientAddr`). Ao exceder o limite, o WAF pode bloquear, registrar ou redirecionar. Diferente de rulesets gerenciados, essa defesa é quantitativa e reduz impacto de ataques volumétricos, mesmo quando requisições individuais parecem legítimas.
 
 
-**Remediation action**
+**Ação de remediação**
 
-- [What is Azure Web Application Firewall on Azure Application Gateway?](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/ag-overview) - Overview of WAF capabilities on Application Gateway including custom rules
-- [Create and use Web Application Firewall v2 custom rules on Application Gateway](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/create-custom-waf-rules) - Step-by-step guidance on creating custom rules including rate limiting
-- [Web Application Firewall custom rules](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/custom-waf-rules-overview) - Detailed documentation of custom rule types including RateLimitRule
-- [Rate limiting in Application Gateway WAF](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/rate-limiting-overview) - Overview of rate limiting capabilities and configuration options
+- [O que é o Azure Web Application Firewall no Azure Application Gateway?](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/ag-overview) - Visão geral dos recursos do WAF no Application Gateway, incluindo regras personalizadas
+- [Criar e usar regras personalizadas do Web Application Firewall v2 no Application Gateway](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/create-custom-waf-rules) - Passo a passo para criar regras personalizadas, incluindo limitação de taxa
+- [Regras personalizadas do Web Application Firewall](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/custom-waf-rules-overview) - Documentação detalhada dos tipos de regra, incluindo `RateLimitRule`
+- [Limitação de taxa no WAF do Application Gateway](https://learn.microsoft.com/en-us/azure/web-application-firewall/ag/rate-limiting-overview) - Visão geral de capacidades e opções de configuração
 
 
 <!--- Results --->

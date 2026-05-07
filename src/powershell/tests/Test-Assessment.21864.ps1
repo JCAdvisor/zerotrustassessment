@@ -7,7 +7,7 @@ function Test-Assessment-21864{
     [ZtTest(
     	Category = 'Controle de acesso',
     	ImplementationCost = 'Alto',
-    	Pillar = 'Identity',
+    	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger identidades e segredos',
     	TenantType = ('Workforce','External'),

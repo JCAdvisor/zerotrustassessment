@@ -16,25 +16,25 @@
 
 function Test-Assessment-25394 {
     [ZtTest(
-        Category = 'Global Secure Access',
-        ImplementationCost = 'Low',
+        Category = 'Acesso Seguro Global',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Entra_Premium_Private_Access', 'AAD_PREMIUM'),
         CompatibleLicense = ('Entra_Premium_Private_Access'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce', 'External'),
         TestId = '25394',
-        Title = 'Quick Access is bound to a Conditional Access policy',
-        UserImpact = 'Medium'
+        Title = 'O Quick Access está vinculado a uma política de Conditional Access',
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Checking Quick Access Conditional Access policy protection'
-    Write-ZtProgress -Activity $activity -Status 'Querying Quick Access application'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Verificando a proteção de política de Conditional Access do Quick Access'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o aplicativo Quick Access'
 
     # Q1: Get Quick Access application
     $quickAccessApp = Invoke-ZtGraphRequest -RelativeUri 'servicePrincipals' -Filter "tags/any(c:c eq 'NetworkAccessQuickAccessApplication')" -Select 'appId,displayName,id' -ApiVersion beta
@@ -46,7 +46,7 @@ function Test-Assessment-25394 {
     # Q2: Get all enabled Conditional Access policies
     $caPolicies = $null
     if ($null -ne $quickAccessApp -and $quickAccessApp.Count -gt 0) {
-        Write-ZtProgress -Activity $activity -Status 'Checking Conditional Access policies for Quick Access'
+        Write-ZtProgress -Activity $activity -Status 'Verificando políticas de Conditional Access para Quick Access'
         $allCAPolicies = Get-ZtConditionalAccessPolicy
         $caPolicies = $allCAPolicies | Where-Object { $_.state -eq 'enabled' }
     }
@@ -61,14 +61,14 @@ function Test-Assessment-25394 {
 
     # Check if Quick Access application exists
     if (-not $quickAccessApp -or $quickAccessApp.Count -eq 0) {
-        $testResultMarkdown = "⚠️ No Quick Access application is configured, review the documentation on how to enable Quick Access if needed.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Nenhum aplicativo Quick Access está configurado. Revise a documentação para habilitar o Quick Access se necessário.`n`n%TestResult%"
     }
     else {
         # Check Conditional Access policy coverage
         if ($null -eq $caPolicies -or $caPolicies.Count -eq 0) {
-            Write-PSFMessage 'Failed to retrieve Conditional Access policies or no policies are enabled' -Level Warning
+            Write-PSFMessage 'Falha ao recuperar políticas de Conditional Access ou nenhuma política está habilitada' -Level Warning
             $passed = $false
-            $testResultMarkdown = "❌ Quick Access application found without Conditional Access policy enforcement.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Aplicativo Quick Access encontrado sem aplicação de política de Conditional Access.`n`n%TestResult%"
         }
         else {
             foreach ($policy in $caPolicies) {
@@ -122,11 +122,11 @@ function Test-Assessment-25394 {
         # Determine pass/fail status
         if ($applicablePolicies.Count -gt 0) {
             $passed = $true
-            $testResultMarkdown = "✅ Quick Access application is protected by Conditional Access policies with authentication controls.`n`n%TestResult%"
+            $testResultMarkdown = "✅ O aplicativo Quick Access está protegido por políticas de Conditional Access com controles de autenticação.`n`n%TestResult%"
         }
         else {
             $passed = $false
-            $testResultMarkdown = "❌ Quick Access application found without Conditional Access policy enforcement.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Aplicativo Quick Access encontrado sem aplicação de política de Conditional Access.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -137,12 +137,12 @@ function Test-Assessment-25394 {
 
     if ($null -ne $quickAccessApp -and $quickAccessApp.Count -gt 0) {
         $appPortalLink = "https://entra.microsoft.com/#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/overview/appId/$($quickAccessApp.appId)"
-        $mdInfo += "**Quick Access application name:** [$(Get-SafeMarkdown -Text $quickAccessApp.displayName)]($appPortalLink)`n`n"
+        $mdInfo += "**Nome do aplicativo Quick Access:** [$(Get-SafeMarkdown -Text $quickAccessApp.displayName)]($appPortalLink)`n`n"
 
         # Show applicable policies if any
         if ($applicablePolicies.Count -gt 0) {
-            $mdInfo += "### [Applicable Conditional Access policies](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/QuickAccessMenuBlade/~/GlobalSecureAccess)`n`n"
-            $mdInfo += "| Policy name | Grant controls configured |`n"
+            $mdInfo += "### [Políticas de Conditional Access aplicáveis](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/QuickAccessMenuBlade/~/GlobalSecureAccess)`n`n"
+            $mdInfo += "| Nome da política | Controles de concessão configurados |`n"
             $mdInfo += "| :---------- | :------------------------ |`n"
 
             foreach ($policy in $applicablePolicies) {
@@ -155,13 +155,13 @@ function Test-Assessment-25394 {
         }
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '25394'
-        Title  = 'Quick Access is protected by Conditional Access policies'
+        Title  = 'Quick Access está protegido por políticas de Conditional Access'
         Status = $passed
         Result = $testResultMarkdown
     }

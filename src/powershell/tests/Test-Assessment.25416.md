@@ -1,20 +1,19 @@
-When you connect remote networks to Global Secure Access through IPsec tunnels but don't set up cloud firewall policies, all internet-bound traffic from branch offices goes through the Security Service Edge without egress filtering controls. If a threat actor gains access to a branch office workstation, they can make outbound connections to command-and-control infrastructure, exfiltrate data over standard ports, or download malicious payloads without network-layer inspection.
+Quando você conecta redes remotas ao Global Secure Access através de túneis IPsec, mas não configura políticas de firewall de nuvem, todo o tráfego vinculado à internet dos escritórios remotos passa pela Security Service Edge sem controles de filtragem de saída. Se um ator de ameaça ganhar acesso a uma estação de trabalho do escritório remoto, ele pode fazer conexões de saída para infraestrutura de comando e controle, exfiltrar dados em portas padrão ou fazer download de cargas maliciosas sem inspeção em nível de rede.
 
-Without Global Secure Access cloud firewall:
+Sem firewall de nuvem do Global Secure Access:
 
-- You can't enforce a deny-by-default posture or restrict outbound communications from branch networks to unauthorized internet destinations.
-- Threat actors can stage data for exfiltration, pivot to cloud resources, or move laterally without detection.
-- Traditional perimeter defenses might assume all egress is legitimate, resulting in gaps in security coverage.
+- Você não pode impor uma postura de negação por padrão ou restringir comunicações de saída de redes de escritório remoto para destinos da internet não autorizados.
+- Atores de ameaça podem preparar dados para exfiltração, mudar para recursos de nuvem ou se mover lateralmente sem detecção.
+- As defesas tradicionais do perímetro podem assumir que toda saída é legítima, resultando em lacunas na cobertura de segurança.
 
-Cloud firewall policies linked to the baseline profile provide centralized egress control for all remote network traffic. Administrators can use these policies to define granular filtering rules that restrict unauthorized outbound communications.
+As políticas de firewall de nuvem vinculadas ao perfil base fornecem controle centralizado de saída para todo o tráfego de rede remota. Os administradores podem usar essas políticas para definir regras de filtragem granulares que restringem comunicações de saída não autorizadas.
 
-**Remediation action**
+**Ação de remediação**
 
-- As a prerequisite for cloud firewall, [configure remote networks for internet access](https://learn.microsoft.com/entra/global-secure-access/how-to-create-remote-networks?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Follow the steps in [Configure Global Secure Access cloud firewall](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-cloud-firewall?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci) to:
-    - Create a cloud firewall policy with appropriate filtering rules.
-    - Add or update firewall rules based on source IP, destination IP, ports, and protocols.
-    - Link the cloud firewall policy to the baseline profile for remote networks.
+- Como um pré-requisito para firewall de nuvem, [configure redes remotas para acesso à internet](https://learn.microsoft.com/entra/global-secure-access/how-to-create-remote-networks?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
+- Siga as etapas em [Configurar firewall de nuvem do Global Secure Access](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-cloud-firewall?wt_mc_id=zerotrustrecommendations_automation_content_cnl_csasci) para:
+    - Criar uma política de firewall de nuvem com regras de filtragem apropriadas.
+    - Adicionar ou atualizar regras de firewall com base em IP de origem, IP de destino, portas e protocolos.
+    - Vincular a política de firewall de nuvem ao perfil base para redes remotas.
 <!--- Results --->
 %TestResult%
-

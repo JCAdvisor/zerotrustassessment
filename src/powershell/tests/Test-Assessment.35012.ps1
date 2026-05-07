@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Container labels are configured for Teams, groups, and sites
+    Os rótulos de contêiner estão configurados para Teams, grupos e sites
 
 .DESCRIPTION
-    This test evaluates sensitivity label configuration to ensure container labels
-    are enabled for Microsoft Teams, Microsoft 365 Groups, and SharePoint sites.
-    Container labels enforce consistent security policies at the workspace level,
-    controlling external sharing, guest access, and device restrictions.
+    Este teste avalia a configuração de rótulo de sensibilidade para garantir que os rótulos de contêiner
+    estejam habilitados para Microsoft Teams, Microsoft 365 Groups e sites do SharePoint.
+    Os rótulos de contêiner aplicam políticas de segurança consistentes no nível do espaço de trabalho,
+    controlando o compartilhamento externo, acesso de convidado e restrições de dispositivo.
 
 .NOTES
     Test ID: 35012
@@ -17,17 +17,17 @@
 function Test-Assessment-35012 {
 
     [ZtTest(
-        Category = 'Sensitivity Labels Configuration',
-        ImplementationCost = 'Medium',
+        Category = 'Configuração de rótulos de sensibilidade',
+        ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         MinimumLicense = ('Microsoft 365 E5'),
-        Pillar = 'Data',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger locatários e sistemas de produção',
         TenantType = 'Workforce',
         TestId = 35012,
-        Title = 'Container labels are configured for Teams, groups, and sites',
-        UserImpact = 'High'
+        Title = 'Os rótulos de contêiner estão configurados para Teams, grupos e sites',
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()
@@ -37,9 +37,9 @@ function Test-Assessment-35012 {
     function Get-ContainerLabelSummary {
         <#
         .SYNOPSIS
-            Extracts container label details from a sensitivity label.
+            Extrai detalhes de rótulo de contêiner de um rótulo de sensibilidade.
         .OUTPUTS
-            PSCustomObject with container label details per spec.
+            PSCustomObject com detalhes de rótulo de contêiner por especificação.
         #>
         param(
             [object]$Label
@@ -66,9 +66,9 @@ function Test-Assessment-35012 {
     function Test-ContainerLabel {
         <#
         .SYNOPSIS
-            Tests if a label has both Site and UnifiedGroup scopes in ContentType.
+            Testa se um rótulo tem escopos de Site e UnifiedGroup em ContentType.
         .OUTPUTS
-            Boolean indicating whether the label is a container label.
+            Boolean indicando se o rótulo é um rótulo de contêiner.
         #>
         param([object]$Label)
 
@@ -95,11 +95,11 @@ function Test-Assessment-35012 {
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
-    $activity = 'Evaluating container label configuration'
-    Write-ZtProgress -Activity $activity -Status 'Retrieving sensitivity labels'
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
+    $activity = 'Avaliando configuração de rótulo de contêiner'
+    Write-ZtProgress -Activity $activity -Status 'Recuperando rótulos de sensibilidade'
 
-    # Query Q1: Retrieve all sensitivity labels
+        # Consulta Q1: Retrieve all sensitivity labels
     $allLabels = $null
     $containerLabels = @()
     $queryError = $false
@@ -108,14 +108,14 @@ function Test-Assessment-35012 {
         $allLabels = Get-Label -ErrorAction Stop
     }
     catch {
-        Write-PSFMessage -Level Warning -Message "Failed to retrieve sensitivity labels: $_"
+        Write-PSFMessage -Level Warning -Message "Falha ao recuperar rótulos de sensibilidade: $_"
         $queryError = $true
     }
 
-    # Query Q2: Filter for container-enabled labels (both Site and UnifiedGroup scopes in ContentType)
+        # Consulta Q2: Filter for container-enabled labels (both Site and UnifiedGroup scopes in ContentType)
     if ($null -ne $allLabels -and $allLabels.Count -gt 0) {
 
-        Write-ZtProgress -Activity $activity -Status 'Filtering container-enabled labels'
+        Write-ZtProgress -Activity $activity -Status 'Filtrando rótulos habilitados para contêiner'
 
         foreach ($label in $allLabels) {
             $isContainer = Test-ContainerLabel -Label $label
@@ -140,7 +140,7 @@ function Test-Assessment-35012 {
 
         $customStatus = 'Investigate'
         $testResultMarkdown =
-            "⚠️ Query fails or unable to retrieve label scope information due to permissions issues or service connection failure. Ensure the Security & Compliance PowerShell module is connected and the account has appropriate permissions to retrieve label properties."
+            "⚠️ A consulta falha ou não é possível recuperar informações de escopo de rótulo devido a problemas de permissões ou falha na conexão do serviço. Certifique-se de que o módulo do PowerShell de Segurança e Conformidade esteja conectado e que a conta tenha as permissões apropriadas para recuperar propriedades de rótulo."
 
     }
     # Step 2: Check if container labels exist (count >= 1) - Pass (even if some labels had parse errors)
@@ -149,7 +149,7 @@ function Test-Assessment-35012 {
         # Container labels are configured - Pass
         $passed = $true
         $testResultMarkdown =
-            "✅ Container labels are configured for Teams, Groups, and SharePoint sites.`n`n%TestResult%"
+            "✅ Os rótulos de contêiner estão configurados para Teams, grupos e sites do SharePoint.`n`n%TestResult%"
 
         # Build label results for reporting
         foreach ($label in $containerLabels) {
@@ -164,7 +164,7 @@ function Test-Assessment-35012 {
         # Per spec: "Fail: No container labels are configured (acceptable if Teams/Groups not used; may be a gap if collaboration workspaces exist)"
         $passed = $false
         $testResultMarkdown =
-            "❌ No container labels are configured (acceptable if Teams/Groups not used; may be a gap if collaboration workspaces exist).`n`n%TestResult%"
+            "❌ Nenhum rótulo de contêiner está configurado (aceitável se Teams/Groups não forem usados; pode ser uma lacuna se houver espaços de trabalho colaborativos).`n`n%TestResult%"
 
     }
 
@@ -172,17 +172,17 @@ function Test-Assessment-35012 {
 
     #region Report Generation
 
-    $mdInfo  = "`n## Summary`n`n"
-    $mdInfo += "| Metric | Value |`n|:---|:---|`n"
-    $mdInfo += "| Total sensitivity labels | $(if ($allLabels) { $allLabels.Count } else { 0 }) |`n"
-    $mdInfo += "| Container-protected labels | $($containerLabels.Count) |`n`n"
+    $mdInfo  = "`n## Resumo`n`n"
+    $mdInfo += "| Métrica | Valor |`n|:---|:---|`n"
+    $mdInfo += "| Total de rótulos de sensibilidade | $(if ($allLabels) { $allLabels.Count } else { 0 }) |`n"
+    $mdInfo += "| Rótulos habilitados para contêiner | $($containerLabels.Count) |`n`n"
 
     if ($labelResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-## [Container label details](https://purview.microsoft.com/informationprotection/informationprotectionlabels/sensitivitylabels)
+## [Detalhes dos rótulos de contêiner](https://purview.microsoft.com/informationprotection/informationprotectionlabels/sensitivitylabels)
 
-| Label name | Content type | Display name | Is parent | Priority |
+| Nome do rótulo | Tipo de conteúdo | Nome de exibição | É pai | Prioridade |
 |:---|:---|:---|:---|:---|
 {0}
 '@
@@ -195,14 +195,14 @@ function Test-Assessment-35012 {
         $mdInfo += $formatTemplate -f $tableRows
     }
 
-    # Replace the placeholder with detailed information
+        # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
 
     #endregion Report Generation
 
     $params = @{
         TestId = '35012'
-        Title  = 'Container labels are configured for Teams, Groups, and Sites'
+        Title  = 'Rótulos de contêiner configurados para Teams, grupos e sites'
         Status = $passed
         Result = $testResultMarkdown
     }

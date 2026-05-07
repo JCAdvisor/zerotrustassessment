@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Validates that Request Body Inspection is enabled in Application Gateway WAF.
+    Valida que a Inspeção de Corpo da Solicitação está habilitada no WAF do Application Gateway.
 
 .DESCRIPTION
-    This test validates that Azure Application Gateway Web Application Firewall policies
-    have request body inspection enabled to analyze HTTP POST, PUT, and PATCH request bodies
-    for malicious patterns.
+    Este teste valida que as políticas de Firewall de Aplicativo da Web do Azure Application Gateway
+    têm inspeção de corpo de solicitação habilitada para analisar corpos de solicitação HTTP POST, PUT e PATCH
+    para padrões maliciosos.
 
 .NOTES
     Test ID: 26879
@@ -16,36 +16,36 @@
 
 function Test-Assessment-26879 {
     [ZtTest(
-        Category = 'Azure Network Security',
-        ImplementationCost = 'Low',
+        Category = 'Segurança de rede do Azure',
+        ImplementationCost = 'Baixo',
         MinimumLicense = ('Azure WAF'),
-        Pillar = 'Network',
-        RiskLevel = 'High',
-        SfiPillar = 'Protect networks',
+        Pillar = 'Rede',
+        RiskLevel = 'Alto',
+        SfiPillar = 'Proteger redes',
         TenantType = ('Workforce'),
         TestId = 26879,
-        Title = 'Request Body Inspection is enabled in Application Gateway WAF',
-        UserImpact = 'Low'
+        Title = 'A inspeção do corpo da solicitação está habilitada no WAF do Application Gateway',
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Application Gateway WAF request body inspection configuration'
+    $activity = 'Verificando configuração de inspeção de corpo de solicitação do WAF do Application Gateway'
 
     # Check if connected to Azure
-    Write-ZtProgress -Activity $activity -Status 'Checking Azure connection'
+    Write-ZtProgress -Activity $activity -Status 'Verificando conexão do Azure'
 
     $azContext = Get-AzContext -ErrorAction SilentlyContinue
     if (-not $azContext) {
-        Write-PSFMessage 'Not connected to Azure.' -Level Warning
+        Write-PSFMessage 'Não conectado ao Azure.' -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotConnectedAzure
         return
     }
 
-    Write-ZtProgress -Activity $activity -Status 'Querying Azure Resource Graph'
+    Write-ZtProgress -Activity $activity -Status 'Consultando o Azure Resource Graph'
 
     # Inner join with Application Gateways filters out orphaned WAF policies (not attached to any gateway).
     # summarize collapses to one row per policy, collecting gateway names into a list.
@@ -75,7 +75,7 @@ resources
         Write-PSFMessage "ARG Query returned $($policies.Count) records" -Tag Test -Level VeryVerbose
     }
     catch {
-        Write-PSFMessage "Azure Resource Graph query failed: $($_.Exception.Message)" -Tag Test -Level Warning
+        Write-PSFMessage "Falha na consulta do Azure Resource Graph: $($_.Exception.Message)" -Tag Test -Level Warning
         Add-ZtTestResultDetail -SkippedBecause NotSupported
         return
     }
@@ -84,7 +84,7 @@ resources
     #region Assessment Logic
     # Skip test if no policies found
     if ($policies.Count -eq 0) {
-        Write-PSFMessage 'No Application Gateway WAF policies found.' -Tag Test -Level Verbose
+        Write-PSFMessage 'Nenhuma política de WAF do Application Gateway encontrada.' -Tag Test -Level Verbose
         Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'No Application Gateway WAF policies attached to Application Gateways found across subscriptions.'
         return
     }
@@ -97,10 +97,10 @@ resources
     }).Count -eq 0
 
     if ($passed) {
-        $testResultMarkdown = "✅ All Application Gateway WAF policies attached to Application Gateways are enabled, running in Prevention mode, and have request body inspection enabled.`n`n%TestResult%"
+        $testResultMarkdown = "✅ Todas as políticas de WAF do Application Gateway anexadas aos Application Gateways estão habilitadas, executando no modo Prevenção e têm inspeção de corpo de solicitação habilitada.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ One or more Application Gateway WAF policies attached to Application Gateways are disabled, running in Detection mode, or have request body inspection disabled, leaving applications vulnerable to body-based attacks that bypass WAF rule evaluation.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Uma ou mais políticas de WAF do Application Gateway anexadas aos Application Gateways estão desabilitadas, executando no modo Detecção ou têm inspeção de corpo de solicitação desabilitada, deixando aplicativos vulneráveis a ataques baseados em corpo que contornam a avaliação de regras do WAF.`n`n%TestResult%"
     }
     #endregion Assessment Logic
 
@@ -108,7 +108,7 @@ resources
     $mdInfo = ''
 
     # Table title
-    $reportTitle = 'Application Gateway WAF Policies'
+    $reportTitle = 'Políticas de WAF do Application Gateway'
     $portalLink = "https://portal.azure.com/#view/Microsoft_Azure_HybridNetworking/FirewallManagerMenuBlade/~/wafMenuItem"
 
     # Prepare table rows
@@ -136,7 +136,7 @@ resources
 
 ## [{0}]({1})
 
-| Policy name | Subscription name | Attached Application Gateways | Enabled state | WAF mode | Request body check | Status |
+| Nome da política | Nome da assinatura | Application Gateways anexados | Estado habilitado | Modo WAF | Inspeção de corpo de solicitação | Status |
 | :---------- | :---------------- | :---------------------------- | :-----------: | :------: | :----------------: | :----: |
 {2}
 
@@ -149,7 +149,7 @@ resources
 
     $params = @{
         TestId = '26879'
-        Title  = 'Request Body Inspection is enabled in Application Gateway WAF'
+        Title  = 'Inspeção de Corpo da Solicitação está habilitada no WAF do Application Gateway'
         Status = $passed
         Result = $testResultMarkdown
     }
