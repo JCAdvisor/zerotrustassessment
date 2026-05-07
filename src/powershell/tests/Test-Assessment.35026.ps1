@@ -18,7 +18,7 @@
 
 function Test-Assessment-35026 {
     [ZtTest(
-    	Category = 'Microsoft Purview Message Encryption',
+    	Category = 'Criptografia de Mensagens do Purview',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E3'),
     	Service = ('ExchangeOnline'),

@@ -17,7 +17,7 @@
 
 function Test-Assessment-35027 {
     [ZtTest(
-    	Category = 'Information Protection',
+    	Category = 'Proteção de Informações',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E3','Microsoft 365 E5','Advanced Message Encryption add-on'),
     	Service = ('ExchangeOnline'),

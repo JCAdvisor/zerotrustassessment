@@ -52,7 +52,7 @@ function Add-ZtOverviewCaMfa {
 		$percent = Get-ZtPercentLabel -Value $caMfa -Total $total
 
 		@{
-			"description" = "Over the past $duration, $percent of sign-ins were protected by conditional access policies enforcing multifactor."
+			"description" = "Nos últimos $duration, $percent das entradas foram protegidas por políticas de acesso condicional que exigem multifator."
 			"nodes"       = $nodes
 		}
 	}

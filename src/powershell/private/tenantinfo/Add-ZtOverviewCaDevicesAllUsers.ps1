@@ -50,7 +50,7 @@ function Add-ZtOverviewCaDevicesAllUsers {
 		$duration = Get-ZtSignInDuration -Database $Database
 		$percent = Get-ZtPercentLabel -Value $compliant -Total ($managed + $unmanaged)
 		@{
-			"description" = "Over the past $duration, $percent of sign-ins were from compliant devices."
+			"description" = "Nos últimos $duration, $percent das entradas foram de dispositivos em conformidade."
 			"nodes"       = $nodes
 		}
 	}

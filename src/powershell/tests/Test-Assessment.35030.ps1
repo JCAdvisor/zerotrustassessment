@@ -14,7 +14,7 @@
 
 function Test-Assessment-35030 {
     [ZtTest(
-        Category = 'Data Loss Prevention (DLP)',
+        Category = 'Prevenção contra Perda de Dados (DLP)',
        ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),

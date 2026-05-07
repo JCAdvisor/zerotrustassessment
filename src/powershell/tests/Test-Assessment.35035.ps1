@@ -17,7 +17,7 @@
 
 function Test-Assessment-35035 {
     [ZtTest(
-    	Category = 'Advanced Classification',
+    	Category = 'Classificação Avançada',
     	ImplementationCost = 'Baixo',
     	CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
     	Service = ('SecurityCompliance'),

@@ -5,7 +5,7 @@
 
 function Test-Assessment-24546 {
     [ZtTest(
-    	Category = 'tenant',
+    	Category = 'Tenant',
     	ImplementationCost = 'Baixo',
         MinimumLicense = ('P1'),
     	Pillar = 'Dispositivos',
