@@ -19,7 +19,7 @@ function Test-Assessment-35006 {
     	Service = ('SharePointOnline'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35006,
         Title = 'A rotulagem de PDF está habilitada no SharePoint',

@@ -25,7 +25,7 @@ function Test-Assessment-35002 {
     	Service = ('Graph'),
         Pillar = 'Dados',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35002,
         Title = 'As configurações de acesso entre locatários estão configuradas para permitir o compartilhamento de conteúdo criptografado',

@@ -455,7 +455,7 @@ foreach ($file in $testFiles) {
 		# }
 		#$frontMatter['# pillar'] #Code to identity for now until we get the front-matter in
 		if (-not $testData.Pillar) {
-			$update.Pillar = 'Identity'
+			$update.Pillar = 'Identidade'
 		}
 		elseif ($testData.Pillar -ne 'Identity') {
 			Write-Verbose "[$testId] Pillar Update notice: Current Pillar set to '$($testData.Pillar)'. NOT reverting to 'Identity' for now, pending code update."

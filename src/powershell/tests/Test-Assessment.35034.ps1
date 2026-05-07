@@ -18,16 +18,16 @@
 function Test-Assessment-35034 {
     [ZtTest(
         Category = 'Advanced Classification',
-        ImplementationCost = 'Medium',
+       ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
+        Pillar = 'Dados',
         RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce', 'External'),
         TestId = 35034,
         Title = 'Exact Data Match is configured for sensitive information detection',
-        UserImpact = 'Medium'
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

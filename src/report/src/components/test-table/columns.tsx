@@ -53,7 +53,7 @@ export const columns: ColumnDef<Test>[] = [
         meta: { label: "Pilar SFI" },
         header: ({ column }) => (
             <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc") }>
-                Pilar SFI
+                Pilar SFI (Secure Future Initiative)
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),

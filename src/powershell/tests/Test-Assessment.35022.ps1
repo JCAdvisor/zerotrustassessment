@@ -19,17 +19,17 @@
 
 function Test-Assessment-35022 {
     [ZtTest(
-        Category = 'Information Protection',
-        ImplementationCost = 'Medium',
+        Category = 'Proteção de Informações',
+        ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = 'Workforce',
         TestId = 35022,
         Title = 'On-demand scans are configured for sensitive information discovery',
-        UserImpact = 'Low'
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

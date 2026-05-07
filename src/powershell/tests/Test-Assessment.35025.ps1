@@ -18,16 +18,16 @@
 function Test-Assessment-35025 {
     [ZtTest(
         Category = 'Rights Management Service (RMS)',
-        ImplementationCost = 'Low',
+        ImplementationCost = 'Baixo',
         Service = ('ExchangeOnline'),
         MinimumLicense = ('Microsoft 365 E3'),
-        Pillar = 'Data',
+        Pillar = 'Dados',
         RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35025,
         Title = 'Internal Rights Management licensing is enabled',
-        UserImpact = 'High'
+        UserImpact = 'Alto'
     )]
     [CmdletBinding()]
     param()

@@ -24,14 +24,14 @@ Example Usage:
 function Get-Test {
 	[ZtTest(
 		Category = 'Access control',
-		ImplementationCost = 'Low',
-		Pillar = 'Identity',
+		ImplementationCost = 'Baixo',
+		Pillar = 'Identidade',
 		RiskLevel = 'High',
 		SfiPillar = "Protect identities and secrets",
 		TenantType = ('Workforce', 'External'),
 		TestId = 21786,
 		Title = "User sign-in activity uses token protection",
-		UserImpact = 'Low'
+		UserImpact = 'Baixo'
 	)]
 	[CmdletBinding()]
 	param ()

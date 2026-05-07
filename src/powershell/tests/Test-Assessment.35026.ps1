@@ -19,16 +19,16 @@
 function Test-Assessment-35026 {
     [ZtTest(
     	Category = 'Microsoft Purview Message Encryption',
-    	ImplementationCost = 'Low',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E3'),
     	Service = ('ExchangeOnline'),
-    	Pillar = 'Data',
-    	RiskLevel = 'Medium',
-    	SfiPillar = 'Protect tenants and production systems',
+    	Pillar = 'Dados',
+    	RiskLevel = 'Médio',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 35026,
     	Title = 'Microsoft Purview Message Encryption is configured with simplified client access',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

@@ -22,7 +22,7 @@ function Test-Assessment-35014 {
         MinimumLicense = ('Microsoft 365 E3'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35014,
         Title = 'As políticas de rótulo de email herdam sensibilidade de anexos',

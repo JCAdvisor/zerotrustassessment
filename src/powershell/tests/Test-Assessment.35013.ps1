@@ -23,7 +23,7 @@ function Test-Assessment-35013 {
         MinimumLicense = 'Microsoft 365 E3',
         Pillar = 'Dados',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce', 'External'),
         TestId = 35013,
         Title = 'Os rótulos de sensibilidade com criptografia estão configurados',

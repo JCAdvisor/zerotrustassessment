@@ -9,7 +9,7 @@ function Test-Assessment-21824 {
     	MinimumLicense = ('P1'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 21824,
     	Title = 'Convidados não possuem sessões de logon de longa duração',
@@ -27,7 +27,7 @@ function Test-Assessment-21824 {
     $testResultMarkdown = "Convidados não possuem sessões de logon de longa duração.`n`n%TestResult%"
 
     $mdInfo = "## Políticas de Acesso Condicional Analisadas`n`n| Nome da Política | Frequência de Logon | Status |`n| :--- | :--- | :--- |`n"
-    
+
     $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
 
     $params = @{

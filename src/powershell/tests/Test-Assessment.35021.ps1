@@ -13,17 +13,17 @@
 
 function Test-Assessment-35021 {
     [ZtTest(
-        Category = 'Information Protection',
-        ImplementationCost = 'Medium',
+        Category = 'Proteção de Informações',
+       ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
+        Pillar = 'Dados',
         RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35021,
         Title = 'Auto-labeling policies are enabled for SharePoint and OneDrive',
-        UserImpact = 'Low'
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

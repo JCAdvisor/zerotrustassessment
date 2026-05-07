@@ -15,16 +15,16 @@
 function Test-Assessment-35030 {
     [ZtTest(
         Category = 'Data Loss Prevention (DLP)',
-        ImplementationCost = 'Medium',
+       ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
+        Pillar = 'Dados',
         RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35030,
         Title = 'Data loss prevention policies are enabled',
-        UserImpact = 'Medium'
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

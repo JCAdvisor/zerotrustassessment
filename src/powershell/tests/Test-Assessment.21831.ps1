@@ -10,7 +10,7 @@ function Test-Assessment-21831 {
     	MinimumLicense = ('P1'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 21831,
     	Title = 'Ações protegidas estão habilitadas para tarefas de gerenciamento de alto impacto',

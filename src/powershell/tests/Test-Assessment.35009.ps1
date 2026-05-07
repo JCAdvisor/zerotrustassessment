@@ -11,7 +11,7 @@ function Test-Assessment-35009 {
     	Service = ('SecurityCompliance'),
         Pillar = 'Dados',
         RiskLevel = 'Baixo',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35009,
         Title = 'A coautoria está habilitada para arquivos criptografados com rótulos de sensibilidade',

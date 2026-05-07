@@ -22,7 +22,7 @@ function Test-Assessment-35017 {
         MinimumLicense = ('Microsoft 365 E3'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35017,
         Title = 'Um rótulo de sensibilidade padrão está configurado nas políticas de rótulo',

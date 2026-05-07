@@ -18,16 +18,16 @@
 function Test-Assessment-35027 {
     [ZtTest(
     	Category = 'Information Protection',
-    	ImplementationCost = 'Low',
+    	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E3','Microsoft 365 E5','Advanced Message Encryption add-on'),
     	Service = ('ExchangeOnline'),
-    	Pillar = 'Data',
+    	Pillar = 'Dados',
     	RiskLevel = 'Low',
-    	SfiPillar = 'Protect tenants and production systems',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35027,
     	Title = 'Custom branding templates are configured for Microsoft Purview Message Encryption',
-    	UserImpact = 'Low'
+    	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

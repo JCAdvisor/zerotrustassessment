@@ -20,7 +20,7 @@ function Test-Assessment-35003 {
     	Service = ('SecurityCompliance'),
         Pillar = 'Dados',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35003,
         Title = 'Os rótulos de sensibilidade estão configurados',

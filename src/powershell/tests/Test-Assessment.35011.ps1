@@ -21,7 +21,7 @@ function Test-Assessment-35011 {
     	Service = ('AipService','Graph'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 35011,
         Title = 'A associação de superusuário está configurada para o Microsoft Purview Information Protection',

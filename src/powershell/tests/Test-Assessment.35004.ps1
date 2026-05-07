@@ -22,7 +22,7 @@ function Test-Assessment-35004 {
     	Service = ('SecurityCompliance'),
         Pillar = 'Dados',
         RiskLevel = 'Baixo',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35004,
         Title = 'As políticas de rótulos de sensibilidade são publicadas para os usuários',

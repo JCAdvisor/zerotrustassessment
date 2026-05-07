@@ -13,17 +13,17 @@
 
 function Test-Assessment-35029 {
     [ZtTest(
-        Category = 'Information Protection',
-        ImplementationCost = 'Medium',
+        Category = 'Proteção de Informações',
+       ImplementationCost = 'Médio',
         Service = ('ExchangeOnline'),
         MinimumLicense = ('Microsoft 365 E5'),
-        Pillar = 'Data',
-        RiskLevel = 'Medium',
-        SfiPillar = 'Protect tenants and production systems',
+        Pillar = 'Dados',
+        RiskLevel = 'Médio',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35029,
         Title = 'Mail flow rules apply rights protection to sensitive messages',
-        UserImpact = 'Medium'
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

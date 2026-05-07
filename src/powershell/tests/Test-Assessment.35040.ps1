@@ -18,12 +18,12 @@
 function Test-Assessment-35040 {
     [ZtTest(
         Category = 'Gerenciamento de postura de segurança de dados',
-        ImplementationCost = 'Medium',
+       ImplementationCost = 'Médio',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
         Pillar = 'Dados',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35040,
         Title = 'Monitoramento de conformidade de comunicação configurado para ferramentas de IA corporativa',

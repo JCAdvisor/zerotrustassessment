@@ -430,7 +430,7 @@ export function DataTable<TData extends Test, TValue>({
             <div className="mb-4">
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium">Filtrar por pilar SFI:</span>
+                        <span className="text-sm font-medium">Filtrar por Pilar SFI (Secure Future Initiative):</span>
                         {selectedSfiPillars.length > 0 && (
                             <Button
                                 variant="ghost"

@@ -5,17 +5,17 @@
 
 function Test-Assessment-35020 {
     [ZtTest(
-        Category = 'Information Protection',
-        ImplementationCost = 'Low',
+        Category = 'Proteção de Informações',
+        ImplementationCost = 'Baixo',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
+        Pillar = 'Dados',
         RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce','External'),
         TestId = 35020,
         Title = 'Auto-labeling policies are in enforcement mode',
-        UserImpact = 'Low'
+        UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
     param()

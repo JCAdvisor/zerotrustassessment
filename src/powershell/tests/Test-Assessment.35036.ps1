@@ -18,12 +18,12 @@
 function Test-Assessment-35036 {
     [ZtTest(
         	Category = 'Classificação Avançada',
-    	ImplementationCost = 'High',
+    	ImplementationCost = 'Alto',
     	CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
     	Service = ('SecurityCompliance'),
         	Pillar = 'Dados',
         	RiskLevel = 'Médio',
-        	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+        	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 35036,
         	Title = 'Classificadores treináveis são usados em políticas de prevenção de perda de dados e identificação automática de rótulos',

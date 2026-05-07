@@ -19,7 +19,7 @@ function Test-Assessment-35019 {
     	Service = ('SecurityCompliance'),
     	Pillar = 'Dados',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35019,
     	Title = 'As políticas de aplicação automática de rótulos estão configuradas para todas as cargas de trabalho',

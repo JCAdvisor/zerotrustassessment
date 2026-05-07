@@ -19,7 +19,7 @@ function Test-Assessment-35018 {
         MinimumLicense = ('Microsoft 365 E3'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35018,
         Title = 'Os usuários devem fornecer justificativa para rebaixar rótulos de sensibilidade',

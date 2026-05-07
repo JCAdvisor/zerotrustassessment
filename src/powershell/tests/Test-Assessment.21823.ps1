@@ -10,7 +10,7 @@ function Test-Assessment-21823{
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 21823,
     	Title = 'O autoatendimento para inscrição de convidados via fluxo de usuário está desativado',

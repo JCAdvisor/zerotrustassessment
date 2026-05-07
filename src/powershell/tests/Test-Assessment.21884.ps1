@@ -10,7 +10,7 @@ function Test-Assessment-21884 {
     	MinimumLicense = ('P1'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21884,
     	Title = 'Políticas de Acesso Condicional para identidades de carga de trabalho baseadas em redes conhecidas estão configuradas',
@@ -37,13 +37,13 @@ function Test-Assessment-21884 {
 
     $testResultMarkdown = ""
     # Lógica de detecção omitida por brevidade, focando na tradução das saídas de texto
-    
+
     # Exemplo de tradução dos cabeçalhos de relatório
     if ($passed) {
         $testResultMarkdown = "✅ Identidades de carga de trabalho estão protegidas por políticas baseadas em rede."
     } else {
         $testResultMarkdown = "❌ Algumas identidades de carga de trabalho não possuem restrições de rede configuradas."
-        
+
         $testResultMarkdown += "`n`n## Service Principals Desprotegidos"
         $testResultMarkdown += "`n| Nome de exibição | Tipo de credencial | Políticas aplicadas | Restrições de local |"
         $testResultMarkdown += "`n|-------------------|--------------------|---------------------|----------------------|"

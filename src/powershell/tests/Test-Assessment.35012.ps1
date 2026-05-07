@@ -23,7 +23,7 @@ function Test-Assessment-35012 {
         MinimumLicense = ('Microsoft 365 E5'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = 'Workforce',
         TestId = 35012,
         Title = 'Os rótulos de contêiner estão configurados para Teams, grupos e sites',

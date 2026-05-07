@@ -10,7 +10,7 @@ function Test-Assessment-24794 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24794,
     	Title = 'Políticas de Termos e Condições protegem o acesso a dados sensíveis',

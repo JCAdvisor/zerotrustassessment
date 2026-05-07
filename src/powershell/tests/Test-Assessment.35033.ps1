@@ -18,16 +18,16 @@
 function Test-Assessment-35033 {
     [ZtTest(
         Category = 'Advanced Classification',
-        ImplementationCost = 'High',
+        ImplementationCost = 'Alto',
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
-        Pillar = 'Data',
+        Pillar = 'Dados',
         RiskLevel = 'High',
-        SfiPillar = 'Protect tenants and production systems',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35033,
         Title = 'Custom sensitive information types are configured',
-        UserImpact = 'Medium'
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

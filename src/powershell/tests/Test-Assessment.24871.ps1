@@ -10,7 +10,7 @@ function Test-Assessment-24871 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24871,
     	Title = 'A inscrição automática no Defender para Endpoint é aplicada para reduzir riscos de ameaças Android não gerenciadas',

@@ -7,7 +7,7 @@ function Test-Assessment-%testId%{
 	[ZtTest(
 		Category = '%category%',
 		ImplementationCost = '%implementationCost%',
-		Pillar = 'Identity',
+		Pillar = 'Identidade',
 		RiskLevel = '%risk%',
 		SfiPillar = "Protect identities and secrets",
 		TenantType = ('Workforce', 'External'),

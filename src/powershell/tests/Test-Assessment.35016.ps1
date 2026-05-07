@@ -11,7 +11,7 @@ function Test-Assessment-35016 {
         MinimumLicense = ('Microsoft 365 E3'),
         Pillar = 'Dados',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce','External'),
         TestId = 35016,
         Title = 'A rotulagem obrigatória está habilitada nas políticas de rótulo de sensibilidade',

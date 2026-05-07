@@ -19,7 +19,7 @@ function Test-Assessment-35008 {
     	Service = ('SharePointOnline'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35008,
         Title = 'Os rótulos de sensibilidade padrão estão configurados para bibliotecas de documentos do SharePoint',

@@ -10,7 +10,7 @@ function Test-Assessment-24802 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Baixo',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24802,
     	Title = 'Regras de limpeza de dispositivos mantêm a higiene do locatário ocultando dispositivos inativos',

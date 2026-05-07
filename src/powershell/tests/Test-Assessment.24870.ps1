@@ -10,7 +10,7 @@ function Test-Assessment-24870 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24870,
     	Title = 'Perfis de Wi-Fi seguros protegem dispositivos macOS contra acesso de rede não autorizado',

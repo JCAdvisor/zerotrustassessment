@@ -17,18 +17,18 @@ Here's how the attribute looks like when defining the required services for a te
 function Test-Assessment-xxxxx {
     [ZtTest(
         Category = 'Application Proxy',
-        ImplementationCost = 'Medium',
+       ImplementationCost = 'Médio',
 
         Service = ('Graph', 'Azure', 'AipService'),
 
         CompatibleLicense = ('AAD_PREMIUM'),
-        Pillar = 'Network',
+        Pillar = 'Redes',
         RiskLevel = 'High',
         SfiPillar = 'Protect identities and secrets',
         TenantType = ('Workforce'),
         TestId = xxxxx,
         Title = 'Test Title',
-        UserImpact = 'Medium'
+        UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param(

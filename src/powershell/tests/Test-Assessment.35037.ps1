@@ -6,12 +6,12 @@
 function Test-Assessment-35037 {
     [ZtTest(
         Category = 'Gerenciamento de postura de segurança de dados',
-        ImplementationCost = 'Low',
+        ImplementationCost = 'Baixo',
         Service = ('ExchangeOnline'),
         MinimumLicense = ('Microsoft 365 E3'),
         Pillar = 'Dados',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce','External'),
         TestId = 35037,
         Title = 'Registro de auditoria do Purview habilitado',

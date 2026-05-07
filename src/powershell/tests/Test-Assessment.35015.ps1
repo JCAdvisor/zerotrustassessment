@@ -19,7 +19,7 @@ function Test-Assessment-35015 {
     	Service = ('SecurityCompliance'),
         Pillar = 'Dados',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35015,
         Title = 'Os rótulos de sensibilidade publicados globalmente não excedem o máximo recomendado',

@@ -11,7 +11,7 @@ const exactTranslations: Record<string, string> = {
     "Search by name...": "Buscar por nome...",
     "Risk:": "Risco:",
     "Status:": "Status:",
-    "Filter by SFI Pillar:": "Filtrar por pilar SFI:",
+    "Filter by SFI Pillar:": "Filtrar por Pilar SFI (Secure Future Initiative):",
     "Clear All": "Limpar tudo",
     "Clear All Filters": "Limpar todos os filtros",
     "No results.": "Sem resultados.",

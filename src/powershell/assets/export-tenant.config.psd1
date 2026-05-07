@@ -12,7 +12,7 @@
 
 	# General Parameters for the system itself
 	Type = 'Default' # PrivilegedGroup # What kind of data export this is
-	Pillar = 'Identity' # The Pillar this export is used for
+	Pillar = 'Identidade' # The Pillar this export is used for
 	# Environment = $null # 'Global' # Some exports may only be available in specific azure types
 	# IncludePlan = @() # P2, Governance # Only run for Tenants with this EntraID Plan
 	# ExcludePlan = @() # Free # Do NOT run for Tenants with this EntraID Plan

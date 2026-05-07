@@ -18,16 +18,16 @@
 function Test-Assessment-35035 {
     [ZtTest(
     	Category = 'Advanced Classification',
-    	ImplementationCost = 'Low',
+    	ImplementationCost = 'Baixo',
     	CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
     	Service = ('SecurityCompliance'),
-    	Pillar = 'Data',
+    	Pillar = 'Dados',
     	RiskLevel = 'High',
-    	SfiPillar = 'Protect tenants and production systems',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35035,
     	Title = 'Named entity sensitive information types are used in auto-labeling and data loss prevention policies',
-    	UserImpact = 'Medium'
+    	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()

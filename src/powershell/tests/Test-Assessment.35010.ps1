@@ -29,7 +29,7 @@ function Test-Assessment-35010 {
     	MinimumLicense = ('Microsoft 365 E5'),
         Pillar = 'Dados',
         RiskLevel = 'Baixo',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35010,
         Title = 'Os rótulos de criptografia de chave dupla estão configurados',

@@ -13,7 +13,7 @@ function Test-Assessment-24823 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24823,
     	Title = 'Configurações de marca e suporte do Company Portal melhoram a experiência e a confiança do usuário',

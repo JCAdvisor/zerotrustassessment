@@ -19,7 +19,7 @@ function Test-Assessment-35005 {
     	Service = ('SharePointOnline'),
         Pillar = 'Dados',
         RiskLevel = 'Alto',
-        SfiPillar = 'Proteger locatários e sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35005,
         Title = 'Os rótulos de sensibilidade estão habilitados para SharePoint e OneDrive',

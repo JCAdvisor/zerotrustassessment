@@ -10,7 +10,7 @@ function Test-Assessment-24827 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger locatários e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24827,
     	Title = 'Políticas de Acesso Condicional bloqueiam acesso de aplicativos não gerenciados',
