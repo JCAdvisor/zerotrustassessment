@@ -19,7 +19,7 @@
 
 function Test-Assessment-35002 {
     [ZtTest(
-        Category = 'Identidade',
+        Category = 'Gerenciamento de Credenciais',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Microsoft 365 E5'),
     	Service = ('Graph'),

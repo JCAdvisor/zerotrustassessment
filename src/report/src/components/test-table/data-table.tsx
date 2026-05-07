@@ -60,27 +60,27 @@ export function DataTable<TData extends Test, TValue>({
 }: DataTableProps<TData, TValue>) {
     // Recomendations and benefits dictionaries
     const benefitsDict: {[key: string]: string} = {
-        "Gerenciamento de Credenciais": "Facilita gerenciamento centralizado de identidades, alinhando com suas experiências em avaliações de risco de credenciais.",
-        "Gerenciamento de Aplicativos": "Beneficia com controle centralizado de acessos, monitoramento de riscos, SSO seguro e conformidade automatizada, reduzindo violações e elevando produtividade.",
-        "Acesso Privilegiado": "Gerenciamento de Acesso Privilegiado no Microsoft 365 via PIM no Entra ID beneficia com acesso just-in-time, ativação aprovada, MFA, monitoramento de sessões e auditorias para minimizar riscos de abuso e conformidade com LGPD/ISO 27001.",
-        "Controle de Acesso": "Controle de Acesso no Microsoft 365 via Entra ID beneficia com autenticação condicional, MFA, princípio do menor privilégio, detecção de riscos e automação de revisões para prevenir acessos indevidos, elevar segurança e garantir conformidade.",
-        "Tenant": "Gerenciamento no nível de Tenant do Microsoft 365 beneficia com isolamento lógico de dados e configurações, governança multi-tenant via Entra ID, escalabilidade segura e conformidade centralizada para múltiplas organizações ou ambientes.",
-        "Dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 via Intune beneficia com controle centralizado remoto, conformidade de políticas de segurança, suporte BYOD, implantação automática de apps e atualizações, proteção de dados e integração com Defender para ambientes híbridos.",
-        "Colaboração Externa": "Colaboração externa no Microsoft 365, via Entra, beneficia com compartilhamento seguro de apps e dados com parceiros externos usando suas próprias identidades, sem sincronização de contas, mantendo controle granular, auditoria e conformidade para colaboração eficiente e reduzida sobrecarga administrativa.",
-        "Auditoria": "Auditoria no Entra ID beneficia com logs detalhados de atividades de usuários, grupos e apps, permitindo rastrear alterações, entradas suspeitas, investigações de incidentes, relatórios de conformidade e integração com Azure Monitor para alertas e análises avançadas.",
-        "Infraestrutura Híbrida": "Infraestrutura Híbrida no Microsoft 365, via Entra ID Connect e identidade híbrida, beneficia com identidade unificada local-nuvem, SSO seamless, gerenciamento centralizado, migração gradual, alta disponibilidade e governança consistente para recursos on-premises e SaaS."
+        "gerenciamento de credenciais": "Facilita gerenciamento centralizado de identidades, alinhando com suas experiências em avaliações de risco de credenciais.",
+        "gerenciamento de aplicativos": "Beneficia com controle centralizado de acessos, monitoramento de riscos, SSO seguro e conformidade automatizada, reduzindo violações e elevando produtividade.",
+        "acesso privilegiado": "Gerenciamento de Acesso Privilegiado no Microsoft 365 via PIM no Entra ID beneficia com acesso just-in-time, ativação aprovada, MFA, monitoramento de sessões e auditorias para minimizar riscos de abuso e conformidade com LGPD/ISO 27001.",
+        "controle de acesso": "Controle de Acesso no Microsoft 365 via Entra ID beneficia com autenticação condicional, MFA, princípio do menor privilégio, detecção de riscos e automação de revisões para prevenir acessos indevidos, elevar segurança e garantir conformidade.",
+        "tenant": "Gerenciamento no nível de Tenant do Microsoft 365 beneficia com isolamento lógico de dados e configurações, governança multi-tenant via Entra ID, escalabilidade segura e conformidade centralizada para múltiplas organizações ou ambientes.",
+        "dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 via Intune beneficia com controle centralizado remoto, conformidade de políticas de segurança, suporte BYOD, implantação automática de apps e atualizações, proteção de dados e integração com Defender para ambientes híbridos.",
+        "colaboração externa": "Colaboração externa no Microsoft 365, via Entra, beneficia com compartilhamento seguro de apps e dados com parceiros externos usando suas próprias identidades, sem sincronização de contas, mantendo controle granular, auditoria e conformidade para colaboração eficiente e reduzida sobrecarga administrativa.",
+        "auditoria": "Auditoria no Entra ID beneficia com logs detalhados de atividades de usuários, grupos e apps, permitindo rastrear alterações, entradas suspeitas, investigações de incidentes, relatórios de conformidade e integração com Azure Monitor para alertas e análises avançadas.",
+        "infraestrutura híbrida": "Infraestrutura Híbrida no Microsoft 365, via Entra ID Connect e identidade híbrida, beneficia com identidade unificada local-nuvem, SSO seamless, gerenciamento centralizado, migração gradual, alta disponibilidade e governança consistente para recursos on-premises e SaaS."
     };
 
     const descriptionDict: {[key: string]: string} = {
-        "Gerenciamento de Credenciais": "Processo de criar, armazenar, atualizar e revogar identidades e autenticações (como senhas, tokens e certificados) durante todo o ciclo de vida do usuário para garantir segurança e controle de acesso.",
-        "Gerenciamento de Aplicativos": "Gerenciamento de Aplicativos no Microsoft 365 envolve controlar apps via Entra ID e Centro de Administração Teams, permitindo, bloqueando e governando acesso com políticas de permissão, instalação e conformidade para segurança e produtividade.",
-        "Acesso Privilegiado": "Gerenciamento de Acesso Privilegiado (PAM) no Microsoft 365 é um recurso do Entra ID Governance (PIM) que concede permissões elevadas temporariamente e sob aprovação, com monitoramento e auditoria para reduzir riscos de abuso.",
-        "Controle de Acesso":"Controle de Acesso no Microsoft 365 via Entra ID é o gerenciamento de identidades e permissões baseado em funções (RBAC), com políticas de acesso condicional, MFA e menor privilégio para autorizar usuários aos recursos certos no momento adequado.",
-        "Tenant": "Tenant no Microsoft 365 é uma instância dedicada e isolada de serviços (Entra ID, Exchange, Teams), gerenciando identidades, acessos, políticas e dados para uma organização única com controle administrativo centralizado.",
-        "Dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 é feito via Intune, solução unificada em nuvem que registra, configura, protege e monitora endpoints (Windows, iOS, Android, macOS) com políticas MDM/MAM, implantação de apps e conformidade para acesso seguro a recursos corporativos.",
-        "Colaboração Externa": "Colaboração externa no Microsoft 365 permite colaboração segura com usuários externos via Entra ID B2B, convidando parceiros como convidados para acessar Teams, SharePoint e apps sem contas internas, com políticas de acesso granular e monitoramento.",
-        "Auditoria": "Auditoria no Entra ID registra logs de atividades como criações de usuários, alterações de permissões e entradas, disponíveis no portal Microsoft Entra para consulta, exportação e integração com ferramentas SIEM para monitoramento e conformidade.",
-        "Infraestrutura Híbrida": "Infraestrutura Híbrida no Microsoft 365 integra ambientes on-premises (Active Directory) com nuvem via Entra Connect, sincronizando identidades, habilitando SSO, join híbrido de dispositivos e políticas unificadas para gerenciamento contínuo de acesso e segurança."
+        "gerenciamento de credenciais": "Processo de criar, armazenar, atualizar e revogar identidades e autenticações (como senhas, tokens e certificados) durante todo o ciclo de vida do usuário para garantir segurança e controle de acesso.",
+        "gerenciamento de aplicativos": "Gerenciamento de Aplicativos no Microsoft 365 envolve controlar apps via Entra ID e Centro de Administração Teams, permitindo, bloqueando e governando acesso com políticas de permissão, instalação e conformidade para segurança e produtividade.",
+        "acesso privilegiado": "Gerenciamento de Acesso Privilegiado (PAM) no Microsoft 365 é um recurso do Entra ID Governance (PIM) que concede permissões elevadas temporariamente e sob aprovação, com monitoramento e auditoria para reduzir riscos de abuso.",
+        "controle de acesso":"Controle de Acesso no Microsoft 365 via Entra ID é o gerenciamento de identidades e permissões baseado em funções (RBAC), com políticas de acesso condicional, MFA e menor privilégio para autorizar usuários aos recursos certos no momento adequado.",
+        "tenant": "Tenant no Microsoft 365 é uma instância dedicada e isolada de serviços (Entra ID, Exchange, Teams), gerenciando identidades, acessos, políticas e dados para uma organização única com controle administrativo centralizado.",
+        "dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 é feito via Intune, solução unificada em nuvem que registra, configura, protege e monitora endpoints (Windows, iOS, Android, macOS) com políticas MDM/MAM, implantação de apps e conformidade para acesso seguro a recursos corporativos.",
+        "colaboração externa": "Colaboração externa no Microsoft 365 permite colaboração segura com usuários externos via Entra ID B2B, convidando parceiros como convidados para acessar Teams, SharePoint e apps sem contas internas, com políticas de acesso granular e monitoramento.",
+        "auditoria": "Auditoria no Entra ID registra logs de atividades como criações de usuários, alterações de permissões e entradas, disponíveis no portal Microsoft Entra para consulta, exportação e integração com ferramentas SIEM para monitoramento e conformidade.",
+        "infraestrutura híbrida": "Infraestrutura Híbrida no Microsoft 365 integra ambientes on-premises (Active Directory) com nuvem via Entra Connect, sincronizando identidades, habilitando SSO, join híbrido de dispositivos e políticas unificadas para gerenciamento contínuo de acesso e segurança."
     };
 
     // Organize data by category for overview mode
@@ -123,7 +123,7 @@ export function DataTable<TData extends Test, TValue>({
                                     <TableCell className="font-medium">{category}</TableCell>
                                     <TableCell className="max-w-xs">
                                         <p className="text-sm text-muted-foreground">
-                                            {descriptionDict[category] || "Descrição não disponível"}
+                                            {descriptionDict[category.toLowerCase()] || "Descrição não disponível"}
                                         </p>
                                     </TableCell>
                                     <TableCell className="text-center">{tests.length}</TableCell>
@@ -134,7 +134,7 @@ export function DataTable<TData extends Test, TValue>({
                                     </TableCell>
                                     <TableCell>
                                         <p className="text-sm">
-                                            {benefitsDict[category] || "Benefícios não disponíveis"}
+                                            {benefitsDict[category.toLowerCase()] || "Benefícios não disponíveis"}
                                         </p>
                                     </TableCell>
                                 </TableRow>

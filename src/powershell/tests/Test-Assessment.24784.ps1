@@ -5,7 +5,7 @@
 
 function Test-Assessment-24784 {
     [ZtTest(
-        Category = 'Dispositivo',
+        Category = 'Dispositivos',
         ImplementationCost = 'Baixo',
         MinimumLicense = ('Intune'),
         Pillar = 'Dispositivos',

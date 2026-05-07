@@ -5,7 +5,7 @@
 
 function Test-Assessment-35001 {
     [ZtTest(
-        Category = 'Entra',
+        Category = 'Gerenciamento de Credenciais',
         ImplementationCost = 'Baixo',
         Service = ('Graph'),
         MinimumLicense = ('Microsoft 365 E5'),
