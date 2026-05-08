@@ -10,7 +10,7 @@ function Test-Assessment-21790 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21790,
     	Title = 'Configurações de acesso de saída entre tenants estão configuradas',
@@ -47,6 +47,5 @@ Usuários e grupos: $($result.b2bDirectConnectOutbound.usersAndGroups.accessType
 Aplicativos externos: $($result.b2bDirectConnectOutbound.applications.accessType)
 "@
 
-    $testResultMarkdown = $testResultMarkdown -replace "%TestResult%", $mdInfo
     Add-ZtTestResultDetail -TestId '21790' -Status $passed -Result $testResultMarkdown
 }

@@ -12,11 +12,11 @@ function Get-RiskStateLabel {
             return $null
         }
         $riskStateList = @{
-            "none" = "None"
-            "confirmedSafe" = "Confirmed Safe"
-            "remediated" = "Remediated"
-            "dismissed" = "Dismissed"
-            "atRisk" = "At Risk"
+            "none" = "Nenhum"
+            "confirmedSafe" = "Confirmado como seguro"
+            "remediated" = "Corrigido"
+            "dismissed" = "Dispensado"
+            "atRisk" = "Em risco"
         }
         return $riskStateList[$RiskState]
     }

@@ -10,7 +10,7 @@ function Test-Assessment-24546 {
         MinimumLicense = ('P1'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24546,
     	Title = 'O registro automático de dispositivos Windows é aplicado para eliminar riscos de endpoints não gerenciados',

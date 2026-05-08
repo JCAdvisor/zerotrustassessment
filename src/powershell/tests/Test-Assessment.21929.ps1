@@ -10,7 +10,7 @@ function Test-Assessment-21929{
     	MinimumLicense = ('P2','Governance'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21929,
     	Title = 'Todos os pacotes de gerenciamento de direitos aplicáveis a convidados têm expirações ou revisões de acesso configuradas em suas políticas de atribuição',

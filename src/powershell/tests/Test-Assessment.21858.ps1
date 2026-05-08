@@ -9,7 +9,7 @@ function Test-Assessment-21858 {
         MinimumLicense = ('Free'),
         Pillar = 'Identidade',
         RiskLevel = 'Médio',
-        SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+        SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce', 'External'),
         TestId = 21858,
         Title = 'Identidades de convidados inativas são desativadas ou removidas do tenant',

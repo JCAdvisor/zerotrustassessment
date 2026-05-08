@@ -1130,11 +1130,11 @@ export default function Dashboard() {
                                     <ChartContainer
                                         config={{
                                             compliant: {
-                                                label: "Compliant",
+                                                label: "Em conformidade",
                                                 color: "hsl(142, 71%, 45%)",
                                             },
                                             nonCompliant: {
-                                                label: "Non-compliant",
+                                                label: "Não conforme",
                                                 color: "hsl(0, 89%, 60%)",
                                             },
                                         }}

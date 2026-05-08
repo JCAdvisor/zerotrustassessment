@@ -10,7 +10,7 @@ function Test-Assessment-24572 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24572,
     	Title = 'Notificações de registo de dispositivos são impostas para garantir a consciencialização do utilizador',

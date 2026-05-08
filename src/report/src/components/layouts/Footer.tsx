@@ -7,7 +7,7 @@ export function Footer() {
     // Format the assessment date
     const formatDate = (dateString: string) => {
         try {
-            return new Date(dateString).toLocaleDateString('en-US', {
+            return new Date(dateString).toLocaleDateString('pt-BR', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'

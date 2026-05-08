@@ -10,7 +10,7 @@ function Test-Assessment-21792 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 21792,
     	Title = 'Convidados possuem acesso restrito a objetos do diretório',

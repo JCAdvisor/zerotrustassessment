@@ -10,7 +10,7 @@ function Test-Assessment-24543 {
         MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24543,
     	Title = 'Políticas de conformidade protegem dispositivos iOS/iPadOS',

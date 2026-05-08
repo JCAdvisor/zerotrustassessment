@@ -10,7 +10,7 @@ function Test-Assessment-21777 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21777,
     	Title = 'O bloqueio de propriedade de instância de aplicativo está configurado para todos os aplicativos multitenants',

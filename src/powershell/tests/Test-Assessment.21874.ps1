@@ -9,7 +9,7 @@ function Test-Assessment-21874 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21874,
     	Title = 'O acesso de convidados é limitado a tenants aprovados',

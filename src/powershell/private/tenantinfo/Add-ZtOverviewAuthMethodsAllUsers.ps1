@@ -93,7 +93,7 @@ where list_has_any([$MethodTypes], methodsRegistered)
 		)
 
 		@{
-			"description" = "Strongest authentication method registered by all users."
+			"description" = "Métodos de autenticação mais fortes registrados por todos os usuários."
 			"nodes"       = $nodes
 		}
 	}

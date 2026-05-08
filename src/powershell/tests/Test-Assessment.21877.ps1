@@ -10,7 +10,7 @@ function Test-Assessment-21877 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 21877,
     	Title = 'Todos os convidados possuem um padrinho',

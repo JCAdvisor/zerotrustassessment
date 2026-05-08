@@ -225,7 +225,7 @@ export function Header() {
                                     <div className='flex flex-col space-y-1'>
                                         <p className='text-sm font-medium leading-none'>Avaliação executada em</p>
                                         <p className='text-xs leading-none text-muted-foreground'>
-                                            {new Date(reportData.ExecutedAt).toLocaleDateString("en", { day: 'numeric', month: 'long', year: 'numeric', hour12: true, hour: 'numeric', minute: 'numeric' })}
+                                            {new Date(reportData.ExecutedAt).toLocaleDateString("pt-BR", { day: 'numeric', month: 'long', year: 'numeric', hour12: true, hour: 'numeric', minute: 'numeric' })}
                                         </p>
                                     </div>
                                 </DropdownMenuLabel>

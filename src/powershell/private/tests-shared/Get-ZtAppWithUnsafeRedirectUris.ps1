@@ -26,10 +26,10 @@ function Get-ZtAppWithUnsafeRedirectUris {
 			$Type
 		)
 		$mdInfo = ""
-		$mdInfo += "| | Name | Unsafe redirect URIs |"
+		$mdInfo += "| | Nome | URIs de redirecionamento inseguros |"
 		# Only add the app owner tenant column for ServicePrincipal
 		if ($Type -eq 'ServicePrincipal') {
-			$mdInfo += "App owner tenant |`n"
+			$mdInfo += "Tenant proprietário do aplicativo |`n"
 		}
 		else {
 			$mdInfo += "`n"
@@ -163,11 +163,11 @@ function Get-ZtAppWithUnsafeRedirectUris {
 	$passed = @($riskyApps).Count -eq 0
 
 	if ($passed) {
-		$testResultMarkdown += "No unsafe redirect URIs found"
+		$testResultMarkdown += "Nenhum URI de redirecionamento inseguro encontrado"
 	}
 	else {
-		$testResultMarkdown += "Unsafe redirect URIs found`n`n"
-		$testResultMarkdown += "1️⃣ → Use of http(s) instead of https, 2️⃣ → Use of *.azurewebsites.net, 3️⃣ → Invalid URL, 4️⃣ → Domain not resolved`n`n"
+		$testResultMarkdown += "URIs de redirecionamento inseguros encontrados`n`n"
+		$testResultMarkdown += "1️⃣ → Uso de http(s) em vez de https, 2️⃣ → Uso de *.azurewebsites.net, 3️⃣ → URL inválido, 4️⃣ → Domínio não resolvido`n`n"
 		$testResultMarkdown += Get-ZtiRiskyAppList -Apps $riskyApps -Type $Type
 	}
 

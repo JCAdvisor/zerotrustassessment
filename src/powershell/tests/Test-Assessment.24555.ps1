@@ -10,7 +10,7 @@ function Test-Assessment-24555 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Médio',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24555,
     	Title = 'A configuração de Tags de Escopo é aplicada para apoiar a administração delegada e o acesso com o menor privilégio',

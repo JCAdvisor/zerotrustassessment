@@ -25,26 +25,26 @@ from SignIn
 
 	# Handle empty SignIn table (e.g., when export times out)
 	if ($null -eq $results -or $results.minutes -is [System.DBNull]) {
-		$script:__ZtSession.SignInLogDuration = "0 duration"
+		$script:__ZtSession.SignInLogDuration = "0 dias"
 		return $script:__ZtSession.SignInLogDuration
 	}
 
 	$duration = 0
 	if ($results.days -gt 0) {
 		$duration = $results.days
-		$label = "day"
+		$label = "dia"
 	}
 	elseif ($results.hours -gt 0) {
 		$duration = $results.hours
-		$label = "hour"
+		$label = "hora"
 	}
 	elseif ($results.minutes -gt 0) {
 		$duration = $results.minutes
-		$label = "minute"
+		$label = "minuto"
 	}
 	else {
 		$duration = 0
-		$label = "duration" # Unknown duration
+		$label = "duração" # Unknown duration
 	}
 	if ($duration -gt 1) {
 		$label += "s" # Pluralize

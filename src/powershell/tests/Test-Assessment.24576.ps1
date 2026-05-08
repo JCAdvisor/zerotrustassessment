@@ -10,7 +10,7 @@ function Test-Assessment-24576 {
     	MinimumLicense = ('Intune'),
     	Pillar = 'Dispositivos',
     	RiskLevel = 'Baixo',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 24576,
     	Title = 'A análise de pontos de extremidade está ativada para ajudar a identificar riscos em dispositivos Windows',

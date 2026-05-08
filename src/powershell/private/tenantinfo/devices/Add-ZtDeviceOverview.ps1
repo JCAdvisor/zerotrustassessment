@@ -187,7 +187,7 @@ order by operatingSystem, trustType, isCompliant
         )
 
         @{
-            "description"       = "Desktop devices (Windows and macOS) by join type and compliance status."
+            "description"       = "Dispositivos desktop (Windows e macOS) por tipo de ingresso e status de conformidade."
             "nodes"             = $nodes
             "totalDevices"      = $windowsTotal + $macOSTotal
             "entrajoined"       = $windowsEntraJoined
@@ -324,7 +324,7 @@ order by operatingSystem, deviceOwnership, isCompliant
         )
 
         @{
-            "description"  = "Mobile devices by compliance status."
+            "description"  = "Dispositivos móveis por status de conformidade."
             "nodes"        = $nodes
             "totalDevices" = $results | Measure-Object -Property count -Sum | Select-Object -ExpandProperty Sum
         }

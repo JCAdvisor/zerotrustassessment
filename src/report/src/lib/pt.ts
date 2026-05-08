@@ -93,12 +93,13 @@ const exactTranslations: Record<string, string> = {
     "All devices": "Todos os dispositivos",
     "All users": "Todos os usuários",
     "Specific Groups": "Grupos específicos",
-    "Protect tenants and isolate production systems": "Proteger tenants e isolar sistemas de produção",
+    "Protect tenants and isolate production systems": "Proteger tenants e sistemas em produção",
     "Monitor and detect": "Monitorar e detectar",
     "Protect engineering": "Proteger a engenharia",
     "Protect identities": "Proteger identidades",
     "Protect tenants": "Proteger tenants",
     "Accelerate response": "Acelerar a resposta",
+    "less than 1%": "menos de 1%",
 }
 
 export function translateText(value: string | number | boolean | null | undefined): string {

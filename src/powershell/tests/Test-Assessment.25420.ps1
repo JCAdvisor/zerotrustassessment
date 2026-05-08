@@ -151,7 +151,7 @@ function Test-Assessment-25420 {
     }
     else {
 
-        Write-ZtProgress -Activity $activity -Status 'Evaluating log categories and retention'
+        Write-ZtProgress -Activity $activity -Status 'Avaliando categorias de log e retenção'
 
         # Initialize log category tracking
         foreach ($category in $REQUIRED_LOG_CATEGORIES) {
@@ -281,13 +281,13 @@ function Test-Assessment-25420 {
         if ($passingSettingFound) {
 
             $passed = $true
-            $testResultMarkdown = "✅ Global Secure Access logs are retained for at least $MINIMUM_RETENTION_DAYS days, supporting security analysis and compliance requirements`n`n%TestResult%"
+            $testResultMarkdown = "✅ Os logs do Acesso Seguro Global são retidos por pelo menos $MINIMUM_RETENTION_DAYS dias, atendendo aos requisitos de análise de segurança e conformidade.`n`n%TestResult%"
 
         }
         else {
 
             $passed = $false
-            $testResultMarkdown = "❌ Global Secure Access logs are not retained for adequate duration to support security investigations and compliance obligations`n`n%TestResult%"
+            $testResultMarkdown = "❌ Os logs do Acesso Seguro Global não são retidos por tempo suficiente para suportar investigações de segurança e obrigações de conformidade.`n`n%TestResult%"
 
         }
     }
@@ -306,34 +306,34 @@ function Test-Assessment-25420 {
         ($workspaceRetentions | Measure-Object -Minimum).Minimum
     } else { $null }
 
-    $mdInfo = "`n## [Diagnostic settings configuration](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/DiagnosticSettings)`n`n"
+    $mdInfo = "`n## [Configuração de diagnóstico](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/DiagnosticSettings)`n`n"
 
     # Log Retention Status table
     if ($logCategoryStatus.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-### Log retention status
+### Status de retenção de log
 
-| Log category | Enabled | Destination type | Retention period | Meets minimum (90 days) |
+| Categoria de log | Habilitado | Tipo de destino | Período de retenção | Atende ao mínimo (90 dias) |
 | :--- | :--- | :--- | :--- | :--- |
 {0}
 
 '@
         foreach ($category in $REQUIRED_LOG_CATEGORIES) {
             $status       = $logCategoryStatus[$category]
-            $enabledText  = if ($status.Enabled) { 'Yes' } else { 'No' }
-            $destType     = if ($status.Enabled) { $status.DestinationType } else { 'None' }
+            $enabledText  = if ($status.Enabled) { 'Sim' } else { 'Não' }
+            $destType     = if ($status.Enabled) { $status.DestinationType } else { 'Nenhum' }
 
             # For storage-only destinations, retention cannot be queried via API
             $isStorageOnly = $status.DestinationType -eq 'Storage'
             $retention = if ($status.RetentionDays) {
-                "$($status.RetentionDays) days"
+                "$($status.RetentionDays) dias"
             } elseif ($isStorageOnly) {
-                'Manual verification required'
+                'Verificação manual necessária'
             } else {
-                'Not configured'
+                'Não configurado'
             }
-            $meetsMinText = if ($status.MeetsMinimum) { 'Yes' } else { 'No' }
+            $meetsMinText = if ($status.MeetsMinimum) { 'Sim' } else { 'Não' }
 
             $tableRows   += "| $category | $enabledText | $destType | $retention | $meetsMinText |`n"
         }
@@ -344,9 +344,9 @@ function Test-Assessment-25420 {
     if ($diagResults.Count -gt 0) {
         $tableRows = ""
         $formatTemplate = @'
-### Destination details
+### Detalhes do destino
 
-| Destination type | Resource name | Default retention | Status |
+| Tipo de destino | Nome do recurso | Retenção padrão | Status |
 | :--- | :--- | :--- | :--- |
 {0}
 
@@ -366,8 +366,8 @@ function Test-Assessment-25420 {
             $resourceName = if ($diag.WorkspaceName) { Get-SafeMarkdown $diag.WorkspaceName }
                            elseif ($diag.StorageAccountId) { Get-SafeMarkdown ($diag.StorageAccountId.Split('/')[-1]) }
                            else { 'N/A' }
-            $retention = if ($diag.RetentionDays) { "$($diag.RetentionDays) days" }
-                        elseif ($diag.StorageAccountId) { 'Manual verification required' }
+            $retention = if ($diag.RetentionDays) { "$($diag.RetentionDays) dias" }
+                        elseif ($diag.StorageAccountId) { 'Verificação manual necessária' }
                         else { 'N/A' }
             $tableRows += "| $destType | $resourceName | $retention | $($diag.Status) |`n"
         }
@@ -375,13 +375,13 @@ function Test-Assessment-25420 {
     }
 
     # Summary table (per spec format)
-    $mdInfo += "### Summary`n`n"
-    $mdInfo += "| Metric | Value |`n| :--- | :--- |`n"
-    $mdInfo += "| Total diagnostic settings | $($diagnosticSettings.Count) |`n"
-    $mdInfo += "| Settings with long-term destination | $settingsWithLongTermDest |`n"
-    $mdInfo += "| Average retention period | $(if ($avgRetention) { "$avgRetention days" } else { 'N/A' }) |`n"
-    $mdInfo += "| Minimum retention found | $(if ($minRetention) { "$minRetention days" } else { 'N/A' }) |`n"
-    $mdInfo += "| Meets 90-day minimum | $(if ($hasAdequateRetention) { 'Yes' } else { 'No' }) |`n"
+    $mdInfo += "### Resumo`n`n"
+    $mdInfo += "| Métrica | Valor |`n| :--- | :--- |`n"
+    $mdInfo += "| Total de configurações de diagnóstico | $($diagnosticSettings.Count) |`n"
+    $mdInfo += "| Configurações com destino de longo prazo | $settingsWithLongTermDest |`n"
+    $mdInfo += "| Período médio de retenção | $(if ($avgRetention) { "$avgRetention dias" } else { 'N/A' }) |`n"
+    $mdInfo += "| Retenção mínima encontrada | $(if ($minRetention) { "$minRetention dias" } else { 'N/A' }) |`n"
+    $mdInfo += "| Atende ao mínimo de 90 dias | $(if ($hasAdequateRetention) { 'Sim' } else { 'Não' }) |`n"
 
         # Substituir o placeholder pelas informações detalhadas
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo

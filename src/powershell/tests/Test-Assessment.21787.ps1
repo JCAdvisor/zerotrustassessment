@@ -10,7 +10,7 @@ function Test-Assessment-21787 {
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',
     	RiskLevel = 'Alto',
-    	SfiPillar = 'Proteger tenants e isolar sistemas de produção',
+    	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 21787,
     	Title = 'As permissões para criar novos tenants são limitadas à função de Criador de tenant',

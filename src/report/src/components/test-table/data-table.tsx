@@ -455,7 +455,7 @@ export function DataTable<TData extends Test, TValue>({
                                 }}
                                 className="h-6 px-2 text-xs text-muted-foreground hover:text-foreground"
                             >
-                                Clear All Filters
+                                Limpar todos os filtros
                             </Button>
                         )}
                         <div className="text-xs text-muted-foreground">
