@@ -5,7 +5,7 @@
 
 function Test-Assessment-22128 {
     [ZtTest(
-        Category = 'Gestão de aplicativos',
+        Category = 'Gerenciamento de aplicativos',
         ImplementationCost = 'Médio',
         MinimumLicense = ('Free'),
         Pillar = 'Identidade',

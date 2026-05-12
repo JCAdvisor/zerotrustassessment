@@ -44,6 +44,14 @@ const allMenuItems: NavItemWithChildren[] = [
         title: 'Dados',
         to: 'data',
     },
+    {
+        title: 'Roadmap',
+        to: 'roadmap',
+    },
+    {
+        title: 'Guia de Implementação',
+        to: 'workshop',
+    },
 ]
 
 // Filter menu based on available data (e.g., exclude Network/Data if their totals don't exist)

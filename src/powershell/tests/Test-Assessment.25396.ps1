@@ -14,7 +14,7 @@
 
 function Test-Assessment-25396 {
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
         ImplementationCost = 'Médio',
         MinimumLicense = ('Entra_Premium_Private_Access', 'AAD_PREMIUM'),
         CompatibleLicense = ('Entra_Premium_Private_Access'),
@@ -81,11 +81,11 @@ function Test-Assessment-25396 {
     if (-not $privateAccessApps -or $privateAccessApps.Count -eq 0) {
         $passed = $false
         $testResultMarkdown = @"
-⚠️ No Private Access applications are configured.
+⚠️ Nenhum aplicativo Private Access está configurado.
 
 ## Links do portal
 
-- [Acesso Seguro Global > Aplicativos > Aplicativos corporativos](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/EnterpriseApplicationListBladeV3/fromNav/globalSecureAccess/applicationType/GlobalSecureAccessApplication)
+- [Global Secure Access > Aplicativos > Aplicativos corporativos](https://entra.microsoft.com/#view/Microsoft_AAD_IAM/EnterpriseApplicationListBladeV3/fromNav/globalSecureAccess/applicationType/GlobalSecureAccessApplication)
 - [Conditional Access > Políticas](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/Overview/menuId//fromNav/Identity)
 - [Métodos de autenticação > Forças de autenticação](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/ConditionalAccessBlade/~/AuthStrengths)
 "@
@@ -197,7 +197,7 @@ function Test-Assessment-25396 {
                     # Check for MFA in builtInControls
                     elseif ($policy.grantControls.builtInControls -contains 'mfa') {
                         $currentLevel = 'MFA'
-                        $currentStrengthName = 'MFA (built-in)'
+                        $currentStrengthName = 'MFA (integrada)'
                     }
 
                     # Collect policy details
@@ -236,7 +236,7 @@ function Test-Assessment-25396 {
                 $manualReviewApps++
             }
             else {
-                $status = 'Unprotected'
+                $status = 'Não protegido'
                 $unprotectedApps++
             }
 
@@ -249,8 +249,8 @@ function Test-Assessment-25396 {
                 AppName         = $displayName
                 AppId           = $appId
                 AppType         = $appType
-                HasCSA          = if ($hasCSA) { 'Yes' } else { 'No' }
-                CAPolicies      = if ($allPolicyDetails.Count -gt 0) { $strongestPolicyNames } else { 'None' }
+                HasCSA          = if ($hasCSA) { 'Sim' } else { 'Não' }
+                CAPolicies      = if ($allPolicyDetails.Count -gt 0) { $strongestPolicyNames } else { 'Nenhuma' }
                 AuthStrength    = $authStrengthName
                 Level           = $authLevel
                 Status          = $status

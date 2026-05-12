@@ -17,7 +17,7 @@
 function Test-Assessment-25420 {
 
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
         ImplementationCost = 'Baixo',
         MinimumLicense = ('AAD_PREMIUM', 'Entra_Premium_Internet_Access', 'Entra_Premium_Private_Access'),
         CompatibleLicense = ('Entra_Premium_Private_Access','Entra_Premium_Internet_Access'),
@@ -146,7 +146,7 @@ function Test-Assessment-25420 {
     if ($null -eq $diagnosticSettings -or $diagnosticSettings.Count -eq 0) {
 
         $passed = $false
-        $testResultMarkdown = "❌ Nenhuma configuração de diagnóstico está definida para o Microsoft Entra. Os logs do Acesso Seguro Global são retidos por apenas 30 dias (retenção padrão no portal), o que é insuficiente para investigações de segurança.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma configuração de diagnóstico está definida para o Microsoft Entra. Os logs do Global Secure Access são retidos por apenas 30 dias (retenção padrão no portal), o que é insuficiente para investigações de segurança.`n`n%TestResult%"
 
     }
     else {
@@ -281,13 +281,13 @@ function Test-Assessment-25420 {
         if ($passingSettingFound) {
 
             $passed = $true
-            $testResultMarkdown = "✅ Os logs do Acesso Seguro Global são retidos por pelo menos $MINIMUM_RETENTION_DAYS dias, atendendo aos requisitos de análise de segurança e conformidade.`n`n%TestResult%"
+            $testResultMarkdown = "✅ Os logs do Global Secure Access são retidos por pelo menos $MINIMUM_RETENTION_DAYS dias, atendendo aos requisitos de análise de segurança e conformidade.`n`n%TestResult%"
 
         }
         else {
 
             $passed = $false
-            $testResultMarkdown = "❌ Os logs do Acesso Seguro Global não são retidos por tempo suficiente para suportar investigações de segurança e obrigações de conformidade.`n`n%TestResult%"
+            $testResultMarkdown = "❌ Os logs do Global Secure Access não são retidos por tempo suficiente para suportar investigações de segurança e obrigações de conformidade.`n`n%TestResult%"
 
         }
     }

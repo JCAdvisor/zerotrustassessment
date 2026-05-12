@@ -23,11 +23,11 @@ function Test-Assessment-35024 {
     	MinimumLicense = ('Microsoft 365 E3'),
     	Service = ('ExchangeOnline'),
     	Pillar = 'Dados',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35024,
-    	Title = 'Azure Rights Management service is enabled',
+    	Title = 'O serviço de Gerenciamento de Direitos do Azure está habilitado',
     	UserImpact = 'Alto'
     )]
     [CmdletBinding()]
@@ -58,7 +58,7 @@ function Test-Assessment-35024 {
 
     if ($errorMsg) {
         $investigateFlag = $true
-        $testResultMarkdown = "⚠️ Unable to retrieve Azure RMS licensing status. Please verify connectivity and permissions.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível recuperar o status de licenciamento do Azure RMS. Verifique a conectividade e as permissões.`n`n%TestResult%"
     }
     else {
         $passed = $irmConfig.AzureRMSLicensingEnabled -eq $true
@@ -118,7 +118,7 @@ function Test-Assessment-35024 {
 
     $params = @{
         TestId = '35024'
-        Title  = 'Azure RMS Licensing Enabled'
+        Title  = 'O serviço de Gerenciamento de Direitos do Azure está habilitado'
         Status = $passed
         Result = $testResultMarkdown
     }

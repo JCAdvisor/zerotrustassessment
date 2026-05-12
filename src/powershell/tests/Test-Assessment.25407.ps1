@@ -5,7 +5,7 @@
 
 function Test-Assessment-25407 {
     [ZtTest(
-    	Category = 'Acesso Seguro Global',
+    	Category = 'Global Secure Access',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
@@ -99,9 +99,3 @@ function Test-Assessment-25407 {
 
     Add-ZtTestResultDetail @params
 }
-
-
-
-
-
-

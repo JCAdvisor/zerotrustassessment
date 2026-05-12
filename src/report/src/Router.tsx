@@ -10,6 +10,8 @@ import Apps from "./pages/Apps";
 import Network from "./pages/Network";
 import Infrastructure from "./pages/Infrastructure";
 import Data from "./pages/Data";
+import Roadmap from "./pages/Roadmap";
+import WorkshopGuide from "./pages/WorkshopGuide";
 
 export const router = createHashRouter([
     {
@@ -43,6 +45,14 @@ export const router = createHashRouter([
             {
                 path: "data",
                 element: <Data />,
+            },
+            {
+                path: "roadmap",
+                element: <Roadmap />,
+            },
+            {
+                path: "workshop",
+                element: <WorkshopGuide />,
             },
         ],
     },

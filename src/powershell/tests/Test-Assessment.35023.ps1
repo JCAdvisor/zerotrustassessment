@@ -26,7 +26,7 @@ function Test-Assessment-35023 {
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35023,
-        Title = 'OCR is enabled for sensitive information detection',
+        Title = 'O OCR está habilitado para detecção de informação sensível',
         UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -77,7 +77,7 @@ function Test-Assessment-35023 {
         if ($teams)      { $enabledLocationsCount++ }
         if ($endpoint)   { $enabledLocationsCount++ }
 
-        $billingStatus = if ($isBlocked) { 'Not Configured' } else { 'Configured' }
+        $billingStatus = if ($isBlocked) { 'Não configurado' } else { 'Configurado' }
     }
     #endregion Data Collection
 
@@ -96,23 +96,23 @@ function Test-Assessment-35023 {
 
         if (-not $hasConfig) {
             $passed = $false
-            $testResultMarkdown = "❌ OCR is not configured.`n`n%TestResult%"
+            $testResultMarkdown = "❌ O OCR não está configurado.`n`n%TestResult%"
         }
         elseif (-not $enabled) {
             $passed = $false
-            $testResultMarkdown = "❌ OCR is configured but disabled at the tenant level.`n`n%TestResult%"
+            $testResultMarkdown = "❌ O OCR está configurado, mas desabilitado no nível do locatário.`n`n%TestResult%"
         }
         elseif (-not $anyLocationEnabled) {
             $passed = $false
-            $testResultMarkdown = "❌ OCR is enabled but not configured for any locations.`n`n%TestResult%"
+            $testResultMarkdown = "❌ O OCR está habilitado, mas não está configurado para nenhum local.`n`n%TestResult%"
         }
         elseif ($isBlocked) {
             $passed = $false
-            $testResultMarkdown = "❌ OCR usage is blocked.`n`n%TestResult%"
+            $testResultMarkdown = "❌ O uso de OCR está bloqueado.`n`n%TestResult%"
         }
         else {
             $passed = $true
-            $testResultMarkdown = "✅ OCR configuration is enabled at the tenant level for at least one workload, enabling policies to detect sensitive information within images.`n`n%TestResult%"
+            $testResultMarkdown = "✅ A configuração de OCR está habilitada no nível do locatário para pelo menos uma carga de trabalho, permitindo que as políticas detectem informações sensíveis em imagens.`n`n%TestResult%"
         }
     }
     #endregion Assessment Logic
@@ -164,7 +164,7 @@ function Test-Assessment-35023 {
 
     $params = @{
         TestId = '35023'
-        Title = 'OCR is enabled for sensitive information detection'
+        Title = 'O OCR está habilitado para detecção de informação sensível'
         Status = $passed
         Result = $testResultMarkdown
     }

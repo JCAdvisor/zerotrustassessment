@@ -22,11 +22,11 @@ function Test-Assessment-35025 {
         Service = ('ExchangeOnline'),
         MinimumLicense = ('Microsoft 365 E3'),
         Pillar = 'Dados',
-        RiskLevel = 'High',
+        RiskLevel = 'Alto',
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35025,
-        Title = 'Internal Rights Management licensing is enabled',
+        Title = 'O licenciamento interno de Gerenciamento de Direitos está habilitado',
         UserImpact = 'Alto'
     )]
     [CmdletBinding()]
@@ -112,21 +112,21 @@ function Test-Assessment-35025 {
             $licensingLocationValue = if ($irmConfig.LicensingLocation) {
                 ($irmConfig.LicensingLocation | ForEach-Object { Get-SafeMarkdown $_ }) -join ', '
             } else {
-                'Not configured'
+                'Não configurado'
             }
 
             $internalLicensingConfig = if ($irmConfig.InternalLicensingEnabled -eq $true) {
-                '✅ Enabled'
+                '✅ Habilitado'
             } elseif ($irmConfig.InternalLicensingEnabled -eq $false) {
-                '❌ Disabled'
+                '❌ Desabilitado'
             } else {
-                '⚠️ Incomplete'
+                '⚠️ Incompleto'
             }
 
             $licensingEndpoints = if ($irmConfig.LicensingLocation) {
-                '✅ Configured'
+                '✅ Configurado'
             } else {
-                '❌ Not Configured'
+                '❌ Não Configurado'
             }
 
             # Build table
@@ -148,7 +148,7 @@ function Test-Assessment-35025 {
 
     $params = @{
         TestId = '35025'
-        Title  = 'Internal RMS Licensing Enabled'
+        Title  = 'O licenciamento interno de Gerenciamento de Direitos está habilitado'
         Status = $passed
         Result = $testResultMarkdown
     }

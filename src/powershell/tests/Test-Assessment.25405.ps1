@@ -14,7 +14,7 @@
 
 function Test-Assessment-25405 {
     [ZtTest(
-    	Category = 'Acesso Seguro Global',
+    	Category = 'Global Secure Access',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('P1'),
     	Pillar = 'Rede',

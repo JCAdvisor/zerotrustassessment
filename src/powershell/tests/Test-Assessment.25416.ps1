@@ -17,7 +17,7 @@
 
 function Test-Assessment-25416 {
     [ZtTest(
-    	Category = 'Acesso Seguro Global',
+    	Category = 'Global Secure Access',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
@@ -26,7 +26,7 @@ function Test-Assessment-25416 {
     	SfiPillar = 'Proteger redes',
     	TenantType = ('Workforce','External'),
     	TestId = 25416,
-    	Title = 'O firewall de nuvem do Acesso Seguro Global protege o tráfego de internet das filiais',
+    	Title = 'O firewall de nuvem do Global Secure Access protege o tráfego de internet das filiais',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -271,7 +271,7 @@ function Test-Assessment-25416 {
 
     $params = @{
         TestId = '25416'
-        Title  = 'O tráfego de internet das filiais é protegido por políticas de Firewall de Nuvem pelo Acesso Seguro Global'
+        Title  = 'O tráfego de internet das filiais é protegido por políticas de Firewall de Nuvem pelo Global Secure Access'
         Status = $passed
         Result = $testResultMarkdown
     }

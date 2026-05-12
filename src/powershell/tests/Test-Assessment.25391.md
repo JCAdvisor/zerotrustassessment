@@ -9,7 +9,7 @@ Sem conectores funcionais:
 **Ação de remediação**
 
 - [Configure conectores para alta disponibilidade](https://learn.microsoft.com/entra/global-secure-access/how-to-configure-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
-- Monitore a integridade dos conectores no centro de administração do Microsoft Entra em Acesso Seguro Global > Conectar > Conectores.
+- Monitore a integridade dos conectores no centro de administração do Microsoft Entra em Global Secure Access > Conectar > Conectores.
 - [Solucione problemas de instalação e conectividade dos conectores](https://learn.microsoft.com/entra/global-secure-access/troubleshoot-connectors?wt.mc_id=zerotrustrecommendations_automation_content_cnl_csasci).
 <!--- Results --->
 %TestResult%

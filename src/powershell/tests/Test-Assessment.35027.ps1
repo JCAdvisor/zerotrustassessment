@@ -22,11 +22,11 @@ function Test-Assessment-35027 {
     	MinimumLicense = ('Microsoft 365 E3','Microsoft 365 E5','Advanced Message Encryption add-on'),
     	Service = ('ExchangeOnline'),
     	Pillar = 'Dados',
-    	RiskLevel = 'Low',
+    	RiskLevel = 'Baixo',
     	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35027,
-    	Title = 'Custom branding templates are configured for Microsoft Purview Message Encryption',
+    	Title = 'Modelos de marca personalizada estão configurados para o Criptografia de Mensagens do Microsoft Purview',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -70,12 +70,12 @@ function Test-Assessment-35027 {
             # Store configuration details for reporting
             $configDetails += [PSCustomObject]@{
                 Identity         = $config.Identity
-                EmailText        = if ($hasEmailText) { "✅ $($config.EmailText)" } else { '❌ None' }
-                LogoConfigured   = if ($hasImageUrl) { '✅ Yes' } else { '❌ No' }
-                BackgroundColor  = if ($hasBackgroundColor) { "✅ $($config.BackgroundColor)" } else { '❌ None' }
-                PortalText       = if ($hasPortalText) { "✅ $($config.PortalText)" } else { '❌ None' }
-                IntroductionText = if ($hasIntroductionText) { "✅ $($config.IntroductionText)" } else { '❌ None' }
-                DisclaimerText   = if ($hasDisclaimerText) { "✅ $($config.DisclaimerText)" } else { '❌ None' }
+                EmailText        = if ($hasEmailText) { "✅ $($config.EmailText)" } else { '❌ Nenhum' }
+                LogoConfigured   = if ($hasImageUrl) { '✅ Sim' } else { '❌ Não' }
+                BackgroundColor  = if ($hasBackgroundColor) { "✅ $($config.BackgroundColor)" } else { '❌ Nenhum' }
+                PortalText       = if ($hasPortalText) { "✅ $($config.PortalText)" } else { '❌ Nenhum' }
+                IntroductionText = if ($hasIntroductionText) { "✅ $($config.IntroductionText)" } else { '❌ Nenhum' }
+                DisclaimerText   = if ($hasDisclaimerText) { "✅ $($config.DisclaimerText)" } else { '❌ Nenhum' }
             }
         }
     }
@@ -138,7 +138,7 @@ function Test-Assessment-35027 {
 
     $params = @{
         TestId = '35027'
-        Title  = 'OME Custom Branding Templates'
+        Title  = 'Modelos de marca personalizada do Criptografia de Mensagens do Microsoft Purview'
         Status = $passed
         Result = $testResultMarkdown
     }

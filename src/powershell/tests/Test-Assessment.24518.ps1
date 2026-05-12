@@ -6,7 +6,7 @@ Verifica se todos os aplicativos empresariais possuem proprietários atribuídos
 function Test-Assessment-24518 {
 
     [ZtTest(
-    	Category = 'Gestão de aplicativos',
+    	Category = 'Gerenciamento de aplicativos',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('Free'),
     	Pillar = 'Identidade',

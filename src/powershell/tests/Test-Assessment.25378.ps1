@@ -106,11 +106,11 @@ function Test-Assessment-25378 {
         # Evaluate and set test result
         if ($isServiceDefault -or $fullAllowCondition) {
             $passed = $false
-            $testResultMarkdown = "❌ Default outbound B2B collaboration allows all users to access all applications in external organizations without governance.`n`n%TestResult%"
+            $testResultMarkdown = "❌ A colaboração B2B de saída padrão permite que todos os usuários acessem todos os aplicativos em organizações externas sem governança.`n`n%TestResult%"
         }
         elseif ($fullBlockCondition) {
             $passed = $true
-            $testResultMarkdown = "✅ Default outbound B2B collaboration is blocked for all users and all applications, requiring explicit cross-tenant access policies for external collaboration.`n`n%TestResult%"
+            $testResultMarkdown = "✅ A colaboração B2B de saída padrão está bloqueada para todos os usuários e todos os aplicativos, exigindo políticas explícitas de acesso entre locatários para colaboração externa.`n`n%TestResult%"
         }
         else {
             $passed = $false
@@ -182,7 +182,7 @@ function Test-Assessment-25378 {
 
 ## [{0}]({1})
 
-| Setting | Configured value | Expected value | Status |
+| Configuração | Valor configurado | Valor esperado | Status |
 | :------ | :--------------- | :------------- | :----: |
 {2}
 

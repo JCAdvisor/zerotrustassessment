@@ -46,11 +46,11 @@ function Test-Assessment-35012 {
         )
 
         # Extract content types from label
-        $contentType = if ($Label.ContentType) { $Label.ContentType } else { 'Not specified' }
+        $contentType = if ($Label.ContentType) { $Label.ContentType } else { 'Não especificado' }
 
         # Use null-coalescing to provide default values for potentially missing properties
-        $labelName = if ($null -ne $Label.Name) { $Label.Name } else { 'Unknown' }
-        $displayName = if ($null -ne $Label.DisplayName) { $Label.DisplayName } else { 'Not specified' }
+        $labelName = if ($null -ne $Label.Name) { $Label.Name } else { 'Desconhecido' }
+        $displayName = if ($null -ne $Label.DisplayName) { $Label.DisplayName } else { 'Não especificado' }
         $isParent = if ($null -ne $Label.IsParent) { $Label.IsParent } else { $false }
         $priority = if ($null -ne $Label.Priority) { $Label.Priority } else { 'N/A' }
 

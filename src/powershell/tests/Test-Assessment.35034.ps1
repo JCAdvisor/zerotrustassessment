@@ -22,11 +22,11 @@ function Test-Assessment-35034 {
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
         Pillar = 'Dados',
-        RiskLevel = 'High',
+        RiskLevel = 'Alto',
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce', 'External'),
         TestId = 35034,
-        Title = 'Exact Data Match is configured for sensitive information detection',
+        Title = 'A Coincidência Exata de Dados está configurada para detecção de informação sensível',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -80,13 +80,13 @@ function Test-Assessment-35034 {
 
 ## [{0}]({1})
 
-| Schema name | Description | Version | Created date | Modified date |
+| Nome do esquema | Descrição | Versão | Data de criação | Data de modificação |
 | :---------- | :---------- | :------ | :----------- | :------------ |
 {2}
 
 '@
 
-        $reportTitle = 'Exact Data Match Schemas'
+        $reportTitle = 'Esquemas de Coincidência Exata de Dados'
         $portalLink = 'https://purview.microsoft.com/informationprotection/dataclassification/exactdatamatch'
 
         $tableRows = ''
@@ -107,8 +107,8 @@ function Test-Assessment-35034 {
             $tableRows += "| $safeName | $safeDescription | $safeVersion | $safeCreated | $safeModified |`n"
         }
 
-        $tableRows += "`n**Summary:**`n"
-        $tableRows += "* Total EDM Schemas: $(@($edmSchemas).Count)"
+        $tableRows += "`n**Resumo:**`n"
+        $tableRows += "* Total de esquemas de EDM: $(@($edmSchemas).Count)"
 
         $mdInfo = $formatTemplate -f $reportTitle, $portalLink, $tableRows
     }
@@ -119,7 +119,7 @@ function Test-Assessment-35034 {
 
     $params = @{
         TestId = '35034'
-        Title  = 'Exact Data Match (EDM) Configurations'
+        Title  = 'A Coincidência Exata de Dados está configurada para detecção de informação sensível'
         Status = $passed
         Result = $testResultMarkdown
     }

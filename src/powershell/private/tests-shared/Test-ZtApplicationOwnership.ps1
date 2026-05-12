@@ -26,7 +26,7 @@ function Test-ZtApplicationOwnership {
 		$ReportTitle,
 
         [string]
-		$Activity = 'Checking enterprise application ownership'
+		$Activity = 'Verificando a propriedade de aplicativos corporativos'
     )
 
 	#region Helper Functions
@@ -59,7 +59,7 @@ function Test-ZtApplicationOwnership {
 		}
 
 		# Build table header
-		$tableHeader =  "| App name | Multi-tenant | Permission  | Classification | Owner count |`n"
+		$tableHeader =  "| Nome do aplicativo | Multi-tenant | Permissão | Classificação | Nº de proprietários |`n"
 		$tableHeader += "| :-------- | :------------ | :---------- | :------------- | :----------- |`n"
 
 		$tableRows = ''
@@ -75,7 +75,7 @@ function Test-ZtApplicationOwnership {
 			$permList = if ($allPermissions.Count -gt 0) {
 				($allPermissions | Select-Object -Unique | Sort-Object) -join ', '
 			} else {
-				'None'
+				'Nenhuma'
 			}
 
 			# Use the overall app Risk (already calculated by Get-GraphRisk)
@@ -104,15 +104,15 @@ function Test-ZtApplicationOwnership {
 	}
 	#endregion Helper Functions
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    Write-ZtProgress -Activity $Activity -Status 'Getting applications with insufficient owners'
+    Write-ZtProgress -Activity $Activity -Status 'Obtendo aplicativos com proprietários insuficientes'
 
     # Get applications based on privilege level
     $filteredApps = Get-ApplicationsWithInsufficientOwners -Database $Database -PrivilegeLevel $PrivilegeLevel
 
     # Build report and get parameters for Add-ZtTestResultDetail
-    Write-ZtProgress -Activity $Activity -Status 'Building report for applications with insufficient owners'
+    Write-ZtProgress -Activity $Activity -Status 'Gerando relatório de aplicativos com proprietários insuficientes'
 
     $params = Get-ZtiOwnershipReport `
         -Applications $filteredApps `

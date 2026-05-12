@@ -15,7 +15,7 @@
 
 function Test-Assessment-25422 {
     [ZtTest(
-    	Category = 'Acesso Seguro Global',
+    	Category = 'Global Secure Access',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Entra_Premium_Internet_Access','Entra_Premium_Private_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access','Entra_Premium_Private_Access'),
@@ -24,7 +24,7 @@ function Test-Assessment-25422 {
     	SfiPillar = 'Monitorar e detectar ciberameaças',
     	TenantType = ('Workforce','External'),
     	TestId = 25422,
-    	Title = 'Os logs de implantação do Acesso Seguro Global estão preenchidos e revisados',
+    	Title = 'Os logs de implantação do Global Secure Access estão preenchidos e revisados',
     	UserImpact = 'Baixo'
     )]
     [CmdletBinding()]

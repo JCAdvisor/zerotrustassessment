@@ -51,6 +51,7 @@ import {
 import { Test } from "@/config/report-data"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { StatusIcon } from "../status-icon"
+import { WorkshopGuidesPanel } from "@/components/workshop-guides-panel"
 
 export function DataTable<TData extends Test, TValue>({
     columns,
@@ -58,41 +59,48 @@ export function DataTable<TData extends Test, TValue>({
     pillar,
     isOverview = false,
 }: DataTableProps<TData, TValue>) {
-    // Recomendations and benefits dictionaries
-    const benefitsDict: {[key: string]: string} = {
-        "gerenciamento de credenciais": "Facilita gerenciamento centralizado de identidades, alinhando com suas experiências em avaliações de risco de credenciais.",
-        "gerenciamento de aplicativos": "Beneficia com controle centralizado de acessos, monitoramento de riscos, SSO seguro e conformidade automatizada, reduzindo violações e elevando produtividade.",
-        "acesso privilegiado": "Gerenciamento de Acesso Privilegiado no Microsoft 365 via PIM no Entra ID beneficia com acesso just-in-time, ativação aprovada, MFA, monitoramento de sessões e auditorias para minimizar riscos de abuso e conformidade com LGPD/ISO 27001.",
-        "controle de acesso": "Controle de Acesso no Microsoft 365 via Entra ID beneficia com autenticação condicional, MFA, princípio do menor privilégio, detecção de riscos e automação de revisões para prevenir acessos indevidos, elevar segurança e garantir conformidade.",
-        "tenant": "Gerenciamento no nível de Tenant do Microsoft 365 beneficia com isolamento lógico de dados e configurações, governança multi-tenant via Entra ID, escalabilidade segura e conformidade centralizada para múltiplas organizações ou ambientes.",
-        "dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 via Intune beneficia com controle centralizado remoto, conformidade de políticas de segurança, suporte BYOD, implantação automática de apps e atualizações, proteção de dados e integração com Defender para ambientes híbridos.",
-        "colaboração externa": "Colaboração externa no Microsoft 365, via Entra, beneficia com compartilhamento seguro de apps e dados com parceiros externos usando suas próprias identidades, sem sincronização de contas, mantendo controle granular, auditoria e conformidade para colaboração eficiente e reduzida sobrecarga administrativa.",
-        "auditoria": "Auditoria no Entra ID beneficia com logs detalhados de atividades de usuários, grupos e apps, permitindo rastrear alterações, entradas suspeitas, investigações de incidentes, relatórios de conformidade e integração com Azure Monitor para alertas e análises avançadas.",
-        "infraestrutura híbrida": "Infraestrutura Híbrida no Microsoft 365, via Entra ID Connect e identidade híbrida, beneficia com identidade unificada local-nuvem, SSO seamless, gerenciamento centralizado, migração gradual, alta disponibilidade e governança consistente para recursos on-premises e SaaS."
+    // Function to get icon for SFI pillar
+    const getSfiPillarIcon = (pillar: string) => {
+        if (pillar.includes("Monitorar e detectar ciberameaças")) return Eye;
+        if (pillar.includes("Proteger sistemas de engenharia")) return Wrench;
+        if (pillar.includes("Proteger identidades e segredos")) return Lock;
+        if (pillar.includes("Proteger tenants e sistemas em produção") || pillar.includes("Proteger locatários e isolar sistemas de produção")) return Building;
+        if (pillar.includes("Acelerar resposta e remediação")) return Zap;
+        if (pillar.includes("Proteger redes")) return Shield;
+        return Shield;
     };
 
-    const descriptionDict: {[key: string]: string} = {
-        "gerenciamento de credenciais": "Processo de criar, armazenar, atualizar e revogar identidades e autenticações (como senhas, tokens e certificados) durante todo o ciclo de vida do usuário para garantir segurança e controle de acesso.",
-        "gerenciamento de aplicativos": "Gerenciamento de Aplicativos no Microsoft 365 envolve controlar apps via Entra ID e Centro de Administração Teams, permitindo, bloqueando e governando acesso com políticas de permissão, instalação e conformidade para segurança e produtividade.",
-        "acesso privilegiado": "Gerenciamento de Acesso Privilegiado (PAM) no Microsoft 365 é um recurso do Entra ID Governance (PIM) que concede permissões elevadas temporariamente e sob aprovação, com monitoramento e auditoria para reduzir riscos de abuso.",
-        "controle de acesso":"Controle de Acesso no Microsoft 365 via Entra ID é o gerenciamento de identidades e permissões baseado em funções (RBAC), com políticas de acesso condicional, MFA e menor privilégio para autorizar usuários aos recursos certos no momento adequado.",
-        "tenant": "Tenant no Microsoft 365 é uma instância dedicada e isolada de serviços (Entra ID, Exchange, Teams), gerenciando identidades, acessos, políticas e dados para uma organização única com controle administrativo centralizado.",
-        "dispositivos": "Gerenciamento de Dispositivos no Microsoft 365 é feito via Intune, solução unificada em nuvem que registra, configura, protege e monitora endpoints (Windows, iOS, Android, macOS) com políticas MDM/MAM, implantação de apps e conformidade para acesso seguro a recursos corporativos.",
-        "colaboração externa": "Colaboração externa no Microsoft 365 permite colaboração segura com usuários externos via Entra ID B2B, convidando parceiros como convidados para acessar Teams, SharePoint e apps sem contas internas, com políticas de acesso granular e monitoramento.",
-        "auditoria": "Auditoria no Entra ID registra logs de atividades como criações de usuários, alterações de permissões e entradas, disponíveis no portal Microsoft Entra para consulta, exportação e integração com ferramentas SIEM para monitoramento e conformidade.",
-        "infraestrutura híbrida": "Infraestrutura Híbrida no Microsoft 365 integra ambientes on-premises (Active Directory) com nuvem via Entra Connect, sincronizando identidades, habilitando SSO, join híbrido de dispositivos e políticas unificadas para gerenciamento contínuo de acesso e segurança."
+    // SFI Pillar descriptions and benefits dictionaries
+    const sfiPillarDescriptionDict: {[key: string]: string} = {
+        "Proteger identidades e segredos": "Garante que identidades humanas e de máquinas sejam criadas, gerenciadas e protegidas ao longo de todo o ciclo de vida, usando autenticação forte, acesso condicional, MFA resistente a phishing e gerenciamento seguro de credenciais e segredos.",
+        "Proteger locatários e isolar sistemas de produção": "Assegura que os locatários do Microsoft 365 e Entra ID estejam configurados com isolamento adequado, governança centralizada, controles de acesso de emergência e separação entre ambientes de produção e não produção.",
+        "Proteger tenants e sistemas em produção": "Assegura que os locatários do Microsoft 365 e Entra ID estejam configurados com isolamento adequado, governança centralizada, controles de acesso de emergência e separação entre ambientes de produção e não produção.",
+        "Proteger redes": "Aplica segmentação de rede, controle de tráfego, proteção contra exfiltração de dados e políticas de acesso baseadas em identidade para garantir que apenas comunicações autorizadas fluam entre recursos corporativos e externos.",
+        "Proteger sistemas de engenharia": "Protege os sistemas, ferramentas e pipelines usados no desenvolvimento e operação de software, garantindo que o acesso seja controlado, o código seja auditado e as dependências sejam verificadas para prevenir comprometimentos na cadeia de suprimento.",
+        "Monitorar e detectar ciberameaças": "Implementa visibilidade contínua sobre o ambiente por meio de logs de auditoria, alertas, SIEM e análise comportamental para identificar atividades suspeitas, anomalias e ameaças antes que causem impacto significativo.",
+        "Acelerar resposta e remediação": "Reduz o tempo de detecção e resposta a incidentes por meio de automação, playbooks, integração entre ferramentas de segurança e processos bem definidos de contenção, erradicação e recuperação.",
     };
 
-    // Organize data by category for overview mode
+    const sfiPillarBenefitsDict: {[key: string]: string} = {
+        "Proteger identidades e segredos": "Reduz o risco de comprometimento de contas ao exigir autenticação forte e eliminar credenciais fracas. Melhora a conformidade com LGPD e ISO 27001 ao garantir rastreabilidade e controle sobre quem acessa o quê e quando.",
+        "Proteger locatários e isolar sistemas de produção": "Evita movimentação lateral entre ambientes e limita o impacto de comprometimentos. Garante que alterações em produção sejam controladas e auditadas, reduzindo riscos de configurações incorretas e acessos não autorizados.",
+        "Proteger tenants e sistemas em produção": "Evita movimentação lateral entre ambientes e limita o impacto de comprometimentos. Garante que alterações em produção sejam controladas e auditadas, reduzindo riscos de configurações incorretas e acessos não autorizados.",
+        "Proteger redes": "Limita a superfície de ataque reduzindo comunicações desnecessárias entre sistemas. Protege dados em trânsito e previne exfiltração, contribuindo para conformidade regulatória e resiliência operacional.",
+        "Proteger sistemas de engenharia": "Previne a introdução de vulnerabilidades por meio de ferramentas ou dependências comprometidas. Garante integridade do código e rastreabilidade das mudanças, reduzindo riscos associados a ataques à cadeia de suprimento de software.",
+        "Monitorar e detectar ciberameaças": "Permite identificação precoce de ameaças, reduzindo o tempo de permanência de atacantes no ambiente. Apoia investigações forenses, conformidade regulatória e melhora contínua da postura de segurança com base em dados reais.",
+        "Acelerar resposta e remediação": "Reduz o impacto de incidentes ao diminuir o tempo entre detecção e contenção. Automatiza ações repetitivas, libera analistas para tarefas de maior valor e melhora a resiliência organizacional diante de ameaças persistentes.",
+    };
+
+    // Organize data by SFI pillar for overview mode
     const overviewData = React.useMemo(() => {
         const result: { [key: string]: TData[] } = {};
         data.forEach((test: TData) => {
-            const category = (test as any).TestCategory;
-            if (category) {
-                if (!result[category]) {
-                    result[category] = [];
+            const sfiPillar = (test as any).TestSfiPillar;
+            if (sfiPillar) {
+                if (!result[sfiPillar]) {
+                    result[sfiPillar] = [];
                 }
-                result[category].push(test);
+                result[sfiPillar].push(test);
             }
         });
         return result;
@@ -105,7 +113,7 @@ export function DataTable<TData extends Test, TValue>({
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Categoria da funcionalidade</TableHead>
+                            <TableHead>Pilar SFI</TableHead>
                             <TableHead>Descrição</TableHead>
                             <TableHead>Total</TableHead>
                             <TableHead>Falhas</TableHead>
@@ -113,17 +121,23 @@ export function DataTable<TData extends Test, TValue>({
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {Object.entries(overviewData).map(([category, tests]: [string, TData[]]) => {
+                        {Object.entries(overviewData).map(([sfiPillar, tests]: [string, TData[]]) => {
                             const failedCount = tests.filter(
                                 (test: TData) => (test as any).TestStatus === "Failed"
                             ).length;
+                            const PillarIcon = getSfiPillarIcon(sfiPillar);
 
                             return (
-                                <TableRow key={category}>
-                                    <TableCell className="font-medium">{category}</TableCell>
+                                <TableRow key={sfiPillar}>
+                                    <TableCell className="font-medium">
+                                        <div className="flex items-center gap-2">
+                                            <PillarIcon className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                                            <span>{sfiPillar}</span>
+                                        </div>
+                                    </TableCell>
                                     <TableCell className="max-w-xs">
                                         <p className="text-sm text-muted-foreground">
-                                            {descriptionDict[category.toLowerCase()] || "Descrição não disponível"}
+                                            {sfiPillarDescriptionDict[sfiPillar] || "Descrição não disponível"}
                                         </p>
                                     </TableCell>
                                     <TableCell className="text-center">{tests.length}</TableCell>
@@ -134,7 +148,7 @@ export function DataTable<TData extends Test, TValue>({
                                     </TableCell>
                                     <TableCell>
                                         <p className="text-sm">
-                                            {benefitsDict[category.toLowerCase()] || "Benefícios não disponíveis"}
+                                            {sfiPillarBenefitsDict[sfiPillar] || "Benefícios não disponíveis"}
                                         </p>
                                     </TableCell>
                                 </TableRow>
@@ -268,16 +282,6 @@ export function DataTable<TData extends Test, TValue>({
             return a.localeCompare(b);
         });
     }, [pillarFilteredData]);
-
-    // Function to get icon for SFI pillar
-    const getSfiPillarIcon = (pillar: string) => {
-        if (pillar.includes("Monitor and detect")) return Eye;
-        if (pillar.includes("Protect engineering")) return Wrench;
-        if (pillar.includes("Protect identities")) return Lock;
-        if (pillar.includes("Protect tenants")) return Building;
-        if (pillar.includes("Accelerate response")) return Zap;
-        return Shield; // Default icon
-    };
 
     const table = useReactTable({
         data: filteredData,
@@ -593,6 +597,8 @@ export function DataTable<TData extends Test, TValue>({
                                 <Markdown className="prose max-w-fit dark:prose-invert" remarkPlugins={[remarkGfm]}>{selectedRow?.TestDescription}</Markdown>
                             </CardContent>
                         </Card>
+
+                        {selectedRow && <WorkshopGuidesPanel test={selectedRow} />}
                     </div>
                 </SheetContent>
             </Sheet>

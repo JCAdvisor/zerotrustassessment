@@ -22,11 +22,11 @@ function Test-Assessment-35035 {
     	CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
     	Service = ('SecurityCompliance'),
     	Pillar = 'Dados',
-    	RiskLevel = 'High',
+    	RiskLevel = 'Alto',
     	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce'),
     	TestId = 35035,
-    	Title = 'Named entity sensitive information types are used in auto-labeling and data loss prevention policies',
+    	Title = 'Tipos de informação sensível de entidade nomeada são usados em políticas de auto-rotulagem e prevenção contra perda de dados',
     	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -144,7 +144,7 @@ function Test-Assessment-35035 {
 
     #region Data Collection
 
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
     $activity = 'Avaliando o uso de Named Entity SIT em políticas'
     Write-ZtProgress -Activity $activity -Status 'Construindo catálogo de pesquisa de Named Entity SIT'
 
@@ -348,16 +348,16 @@ function Test-Assessment-35035 {
 
     # Report parsing errors if any occurred
     if ($parseErrors.Count -gt 0) {
-        $mdInfo += "`n`n### ⚠️ Parsing Errors`n"
-        $mdInfo += "The following rules could not be fully parsed:`n`n"
-        $mdInfo += "| Rule name | Type | Error |`n"
+        $mdInfo += "`n`n### ⚠️ Erros de análise`n"
+        $mdInfo += "As seguintes regras não puderam ser totalmente analisadas:`n`n"
+        $mdInfo += "| Nome da regra | Tipo | Erro |`n"
         $mdInfo += "| :--- | :--- | :--- |`n"
         foreach ($parseError in $parseErrors) {
             $ruleName = Get-SafeMarkdown -Text $parseError.RuleName
             $errorMsg = Get-SafeMarkdown -Text $parseError.Error
             $mdInfo += "| $ruleName | $($parseError.RuleType) | $errorMsg |`n"
         }
-        $mdInfo += "`n**Note**: These rules were excluded from the named entity SIT analysis.`n"
+        $mdInfo += "`n**Nota**: Essas regras foram excluídas da análise de SIT de entidade nomeada.`n"
     }
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
@@ -366,7 +366,7 @@ function Test-Assessment-35035 {
 
     $params = @{
         TestId = '35035'
-        Title  = 'Named Entity SITs Usage in Auto-Labeling and DLP Policies'
+        Title  = 'Tipos de informação sensível de entidade nomeada são usados em políticas de auto-rotulagem e prevenção contra perda de dados'
         Status = $passed
         Result = $testResultMarkdown
     }

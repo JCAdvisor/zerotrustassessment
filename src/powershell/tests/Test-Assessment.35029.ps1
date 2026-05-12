@@ -22,7 +22,7 @@ function Test-Assessment-35029 {
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35029,
-        Title = 'Mail flow rules apply rights protection to sensitive messages',
+        Title = 'Regras de fluxo de email aplicam proteção de direitos a mensagens sensíveis',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -113,47 +113,48 @@ function Test-Assessment-35029 {
     $hasExternalProtection = @($protectionRules | Where-Object { $_.SentToScope -eq 'NotInOrganization' }).Count -gt 0
 
     if ($allProtectionRulesDetailed.Count -gt 0) {
-        $mdInfo += "### [Protection rules configuration](https://admin.exchange.microsoft.com/#/transportrules)`n`n"
-        $mdInfo += "| Rule name | State | Priority | OME | RMS template | Classification | Last modified |`n"
+        $mdInfo += "### [Configuração das regras de proteção](https://admin.exchange.microsoft.com/#/transportrules)`n`n"
+        $mdInfo += "| Nome da regra | Estado | Prioridade | OME | Modelo RMS | Classificação | Última modificação |`n"
         $mdInfo += "| :--- | :--- | :--- | :--- | :--- | :--- | :--- |`n"
 
         foreach ($rule in $allProtectionRulesDetailed | Sort-Object -Property Priority) {
             $ruleName = Get-SafeMarkdown -Text $rule.Name
             $ruleLink = "[$ruleName](https://admin.exchange.microsoft.com/#/transportrules)"
             $stateIcon = if ($rule.State -eq 'Enabled') { '✅' } else { '❌' }
-            $omeStatus = if ($rule.ApplyOME) { 'Yes' } else { 'No' }
+            $stateDisplay = if ($rule.State -eq 'Enabled') { 'Habilitado' } else { 'Desabilitado' }
+            $omeStatus = if ($rule.ApplyOME) { 'Sim' } else { 'Não' }
             $rmsTemplate = if ($rule.ApplyRightsProtectionTemplate) { Get-SafeMarkdown -Text $rule.ApplyRightsProtectionTemplate } else { 'N/A' }
             $classificationStatus = if ($rule.ApplyClassification) { Get-SafeMarkdown -Text $rule.ApplyClassification } else { 'N/A' }
             $modifiedDate = if ($rule.WhenChanged) { $rule.WhenChanged.ToString('yyyy-MM-dd') } else { 'N/A' }
 
-            $mdInfo += "| $ruleLink | $stateIcon $($rule.State) | $($rule.Priority) | $omeStatus | $rmsTemplate | $classificationStatus | $modifiedDate |`n"
+            $mdInfo += "| $ruleLink | $stateIcon $stateDisplay | $($rule.Priority) | $omeStatus | $rmsTemplate | $classificationStatus | $modifiedDate |`n"
         }
         $mdInfo += "`n"
     }
 
-    $mdInfo += "### Rules by action type`n`n"
-    $mdInfo += "| Action type | Count |`n"
+    $mdInfo += "### Regras por tipo de ação`n`n"
+    $mdInfo += "| Tipo de ação | Contagem |`n"
     $mdInfo += "| :--- | :--- |`n"
-    $mdInfo += "| OME encryption rules | $omeRulesCount |`n"
-    $mdInfo += "| RMS template application | $rmsRulesCount |`n"
-    $mdInfo += "| Classification rules | $classificationRulesCount |`n"
+    $mdInfo += "| Regras de criptografia OME | $omeRulesCount |`n"
+    $mdInfo += "| Aplicação de modelo RMS | $rmsRulesCount |`n"
+    $mdInfo += "| Regras de classificação | $classificationRulesCount |`n"
 
-    $externalProtectionStatus = if ($hasExternalProtection) { '✅ Yes' } else { '❌ No' }
+    $externalProtectionStatus = if ($hasExternalProtection) { '✅ Sim' } else { '❌ Não' }
 
-    $mdInfo += "`n### Summary`n`n"
-    $mdInfo += "| Metric | Count |`n"
+    $mdInfo += "`n### Resumo`n`n"
+    $mdInfo += "| Métrica | Contagem |`n"
     $mdInfo += "| :--- | :--- |`n"
-    $mdInfo += "| Total protection rules | $totalRulesCount |`n"
-    $mdInfo += "| Enabled rules | $enabledRulesCount |`n"
-    $mdInfo += "| Disabled rules | $disabledRulesCount |`n"
-    $mdInfo += "| External email protection | $externalProtectionStatus |"
+    $mdInfo += "| Total de regras de proteção | $totalRulesCount |`n"
+    $mdInfo += "| Regras habilitadas | $enabledRulesCount |`n"
+    $mdInfo += "| Regras desabilitadas | $disabledRulesCount |`n"
+    $mdInfo += "| Proteção de email externo | $externalProtectionStatus |"
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
     #endregion Report Generation
 
     $params = @{
         TestId = '35029'
-        Title  = 'Mail flow rules with rights protection'
+        Title  = 'Regras de fluxo de email aplicam proteção de direitos a mensagens sensíveis'
         Status = $passed
         Result = $testResultMarkdown
     }

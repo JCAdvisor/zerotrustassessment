@@ -8,7 +8,7 @@
 
 function Test-Assessment-25398 {
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
         ImplementationCost = 'Médio',
         MinimumLicense = ('AAD_PREMIUM', 'Entra_Premium_Private_Access'),
         CompatibleLicense = ('Entra_Premium_Private_Access'),
@@ -25,7 +25,7 @@ function Test-Assessment-25398 {
         $Database
     )
 
-    Write-PSFMessage '🟦 Início da avaliação de proteção RDP de controladores de domínio no Acesso Seguro Global' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início da avaliação de proteção RDP de controladores de domínio no Global Secure Access' -Tag Test -Level VeryVerbose
 
     $activity = 'Verificando a proteção de acesso RDP a controladores de domínio'
     Write-ZtProgress -Activity $activity -Status 'Verificando conexão com o Microsoft Graph'
@@ -168,7 +168,7 @@ Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.
                         AppId = $appData.App.appId
                         AppName = $appData.App.displayName
                         DestinationHost = $destinationHost
-                        AppType = 'DC RDP App'
+                        AppType = 'Aplicativo RDP de DC'
                     }
 
                     # Update DC host info
@@ -197,7 +197,7 @@ Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.
                         AppId = $appData.App.appId
                         AppName = $appData.App.displayName
                         DestinationHost = $segment.destinationHost
-                        AppType = 'General RDP App'
+                        AppType = 'Aplicativo RDP geral'
                     }
                 }
             }
@@ -269,7 +269,7 @@ Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.
 
     foreach ($rdpApp in $rdpApps) {
         $protected = $false
-        $protectedBy = 'None'
+        $protectedBy = 'Nenhuma'
         $authStrengthName = 'N/A'
         $status = 'Fail'
         $targetingMethod = 'None'
@@ -283,7 +283,7 @@ Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.
             if ($includeApps -contains $rdpApp.AppId -or $includeApps -contains 'All') {
                 $protected = $true
                 $protectedBy = $policy.displayName
-                $authStrengthName = 'Phishing-resistant MFA'
+                $authStrengthName = 'MFA resistente a phishing'
                 $status = 'Pass'
                 $targetingMethod = if ($includeApps -contains 'All') { 'All Apps' } else { 'Direct' }
                 $policyId = $policy.id
@@ -292,7 +292,7 @@ Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.
             elseif ($appFilter) {
                 $protected = $true
                 $protectedBy = $policy.displayName
-                $authStrengthName = 'Phishing-resistant MFA'
+                $authStrengthName = 'MFA resistente a phishing'
                 $status = 'Investigate'
                 $targetingMethod = 'Filter (Custom Security Attributes)'
                 $policyId = $policy.id
@@ -357,7 +357,7 @@ Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.
         $dcHostRows = ''
         foreach ($dcHost in $dcHosts.Keys) {
             $info = $dcHosts[$dcHost]
-            $rdpFound = if ($info.RdpAppFound) { 'Yes' } else { 'No' }
+            $rdpFound = if ($info.RdpAppFound) { 'Sim' } else { 'Não' }
             $dcHostRows += "| $(Get-SafeMarkdown $dcHost) | $(Get-SafeMarkdown $info.SourceApp) | $($info.Ports) | $rdpFound | $(Get-SafeMarkdown $info.RdpAppName) |`n"
         }
 
@@ -365,7 +365,7 @@ Write-ZtProgress -Activity $activity -Status "Verificando segmentos para $($app.
 
 ## [Hosts de controladores de domínio identificados]($privateAccessLink)
 
-| DC host (FQDN/IP) | Source application | Ports configured | RDP app found | RDP app name |
+| DC host (FQDN/IP) | Aplicativo de origem | Portas configuradas | Aplicativo RDP encontrado | Nome do aplicativo RDP |
 | :--- | :--- | :--- | :--- | :--- |
 $dcHostRows
 "@
@@ -378,13 +378,14 @@ $dcHostRows
             "[$(Get-SafeMarkdown $result.ProtectedBy)](https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/PolicyBlade/policyId/$($result.PolicyId))"
         } else { $result.ProtectedBy }
 
-        $statusIcon = switch ($result.Status) {
-            'Pass' { '✅' }
-            'Fail' { '❌' }
-            'Investigate' { '⚠️' }
+        $statusLabel = switch ($result.Status) {
+            'Pass'        { '✅ Aprovado' }
+            'Fail'        { '❌ Reprovado' }
+            'Investigate' { '⚠️ Investigar' }
+            default       { $result.Status }
         }
 
-        $rdpAppRows += "| $(Get-SafeMarkdown $result.AppName) | $(Get-SafeMarkdown $result.AppId) | $(Get-SafeMarkdown $result.DestinationHost) | $(Get-SafeMarkdown $result.AppType) | $policyCell | $($result.AuthStrength) | $statusIcon $($result.Status) |`n"
+        $rdpAppRows += "| $(Get-SafeMarkdown $result.AppName) | $(Get-SafeMarkdown $result.AppId) | $(Get-SafeMarkdown $result.DestinationHost) | $(Get-SafeMarkdown $result.AppType) | $policyCell | $($result.AuthStrength) | $statusLabel |`n"
     }
 
     $rdpAppsSection = @"
@@ -407,12 +408,12 @@ $rdpAppRows
             $appFilter = $policy.conditions.applications.applicationFilter
 
             if ($includeApps -contains 'All') {
-                $targetApps = 'All applications'
-                $targetingMethod = 'All Apps'
+                $targetApps = 'Todos os aplicativos'
+                $targetingMethod = 'Todos os aplicativos'
             }
             elseif ($appFilter) {
-                $targetApps = 'Via custom security attributes'
-                $targetingMethod = 'Filter'
+                $targetApps = 'Via atributos de segurança personalizados'
+                $targetingMethod = 'Filtro'
             }
             else {
                 $appNames = @()
@@ -420,8 +421,8 @@ $rdpAppRows
                     $matchedApp = $results | Where-Object { $_.AppId -eq $aid } | Select-Object -First 1
                     if ($matchedApp) { $appNames += $matchedApp.AppName }
                 }
-                $targetApps = if ($appNames.Count -gt 0) { ($appNames | Sort-Object -Unique) -join ', ' } else { "$($includeApps.Count) application(s)" }
-                $targetingMethod = 'Direct'
+                $targetApps = if ($appNames.Count -gt 0) { ($appNames | Sort-Object -Unique) -join ', ' } else { "$($includeApps.Count) aplicativo(s)" }
+                $targetingMethod = 'Direto'
             }
 
             $policyRows += "| $policyNameLink | $policyState | $(Get-SafeMarkdown $targetApps) | $targetingMethod |`n"
@@ -429,9 +430,9 @@ $rdpAppRows
 
         $caPoliciesSection = @"
 
-## [Conditional Access policies requiring phishing-resistant MFA]($caPoliciesLink)
+## [Políticas de Conditional Access que exigem MFA resistente a phishing]($caPoliciesLink)
 
-| Policy name | State | Target applications | Targeting method |
+| Nome da política | Estado | Aplicativos alvo | Método de direcionamento |
 | :--- | :--- | :--- | :--- |
 $policyRows
 "@
@@ -449,7 +450,7 @@ $policyRows
 
     $params = @{
         TestId = '25398'
-        Title  = 'Domain controller RDP access is protected by phishing-resistant authentication through Global Secure Access'
+        Title  = 'O acesso RDP a controladores de domínio está protegido por autenticação resistente a phishing via Global Secure Access'
         Status = $passed
         Result = $testResultMarkdown
     }

@@ -15,7 +15,7 @@
 
 function Test-Assessment-25377 {
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
         ImplementationCost = 'Médio',
     	MinimumLicense = ('AAD_PREMIUM','Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
@@ -65,12 +65,12 @@ function Test-Assessment-25377 {
     # Check Q1: Network packet tagging must be enabled
     if ($null -eq $networkPacketTaggingStatus -or $networkPacketTaggingStatus -ne 'enabled') {
         $statusText = if ($null -eq $networkPacketTaggingStatus) {
-            'not configured'
+            'não configurado'
         }
         else {
             $networkPacketTaggingStatus
         }
-        $testResultMarkdown = "❌ As Restrições Universais de Locatário não estão totalmente configuradas. A marcação de pacotes de rede está $statusText (esperado: enabled). `n`n%TestResult%"
+        $testResultMarkdown = "❌ As Restrições Universais de Locatário não estão totalmente configuradas. A marcação de pacotes de rede está $statusText (esperado: habilitado). `n`n%TestResult%"
         $passed = $false
     }
     else {
@@ -163,7 +163,7 @@ function Test-Assessment-25377 {
 
 ## [{0}]({1})
 
-| Setting | Current Value | Expected Value | Status |
+| Configuração | Valor atual | Valor esperado | Status |
 | :------ | :------------ | :------------- | :----: |
 {2}
 
@@ -186,7 +186,7 @@ function Test-Assessment-25377 {
 
     $params = @{
         TestId = '25377'
-        Title  = 'Usuários que acessam aplicações externas a partir de dispositivos corporativos são bloqueados, a menos que autorizados explicitamente pelas políticas de restrições de locatário'
+        Title  = 'As restrições universais de locatário bloqueiam o acesso externo não autorizado'
         Status = $passed
         Result = $testResultMarkdown
     }

@@ -27,7 +27,7 @@ function Test-Assessment-35026 {
     	SfiPillar = 'Proteger tenants e sistemas em produção',
     	TenantType = ('Workforce','External'),
     	TestId = 35026,
-    	Title = 'Microsoft Purview Message Encryption is configured with simplified client access',
+    	Title = 'O Criptografia de Mensagens do Microsoft Purview está configurado com acesso de cliente simplificado',
     	UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -142,7 +142,7 @@ function Test-Assessment-35026 {
 
     $params = @{
         TestId = '35026'
-        Title  = 'Office 365 Message Encryption (OME) - SimplifiedClientAccessEnabled'
+        Title  = 'O Criptografia de Mensagens do Microsoft Purview está configurado com acesso de cliente simplificado'
         Status = $passed
         Result = $testResultMarkdown
     }

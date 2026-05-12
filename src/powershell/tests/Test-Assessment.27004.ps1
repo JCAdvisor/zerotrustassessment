@@ -20,7 +20,7 @@
 
 function Test-Assessment-27004 {
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
     	ImplementationCost = 'Baixo',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
@@ -107,7 +107,7 @@ function Test-Assessment-27004 {
     elseif ($null -eq $tlsPolicies -or $tlsPolicies.Count -eq 0) {
         # No TLS inspection policies configured - prerequisite not met
         Write-PSFMessage 'A inspeção de TLS não está configurada neste locaário.' -Tag Test -Level Verbose
-        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'TLS inspection is not configured in this tenant. This check is not applicable until a TLS inspection policy is created.'
+        Add-ZtTestResultDetail -SkippedBecause NotApplicable -Result 'A inspeção de TLS não está configurada neste locatário. Esta verificação não se aplica até que uma política de inspeção de TLS seja criada.'
         return
     }
     else {
@@ -139,8 +139,8 @@ function Test-Assessment-27004 {
                 foreach ($dest in $rule.matchingConditions.destinations) {
                     if ($null -ne $dest.values) {
                         $destType = if ($dest.'@odata.type' -like '*tlsInspectionFqdnDestination*') { 'FQDN' }
-                                    elseif ($dest.'@odata.type' -like '*tlsInspectionWebCategoryDestination*') { 'Category' }
-                                    else { 'Unknown' }
+                                    elseif ($dest.'@odata.type' -like '*tlsInspectionWebCategoryDestination*') { 'Categoria' }
+                                    else { 'Desconhecido' }
                         foreach ($v in $dest.values) {
                             $destinations += $v
                             $destinationTypeMap[$v] = $destType
@@ -162,15 +162,15 @@ function Test-Assessment-27004 {
                 $destType = if ($destinationTypeMap.ContainsKey($destination)) { $destinationTypeMap[$destination] } else { 'FQDN' }
 
                 # Check if this is a web category destination
-                if ($destType -eq 'Category') {
+                if ($destType -eq 'Categoria') {
                     # Check against system recommended bypass categories
                     for ($i = 0; $i -lt $systemCategoriesLower.Count; $i++) {
                         if ($destLower -eq $systemCategoriesLower[$i]) {
                             $matchedPairs.Add([PSCustomObject]@{
                                 CustomFqdn = $destination
                                 SystemFqdn = $systemCategories[$i]
-                                MatchType  = 'Exact'
-                                DestType   = 'Category'
+                                MatchType  = 'Exata'
+                                DestType   = 'Categoria'
                             })
                             break
                         }
@@ -185,7 +185,7 @@ function Test-Assessment-27004 {
 
                         if ($destLower -eq $sysFqdn) {
                             # Exact match (covers wildcard-to-wildcard too)
-                            $isMatch = $true; $matchType = 'Exact'
+                            $isMatch = $true; $matchType = 'Exata'
                         }
                         elseif ($sysFqdn -match '^\*\.([^.]+)\.\*$') {
                             # Double-wildcard: *.domain.* — check if custom destination matches the pattern
@@ -193,7 +193,7 @@ function Test-Assessment-27004 {
                             if ($destLower -match "\.$mid\.") {
                                 $isMatch = $true
                                 # Determine match type based on whether custom is also a wildcard
-                                $matchType = if ($destLower -match '^\*\.') { 'Wildcard' } else { 'Subdomain' }
+                                $matchType = if ($destLower -match '^\*\.') { 'Curinga' } else { 'Subdomínio' }
                             }
                         }
                         elseif ($sysFqdn -match '^\*\.(.+)$') {
@@ -207,12 +207,12 @@ function Test-Assessment-27004 {
                             elseif ($destLower -like "*.$suffix") {
                                 # Subdomain of the wildcard suffix
                                 $isMatch = $true
-                                $matchType = 'Subdomain'
+                                $matchType = 'Subdomínio'
                             }
                             elseif ($destLower -eq $suffix) {
                                 # Base domain match
                                 $isMatch = $true
-                                $matchType = 'Subdomain'
+                                $matchType = 'Subdomínio'
                             }
                         }
 
@@ -220,7 +220,7 @@ function Test-Assessment-27004 {
                         if (-not $isMatch -and $destLower -match '^\*\.(.+)$') {
                             $customSuffix = $Matches[1]
                             if ($sysFqdn -eq $customSuffix -or $sysFqdn -eq "*.$customSuffix") {
-                                $isMatch = $true; $matchType = 'Wildcard'
+                                $isMatch = $true; $matchType = 'Curinga'
                             }
                         }
 
@@ -237,9 +237,9 @@ function Test-Assessment-27004 {
                 }
             }
 
-            $ruleStatus = if ($matchedPairs.Count -eq 0) { 'No Overlap' }
-                          elseif ($matchedPairs.Count -ge $destinations.Count) { 'Redundant' }
-                          else { 'Partial' }
+            $ruleStatus = if ($matchedPairs.Count -eq 0) { 'Sem sobreposição' }
+                          elseif ($matchedPairs.Count -ge $destinations.Count) { 'Redundante' }
+                          else { 'Parcial' }
 
             $ruleInfo = [PSCustomObject]@{
                 PolicyName        = $policy.name
@@ -255,7 +255,7 @@ function Test-Assessment-27004 {
 
             $allBypassRules.Add($ruleInfo)
 
-            if ($ruleStatus -ne 'No Overlap') {
+            if ($ruleStatus -ne 'Sem sobreposição') {
                 $redundantRules.Add($ruleInfo)
             }
         }
@@ -288,7 +288,7 @@ function Test-Assessment-27004 {
         $totalUniqueDestinations = $totalDestinations - $totalRedundantDestinations
 
         # Sort rules per spec: Status priority (Redundant → Partial → No Overlap), then by descending redundant count
-        $statusPriority = @{ 'Redundant' = 1; 'Partial' = 2; 'No Overlap' = 3 }
+        $statusPriority = @{ 'Redundante' = 1; 'Parcial' = 2; 'Sem sobreposição' = 3 }
         $sortedRules = $allBypassRules | Sort-Object { $statusPriority[$_.Status] }, @{ Expression = { $_.RedundantCount }; Descending = $true }
 
         # Build rule-level summary table with row cap
@@ -311,7 +311,7 @@ function Test-Assessment-27004 {
             $remainingRedundant = ($remaining | Where-Object { $_.Status -eq 'Redundant' }).Count
             $remainingPartial = ($remaining | Where-Object { $_.Status -eq 'Partial' }).Count
             $remainingNoOverlap = ($remaining | Where-Object { $_.Status -eq 'No Overlap' }).Count
-            $rulesTable += "| *+ $remainingCount more rules not shown ($remainingRedundant redundant, $remainingPartial partial, $remainingNoOverlap no overlap)* | | | | |`n"
+            $rulesTable += "| *+ $remainingCount regras adicionais não exibidas ($remainingRedundant redundantes, $remainingPartial parciais, $remainingNoOverlap sem sobreposição)* | | | | |`n"
         }
 
         # Build redundant destination detail grouped by rule
@@ -347,7 +347,7 @@ function Test-Assessment-27004 {
                 # Add overflow row if this rule has more redundant destinations than display limit
                 if ($rule.MatchedPairs.Count -gt $MAX_DESTINATIONS_PER_RULE) {
                     $remainingPairs = $rule.MatchedPairs.Count - $MAX_DESTINATIONS_PER_RULE
-                    $redundantDetail += "| | *+ $remainingPairs more redundant destinations not shown for this rule* | | | |`n"
+                    $redundantDetail += "| | *+ $remainingPairs destinos redundantes adicionais não exibidos para esta regra* | | | |`n"
                 }
 
                 $redundantDetail += "`n"
@@ -356,7 +356,7 @@ function Test-Assessment-27004 {
             # Add overflow line if there are more rule groups than display limit
             if ($sortedRedundantRules.Count -gt $MAX_RULE_GROUPS) {
                 $remainingRuleGroups = $sortedRedundantRules.Count - $MAX_RULE_GROUPS
-                $redundantDetail += "*+ $remainingRuleGroups more rules with redundant destinations not shown*`n`n"
+                $redundantDetail += "*+ $remainingRuleGroups regras adicionais com destinos redundantes não exibidas*`n`n"
             }
         }
 

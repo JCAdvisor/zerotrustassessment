@@ -30,7 +30,7 @@ function Test-Assessment-35032 {
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35032,
-        Title = 'Adaptive Protection is enabled in data loss prevention policies',
+        Title = 'A Proteção Adaptativa está habilitada nas políticas de prevenção contra perda de dados',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -84,19 +84,19 @@ function Test-Assessment-35032 {
     $testResultMarkdown = ""
 
     if ($customStatus) {
-        $testResultMarkdown = "⚠️ Unable to determine Adaptive Protection configuration due to permissions issues or service connection failure.`n`n%TestResult%"
+        $testResultMarkdown = "⚠️ Não foi possível determinar a configuração da Proteção Adaptativa devido a problemas de permissão ou falha na conexão com o serviço.`n`n%TestResult%"
     }
     elseif ($passed) {
-        $testResultMarkdown = "✅ Adaptive Protection is configured in DLP policies, enabling risk-based, behavior-driven data protection through insider risk integration.`n`n%TestResult%"
+        $testResultMarkdown = "✅ A Proteção Adaptativa está configurada nas políticas DLP, habilitando a proteção de dados baseada em risco e comportamento por meio da integração com o gerenciamento de risco interno.`n`n%TestResult%"
     }
     else {
-        $testResultMarkdown = "❌ No DLP policies use Adaptive Protection; policies do not have insider risk-based rules configured.`n`n%TestResult%"
+        $testResultMarkdown = "❌ Nenhuma política DLP utiliza Proteção Adaptativa; as políticas não possuem regras baseadas em risco interno configuradas.`n`n%TestResult%"
     }
 
     $mdInfo = ''
 
     if ($customStatus) {
-        $mdInfo = "[View DLP Policies in Microsoft Purview Portal](https://purview.microsoft.com/datalossprevention/policies)`n"
+        $mdInfo = "[Ver políticas DLP no Portal do Microsoft Purview](https://purview.microsoft.com/datalossprevention/policies)`n"
     }
     elseif ($passed) {
         # Summary counts
@@ -121,48 +121,48 @@ function Test-Assessment-35032 {
 
 ### {0}
 
-| Metric | Count |
+| Métrica | Contagem |
 | :----- | :---- |
 {1}
 
-### DLP Rules with Adaptive Protection
+### Regras DLP com Proteção Adaptativa
 
-| Rule Name | Parent Policy | Enabled | Risk Levels |
+| Nome da regra | Política pai | Habilitada | Níveis de risco |
 | :-------- | :------------ | :------ | :---------- |
 {2}
 
-[View DLP Policies in Microsoft Purview Portal](https://purview.microsoft.com/datalossprevention/policies)
+[Ver políticas DLP no Portal do Microsoft Purview](https://purview.microsoft.com/datalossprevention/policies)
 
 '@
 
-        $summaryRows = "| Total DLP Rules | $totalRules |`n"
-        $summaryRows += "| Rules with Adaptive Protection | $adaptiveRulesCount |`n"
-        $summaryRows += "| Policies with Adaptive Protection | $($adaptivePolicies.Count) |`n"
-        $summaryRows += "| Rules with Elevated Risk Level | $elevatedRiskCount |`n"
-        $summaryRows += "| Rules with Moderate Risk Level | $moderateRiskCount |`n"
-        $summaryRows += "| Rules with Minor Risk Level | $minorRiskCount |`n"
+        $summaryRows = "| Total de regras DLP | $totalRules |`n"
+        $summaryRows += "| Regras com Proteção Adaptativa | $adaptiveRulesCount |`n"
+        $summaryRows += "| Políticas com Proteção Adaptativa | $($adaptivePolicies.Count) |`n"
+        $summaryRows += "| Regras com nível de risco elevado | $elevatedRiskCount |`n"
+        $summaryRows += "| Regras com nível de risco moderado | $moderateRiskCount |`n"
+        $summaryRows += "| Regras com nível de risco baixo | $minorRiskCount |`n"
 
         $ruleRows = ''
         foreach ($rule in $adaptiveRules) {
             $ruleName = $rule.Name
             $parentPolicy = $rule.ParentPolicyName
-            $enabledStatus = if ($rule.Disabled -eq $false) { "✅ Yes" } else { "❌ No" }
+            $enabledStatus = if ($rule.Disabled -eq $false) { "✅ Sim" } else { "❌ Não" }
 
             # Determine which risk levels are in the rule
             $riskLevels = @()
-            if ($rule.AdvancedRule -match $ElevatedRiskGuid) { $riskLevels += "Elevated" }
-            if ($rule.AdvancedRule -match $ModerateRiskGuid) { $riskLevels += "Moderate" }
-            if ($rule.AdvancedRule -match $MinorRiskGuid) { $riskLevels += "Minor" }
-            $riskLevelStr = if ($riskLevels.Count -gt 0) { $riskLevels -join ", " } else { "Unknown" }
+            if ($rule.AdvancedRule -match $ElevatedRiskGuid) { $riskLevels += "Elevado" }
+            if ($rule.AdvancedRule -match $ModerateRiskGuid) { $riskLevels += "Moderado" }
+            if ($rule.AdvancedRule -match $MinorRiskGuid) { $riskLevels += "Baixo" }
+            $riskLevelStr = if ($riskLevels.Count -gt 0) { $riskLevels -join ", " } else { "Desconhecido" }
 
             $ruleRows += "| $ruleName | $parentPolicy | $enabledStatus | $riskLevelStr |`n"
         }
 
-        $reportTitle = 'Adaptive Protection Summary'
+        $reportTitle = 'Resumo da Proteção Adaptativa'
         $mdInfo = $formatTemplate -f $reportTitle, $summaryRows, $ruleRows
     }
     else {
-        $mdInfo = "[View DLP Policies in Microsoft Purview Portal](https://purview.microsoft.com/datalossprevention/policies)`n"
+        $mdInfo = "[Ver políticas DLP no Portal do Microsoft Purview](https://purview.microsoft.com/datalossprevention/policies)`n"
     }
 
     $testResultMarkdown = $testResultMarkdown -replace '%TestResult%', $mdInfo
@@ -170,7 +170,7 @@ function Test-Assessment-35032 {
 
     $params = @{
         TestId = '35032'
-        Title  = 'Adaptive Protection in DLP Policies'
+        Title  = 'Proteção Adaptativa nas políticas DLP'
         Status = $passed
         Result = $testResultMarkdown
     }

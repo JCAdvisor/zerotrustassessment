@@ -17,7 +17,7 @@
 
 function Test-Assessment-25410 {
     [ZtTest(
-    	Category = 'Acesso Seguro Global',
+    	Category = 'Global Secure Access',
     	ImplementationCost = 'Médio',
     	MinimumLicense = ('Entra_Premium_Internet_Access'),
     	CompatibleLicense = ('Entra_Premium_Internet_Access'),
@@ -262,7 +262,7 @@ function Test-Assessment-25410 {
 
     $params = @{
         TestId = '25410'
-        Title  = 'O tráfego de internet é protegido por políticas de filtragem de conteúdo web no Acesso Seguro Global'
+        Title  = 'O tráfego de internet é protegido por políticas de filtragem de conteúdo web no Global Secure Access'
         Status = $passed
         Result = $testResultMarkdown
     }

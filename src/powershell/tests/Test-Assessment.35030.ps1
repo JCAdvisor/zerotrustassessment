@@ -19,21 +19,21 @@ function Test-Assessment-35030 {
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
         Pillar = 'Dados',
-        RiskLevel = 'High',
+        RiskLevel = 'Alto',
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35030,
-        Title = 'Data loss prevention policies are enabled',
+        Title = 'As políticas de prevenção contra perda de dados estão habilitadas',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
     param()
 
     #region Data Collection
-    Write-PSFMessage '🟦 Start' -Tag Test -Level VeryVerbose
+    Write-PSFMessage '🟦 Início' -Tag Test -Level VeryVerbose
 
-    $activity = 'Checking Data Loss Prevention Policies'
-    Write-ZtProgress -Activity $activity -Status 'Querying DLP policies from compliance center'
+    $activity = 'Verificando políticas de prevenção contra perda de dados'
+    Write-ZtProgress -Activity $activity -Status 'Consultando políticas DLP do centro de conformidade'
 
     $dlpPolicies = $null
     $dlpPoliciesDetailed = $null
@@ -79,27 +79,27 @@ function Test-Assessment-35030 {
     $testResultMarkdown = ""
 
     if ($investigateFlag) {
-        $testResultMarkdown = "⚠️ Unable to determine DLP policy status due to permissions issues or service connection failure.`n`n"
+        $testResultMarkdown = "⚠️ Não foi possível determinar o status das políticas DLP devido a problemas de permissões ou falha na conexão de serviço.`n`n"
     }
     else {
         if ($passed) {
-            $testResultMarkdown = "✅ One or more DLP policies are enabled and configured, providing automated protection against sensitive data disclosure.`n`n"
+            $testResultMarkdown = "✅ Uma ou mais políticas DLP estão habilitadas e configuradas, fornecendo proteção automatizada contra divulgação de dados sensíveis.`n`n"
         }
         else {
-            $testResultMarkdown = "❌ No DLP policies are enabled or no DLP policies exist in the organization.`n`n"
+            $testResultMarkdown = "❌ Nenhuma política DLP está habilitada ou não existem políticas DLP na organização.`n`n"
         }
 
-        $testResultMarkdown += "## Data Loss Prevention Policy Summary`n`n"
-        $testResultMarkdown += "**Total DLP Policies:** $($dlpPolicies.Count)`n`n"
-        $testResultMarkdown += "**Enabled Policies:** $enabledPoliciesCount`n`n"
+        $testResultMarkdown += "## Resumo das políticas de prevenção contra perda de dados`n`n"
+        $testResultMarkdown += "**Total de políticas DLP:** $($dlpPolicies.Count)`n`n"
+        $testResultMarkdown += "**Políticas habilitadas:** $enabledPoliciesCount`n`n"
 
         if ($dlpPoliciesDetailed.Count -gt 0) {
-            $testResultMarkdown += "### DLP Policies Configuration`n`n"
-            $testResultMarkdown += "| Policy Name | Enabled Status | Created Date | Last Modified Date |`n"
+            $testResultMarkdown += "### Configuração das políticas DLP`n`n"
+            $testResultMarkdown += "| Nome da política | Status habilitado | Data de criação | Data da última modificação |`n"
             $testResultMarkdown += "| :--- | :--- | :--- | :--- |`n"
 
             foreach ($policy in $dlpPoliciesDetailed) {
-                $enabledStatus = if ($policy.Enabled) { "✅ Yes" } else { "❌ No" }
+                $enabledStatus = if ($policy.Enabled) { "✅ Sim" } else { "❌ Não" }
                 $createdDate = if ($policy.WhenCreatedUTC) { $policy.WhenCreatedUTC.ToString('yyyy-MM-dd') } else { "N/A" }
                 $modifiedDate = if ($policy.WhenChangedUTC) { $policy.WhenChangedUTC.ToString('yyyy-MM-dd') } else { "N/A" }
                 $testResultMarkdown += "| $($policy.Name) | $enabledStatus | $createdDate | $modifiedDate |`n"
@@ -108,11 +108,12 @@ function Test-Assessment-35030 {
         }
     }
 
-    $testResultMarkdown += "[View DLP Policies in Microsoft Purview Portal](https://purview.microsoft.com/datalossprevention/policies)`n"
+    $testResultMarkdown += "[Visualizar políticas DLP no portal do Microsoft Purview](https://purview.microsoft.com/datalossprevention/policies)`n"
     #endregion Report Generation
 
     $params = @{
         TestId = '35030'
+        Title  = 'As políticas de prevenção contra perda de dados estão habilitadas'
         Status = $passed
         Result = $testResultMarkdown
     }

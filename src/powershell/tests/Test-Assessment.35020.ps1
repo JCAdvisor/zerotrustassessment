@@ -10,11 +10,11 @@ function Test-Assessment-35020 {
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
         Pillar = 'Dados',
-        RiskLevel = 'High',
+        RiskLevel = 'Alto',
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce','External'),
         TestId = 35020,
-        Title = 'Auto-labeling policies are in enforcement mode',
+        Title = 'As políticas de aplicação automática de rótulos estão no modo de aplicação',
         UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -113,17 +113,17 @@ function Test-Assessment-35020 {
     if ($allPolicies.Count -gt 0) {
         # Calculate aggregated workload coverage across all enforcement policies
         $allWorkloads = ($enforcementPolicies | ForEach-Object { $_.Workload }) -join ' '
-        $exchangeCovered = if ($allWorkloads -match 'Exchange') { 'Yes' } else { 'No' }
-        $sharepointCovered = if ($allWorkloads -match 'SharePoint') { 'Yes' } else { 'No' }
-        $onedriveCovered = if ($allWorkloads -match 'OneDrive') { 'Yes' } else { 'No' }
-        $teamsCovered = if ($allWorkloads -match 'Teams') { 'Yes' } else { 'No' }
-        $powerbiCovered = if ($allWorkloads -match 'PowerBI') { 'Yes' } else { 'No' }
+        $exchangeCovered = if ($allWorkloads -match 'Exchange') { 'Sim' } else { 'Não' }
+        $sharepointCovered = if ($allWorkloads -match 'SharePoint') { 'Sim' } else { 'Não' }
+        $onedriveCovered = if ($allWorkloads -match 'OneDrive') { 'Sim' } else { 'Não' }
+        $teamsCovered = if ($allWorkloads -match 'Teams') { 'Sim' } else { 'Não' }
+        $powerbiCovered = if ($allWorkloads -match 'PowerBI') { 'Sim' } else { 'Não' }
 
-        $mdInfo += "`n`n### Summary:`n`n"
-        $mdInfo += "- **Total Policies in Enforcement Mode:** $($enforcementPolicies.Count)`n"
-        $mdInfo += "- **Total Policies in Simulation Mode:** $($simulationPolicies.Count)`n"
-        $mdInfo += "- **Total Policies Disabled:** $($disabledPolicies.Count)`n"
-        $mdInfo += "- **Workloads Covered by Enforcement Policies:**`n"
+        $mdInfo += "`n`n### Resumo:`n`n"
+        $mdInfo += "- **Total de políticas no modo de aplicação:** $($enforcementPolicies.Count)`n"
+        $mdInfo += "- **Total de políticas no modo de simulação:** $($simulationPolicies.Count)`n"
+        $mdInfo += "- **Total de políticas desabilitadas:** $($disabledPolicies.Count)`n"
+        $mdInfo += "- **Cargas de trabalho cobertas por políticas de aplicação:**`n"
         $mdInfo += "  - **Exchange/Outlook:** $exchangeCovered`n"
         $mdInfo += "  - **SharePoint:** $sharepointCovered`n"
         $mdInfo += "  - **OneDrive:** $onedriveCovered`n"
@@ -136,7 +136,7 @@ function Test-Assessment-35020 {
 
     $params = @{
         TestId = '35020'
-        Title  = 'Auto-labeling enforcement mode enabled'
+        Title  = 'As políticas de aplicação automática de rótulos estão no modo de aplicação'
         Status = $passed
         Result = $testResultMarkdown
     }

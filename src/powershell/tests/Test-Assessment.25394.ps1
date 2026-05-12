@@ -16,7 +16,7 @@
 
 function Test-Assessment-25394 {
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
         ImplementationCost = 'Baixo',
         MinimumLicense = ('Entra_Premium_Private_Access', 'AAD_PREMIUM'),
         CompatibleLicense = ('Entra_Premium_Private_Access'),

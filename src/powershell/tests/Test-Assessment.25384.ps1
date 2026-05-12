@@ -130,7 +130,7 @@ function Test-Assessment-25384 {
     foreach ($assignment in $assignments) {
         $principalType = if ($assignment.principal.'@odata.type') {
             $assignment.principal.'@odata.type' -replace '#microsoft.graph.', ''
-        } else { 'unknown' }
+        } else { 'desconhecido' }
 
         $assignmentInfo = [PSCustomObject]@{
             DirectoryScopeId    = $assignment.directoryScopeId
@@ -233,7 +233,7 @@ function Test-Assessment-25384 {
             $displayName = $rawA.principal.displayName
             $upn = $rawA.principal.userPrincipalName
             $acctEnabled = if ($null -ne $rawA.principal.accountEnabled) { $rawA.principal.accountEnabled } else { '' }
-            $pType = if ($rawA.principal.'@odata.type') { $rawA.principal.'@odata.type' -replace '#microsoft.graph.', '' } else { 'unknown' }
+            $pType = if ($rawA.principal.'@odata.type') { $rawA.principal.'@odata.type' -replace '#microsoft.graph.', '' } else { 'desconhecido' }
             $uType = $rawA.principal.userType
             $mdInfo += "| $(Get-SafeMarkdown -Text $scope) | $(Get-SafeMarkdown -Text $displayName) | $upn | $acctEnabled | $pType | $uType |`n"
         }
@@ -282,7 +282,7 @@ function Test-Assessment-25384 {
             $display = if ($app.displayName) {
                 $(Get-SafeMarkdown -Text $app.displayName)
             } else {
-                'Unknown'
+                'Desconhecido'
             }
             $id = if ($app.appId) {
                 $app.appId
@@ -314,7 +314,7 @@ function Test-Assessment-25384 {
         $mdInfo += "| :--- | :--- | :--- | :--- |`n"
         foreach ($a in $tenantWideAssignments) {
             $principalName = if ($a.PrincipalUPN) { $a.PrincipalUPN } else { $a.PrincipalDisplayName }
-            $mdInfo += "| $(Get-SafeMarkdown -Text $principalName) | $($a.PrincipalType) | $($a.UserType) | Tenant-wide (/) |`n"
+            $mdInfo += "| $(Get-SafeMarkdown -Text $principalName) | $($a.PrincipalType) | $($a.UserType) | Abrangência do locatário (/) |`n"
         }
         $mdInfo += "`n"
     }
@@ -364,8 +364,8 @@ function Test-Assessment-25384 {
         $mdInfo += "| :--- | :--- | :--- | :--- |`n"
         foreach ($a in $unresolvedScopedAssignments | Sort-Object PrincipalDisplayName) {
             $principalName = if ($a.PrincipalUPN) { $a.PrincipalUPN } else { $a.PrincipalDisplayName }
-            $scope = if ($a.DirectoryScopeId) { $a.DirectoryScopeId } else { 'Unknown' }
-            $scopeTargetKind = 'Unknown'
+            $scope = if ($a.DirectoryScopeId) { $a.DirectoryScopeId } else { 'Desconhecido' }
+            $scopeTargetKind = 'Desconhecido'
             if ($scope -match '^/servicePrincipals/') {
                 $scopeTargetKind = 'servicePrincipal'
             } elseif ($scope -match '^/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$') {

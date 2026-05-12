@@ -14,7 +14,7 @@
 
 function Test-Assessment-25379 {
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
         ImplementationCost = 'Médio',
     	MinimumLicense = ('AAD_PREMIUM'),
     	CompatibleLicense = ('AAD_PREMIUM','AAD_PREMIUM_P2'),
@@ -126,7 +126,7 @@ function Test-Assessment-25379 {
         elseif ($alternativePolicies) {
             $passed = $false
             $customStatus = 'Investigate'
-            $testResultMarkdown = "⚠️ **Investigate**: Compliant network controls are partially configured. Global Secure Access signaling is enabled and Conditional Access policies reference the compliant network location, but they use an alternative enforcement pattern that requires manual review to confirm adequate protection.`n`n%TestResult%"
+            $testResultMarkdown = "⚠️ **Investigar**: Os controles de rede compatível estão parcialmente configurados. A sinalização do Global Secure Access está habilitada e as políticas de Conditional Access referenciam o local de rede compatível, mas utilizam um padrão de imposição alternativo que requer revisão manual para confirmar proteção adequada.`n`n%TestResult%"
         }
         else {
             $passed = $false
@@ -145,22 +145,22 @@ function Test-Assessment-25379 {
     # Build GSA signaling status section
     $gsaSection = ''
     if ($settings) {
-        $signalingStatusIcon = if ($settings.signalingStatus -eq 'enabled') { '✅ Enabled' } else { '❌ Disabled' }
+        $signalingStatusIcon = if ($settings.signalingStatus -eq 'enabled') { '✅ Habilitado' } else { '❌ Desabilitado' }
         $gsaSection = @"
 
-### [Global Secure Access Signaling Status]($gsaLink)
+### [Status de sinalização do Global Secure Access]($gsaLink)
 
-| Setting | Value |
+| Configuração | Valor |
 | :------ | :---- |
-| Signaling status | $signalingStatusIcon |
+| Status de sinalização | $signalingStatusIcon |
 "@
     }
     else {
         $gsaSection = @"
 
-### [Global Secure Access Signaling Status]($gsaLink)
+### [Status de sinalização do Global Secure Access]($gsaLink)
 
-❌ Unable to retrieve Global Secure Access signaling settings.
+❌ Não foi possível recuperar as configurações de sinalização do Global Secure Access.
 "@
     }
 
@@ -168,20 +168,20 @@ function Test-Assessment-25379 {
     $locationSection = ''
     if ($compliantNetworkLocation) {
         $isTrustedValue = if ($null -ne $compliantNetworkLocation.isTrusted) {
-            if ($compliantNetworkLocation.isTrusted) { '✅ True' } else { '❌ False' }
+            if ($compliantNetworkLocation.isTrusted) { '✅ Verdadeiro' } else { '❌ Falso' }
         } else {
-            'Not specified'
+            'Não especificado'
         }
         $locationSection = @"
 
-### [Compliant Network Named Location]($namedLocationLink)
+### [Local nomeado de rede compatível]($namedLocationLink)
 
-| Property | Value |
+| Propriedade | Valor |
 | :------- | :---- |
-| Display name | $(Get-SafeMarkdown $compliantNetworkLocation.displayName) |
-| Network type | $($compliantNetworkLocation.compliantNetworkType) |
-| Is trusted | $isTrustedValue |
-| Location ID | $($compliantNetworkLocation.id) |
+| Nome de exibição | $(Get-SafeMarkdown $compliantNetworkLocation.displayName) |
+| Tipo de rede | $($compliantNetworkLocation.compliantNetworkType) |
+| É confiável | $isTrustedValue |
+| ID do local | $($compliantNetworkLocation.id) |
 "@
     }
     else {
@@ -203,18 +203,18 @@ function Test-Assessment-25379 {
         if ($allRelevantPolicies.Count -gt 0) {
             foreach ($policy in $standardPolicies) {
                 $policyLink = "https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/PolicyBlade/policyId/$($policy.id)"
-                $includeLocations = if ($policy.conditions.locations.includeLocations) { ($policy.conditions.locations.includeLocations -join ', ') } else { 'None' }
-                $excludeLocations = if ($policy.conditions.locations.excludeLocations) { ($policy.conditions.locations.excludeLocations -join ', ') } else { 'None' }
-                $grantControls = if ($policy.grantControls.builtInControls) { ($policy.grantControls.builtInControls -join ', ') } else { 'None' }
+                $includeLocations = if ($policy.conditions.locations.includeLocations) { ($policy.conditions.locations.includeLocations -join ', ') } else { 'Nenhuma' }
+                $excludeLocations = if ($policy.conditions.locations.excludeLocations) { ($policy.conditions.locations.excludeLocations -join ', ') } else { 'Nenhuma' }
+                $grantControls = if ($policy.grantControls.builtInControls) { ($policy.grantControls.builtInControls -join ', ') } else { 'Nenhum' }
                 $policyState = Get-FormattedPolicyState $policy.state
                 $policyTableRows += "| ✅ | [$(Get-SafeMarkdown $policy.displayName)]($policyLink) | $policyState | $includeLocations | $excludeLocations | $grantControls |`n"
             }
 
             foreach ($policy in $alternativePolicies) {
                 $policyLink = "https://entra.microsoft.com/#view/Microsoft_AAD_ConditionalAccess/PolicyBlade/policyId/$($policy.id)"
-                $includeLocations = if ($policy.conditions.locations.includeLocations) { ($policy.conditions.locations.includeLocations -join ', ') } else { 'None' }
-                $excludeLocations = if ($policy.conditions.locations.excludeLocations) { ($policy.conditions.locations.excludeLocations -join ', ') } else { 'None' }
-                $grantControls = if ($policy.grantControls.builtInControls) { ($policy.grantControls.builtInControls -join ', ') } else { 'None' }
+                $includeLocations = if ($policy.conditions.locations.includeLocations) { ($policy.conditions.locations.includeLocations -join ', ') } else { 'Nenhuma' }
+                $excludeLocations = if ($policy.conditions.locations.excludeLocations) { ($policy.conditions.locations.excludeLocations -join ', ') } else { 'Nenhuma' }
+                $grantControls = if ($policy.grantControls.builtInControls) { ($policy.grantControls.builtInControls -join ', ') } else { 'Nenhum' }
                 $policyState = Get-FormattedPolicyState $policy.state
                 $policyTableRows += "| ⚠️ | [$(Get-SafeMarkdown $policy.displayName)]($policyLink) | $policyState | $includeLocations | $excludeLocations | $grantControls |`n"
             }
@@ -268,12 +268,12 @@ Foram encontradas $($policies.Count) políticas habilitadas de Conditional Acces
     $formatTemplate = @'
 {0}{1}{2}
 
-**Summary:**
+**Resumo:**
 
-- Global Secure Access signaling enabled: {3}
-- Compliant network location exists: {4}
-- Policies using standard pattern (block all except compliant): {5}
-- Policies using alternative patterns: {6}
+- Sinalização do Global Secure Access habilitada: {3}
+- Local de rede compatível existe: {4}
+- Políticas usando padrão padrão (bloquear tudo exceto rede compatível): {5}
+- Políticas usando padrões alternativos: {6}
 '@
 
     $mdInfo = $formatTemplate -f $gsaSection, $locationSection, $policiesSection, $signalingEnabled, $locationExists, $standardPolicyCount, $alternativePolicyCount

@@ -40,7 +40,7 @@ function Test-Assessment-21837{
         $testResultMarkdown = "O [número máximo de dispositivos por usuário]($entraDeviceSettingsLink) está definido como $userQuota"
     }
     elseif ($userQuota -gt 10 -and $userQuota -le 20) {
-        $customStatus = 'Investigar'
+        $customStatus = 'Investigate'
         $testResultMarkdown = "O [número máximo de dispositivos por usuário]($entraDeviceSettingsLink) está definido como $userQuota. Considere reduzir para 10 ou menos."
     }
     else {

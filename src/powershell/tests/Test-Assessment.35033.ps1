@@ -22,11 +22,11 @@ function Test-Assessment-35033 {
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
         Pillar = 'Dados',
-        RiskLevel = 'High',
+        RiskLevel = 'Alto',
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35033,
-        Title = 'Custom sensitive information types are configured',
+        Title = 'Tipos de informação sensível personalizado estão configurados',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -81,8 +81,8 @@ function Test-Assessment-35033 {
     $testResultMarkdown = ''
 
     if ($customStatus -eq 'Investigate') {
-        $testResultMarkdown = "### Investigate`n`n"
-        $testResultMarkdown += "Unable to determine custom SIT status due to permissions issues or service connection failure."
+        $testResultMarkdown = "### Investigar`n`n"
+        $testResultMarkdown += "Não foi possível determinar o status de SIT personalizado devido a problemas de permissões ou falha na conexão de serviço."
     }
     elseif ($passed) {
         $testResultMarkdown = "✅ Tipos de informação sensível personalizado estão configurados, habilitando detecção de padrões de dados sensíveis específicos da organização.`n`n"
@@ -93,26 +93,26 @@ function Test-Assessment-35033 {
 
     # Build detailed information if we have data
     if ($customSITs -and $customSITs.Count -gt 0) {
-        $testResultMarkdown += "## [Custom Sensitive Information Types](https://purview.microsoft.com/informationprotection/dataclassification/sensinfoTypes)`n`n"
-        $testResultMarkdown += "| Name | Description | Publisher |`n"
+        $testResultMarkdown += "## [Tipos de informação sensível personalizado](https://purview.microsoft.com/informationprotection/dataclassification/sensinfoTypes)`n`n"
+        $testResultMarkdown += "| Nome | Descrição | Publicador |`n"
         $testResultMarkdown += "| :--- | :--- | :--- |`n"
 
         foreach ($sit in $customSITs | Sort-Object Name) {
             $safeSITName = Get-SafeMarkdown $sit.Name
-            $safeDescription = if ($sit.Description) { Get-SafeMarkdown $sit.Description } else { 'Not specified' }
-            $safePublisher = if ($sit.Publisher) { Get-SafeMarkdown $sit.Publisher } else { 'Not specified' }
+            $safeDescription = if ($sit.Description) { Get-SafeMarkdown $sit.Description } else { 'Não especificado' }
+            $safePublisher = if ($sit.Publisher) { Get-SafeMarkdown $sit.Publisher } else { 'Não especificado' }
 
             $testResultMarkdown += "| $safeSITName | $safeDescription | $safePublisher |`n"
         }
 
-        $testResultMarkdown += "`n**Summary:**`n"
-        $testResultMarkdown += "* Total Custom SITs: $($customSITs.Count)`n"
+        $testResultMarkdown += "`n**Resumo:**`n"
+        $testResultMarkdown += "* Total de SITs personalizados: $($customSITs.Count)`n"
     }
     #endregion Report Generation
 
     $params = @{
         TestId = '35033'
-        Title  = 'Custom Sensitive Information Types (SITs) Configured'
+        Title  = 'Tipos de informação sensível personalizado estão configurados'
         Status = $passed
         Result = $testResultMarkdown
     }

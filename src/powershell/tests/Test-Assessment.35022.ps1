@@ -28,7 +28,7 @@ function Test-Assessment-35022 {
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = 'Workforce',
         TestId = 35022,
-        Title = 'On-demand scans are configured for sensitive information discovery',
+        Title = 'As varreduras sob demanda estão configuradas para descoberta de informações sensíveis',
         UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -188,10 +188,10 @@ function Test-Assessment-35022 {
                         }
 
                         if (-not $friendlyName) {
-                            $friendlyName = "Unknown SIT - $guidString"
+                            $friendlyName = "SIT desconhecido - $guidString"
                         }
 
-                        $sitDetails += "$friendlyName`: $count matches"
+                        $sitDetails += "$friendlyName`: $count correspondências"
                     }
                     }
                 }
@@ -203,7 +203,7 @@ function Test-Assessment-35022 {
                     $sitDetails -join "; "
                 }
                 else {
-                    'None'
+                    'Nenhum'
                 }
 
                 $createdUtc = ''
@@ -310,16 +310,16 @@ function Test-Assessment-35022 {
             $testResultMarkdown += "* **Status:** Nenhuma varredura está configurada`n"
         }
 
-        $testResultMarkdown += "`n[Microsoft Purview Portal > Information Protection > Classifiers > On-demand classification](https://purview.microsoft.com/informationprotection/dataclassification/colddatascans)`n"
-        $testResultMarkdown += "or"
-        $testResultMarkdown += "`n[Microsoft Purview Portal > Data Loss Prevention > Classifiers > On-demand classification](https://purview.microsoft.com/datalossprevention/dataclassification/colddatascans)`n"
+        $testResultMarkdown += "`n[Microsoft Purview Portal > Proteção de Informações > Classificadores > Classificação sob demanda](https://purview.microsoft.com/informationprotection/dataclassification/colddatascans)`n"
+        $testResultMarkdown += "ou"
+        $testResultMarkdown += "`n[Microsoft Purview Portal > Prevenção contra Perda de Dados > Classificadores > Classificação sob demanda](https://purview.microsoft.com/datalossprevention/dataclassification/colddatascans)`n"
 
     }
     #endregion Report Generation
 
     $params = @{
         TestId = '35022'
-        Title  = 'On-Demand scans configured for sensitive information discovery'
+        Title  = 'As varreduras sob demanda estão configuradas para descoberta de informações sensíveis'
         Status = $passed
         Result = $testResultMarkdown
     }

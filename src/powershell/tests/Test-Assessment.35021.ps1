@@ -18,11 +18,11 @@ function Test-Assessment-35021 {
         Service = ('SecurityCompliance'),
         CompatibleLicense = ('EXCHANGE_S_ENTERPRISE'),
         Pillar = 'Dados',
-        RiskLevel = 'High',
+        RiskLevel = 'Alto',
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce'),
         TestId = 35021,
-        Title = 'Auto-labeling policies are enabled for SharePoint and OneDrive',
+        Title = 'As políticas de aplicação automática de rótulos estão habilitadas para o SharePoint e OneDrive',
         UserImpact = 'Baixo'
     )]
     [CmdletBinding()]
@@ -97,25 +97,25 @@ function Test-Assessment-35021 {
                 $description = if ($policy.Comment) { Get-SafeMarkdown -Text $policy.Comment } else { '' }
                 $enabled = if ($policy.Enabled) { '✅' } else { '❌' }
                 $mode = if ($policy.Mode -eq 'Enable') { 'Aplicação' } elseif ($policy.Mode) { $policy.Mode } else { 'Desconhecido' }
-                $workload = if ($policy.Workload) { $policy.Workload } else { 'Not specified' }
-                $created = if ($policy.WhenCreatedUTC) { $policy.WhenCreatedUTC.ToString('yyyy-MM-dd') } else { 'Unknown' }
-                $lastModified = if ($policy.WhenChangedUTC) { $policy.WhenChangedUTC.ToString('yyyy-MM-dd') } else { 'Unknown' }
+                $workload = if ($policy.Workload) { $policy.Workload } else { 'Não especificado' }
+                $created = if ($policy.WhenCreatedUTC) { $policy.WhenCreatedUTC.ToString('yyyy-MM-dd') } else { 'Desconhecido' }
+                $lastModified = if ($policy.WhenChangedUTC) { $policy.WhenChangedUTC.ToString('yyyy-MM-dd') } else { 'Desconhecido' }
 
                 $testResultMarkdown += "| $policyName | $description | $enabled | $mode | $workload | $created | $lastModified |`n"
             }
 
             # Summary section
-            $testResultMarkdown += "`n### Summary`n`n"
-            $testResultMarkdown += "* **Total Policies Targeting SharePoint/OneDrive:** $($spodPolicies.Count)`n"
+            $testResultMarkdown += "`n### Resumo`n`n"
+            $testResultMarkdown += "* **Total de políticas para o SharePoint/OneDrive:** $($spodPolicies.Count)`n"
 
             # Count by status
             $disabledCount = ($spodPolicies | Where-Object { $_.Enabled -eq $false }).Count
             $simulationCount = ($spodPolicies | Where-Object { $_.Enabled -eq $true -and $_.Mode -ne 'Enable' }).Count
             $enforcementCount = $enforcementPolicies.Count
 
-            $testResultMarkdown += "* **Policies in Enforcement Mode:** $enforcementCount`n"
-            $testResultMarkdown += "* **Policies in Simulation Mode:** $simulationCount`n"
-            $testResultMarkdown += "* **Policies Disabled:** $disabledCount`n"
+            $testResultMarkdown += "* **Políticas no modo de aplicação:** $enforcementCount`n"
+            $testResultMarkdown += "* **Políticas no modo de simulação:** $simulationCount`n"
+            $testResultMarkdown += "* **Políticas desabilitadas:** $disabledCount`n"
 
             # Check workload coverage from enforcement policies
             $enforcementWorkloads = @()
@@ -129,64 +129,64 @@ function Test-Assessment-35021 {
             $hasSharePoint = $enforcementWorkloads -contains 'SharePoint'
             $hasOneDrive = $enforcementWorkloads -contains 'OneDriveForBusiness'
 
-            $testResultMarkdown += "* **SharePoint Coverage:** [$(if ($hasSharePoint) { 'Yes' } else { 'No' })]`n"
-            $testResultMarkdown += "* **OneDrive Coverage:** [$(if ($hasOneDrive) { 'Yes' } else { 'No' })]`n"
+            $testResultMarkdown += "* **Cobertura do SharePoint:** [$(if ($hasSharePoint) { 'Sim' } else { 'Não' })]`n"
+            $testResultMarkdown += "* **Cobertura do OneDrive:** [$(if ($hasOneDrive) { 'Sim' } else { 'Não' })]`n"
 
             # Date range for enforcement activation
             $createdDates = $enforcementPolicies.WhenCreatedUTC | Where-Object { $_ } | Sort-Object
             if ($createdDates) {
                 $oldest = $createdDates[0].ToString('yyyy-MM-dd')
                 $newest = $createdDates[-1].ToString('yyyy-MM-dd')
-                $testResultMarkdown += "* **Enforcement Activation Date Range:** $oldest to $newest`n"
+                $testResultMarkdown += "* **Intervalo de datas de ativação de aplicação:** $oldest a $newest`n"
             }
         }
         else {
             if ($spodPolicies.Count -eq 0) {
-                $testResultMarkdown = "❌ No auto-labeling policies are configured for SharePoint or OneDrive.`n`n"
+                $testResultMarkdown = "❌ Nenhuma política de aplicação automática de rótulos está configurada para o SharePoint ou OneDrive.`n`n"
             }
             else {
-                $testResultMarkdown = "❌ $($spodPolicies.Count) auto-labeling $(if ($spodPolicies.Count -eq 1) { 'policy targets' } else { 'policies target' }) SharePoint/OneDrive, but none are enabled and in enforcement mode.`n`n"
+                $testResultMarkdown = "❌ $($spodPolicies.Count) $(if ($spodPolicies.Count -eq 1) { 'política de aplicação automática de rótulos está direcionada ao' } else { 'políticas de aplicação automática de rótulos estão direcionadas ao' }) SharePoint/OneDrive, mas nenhuma está habilitada e no modo de aplicação.`n`n"
 
-                $testResultMarkdown += "### [Auto-Labeling Policies for SharePoint/OneDrive]($policyLink)`n`n"
-                $testResultMarkdown += "| Policy Name | Description | Enabled | Mode | Workload | Created | Last Modified |`n"
+                $testResultMarkdown += "### [Políticas de aplicação automática de rótulos para o SharePoint/OneDrive]($policyLink)`n`n"
+                $testResultMarkdown += "| Nome da política | Descrição | Habilitada | Modo | Carga de trabalho | Criada | Última modificação |`n"
                 $testResultMarkdown += "| :--- | :--- | :---: | :--- | :--- | :--- | :--- |`n"
 
                 foreach ($policy in $spodPolicies) {
                     $policyName = Get-SafeMarkdown -Text $policy.Name
                     $description = if ($policy.Comment) { Get-SafeMarkdown -Text $policy.Comment } else { '' }
                     $enabled = if ($policy.Enabled) { '✅' } else { '❌' }
-                    $mode = if ($policy.Mode -eq 'Enable') { 'Enforcement' } elseif ($policy.Mode) { $policy.Mode } else { 'Unknown' }
-                    $workload = if ($policy.Workload) { $policy.Workload } else { 'Not specified' }
-                    $created = if ($policy.WhenCreatedUTC) { $policy.WhenCreatedUTC.ToString('yyyy-MM-dd') } else { 'Unknown' }
-                    $lastModified = if ($policy.WhenChangedUTC) { $policy.WhenChangedUTC.ToString('yyyy-MM-dd') } else { 'Unknown' }
+                    $mode = if ($policy.Mode -eq 'Enable') { 'Aplicação' } elseif ($policy.Mode) { $policy.Mode } else { 'Desconhecido' }
+                    $workload = if ($policy.Workload) { $policy.Workload } else { 'Não especificado' }
+                    $created = if ($policy.WhenCreatedUTC) { $policy.WhenCreatedUTC.ToString('yyyy-MM-dd') } else { 'Desconhecido' }
+                    $lastModified = if ($policy.WhenChangedUTC) { $policy.WhenChangedUTC.ToString('yyyy-MM-dd') } else { 'Desconhecido' }
 
                     $testResultMarkdown += "| $policyName | $description | $enabled | $mode | $workload | $created | $lastModified |`n"
                 }
 
                 # Summary section
-                $testResultMarkdown += "`n### Summary`n`n"
-                $testResultMarkdown += "* **Total Policies Targeting SharePoint/OneDrive:** $($spodPolicies.Count)`n"
+                $testResultMarkdown += "`n### Resumo`n`n"
+                $testResultMarkdown += "* **Total de políticas para o SharePoint/OneDrive:** $($spodPolicies.Count)`n"
 
                 $disabledCount = ($spodPolicies | Where-Object { $_.Enabled -eq $false }).Count
                 $simulationCount = ($spodPolicies | Where-Object { $_.Enabled -eq $true -and $_.Mode -ne 'Enable' }).Count
 
-                $testResultMarkdown += "* **Policies in Enforcement Mode:** 0`n"
-                $testResultMarkdown += "* **Policies in Simulation Mode:** $simulationCount`n"
-                $testResultMarkdown += "* **Policies Disabled:** $disabledCount`n"
-                $testResultMarkdown += "* **SharePoint Coverage:** [No]`n"
-                $testResultMarkdown += "* **OneDrive Coverage:** [No]`n"
+                $testResultMarkdown += "* **Políticas no modo de aplicação:** 0`n"
+                $testResultMarkdown += "* **Políticas no modo de simulação:** $simulationCount`n"
+                $testResultMarkdown += "* **Políticas desabilitadas:** $disabledCount`n"
+                $testResultMarkdown += "* **Cobertura do SharePoint:** [Não]`n"
+                $testResultMarkdown += "* **Cobertura do OneDrive:** [Não]`n"
             }
 
-            $testResultMarkdown += "`n### Recommendation`n`n"
-            $testResultMarkdown += "Enable at least one auto-labeling policy in enforcement mode for SharePoint and/or OneDrive to automatically classify sensitive files. "
-            $testResultMarkdown += "Visit the [Auto-labeling policies portal]($policyLink) to create or configure policies.`n"
+            $testResultMarkdown += "`n### Recomendação`n`n"
+            $testResultMarkdown += "Habilite pelo menos uma política de aplicação automática de rótulos no modo de aplicação para o SharePoint e/ou OneDrive para classificar automaticamente arquivos sensíveis. "
+            $testResultMarkdown += "Acesse o [portal de políticas de aplicação automática de rótulos]($policyLink) para criar ou configurar políticas.`n"
         }
     }
     #endregion Report Generation
 
     $params = @{
         TestId = '35021'
-        Title  = 'Auto-Labeling Policies Enabled for SharePoint and OneDrive'
+        Title  = 'As políticas de aplicação automática de rótulos estão habilitadas para o SharePoint e OneDrive'
         Status = $passed
         Result = $testResultMarkdown
     }

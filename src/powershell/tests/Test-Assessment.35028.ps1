@@ -28,7 +28,7 @@ function Test-Assessment-35028 {
         SfiPillar = 'Proteger tenants e sistemas em produção',
         TenantType = ('Workforce', 'External'),
         TestId = 35028,
-        Title = 'Email retention policies are configured',
+        Title = 'As políticas de retenção de email estão configuradas',
         UserImpact = 'Médio'
     )]
     [CmdletBinding()]
@@ -106,7 +106,7 @@ function Test-Assessment-35028 {
         $policyRows = ''
         foreach ($pol in $exchangePolicies | Sort-Object -Property Name) {
             $policyName = Get-SafeMarkdown -Text $pol.Name
-            $enabledIcon = if ($pol.Enabled) { '✅ Yes' } else { '❌ No' }
+            $enabledIcon = if ($pol.Enabled) { '✅ Sim' } else { '❌ Não' }
             $exchangeScope = Get-SafeMarkdown -Text (@($pol.ExchangeLocation) -join ', ')
             $mode = if ($pol.Mode) { Get-SafeMarkdown -Text "$($pol.Mode)" } else { 'N/A' }
             $policyRows += "| $policyName | $enabledIcon | $exchangeScope | $mode |`n"
@@ -121,9 +121,9 @@ function Test-Assessment-35028 {
             foreach ($rule in $exchangeRules | Sort-Object -Property Name) {
                 $ruleName = Get-SafeMarkdown -Text $rule.Name
                 $parentPolicy = Get-SafeMarkdown -Text ($exchangePolicies | Where-Object { $_.Guid.ToString() -eq $rule.Policy }).Name
-                $ruleEnabled = if ($rule.Disabled) { '❌ No' } else { '✅ Yes' }
+                $ruleEnabled = if ($rule.Disabled) { '❌ Não' } else { '✅ Sim' }
                 $retentionAction = if ($rule.RetentionComplianceAction) { Get-SafeMarkdown -Text "$($rule.RetentionComplianceAction)" } else { 'N/A' }
-                $retentionDuration = if ($rule.RetentionDuration) { "$($rule.RetentionDuration)" } else { 'Indefinite' }
+                $retentionDuration = if ($rule.RetentionDuration) { "$($rule.RetentionDuration)" } else { 'Indefinido' }
                 if ($rule.RetentionDurationDisplayHint) {
                     $safeRetentionDurationDisplayHint = Get-SafeMarkdown -Text "$($rule.RetentionDurationDisplayHint)"
                     $retentionDuration += " ($safeRetentionDurationDisplayHint)"
@@ -138,9 +138,9 @@ function Test-Assessment-35028 {
         if ($ruleRows) {
             $rulesSection = @'
 
-### Retention rules for Exchange policies
+### Regras de retenção para políticas do Exchange
 
-| Rule name | Parent policy | Enabled | Retention action | Retention period |
+| Nome da regra | Política pai | Habilitada | Ação de retenção | Período de retenção |
 | :--- | :--- | :--- | :--- | :--- |
 {1}
 '@ -f $null, $ruleRows
@@ -148,19 +148,19 @@ function Test-Assessment-35028 {
 
         $formatTemplate = @'
 
-### [Retention policies with Exchange scope](https://purview.microsoft.com/datalifecyclemanagement/retention)
+### [Políticas de retenção com escopo do Exchange](https://purview.microsoft.com/datalifecyclemanagement/retention)
 
-| Policy name | Enabled | Exchange scope | Mode |
+| Nome da política | Habilitada | Escopo do Exchange | Modo |
 | :--- | :--- | :--- | :--- |
 {0}
 {1}
-### Summary
+### Resumo
 
-| Metric | Value |
+| Métrica | Valor |
 | :--- | :--- |
-| Total retention policies | {2} |
-| Enabled Exchange policies | {3} |
-| Active retention rules (Exchange) | {4} |
+| Total de políticas de retenção | {2} |
+| Políticas do Exchange habilitadas | {3} |
+| Regras de retenção ativas (Exchange) | {4} |
 '@
 
         $mdInfo = $formatTemplate -f $policyRows, $rulesSection, @($retentionPolicies).Count, $enabledExchangePolicies.Count, $activeExchangeRules.Count
@@ -171,7 +171,7 @@ function Test-Assessment-35028 {
 
     $params = @{
         TestId = '35028'
-        Title  = 'Email retention policies are configured'
+        Title  = 'As políticas de retenção de email estão configuradas'
         Status = $passed
         Result = $testResultMarkdown
     }

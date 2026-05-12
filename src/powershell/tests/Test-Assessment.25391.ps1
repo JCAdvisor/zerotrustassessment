@@ -14,7 +14,7 @@
 
 function Test-Assessment-25391 {
     [ZtTest(
-        Category = 'Acesso Seguro Global',
+        Category = 'Global Secure Access',
         ImplementationCost = 'Baixo',
     	MinimumLicense = ('Entra_Premium_Private_Access'),
     	CompatibleLicense = ('Entra_Premium_Private_Access'),
@@ -46,7 +46,7 @@ function Test-Assessment-25391 {
     #region Assessment Logic
     if (-not $connectors -or $connectors.Count -eq 0) {
         $passed = $false
-        $testResultMarkdown = "⚠️ Nenhum conector de rede privada está configurado.`n`n[Para configurar conectores de rede privada: Acesso Seguro Global > Conectar > Conectores](https://entra.microsoft.com/#view/Microsoft_Entra_GSA_Connect/Connectors.ReactView/fromNav/globalSecureAccess)"
+        $testResultMarkdown = "⚠️ Nenhum conector de rede privada está configurado.`n`n[Para configurar conectores de rede privada: Global Secure Access > Conectar > Conectores](https://entra.microsoft.com/#view/Microsoft_Entra_GSA_Connect/Connectors.ReactView/fromNav/globalSecureAccess)"
     }
     else {
         # Step 2: Check for statuses
@@ -91,7 +91,7 @@ function Test-Assessment-25391 {
 
 ## Resumo dos conectores de Private Access
 
-[Link do portal: Acesso Seguro Global > Conectar > Conectores]($portalLink)
+[Link do portal: Global Secure Access > Conectar > Conectores]($portalLink)
 
 - **Total de conectores:** $totalConnectors
 - **Conectores ativos:** $activeConnectors

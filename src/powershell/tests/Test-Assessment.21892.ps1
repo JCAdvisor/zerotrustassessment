@@ -25,8 +25,8 @@ function Test-Assessment-21892 {
         return
     }
 
-      $activity = "Checking that all sign-in activity comes from managed devices"
-    Write-ZtProgress -Activity $activity -Status "Getting Conditional Access policies"
+        $activity = 'Verificando se toda a atividade de logon provém de dispositivos gerenciados'
+    Write-ZtProgress -Activity $activity -Status 'Obtendo políticas de Acesso Condicional'
 
     # Get all enabled Conditional Access policies
     $policies = Invoke-ZtGraphRequest -RelativeUri "identity/conditionalAccess/policies" -ApiVersion v1.0
@@ -60,20 +60,20 @@ function Test-Assessment-21892 {
 
     $testResultMarkdown = ""
     if ($passed) {
-        $testResultMarkdown += "✅ All sign-in activity comes from managed devices.`n"
+        $testResultMarkdown += "✅ Toda a atividade de logon provém de dispositivos gerenciados.`n"
     }
     else {
-        $testResultMarkdown += "❌ Not all sign-in activity comes from managed devices.`n"
+        $testResultMarkdown += "❌ Nem toda a atividade de logon provém de dispositivos gerenciados.`n"
     }
 
     if ( -not $matchingPolicies) {
-        $testResultMarkdown += "`nNo Conditional Access policies were found that require a compliant device or a hybrid joined device. This means that sign-in activity is not restricted to managed devices.`n"
+        $testResultMarkdown += "`nNenhuma política de Acesso Condicional foi encontrada que exija um dispositivo em conformidade ou um dispositivo ingressado híbrido. Isso significa que a atividade de logon não está restrita a dispositivos gerenciados.`n"
     }
     else {
-        $testResultMarkdown += "`n### Managed device conditional access policy summary`n"
-        $testResultMarkdown += "`nThe table below lists all Conditional Access policies that require a compliant device or a hybrid joined device.`n"
+        $testResultMarkdown += "`n### Resumo das políticas de Acesso Condicional para dispositivos gerenciados`n"
+        $testResultMarkdown += "`nA tabela abaixo lista todas as políticas de Acesso Condicional que exigem um dispositivo em conformidade ou um dispositivo ingressado híbrido.`n"
 
-        $testResultMarkdown += "| Name | All users | All apps | Compliant device | Hybrid joined device | Policy state | Status |`n"
+        $testResultMarkdown += "| Nome | Todos os usuários | Todos os aplicativos | Dispositivo em conformidade | Dispositivo ingressado híbrido | Estado da política | Status |`n"
         $testResultMarkdown += "| :--- | :---:  | :---: | :---: | :---: | :--- | :--- |`n"
 
         $matchingPolicies = $matchingPolicies | Sort-Object -Property @{ Expression = { -not $_.Status } }, DisplayName
@@ -88,6 +88,7 @@ function Test-Assessment-21892 {
 
     $testResultParams = @{
         TestId = '21892'
+        Title  = 'Toda a atividade de logon provém de dispositivos gerenciados'
         Status = $passed
         Result = $testResultMarkdown
     }
