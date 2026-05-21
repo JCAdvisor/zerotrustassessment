@@ -18,8 +18,8 @@ const PILLAR_MAP = {
   securityoperations: 'Operações de Segurança',
 }
 
-const EFFORT_PT = { Low: 'Baixo', Medium: 'Médio', High: 'Alto' }
-const IMPACT_PT = { Low: 'Baixo', Medium: 'Médio', High: 'Alto' }
+const EFFORT_PT = { Low: 'Baixo', Medium: 'Médio', High: 'Alto', Baixo: 'Baixo', Médio: 'Médio', Alto: 'Alto' }
+const IMPACT_PT = { Low: 'Baixo', Medium: 'Médio', High: 'Alto', Baixo: 'Baixo', Médio: 'Médio', Alto: 'Alto' }
 
 function capitalize(s) {
   return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase()
@@ -38,12 +38,12 @@ function parseMarkdown(rawContent, filename, pillar) {
   const title = titleMatch ? titleMatch[1].trim() : filename
 
   // Match effort — handles em-dash separators and descriptions after the level
-  const effortMatch = content.match(/\*\*Implementation Effort:\*\*[^\n]*(Low|Medium|High)/i)
+  const effortMatch = content.match(/\*\*(?:Implementation Effort|Esforço de Implementação):\*\*[^\n]*(Low|Medium|High|Baixo|Médio|Alto)/i)
   const effortEn = effortMatch ? capitalize(effortMatch[1]) : null
   const effort = effortEn ? (EFFORT_PT[effortEn] ?? null) : null
 
   // Match impact
-  const impactMatch = content.match(/\*\*User Impact:\*\*[^\n]*(Low|Medium|High)/i)
+  const impactMatch = content.match(/\*\*(?:User Impact|Impacto ao Usuário):\*\*[^\n]*(Low|Medium|High|Baixo|Médio|Alto)/i)
   const impactEn = impactMatch ? capitalize(impactMatch[1]) : null
   const impact = impactEn ? (IMPACT_PT[impactEn] ?? null) : null
 

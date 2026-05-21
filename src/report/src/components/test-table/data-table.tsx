@@ -51,7 +51,7 @@ import {
 import { Test } from "@/config/report-data"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { StatusIcon } from "../status-icon"
-import { WorkshopGuidesPanel } from "@/components/workshop-guides-panel"
+// import { WorkshopGuidesPanel } from "@/components/workshop-guides-panel"
 
 export function DataTable<TData extends Test, TValue>({
     columns,
@@ -598,7 +598,7 @@ export function DataTable<TData extends Test, TValue>({
                             </CardContent>
                         </Card>
 
-                        {selectedRow && <WorkshopGuidesPanel test={selectedRow} />}
+                        {/* {selectedRow && <WorkshopGuidesPanel test={selectedRow} />} */}
                     </div>
                 </SheetContent>
             </Sheet>

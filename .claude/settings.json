@@ -4,7 +4,14 @@
       "Bash(Get-ChildItem -Path \"src/react/docs/workshop-guidance/\" -ErrorAction SilentlyContinue)",
       "Bash(Select-Object Name, FullName)",
       "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\ArthurSilvaJC2Sec\\\\OneDrive - JCADVISOR CONSULTORIA\\\\Code\\\\zero trust assessment\\\\src\\\\react\\\\docs\\\\workshop-guidance\\\\\" -Recurse | Where-Object {$_.PSIsContainer -eq $false} | Select-Object Name, Directory, Length | Sort-Object Directory)",
-      "PowerShell($file = \"C:\\\\Users\\\\ArthurSilvaJC2Sec\\\\OneDrive - JCADVISOR CONSULTORIA\\\\Code\\\\zero trust assessment\\\\src\\\\report\\\\src\\\\config\\\\workshop-data.ts\"; \\(Get-Item $file\\).Length / 1MB)"
+      "PowerShell($file = \"C:\\\\Users\\\\ArthurSilvaJC2Sec\\\\OneDrive - JCADVISOR CONSULTORIA\\\\Code\\\\zero trust assessment\\\\src\\\\report\\\\src\\\\config\\\\workshop-data.ts\"; \\(Get-Item $file\\).Length / 1MB)",
+      "Bash(xargs grep -l \"roadmap\\\\|Road\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\ArthurSilvaJC2Sec\\\\OneDrive - JCADVISOR CONSULTORIA\\\\Code\\\\zero trust assessment\" -Recurse -Filter \"*.ps1\")",
+      "Bash(Select-Object -ExpandProperty Name)",
+      "Bash(Sort-Object)",
+      "Bash(Get-Unique)",
+      "PowerShell(ls \"c:\\\\Users\\\\ArthurSilvaJC2Sec\\\\OneDrive - JCADVISOR CONSULTORIA\\\\Code\\\\zero trust assessment\\\\src\\\\powershell\\\\assets\\\\\")",
+      "PowerShell(head -50)"
     ]
   }
 }
