@@ -280,63 +280,50 @@ export default function Roadmap() {
             </Card>
 
             {/* CTA Section */}
-            <div className="relative mb-2 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-                <div className="absolute inset-0 opacity-10 pointer-events-none"
-                    style={{ backgroundImage: "radial-gradient(circle at 20% 50%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 80% 20%, #6366f1 0%, transparent 50%)" }}
-                />
-                <div className="relative px-8 py-10 md:py-12">
-                    <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                        {/* Left content */}
-                        <div className="flex-1 text-center md:text-left space-y-4">
-                            <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-                                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500/20 border border-blue-400/30">
-                                    <Shield className="h-5 w-5 text-blue-400" />
-                                </div>
-                                <img src={jc2Logo} alt="JC2Sec" className="h-6 brightness-200 opacity-90" />
-                            </div>
-
-                            <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight">
-                                Precisa de ajuda para executar este roadmap?
-                            </h2>
-                            <p className="text-slate-300 text-base md:text-lg max-w-xl leading-relaxed">
-                                A <span className="text-white font-semibold">JC2Sec</span> é especialista em segurança Zero Trust e pode apoiar sua organização em cada fase — da priorização à implementação técnica e acompanhamento contínuo.
-                            </p>
-
-                            <ul className="flex flex-col sm:flex-row gap-3 sm:gap-6 text-sm text-slate-300 justify-center md:justify-start">
-                                <li className="flex items-center gap-2">
-                                    <Zap className="h-4 w-4 text-emerald-400 shrink-0" />
-                                    <span>Implementação dos quick wins</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Target className="h-4 w-4 text-orange-400 shrink-0" />
-                                    <span>Gestão do roadmap completo</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Shield className="h-4 w-4 text-blue-400 shrink-0" />
-                                    <span>Monitoramento e governança</span>
-                                </li>
-                            </ul>
+            <div className="mb-2 rounded-xl border border-border bg-background px-6 py-6">
+                <div className="flex flex-col md:flex-row items-center md:items-center gap-6">
+                    <div className="flex-1 space-y-3">
+                        <div className="flex items-center gap-2.5">
+                            <img src={jc2Logo} alt="JC2Sec" className="h-5 dark:brightness-200 dark:opacity-90" />
                         </div>
-
-                        {/* Right CTA */}
-                        <div className="flex flex-col items-center gap-3 shrink-0">
-                            <a
-                                href="mailto:contato@jc2sec.com.br"
-                                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-200 text-sm"
-                            >
-                                <Mail className="h-4 w-4" />
-                                Falar com um especialista
-                            </a>
-                            <a
-                                href="https://www.jc2sec.com.br"
-                                target="_blank"
-                                rel="noreferrer noopener"
-                                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 transition-colors duration-200 text-sm"
-                            >
-                                Conhecer a JC2Sec
-                                <ArrowRight className="h-3.5 w-3.5" />
-                            </a>
-                        </div>
+                        <h2 className="text-lg font-semibold leading-snug">
+                            Precisa de ajuda para executar este roadmap?
+                        </h2>
+                        <p className="text-sm text-muted-foreground max-w-xl leading-relaxed">
+                            A <span className="font-medium text-foreground">JC2Sec</span> é especialista na suíte Microsoft 365 e pode apoiar sua organização em cada fase — da priorização à implementação técnica e acompanhamento contínuo.
+                        </p>
+                        <ul className="flex flex-col sm:flex-row gap-2 sm:gap-5 text-xs text-muted-foreground">
+                            <li className="flex items-center gap-1.5">
+                                <Zap className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                                Implementação dos quick wins
+                            </li>
+                            <li className="flex items-center gap-1.5">
+                                <Target className="h-3.5 w-3.5 text-orange-500 shrink-0" />
+                                Gestão do roadmap completo
+                            </li>
+                            <li className="flex items-center gap-1.5">
+                                <Shield className="h-3.5 w-3.5 text-blue-500 shrink-0" />
+                                Monitoramento e governança
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="shrink-0 flex flex-col items-end justify-end gap-2 self-end">
+                        <a
+                            href="mailto:contato@jc2sec.com.br"
+                            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold px-5 py-2.5 rounded-lg transition-colors duration-200 text-sm"
+                        >
+                            <Mail className="h-4 w-4" />
+                            Falar com um especialista
+                        </a>
+                        <a
+                            href="https://www.jc2sec.com.br"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors duration-200 text-xs"
+                        >
+                            Conhecer a JC2Sec
+                            <ArrowRight className="h-3 w-3" />
+                        </a>
                     </div>
                 </div>
             </div>
